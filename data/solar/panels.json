@@ -1,0 +1,70 @@
+{
+  "schema": "1.0",
+  "updatedAt": "2025-01-01",
+  "panels": [
+    {
+      "id": "jinko-tiger-neo-550",
+      "brand": "Jinko Solar",
+      "model": "Tiger Neo N-type 550W",
+      "technology": "N-type TOPCon",
+      "ratedWattage": 550,
+      "efficiency": 0.212,
+      "tempCoefficientPmax": -0.30,
+      "degradationYearOnePct": 1.0,
+      "degradationAnnualPct": 0.4,
+      "warrantyYears": 25,
+      "dimensionsMM": { "length": 2278, "width": 1134, "thickness": 30 },
+      "weightKG": 28.0,
+      "priceTHB": 7500,
+      "certifications": ["IEC61215", "IEC61730", "MCS"]
+    },
+    {
+      "id": "longi-hi-mo6-545",
+      "brand": "LONGi",
+      "model": "Hi-MO 6 Explorer 545W",
+      "technology": "N-type HPBC",
+      "ratedWattage": 545,
+      "efficiency": 0.211,
+      "tempCoefficientPmax": -0.29,
+      "degradationYearOnePct": 1.0,
+      "degradationAnnualPct": 0.4,
+      "warrantyYears": 25,
+      "dimensionsMM": { "length": 2256, "width": 1133, "thickness": 30 },
+      "weightKG": 27.8,
+      "priceTHB": 7200,
+      "certifications": ["IEC61215", "IEC61730"]
+    },
+    {
+      "id": "canadian-solar-hiku7-530",
+      "brand": "Canadian Solar",
+      "model": "HiKu7 Mono PERC 530W",
+      "technology": "P-type PERC",
+      "ratedWattage": 530,
+      "efficiency": 0.206,
+      "tempCoefficientPmax": -0.34,
+      "degradationYearOnePct": 2.0,
+      "degradationAnnualPct": 0.55,
+      "warrantyYears": 25,
+      "dimensionsMM": { "length": 2384, "width": 1096, "thickness": 35 },
+      "weightKG": 29.5,
+      "priceTHB": 6800,
+      "certifications": ["IEC61215", "IEC61730", "UL61730"]
+    },
+    {
+      "id": "sunpower-maxeon3-400",
+      "brand": "SunPower",
+      "model": "Maxeon 3 400W",
+      "technology": "Maxeon (IBC)",
+      "ratedWattage": 400,
+      "efficiency": 0.224,
+      "tempCoefficientPmax": -0.27,
+      "degradationYearOnePct": 0.25,
+      "degradationAnnualPct": 0.25,
+      "warrantyYears": 40,
+      "dimensionsMM": { "length": 1812, "width": 1046, "thickness": 40 },
+      "weightKG": 19.0,
+      "priceTHB": 14000,
+      "certifications": ["IEC61215", "IEC61730", "UL61730", "MCS"]
+    }
+  ]
+}

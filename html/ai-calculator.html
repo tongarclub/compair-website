@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Hardware VRAM Calculator — ตรวจสอบ GPU กับ LLM | ComPair</title>
+<meta name="description" content="ตรวจสอบว่า GPU ของคุณรัน Local LLM ขนาดใดได้บ้าง — ครอบคลุม 50+ GPU รุ่น และ LLM 1B–70B พร้อมผล Quantization (Q2–FP16) ทุกระดับ">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://compair.app/html/ai-calculator.html">
+
+<!-- Open Graph -->
+<meta property="og:type"        content="website">
+<meta property="og:url"         content="https://compair.app/html/ai-calculator.html">
+<meta property="og:title"       content="AI Hardware VRAM Calculator — ตรวจสอบ GPU กับ LLM | ComPair">
+<meta property="og:description" content="เลือก GPU และดูทันทีว่ารัน Llama, Mistral, Phi ขนาดใดได้บ้าง พร้อม Quantization ที่แนะนำ">
+<meta property="og:locale"      content="th_TH">
+
+<!-- Static JSON-LD: WebPage + FAQPage + HowTo -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "AI Hardware VRAM Calculator",
+  "url": "https://compair.app/html/ai-calculator.html",
+  "description": "เครื่องมือตรวจสอบว่า GPU รัน Local LLM ได้ไหม ครอบคลุม 50+ GPU และ LLM หลายขนาด",
+  "inLanguage": "th",
+  "isPartOf": { "@type": "WebSite", "url": "https://compair.app/" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "RTX 4060 8GB รัน Llama 3 8B ได้ไหม?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ได้ครับ RTX 4060 มี VRAM 8 GB รัน Llama 3 8B ด้วย Q4_K_M quantization ได้สบาย ต้องการ VRAM ประมาณ 4.1 GB และยังเหลือ headroom สำหรับ context window ขนาดปานกลาง"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "ต้องการ VRAM เท่าไหร่ในการรัน 70B model?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Llama 3 70B ต้องการ VRAM ประมาณ 40 GB สำหรับ Q4_K_M หรือ 70 GB สำหรับ Q8_0 ตัวเลือกที่นิยมคือ RTX 4090 24GB + CPU offload หรือใช้ multi-GPU"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Q4_K_M กับ Q8_0 ต่างกันอย่างไร?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Q4_K_M ใช้ VRAM น้อยกว่า Q8_0 ประมาณครึ่งหนึ่ง แต่คุณภาพต่างกันน้อยมาก (~97% vs ~99% เทียบกับ FP16) Q4_K_M เหมาะสำหรับ GPU ที่ VRAM จำกัด ส่วน Q8_0 เหมาะเมื่อ VRAM เพียงพอและต้องการคุณภาพสูงสุด"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Apple Silicon M1/M2/M3 รัน LLM ได้ไหม?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ได้ครับ Apple Silicon ใช้ Unified Memory ที่แชร์ระหว่าง CPU และ GPU ทำให้รัน LLM ได้อย่างมีประสิทธิภาพ M2 Max 96GB รัน 70B model ได้สบาย ผ่าน llama.cpp กับ Metal backend"
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "วิธีตรวจสอบว่า GPU รัน AI Model ได้ไหม",
+  "description": "ใช้ ComPair VRAM Calculator ตรวจสอบ compatibility ระหว่าง GPU และ LLM ทุกขนาด",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "position": 1,
+      "name": "เลือก GPU",
+      "text": "เลือกรุ่น GPU จาก dropdown — ระบบมีข้อมูล 50+ รุ่น ครอบคลุม NVIDIA, AMD และ Apple Silicon"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 2,
+      "name": "ระบุ System RAM",
+      "text": "เลือกขนาด System RAM ที่ติดตั้งในเครื่อง (สำหรับคำนวณ CPU offload)"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 3,
+      "name": "ดูผลทันที",
+      "text": "ระบบแสดง compatibility สำหรับ LLM ทุกขนาด (1B–70B) พร้อม Quantization ที่เหมาะสมและประมาณความเร็ว token/วินาที"
+    }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/theme-ai.css">
+<link rel="stylesheet" href="/css/shared.css">
+<link rel="stylesheet" href="/css/ai-specific.css">
+<style>
+/* AI Calculator — 3-column form layout */
+.form-body { grid-template-columns: 1fr 1fr 1fr; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a class="logo" href="/index.html">
+      <div class="logo-mark">C</div>
+      <div>
+        <div class="logo-text">ComPair</div>
+        <div class="logo-sub">Comparison Engine</div>
+      </div>
+    </a>
+    <div class="nav-right">
+      <span class="nav-badge" id="gpuCount">— GPUs</span>
+      <a class="nav-link" href="#selector">เลือก Hardware</a>
+      <a class="nav-link" href="#results">ผลการตรวจสอบ</a>
+      <a class="nav-link" href="#quant">Quantization</a>
+      <a class="nav-link" href="/html/solar-calculator.html">Solar ROI →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <div class="hero-label">Domain A · AI Hardware · VRAM Calculator</div>
+      <h1>Hardware ของคุณ<br>รัน <em>AI Model</em><br>ไหนได้บ้าง?</h1>
+      <p class="hero-desc">เพียงเลือก GPU, RAM และ CPU ที่ใช้อยู่ — ระบบจะประเมินว่า LLM Model ขนาดไหนรันได้ และ Quantization ระดับใดเหมาะสม</p>
+    </div>
+    <div class="hero-card">
+      <div class="hc-title">// วิธีใช้งาน</div>
+      <div class="hc-steps">
+        <div class="hc-step"><div class="step-num">1</div><div class="step-txt"><strong>เลือก GPU</strong> จาก dropdown — ค้นหาตาม brand หรือ VRAM</div></div>
+        <div class="hc-step"><div class="step-num">2</div><div class="step-txt"><strong>ระบุ RAM</strong> ที่ติดตั้งในเครื่อง (System RAM)</div></div>
+        <div class="hc-step"><div class="step-num">3</div><div class="step-txt"><strong>เลือก CPU</strong> เพื่อประกอบการประเมิน CPU Offload</div></div>
+        <div class="hc-step"><div class="step-num">4</div><div class="step-txt">ระบบจะ<strong>แสดงผลทันที</strong> — Model ไหนรันได้ ด้วย Quant ระดับใด</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SELECTOR -->
+<div class="wrap" id="selector">
+  <div class="form-section">
+    <div class="form-header">
+      <div class="form-title">เลือก Hardware ของคุณ</div>
+      <div class="form-subtitle">// ข้อมูลโหลดจาก /data/ai-models/</div>
+    </div>
+    <div class="form-body">
+      <div class="form-col">
+        <label class="field-label">GPU / การ์ดจอ</label>
+        <p class="field-hint">เลือกรุ่น GPU — VRAM คือปัจจัยสำคัญที่สุด</p>
+        <div class="select-wrap">
+          <select id="gpuSelect"></select>
+        </div>
+        <div class="info-block" id="gpuInfoBox" style="display:none"><p id="gpuInfoText"></p></div>
+      </div>
+      <div class="form-col">
+        <label class="field-label">System RAM</label>
+        <p class="field-hint">RAM ระบบช่วย Offload เลเยอร์ที่ไม่พอใน VRAM — ควรมีอย่างน้อย 2× ขนาด Model</p>
+        <div class="ram-chips" id="ramChips">
+          <button class="ram-chip" data-val="8">8 GB</button>
+          <button class="ram-chip" data-val="16">16 GB</button>
+          <button class="ram-chip active" data-val="32">32 GB</button>
+          <button class="ram-chip" data-val="48">48 GB</button>
+          <button class="ram-chip" data-val="64">64 GB</button>
+          <button class="ram-chip" data-val="96">96 GB</button>
+          <button class="ram-chip" data-val="128">128 GB</button>
+          <button class="ram-chip" data-val="256">256 GB</button>
+        </div>
+        <div class="info-block"><p><strong>แนะนำ:</strong> RAM 32 GB+ เหมาะกับ 7B–13B แบบ GPU+CPU Split</p></div>
+      </div>
+      <div class="form-col">
+        <label class="field-label">CPU / โปรเซสเซอร์</label>
+        <p class="field-hint">CPU ส่งผลต่อความเร็ว Layer ที่ Offload ออกจาก VRAM</p>
+        <div class="select-wrap">
+          <select id="cpuSelect"></select>
+        </div>
+        <div class="info-block" id="cpuInfoBox" style="display:none"><p id="cpuInfoText"></p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RESULTS -->
+<div class="wrap" id="results">
+  <div class="gpu-spec-card" id="gpuSpecCard">
+    <div class="gsc-header">
+      <div class="gsc-brand-pill" id="gscBrand">—</div>
+      <div><div class="gsc-name" id="gscName">—</div><div class="gsc-arch" id="gscArch">—</div></div>
+      <div><div class="gsc-score-val" id="gscScore">—</div><div class="gsc-score-lbl">Overall Score / 100</div></div>
+    </div>
+    <div class="gsc-specs" id="gscSpecs"></div>
+  </div>
+
+  <div class="results-header">
+    <div class="results-title">Model <em>Compatibility</em></div>
+    <div class="results-meta" id="resultsMeta">// เลือก GPU เพื่อดูผล</div>
+  </div>
+
+  <div class="score-bar-wrap" id="scoreBarWrap" style="display:none">
+    <div class="score-bar-header">
+      <div class="score-bar-title">Compatibility Score</div>
+      <div class="score-bar-val" id="scoreBarVal">—</div>
+    </div>
+    <div class="score-track"><div class="score-fill" id="scoreFill" style="width:0%"></div></div>
+  </div>
+
+  <div class="model-grid" id="modelGrid">
+    <div class="placeholder">
+      <div class="placeholder-icon">⬡</div>
+      <div class="placeholder-title">เลือก GPU ของคุณเพื่อเริ่มต้น</div>
+      <div class="placeholder-sub">ระบบจะตรวจสอบว่า LLM Model ขนาดใดเหมาะกับ Hardware ที่คุณมี</div>
+    </div>
+  </div>
+</div>
+
+<!-- QUANT TABLE -->
+<div class="wrap" id="quant" style="margin-top:48px">
+  <div class="quant-table-section">
+    <div class="qt-head">
+      <div class="qt-title">ตาราง Quantization Reference</div>
+      <div class="qt-sub">VRAM ที่ต้องการ (GB) ตาม Quantization Level และขนาด Model</div>
+    </div>
+    <table class="qt" id="quantTable">
+      <thead>
+        <tr>
+          <th>Format</th><th>Precision</th><th>1–3B</th><th>7B</th><th>13B</th><th>30–34B</th><th>70B</th><th>คุณภาพ</th><th>หมายเหตุ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>FP16 / BF16</td><td>16-bit</td><td>3.0 GB</td><td>14 GB</td><td>26 GB</td><td>65 GB</td><td>140 GB</td><td><span class="qt-badge" style="color:var(--green);border-color:rgba(61,122,90,.4);background:var(--green-bg)">100%</span></td><td style="font-size:11px;color:var(--text3)">ต้องการ VRAM สูงมาก</td></tr>
+        <tr><td>Q8_0</td><td>8-bit</td><td>2.0 GB</td><td>7.2 GB</td><td>14 GB</td><td>34 GB</td><td>70 GB</td><td><span class="qt-badge" style="color:var(--green);border-color:rgba(61,122,90,.4);background:var(--green-bg)">~99%</span></td><td style="font-size:11px;color:var(--text3)">ดีที่สุดเมื่อ VRAM พอ</td></tr>
+        <tr style="background:var(--amber-bg)"><td>Q4_K_M ⭐</td><td>4-bit</td><td>1.5 GB</td><td>4.1 GB</td><td>7.9 GB</td><td>19 GB</td><td>40 GB</td><td><span class="qt-badge" style="color:var(--amber);border-color:rgba(139,105,20,.4);background:#FEF0CC">~97%</span></td><td><span class="qt-rec">แนะนำสำหรับส่วนใหญ่</span></td></tr>
+        <tr><td>Q4_K_S</td><td>4-bit</td><td>1.3 GB</td><td>3.8 GB</td><td>7.4 GB</td><td>18 GB</td><td>38 GB</td><td><span class="qt-badge" style="color:var(--amber);border-color:rgba(139,105,20,.4);background:#FEF0CC">~95%</span></td><td style="font-size:11px;color:var(--text3)">เมื่อ VRAM ค่อนข้างตึง</td></tr>
+        <tr><td>Q3_K_M</td><td>3-bit</td><td>1.2 GB</td><td>3.1 GB</td><td>5.9 GB</td><td>15 GB</td><td>30 GB</td><td><span class="qt-badge" style="color:var(--text2);border-color:var(--border)">~91%</span></td><td style="font-size:11px;color:var(--text3)">คุณภาพลดลงพอสังเกตได้</td></tr>
+        <tr><td>Q2_K</td><td>2-bit</td><td>0.9 GB</td><td>2.4 GB</td><td>4.5 GB</td><td>11 GB</td><td>22 GB</td><td><span class="qt-badge" style="color:var(--red);border-color:rgba(139,58,58,.3);background:var(--red-bg)">~80%</span></td><td style="font-size:11px;color:var(--text3)">ไม่แนะนำ คุณภาพต่ำมาก</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- TIPS -->
+<div class="wrap" style="margin-bottom:0">
+  <div class="tips-section">
+    <div class="tips-title">สิ่งที่ <em>ควรรู้</em></div>
+    <div class="tips-grid">
+      <div class="tip-item"><div class="ti-num">01</div><div class="ti-title">VRAM คือขีดจำกัดหลัก</div><div class="ti-text">Model ต้องโหลดทั้งหมดเข้า VRAM ก่อนรัน ถ้าไม่พอจะ Offload ไป RAM (ช้ากว่า 5–20 เท่า) สูตรประมาณ: <code>VRAM ≈ ขนาด Model × 1.1</code></div></div>
+      <div class="tip-item"><div class="ti-num">02</div><div class="ti-title">Q4_K_M คือ Sweet Spot</div><div class="ti-text">Quantization 4-bit แบบ K-means ให้คุณภาพ ~97% ของ FP16 แต่ใช้ VRAM ลดไปเกือบครึ่ง เหมาะกับ GPU 8–12 GB เกือบทุกรุ่น</div></div>
+      <div class="tip-item"><div class="ti-num">03</div><div class="ti-title">Apple Silicon = Unified Memory</div><div class="ti-text">M-series ใช้ RAM เป็น VRAM ร่วมกัน M2 Max 96 GB = รัน 70B ได้ Bandwidth ต่ำกว่า RTX แต่เงียบและประหยัดไฟมาก</div></div>
+      <div class="tip-item"><div class="ti-num">04</div><div class="ti-title">GPU+CPU Split ช่วยได้</div><div class="ti-text">ใช้ <code>--n-gpu-layers 28</code> ใน llama.cpp เพื่อโหลดบาง Layer ไป GPU และที่เหลือใช้ RAM — ต้องการ RAM 32 GB+</div></div>
+      <div class="tip-item"><div class="ti-num">05</div><div class="ti-title">Context Window = VRAM เพิ่ม</div><div class="ti-text">Context 2K → 4K → 8K → 32K ใช้ VRAM เพิ่มขึ้นแบบ Linear ถ้า VRAM ตึงให้ลด Context ลงก่อนด้วย <code>--ctx-size 2048</code></div></div>
+      <div class="tip-item"><div class="ti-num">06</div><div class="ti-title">เครื่องมือที่แนะนำ</div><div class="ti-text"><code>Ollama</code> ง่ายที่สุด สำหรับ Beginner · <code>LM Studio</code> มี GUI สวย · <code>llama.cpp</code> ยืดหยุ่นสูงสุด · <code>vLLM</code> สำหรับ Production</div></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-logo">ComPair · AI Hardware VRAM Calculator</div>
+      <div class="footer-meta" id="footerMeta">ข้อมูลอ้างอิงจาก llama.cpp · HuggingFace</div>
+      <div class="footer-links">
+        <a href="/index.html">← หน้าหลัก</a>
+        <a href="/html/solar-calculator.html">Solar ROI →</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script type="module">
+import { fetchData, injectJsonLd, buildFaqSchema, buildHowToSchema } from '/js/shared/utils.js';
+import {
+  evaluateModelQuants, getBestCompatStatus, scoreGPU,
+  estimateTokPerSec, getComputeBackend, recommendQuant
+} from '/js/ai/calculator.js';
+
+// ── State ──────────────────────────────────────────────────
+const state = { gpu: null, ram: 32, cpu: null };
+let GPUS = [], CPUS = [], MODELS = [], QUANT_KEYS = [];
+
+// ── Bootstrap ──────────────────────────────────────────────
+async function init() {
+  const [gpuData, cpuData, modelData] = await Promise.all([
+    fetchData('/data/ai-models/gpus.json'),
+    fetchData('/data/ai-models/cpus.json'),
+    fetchData('/data/ai-models/models.json'),
+  ]);
+
+  GPUS       = gpuData.gpus;
+  CPUS       = cpuData.cpus;
+  MODELS     = modelData.models;
+  QUANT_KEYS = modelData.quantKeys;
+
+  // GPU count badge
+  document.getElementById('gpuCount').textContent = `${GPUS.length} GPUs`;
+
+  // Populate GPU select
+  const gpuSel = document.getElementById('gpuSelect');
+  gpuSel.innerHTML = '<option value="">— กรุณาเลือก GPU —</option>';
+  const groups = {};
+  GPUS.forEach(g => { if (!groups[g.gen]) groups[g.gen] = []; groups[g.gen].push(g); });
+  Object.entries(groups).forEach(([gen, list]) => {
+    const og = document.createElement('optgroup');
+    og.label = gen;
+    list.forEach(g => og.appendChild(new Option(`${g.name}  ·  ${g.vramGB} GB VRAM`, g.id)));
+    gpuSel.appendChild(og);
+  });
+  gpuSel.addEventListener('change', onGPUChange);
+
+  // Populate CPU select
+  const cpuSel = document.getElementById('cpuSelect');
+  cpuSel.innerHTML = '<option value="">— กรุณาเลือก CPU —</option>';
+  const cpuGroups = {};
+  CPUS.forEach(c => { if (!cpuGroups[c.brand]) cpuGroups[c.brand] = []; cpuGroups[c.brand].push(c); });
+  Object.entries(cpuGroups).forEach(([brand, list]) => {
+    const og = document.createElement('optgroup');
+    og.label = brand;
+    list.forEach(c => og.appendChild(new Option(`${c.name}  ·  ${c.cores} Cores`, c.id)));
+    cpuSel.appendChild(og);
+  });
+  cpuSel.addEventListener('change', onCPUChange);
+
+  // RAM chips
+  document.querySelectorAll('.ram-chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.ram-chip').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.ram = parseInt(btn.dataset.val);
+      render();
+    });
+  });
+
+  // Footer
+  document.getElementById('footerMeta').textContent =
+    `${GPUS.length} GPU รุ่น · ${MODELS.length} Model ขนาด · ข้อมูลจาก llama.cpp & HuggingFace`;
+
+  // AEO JSON-LD
+  injectJsonLd(buildFaqSchema([
+    { question: 'GPU ที่มี VRAM 8 GB รัน LLM 7B ได้ไหม?', answer: 'ได้ ด้วย Q4_K_M ใช้ VRAM 4.1 GB จาก 8 GB — รันได้สบาย ที่ Q8.0 ต้องการ 7.2 GB จะตึงเล็กน้อย' },
+    { question: 'Quantization คืออะไร?', answer: 'Quantization คือการบีบอัด Weight ของ Model จาก 16-bit ลงเป็น 8, 4, 3, หรือ 2-bit เพื่อลดขนาด VRAM ที่ต้องการ โดยคุณภาพลดลงเล็กน้อย Q4_K_M แนะนำเป็น Sweet Spot ที่ ~97% ของ FP16' },
+    { question: 'Apple Silicon รัน LLM ได้ดีแค่ไหน?', answer: 'Apple M-series ใช้ Unified Memory ทำให้ RAM = VRAM เช่น M2 Max 96 GB รัน 70B ได้ง่ายๆ แต่ Bandwidth ต่ำกว่า NVIDIA RTX ดังนั้นความเร็วโดยประมาณจะช้ากว่า GPU สูงๆ ของ NVIDIA' },
+  ]));
+
+  injectJsonLd(buildHowToSchema({
+    name: 'วิธีตรวจสอบว่า GPU ของฉันรัน LLM ได้ไหม',
+    description: 'ใช้ ComPair AI VRAM Calculator เพื่อประเมิน compatibility ระหว่าง GPU และ LLM Model',
+    steps: [
+      { name: 'เลือก GPU', text: 'เลือกรุ่น GPU จาก dropdown ที่มี 50+ รุ่น รวม NVIDIA RTX, AMD RDNA และ Apple Silicon' },
+      { name: 'ระบุ System RAM', text: 'เลือกขนาด RAM ที่ติดตั้งในเครื่อง เพื่อคำนวณ GPU+CPU Split capability' },
+      { name: 'เลือก CPU (ไม่บังคับ)', text: 'เลือก CPU เพื่อประเมิน Offload speed' },
+      { name: 'ดูผลทันที', text: 'ระบบแสดง Compatibility สำหรับ LLM ทุกขนาด (1B ถึง 70B) พร้อม Quantization ที่เหมาะสมและ Token Speed' },
+    ],
+  }), 'jsonld-howto');
+}
+
+// ── Event Handlers ─────────────────────────────────────────
+function onGPUChange() {
+  const id = document.getElementById('gpuSelect').value;
+  state.gpu = GPUS.find(g => g.id === id) || null;
+  const box = document.getElementById('gpuInfoBox');
+  if (state.gpu) {
+    box.style.display = '';
+    document.getElementById('gpuInfoText').innerHTML =
+      `<strong>${state.gpu.name}</strong> · ${state.gpu.arch} · VRAM ${state.gpu.vramGB} GB · BW ${state.gpu.bandwidthGBs} GB/s · ${state.gpu.cuda ? 'CUDA รองรับ' : getComputeBackend(state.gpu)} · ${state.gpu.priceTHB ? '฿' + state.gpu.priceTHB : 'Server / Cloud'}`;
+  } else {
+    box.style.display = 'none';
+  }
+  render();
+}
+
+function onCPUChange() {
+  const id = document.getElementById('cpuSelect').value;
+  state.cpu = CPUS.find(c => c.id === id) || null;
+  const box = document.getElementById('cpuInfoBox');
+  if (state.cpu) {
+    box.style.display = '';
+    document.getElementById('cpuInfoText').innerHTML =
+      `<strong>${state.cpu.name}</strong> · ${state.cpu.cores} Cores · ${state.cpu.note}`;
+  } else {
+    box.style.display = 'none';
+  }
+  render();
+}
+
+// ── Render ─────────────────────────────────────────────────
+function render() {
+  const { gpu, ram, cpu } = state;
+  if (!gpu) return;
+
+  // GPU Spec Card
+  const card = document.getElementById('gpuSpecCard');
+  card.classList.add('visible');
+  const brandColors = { NVIDIA: '#76b900', AMD: '#ed1c24', Apple: '#888' };
+  const bc = brandColors[gpu.brand] || '#888';
+  const pill = document.getElementById('gscBrand');
+  pill.textContent = gpu.brand;
+  pill.style.color = bc;
+  pill.style.borderColor = bc + '55';
+  document.getElementById('gscName').textContent = gpu.name;
+  document.getElementById('gscArch').textContent = `${gpu.arch} · ${gpu.gen}`;
+
+  const score = scoreGPU(gpu.perfScore, gpu.vramGB);
+  document.getElementById('gscScore').textContent = score;
+
+  const backend = getComputeBackend(gpu);
+  document.getElementById('gscSpecs').innerHTML = `
+    <div class="gsc-cell"><div class="gsc-lbl">VRAM</div><div class="gsc-val" style="color:var(--gold)">${gpu.vramGB} GB</div><div class="gsc-sub">Video RAM</div></div>
+    <div class="gsc-cell"><div class="gsc-lbl">Bandwidth</div><div class="gsc-val">${gpu.bandwidthGBs} <span style="font-size:12px;font-weight:400;color:var(--text3)">GB/s</span></div><div class="gsc-sub">Memory Bandwidth</div></div>
+    <div class="gsc-cell"><div class="gsc-lbl">Architecture</div><div class="gsc-val" style="font-size:13px">${gpu.arch}</div><div class="gsc-sub">${gpu.gen}</div></div>
+    <div class="gsc-cell"><div class="gsc-lbl">Backend</div><div class="gsc-val" style="font-size:13px">${backend}</div><div class="gsc-sub" style="color:${gpu.cuda?'var(--green)':'var(--text3)'}">${gpu.cuda ? '✓ CUDA / llama.cpp' : gpu.brand === 'Apple' ? '✓ Metal · Native' : 'ROCm / Vulkan'}</div></div>
+    <div class="gsc-cell"><div class="gsc-lbl">ราคา</div><div class="gsc-val" style="font-size:12px">${gpu.priceTHB ? '฿' + gpu.priceTHB : 'Server / Cloud'}</div><div class="gsc-sub">โดยประมาณ</div></div>`;
+
+  // Score bar
+  document.getElementById('scoreBarWrap').style.display = '';
+  document.getElementById('scoreFill').style.width = score + '%';
+  document.getElementById('scoreBarVal').textContent = `${score} / 100`;
+  document.getElementById('resultsMeta').textContent =
+    `// ${gpu.name} · VRAM ${gpu.vramGB} GB · RAM ${ram} GB${cpu ? ' · ' + cpu.name : ''}`;
+
+  // Model cards
+  const cards = MODELS.map(model => {
+    const quants = evaluateModelQuants(model, gpu.vramGB, ram, QUANT_KEYS);
+    const bestStatus = getBestCompatStatus(quants);
+    const verdictMap = {
+      ok:    { cls: 'vb-ok',    txt: 'รันได้ปกติ' },
+      warn:  { cls: 'vb-warn',  txt: 'รันได้ · ตึง' },
+      split: { cls: 'vb-split', txt: 'GPU+CPU Split' },
+      no:    { cls: 'vb-no',    txt: 'VRAM ไม่เพียงพอ' },
+    };
+    const v = verdictMap[bestStatus];
+    const spd = estimateTokPerSec(model.baseTokPerSec, gpu.bandwidthGBs);
+    const spdStr = bestStatus === 'no' ? '—' : `~${spd} tok/s`;
+
+    return `
+      <div class="model-card fade-up">
+        <div class="mc-head">
+          <div><div class="mc-name">${model.name}</div><div class="mc-size-sub">${model.usecase}</div></div>
+          <div><span class="verdict-badge ${v.cls}">${v.txt}</span></div>
+        </div>
+        <div class="mc-body">
+          <div class="mc-examples">${model.examples}</div>
+          <div class="quant-row">
+            ${quants.map(q => `
+              <div class="quant-item qi-${q.status}">
+                <div class="qi-label">${q.label}</div>
+                <div class="qi-vram">${q.vramGB} GB</div>
+                <div class="qi-status">${q.status==='ok'?'✓':q.status==='warn'?'~':q.status==='split'?'↕':'✗'}</div>
+              </div>`).join('')}
+          </div>
+        </div>
+        <div class="mc-foot">
+          <div class="mc-foot-ram">RAM ขั้นต่ำ: ${model.minRamGB} GB</div>
+          <div class="mc-foot-spd">ความเร็วโดยประมาณ: ${spdStr}</div>
+        </div>
+      </div>`;
+  });
+
+  document.getElementById('modelGrid').innerHTML = cards.join('');
+}
+
+init().catch(err => console.error('[AI Calculator] init failed:', err));
+</script>
+
+</body>
+</html>

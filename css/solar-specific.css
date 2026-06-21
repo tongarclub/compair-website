@@ -1,0 +1,192 @@
+/**
+ * Solar-Specific Styles — ComPair Solar ROI Calculator
+ * Summary Cards, Recommendation, ROI Table, Panel Comparison
+ *
+ * ต้องโหลดหลัง theme-solar.css + shared.css
+ */
+
+/* ═══════════════════════════════════════════════
+   FORM: 4-column layout override
+═══════════════════════════════════════════════ */
+.form-body { grid-template-columns: 1fr 1fr 1fr 1fr; }
+
+/* ═══════════════════════════════════════════════
+   SUMMARY CARDS (ผลลัพธ์หลัก 4 ช่อง)
+═══════════════════════════════════════════════ */
+.summary-section { margin-bottom: 32px; display: none; }
+.summary-section.visible { display: block; }
+
+.summary-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 16px; margin-bottom: 24px;
+}
+
+.summary-card {
+  background: var(--surface); border: 1px solid var(--border);
+  padding: 24px; text-align: center;
+}
+.sc-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px; font-weight: 300; line-height: 1; margin-bottom: 4px;
+}
+.sc-unit {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; color: var(--text3); letter-spacing: .12em;
+}
+.sc-label { font-size: 13px; color: var(--text2); margin-top: 8px; }
+
+.sc-primary { color: var(--primary);  }
+.sc-warn    { color: var(--warn);     }
+.sc-teal    { color: var(--teal);     }
+.sc-info    { color: var(--info);     }
+
+/* ═══════════════════════════════════════════════
+   RECOMMENDATION SECTION
+═══════════════════════════════════════════════ */
+.rec-section {
+  background: var(--surface); border: 1px solid var(--border);
+  margin-bottom: 32px; display: none;
+}
+.rec-section.visible { display: block; }
+
+.rec-header {
+  padding: 20px 32px; border-bottom: 1px solid var(--border);
+  background: var(--surface2);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.rec-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; font-weight: 600;
+}
+.rec-body { display: grid; grid-template-columns: 1fr 1fr; }
+
+.rec-col { padding: 28px 32px; border-right: 1px solid var(--border); }
+.rec-col:last-child { border-right: none; }
+
+.rec-col-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; color: var(--text3);
+  letter-spacing: .14em; text-transform: uppercase;
+  margin-bottom: 20px; padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.spec-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 0; border-bottom: 1px solid var(--border); gap: 12px;
+}
+.spec-row:last-child { border-bottom: none; }
+
+.spec-key { font-size: 13px; color: var(--text2); }
+.spec-val {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px; font-weight: 500; color: var(--text); text-align: right;
+}
+.spec-val.highlight { color: var(--primary); font-weight: 600; }
+
+/* ═══════════════════════════════════════════════
+   ROI TABLE (25-year breakdown)
+═══════════════════════════════════════════════ */
+.roi-section {
+  background: var(--surface); border: 1px solid var(--border);
+  box-shadow: 0 2px 24px rgba(0,0,0,.04);
+  margin-bottom: 40px; display: none;
+}
+.roi-section.visible { display: block; }
+
+.roi-header {
+  padding: 24px 32px 20px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: flex-end; justify-content: space-between;
+}
+.roi-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; font-weight: 600;
+}
+.roi-sub { font-size: 13px; color: var(--text3); margin-top: 4px; }
+
+.roi-payback-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px; color: var(--warn);
+  background: var(--warn-bg); border: 1px solid var(--warn3);
+  padding: 6px 16px;
+}
+
+table.roi { width: 100%; border-collapse: collapse; }
+
+table.roi th {
+  padding: 13px 20px; text-align: left;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; color: var(--text3);
+  letter-spacing: .12em; text-transform: uppercase;
+  border-bottom: 1px solid var(--border); font-weight: 400;
+}
+table.roi td {
+  padding: 13px 20px;
+  border-bottom: 1px solid var(--border); font-size: 14px;
+}
+table.roi tr:last-child td { border-bottom: none; }
+table.roi tr:hover td { background: var(--bg); }
+table.roi td:first-child {
+  font-family: 'DM Mono', monospace; font-size: 13px;
+  color: var(--text3); font-weight: 400;
+}
+
+.payback-row td { background: var(--warn-bg) !important; font-weight: 600; }
+.cumulative-positive { color: var(--ok); font-weight: 600; }
+
+/* ═══════════════════════════════════════════════
+   PANEL COMPARISON TABLE
+═══════════════════════════════════════════════ */
+.panel-compare-section {
+  background: var(--surface); border: 1px solid var(--border);
+  margin-bottom: 40px;
+}
+
+.pc-header { padding: 24px 32px 20px; border-bottom: 1px solid var(--border); }
+.pc-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; font-weight: 600;
+}
+.pc-sub { font-size: 13px; color: var(--text3); margin-top: 4px; }
+
+table.pc { width: 100%; border-collapse: collapse; }
+
+table.pc th {
+  padding: 13px 20px; text-align: left;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; color: var(--text3);
+  letter-spacing: .12em; text-transform: uppercase;
+  border-bottom: 1px solid var(--border); font-weight: 400;
+}
+table.pc td {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border); font-size: 14px;
+}
+table.pc tr:last-child td { border-bottom: none; }
+table.pc tr:hover td { background: var(--bg); }
+table.pc td:first-child {
+  font-family: 'DM Mono', monospace;
+  font-weight: 500; color: var(--primary); font-size: 13px;
+}
+
+.pc-rec {
+  display: inline-block; padding: 2px 8px;
+  background: var(--teal-bg); border: 1px solid rgba(27,122,110,.3);
+  color: var(--teal); font-size: 11px; font-weight: 600;
+}
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════ */
+@media (max-width: 960px) {
+  .form-body { grid-template-columns: 1fr 1fr !important; }
+  .form-col:nth-child(2) { border-right: none; }
+  .form-col:nth-child(3),
+  .form-col:nth-child(4) { border-top: 1px solid var(--border); }
+  .summary-grid { grid-template-columns: 1fr 1fr; }
+  .rec-body { grid-template-columns: 1fr; }
+  .rec-col { border-right: none; border-bottom: 1px solid var(--border); }
+}
+@media (max-width: 600px) {
+  .summary-grid { grid-template-columns: 1fr 1fr; }
+}

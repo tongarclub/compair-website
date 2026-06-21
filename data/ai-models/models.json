@@ -1,0 +1,56 @@
+{
+  "schema": "1.0",
+  "quantKeys": [
+    { "key": "q8", "label": "Q8.0",   "qualityPct": 99 },
+    { "key": "q4", "label": "Q4_K_M", "qualityPct": 97 },
+    { "key": "q3", "label": "Q3_K_M", "qualityPct": 91 },
+    { "key": "q2", "label": "Q2_K",   "qualityPct": 80 }
+  ],
+  "models": [
+    {
+      "id": "1b",
+      "name": "1–3B",
+      "examples": "Phi-3-mini · Gemma-2B · Qwen2-1.5B · TinyLlama",
+      "q8": 2.0, "q4": 1.5, "q3": 1.2, "q2": 0.9,
+      "minRamGB": 8,
+      "baseTokPerSec": 180,
+      "usecase": "Chat ทั่วไป / Mobile-grade"
+    },
+    {
+      "id": "7b",
+      "name": "7B",
+      "examples": "Llama-3.1-8B · Mistral-7B · Gemma-7B · Qwen2-7B",
+      "q8": 7.2, "q4": 4.1, "q3": 3.1, "q2": 2.4,
+      "minRamGB": 16,
+      "baseTokPerSec": 80,
+      "usecase": "Chat + Code · ยอดนิยม"
+    },
+    {
+      "id": "13b",
+      "name": "13B",
+      "examples": "Llama-2-13B · CodeLlama-13B · Vicuna-13B",
+      "q8": 14, "q4": 7.9, "q3": 5.9, "q2": 4.5,
+      "minRamGB": 32,
+      "baseTokPerSec": 40,
+      "usecase": "Dev + Writing · คุณภาพสูง"
+    },
+    {
+      "id": "30b",
+      "name": "30–34B",
+      "examples": "Yi-34B · CodeLlama-34B · Mixtral-8x7B",
+      "q8": 34, "q4": 19, "q3": 15, "q2": 11,
+      "minRamGB": 64,
+      "baseTokPerSec": 18,
+      "usecase": "Research · Reasoning เชิงลึก"
+    },
+    {
+      "id": "70b",
+      "name": "70B",
+      "examples": "Llama-3.1-70B · Qwen2-72B · DeepSeek-V2",
+      "q8": 70, "q4": 40, "q3": 30, "q2": 22,
+      "minRamGB": 64,
+      "baseTokPerSec": 9,
+      "usecase": "Frontier · เทียบเท่า GPT-3.5"
+    }
+  ]
+}

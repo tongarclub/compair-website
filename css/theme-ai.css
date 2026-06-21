@@ -1,0 +1,57 @@
+/**
+ * Theme: AI Hardware VRAM Calculator
+ * Palette: Warm Gold / Parchment
+ *
+ * --primary*  = accent color สำหรับ page นี้ (gold)
+ * ใช้ร่วมกับ shared.css, ai-specific.css
+ */
+
+:root {
+  /* ── Backgrounds ─────────────────── */
+  --bg:        #F7F5F1;
+  --bg2:       #FEFEFE;
+  --surface:   #FFFFFF;
+  --surface2:  #F2EFE9;
+  --body-grad-1: rgba(180,160,120,.07);
+  --body-grad-2: rgba(139,115,85,.05);
+
+  /* ── Borders ─────────────────────── */
+  --border:    #E4DDD3;
+  --border2:   #C9BFB2;
+
+  /* ── Text ────────────────────────── */
+  --text:      #1C1916;
+  --text2:     #6B6259;
+  --text3:     #A89E94;
+
+  /* ── Primary Accent (Gold) ───────── */
+  --primary:   #8B7355;
+  --primary2:  #B09A78;
+  --primary3:  #D4BC96;
+
+  /* ── Status Colors ───────────────── */
+  --ok:        #3D7A5A;
+  --ok-bg:     #EDF5F0;
+  --warn:      #8B6914;
+  --warn-bg:   #FDF6E3;
+  --warn3:     #D4BC60;
+  --err:       #8B3A3A;
+  --err-bg:    #FDF0EF;
+  --info:      #2D5A8E;
+  --info-bg:   #EEF3FA;
+  --teal:      #1B7A6E;
+  --teal-bg:   #E8F5F3;
+
+  /* ── Backward-compatible aliases ─── */
+  --gold:      var(--primary);
+  --gold2:     var(--primary2);
+  --gold3:     var(--primary3);
+  --green:     var(--ok);
+  --green-bg:  var(--ok-bg);
+  --amber:     var(--warn);
+  --amber-bg:  var(--warn-bg);
+  --red:       var(--err);
+  --red-bg:    var(--err-bg);
+  --blue:      var(--info);
+  --blue-bg:   var(--info-bg);
+}

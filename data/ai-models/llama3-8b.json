@@ -1,0 +1,72 @@
+{
+  "id": "llama3.1-8b",
+  "name": "Llama 3.1 8B",
+  "family": "Llama",
+  "version": "3.1",
+  "parameterCount": 8,
+  "parameterUnit": "B",
+  "architecture": "transformer-decoder",
+  "quantizations": {
+    "fp16": {
+      "vramGB": 16.0,
+      "qualityPct": 100,
+      "label": "FP16 / BF16",
+      "precision": "16-bit",
+      "recommended": false,
+      "note": "Full precision — ต้องการ VRAM สูงมาก"
+    },
+    "q8_0": {
+      "vramGB": 7.2,
+      "qualityPct": 99,
+      "label": "Q8_0",
+      "precision": "8-bit",
+      "recommended": false,
+      "note": "ดีที่สุดเมื่อ VRAM พอ"
+    },
+    "q4_K_M": {
+      "vramGB": 4.1,
+      "qualityPct": 97,
+      "label": "Q4_K_M",
+      "precision": "4-bit",
+      "recommended": true,
+      "note": "Sweet spot — คุณภาพดีที่สุดเมื่อ VRAM จำกัด"
+    },
+    "q4_K_S": {
+      "vramGB": 3.8,
+      "qualityPct": 95,
+      "label": "Q4_K_S",
+      "precision": "4-bit",
+      "recommended": false,
+      "note": "เมื่อ VRAM ค่อนข้างตึง"
+    },
+    "q3_K_M": {
+      "vramGB": 3.1,
+      "qualityPct": 91,
+      "label": "Q3_K_M",
+      "precision": "3-bit",
+      "recommended": false,
+      "note": "คุณภาพลดลงพอสังเกตได้"
+    },
+    "q2_K": {
+      "vramGB": 2.4,
+      "qualityPct": 80,
+      "label": "Q2_K",
+      "precision": "2-bit",
+      "recommended": false,
+      "note": "ไม่แนะนำ — คุณภาพต่ำมาก"
+    }
+  },
+  "minSystemRamGB": 16,
+  "contextWindowTokens": 131072,
+  "approxTokPerSecBase": 80,
+  "usecase": "Chat + Code · ยอดนิยม",
+  "knownModels": [
+    "meta-llama/Llama-3.1-8B-Instruct",
+    "mistralai/Mistral-7B-Instruct-v0.3",
+    "google/gemma-7b-it",
+    "Qwen/Qwen2-7B-Instruct"
+  ],
+  "license": "Meta Llama 3.1 Community License",
+  "releasedAt": "2024-07-23",
+  "source": "https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct"
+}

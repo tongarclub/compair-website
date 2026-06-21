@@ -1,0 +1,56 @@
+/**
+ * Theme: Solar Cell ROI & Sizing Calculator
+ * Palette: Forest Green / Sage
+ *
+ * --primary*  = accent color สำหรับ page นี้ (green)
+ * ใช้ร่วมกับ shared.css, solar-specific.css
+ */
+
+:root {
+  /* ── Backgrounds ─────────────────── */
+  --bg:        #F4F7F4;
+  --bg2:       #FEFEFE;
+  --surface:   #FFFFFF;
+  --surface2:  #EDF2ED;
+  --body-grad-1: rgba(100,170,120,.06);
+  --body-grad-2: rgba(45,106,79,.05);
+
+  /* ── Borders ─────────────────────── */
+  --border:    #D8E4D8;
+  --border2:   #B8CCBA;
+
+  /* ── Text ────────────────────────── */
+  --text:      #1A1F1A;
+  --text2:     #556055;
+  --text3:     #91A491;
+
+  /* ── Primary Accent (Green) ──────── */
+  --primary:   #2D6A4F;
+  --primary2:  #52976F;
+  --primary3:  #95C9A8;
+
+  /* ── Status Colors ───────────────── */
+  --ok:        #3D7A5A;
+  --ok-bg:     #EDF5F0;
+  --warn:      #8B6914;
+  --warn-bg:   #FDF6E3;
+  --warn3:     #D4BC60;
+  --err:       #8B3A3A;
+  --err-bg:    #FDF0EF;
+  --info:      #2D5A8E;
+  --info-bg:   #EEF3FA;
+  --teal:      #1B7A6E;
+  --teal-bg:   #E8F5F3;
+
+  /* ── Backward-compatible aliases ─── */
+  --green:     var(--primary);
+  --green2:    var(--primary2);
+  --green3:    var(--primary3);
+  --amber:     var(--warn);
+  --amber-bg:  var(--warn-bg);
+  --amber3:    var(--warn3);
+  --blue:      var(--info);
+  --blue-bg:   var(--info-bg);
+  --red:       var(--err);
+  --red-bg:    var(--err-bg);
+}

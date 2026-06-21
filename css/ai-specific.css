@@ -1,0 +1,255 @@
+/**
+ * AI-Specific Styles — ComPair AI Hardware VRAM Calculator
+ * GPU Spec Card, Score Bar, Model Cards, Quant Items, Quant Table
+ *
+ * ต้องโหลดหลัง theme-ai.css + shared.css
+ */
+
+/* ═══════════════════════════════════════════════
+   RESULTS HEADER
+═══════════════════════════════════════════════ */
+.results-section { margin-bottom: 40px; }
+
+.results-header {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.results-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px; font-weight: 300; line-height: 1;
+}
+.results-title em { font-style: italic; color: var(--primary); }
+
+.results-meta {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px; color: var(--text3); letter-spacing: .08em;
+}
+
+/* ═══════════════════════════════════════════════
+   GPU SPEC CARD
+═══════════════════════════════════════════════ */
+.gpu-spec-card {
+  background: var(--surface); border: 1px solid var(--border);
+  box-shadow: 0 2px 24px rgba(0,0,0,.04);
+  margin-bottom: 24px; display: none;
+}
+.gpu-spec-card.visible { display: block; }
+
+.gsc-header {
+  display: grid; grid-template-columns: auto 1fr auto;
+  align-items: center; gap: 24px;
+  padding: 24px 32px; border-bottom: 1px solid var(--border);
+}
+
+.gsc-brand-pill {
+  padding: 6px 16px;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px; font-weight: 500; letter-spacing: .08em;
+  border: 1px solid var(--border);
+}
+
+.gsc-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px; font-weight: 600;
+}
+.gsc-arch {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px; color: var(--text3);
+  letter-spacing: .08em; text-transform: uppercase; margin-top: 3px;
+}
+
+.gsc-score-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 40px; font-weight: 300; color: var(--primary);
+  line-height: 1; text-align: right;
+}
+.gsc-score-lbl {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; color: var(--text3); letter-spacing: .08em; text-align: right;
+}
+
+.gsc-specs {
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  border-top: 1px solid var(--border);
+}
+
+.gsc-cell { padding: 20px 24px; border-right: 1px solid var(--border); }
+.gsc-cell:last-child { border-right: none; }
+
+.gsc-lbl {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; color: var(--text3);
+  letter-spacing: .1em; text-transform: uppercase; margin-bottom: 8px;
+}
+.gsc-val  { font-size: 17px; font-weight: 600; line-height: 1.2; }
+.gsc-sub  { font-size: 12px; color: var(--text3); margin-top: 4px; }
+
+/* ═══════════════════════════════════════════════
+   SCORE BAR
+═══════════════════════════════════════════════ */
+.score-bar-wrap { margin-bottom: 28px; }
+
+.score-bar-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 10px;
+}
+.score-bar-title { font-size: 13px; font-weight: 600; }
+
+.score-bar-val {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px; color: var(--primary);
+  background: var(--warn-bg); padding: 4px 12px;
+  border: 1px solid var(--primary3);
+}
+
+.score-track {
+  height: 4px; background: var(--border);
+  position: relative; overflow: hidden; border-radius: 2px;
+}
+.score-fill {
+  height: 100%; position: absolute; left: 0; top: 0;
+  background: linear-gradient(90deg, var(--primary3), var(--primary));
+  transition: width .8s cubic-bezier(.4,0,.2,1);
+}
+
+/* ═══════════════════════════════════════════════
+   MODEL CARDS
+═══════════════════════════════════════════════ */
+.model-grid { display: grid; gap: 14px; }
+
+.model-card {
+  background: var(--surface); border: 1px solid var(--border);
+  box-shadow: 0 1px 12px rgba(0,0,0,.04);
+  overflow: hidden; transition: border-color .2s, box-shadow .2s;
+}
+.model-card:hover {
+  border-color: var(--primary3);
+  box-shadow: 0 4px 24px rgba(0,0,0,.08);
+}
+
+.mc-head {
+  display: grid; grid-template-columns: 1fr auto;
+  padding: 20px 26px 16px; border-bottom: 1px solid var(--border);
+  align-items: center; gap: 16px;
+}
+.mc-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px; font-weight: 600; line-height: 1;
+}
+.mc-size-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; color: var(--text3);
+  letter-spacing: .1em; margin-top: 5px;
+}
+
+/* Verdict Badges */
+.verdict-badge {
+  padding: 6px 16px; font-size: 12px; font-weight: 600;
+  letter-spacing: .04em; border: 1px solid; white-space: nowrap;
+}
+.vb-ok    { color: var(--ok);   border-color: rgba(61,122,90,.3);  background: var(--ok-bg);   }
+.vb-warn  { color: var(--warn); border-color: rgba(139,105,20,.3); background: var(--warn-bg); }
+.vb-split { color: var(--info); border-color: rgba(45,90,142,.3);  background: var(--info-bg); }
+.vb-no    { color: var(--text3); border-color: var(--border);      background: var(--bg);      }
+
+.mc-body { padding: 16px 26px; }
+
+.mc-examples {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px; color: var(--text3);
+  letter-spacing: .04em; margin-bottom: 14px; line-height: 1.6;
+}
+
+/* Quant Items */
+.quant-row { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.quant-item {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 12px 16px; border: 1px solid var(--border);
+  min-width: 90px; transition: all .15s;
+}
+
+.qi-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; font-weight: 500; margin-bottom: 5px;
+}
+.qi-vram   { font-size: 15px; font-weight: 600; line-height: 1.1; }
+.qi-status { font-size: 12px; margin-top: 5px; color: var(--text3); }
+
+.quant-item.qi-ok    { border-color: rgba(61,122,90,.3);  background: var(--ok-bg);   }
+.quant-item.qi-ok    .qi-label,
+.quant-item.qi-ok    .qi-vram  { color: var(--ok); }
+
+.quant-item.qi-warn  { border-color: rgba(139,105,20,.3); background: var(--warn-bg); }
+.quant-item.qi-warn  .qi-label,
+.quant-item.qi-warn  .qi-vram  { color: var(--warn); }
+
+.quant-item.qi-split { border-color: rgba(45,90,142,.3);  background: var(--info-bg); }
+.quant-item.qi-split .qi-label,
+.quant-item.qi-split .qi-vram  { color: var(--info); }
+
+.quant-item.qi-no    { opacity: .45; }
+.quant-item.qi-no    .qi-label { color: var(--text3); }
+
+.mc-foot {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 13px 26px; background: var(--bg); border-top: 1px solid var(--border);
+}
+.mc-foot-ram { font-size: 13px; color: var(--text3); }
+.mc-foot-spd { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--text2); }
+
+/* ═══════════════════════════════════════════════
+   QUANTIZATION REFERENCE TABLE
+═══════════════════════════════════════════════ */
+.quant-table-section {
+  background: var(--surface); border: 1px solid var(--border);
+  box-shadow: 0 2px 24px rgba(0,0,0,.04); margin-bottom: 40px;
+}
+
+.qt-head { padding: 24px 32px 20px; border-bottom: 1px solid var(--border); }
+.qt-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; font-weight: 600;
+}
+.qt-sub { font-size: 13px; color: var(--text3); margin-top: 4px; }
+
+table.qt { width: 100%; border-collapse: collapse; }
+
+table.qt th {
+  padding: 13px 20px; text-align: left;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; color: var(--text3);
+  letter-spacing: .12em; text-transform: uppercase;
+  border-bottom: 1px solid var(--border); font-weight: 400;
+}
+
+table.qt td {
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--border); font-size: 14px;
+}
+table.qt tr:last-child td { border-bottom: none; }
+table.qt tr:hover td { background: var(--bg); }
+
+table.qt td:first-child {
+  font-family: 'DM Mono', monospace;
+  font-weight: 500; color: var(--primary); font-size: 13px;
+}
+
+.qt-badge {
+  display: inline-block; padding: 3px 10px;
+  font-size: 11px; font-weight: 600; border: 1px solid; letter-spacing: .04em;
+}
+.qt-rec {
+  font-size: 11px; padding: 3px 10px;
+  background: var(--warn-bg); border: 1px solid var(--primary3);
+  color: var(--warn); font-weight: 600; display: inline-block;
+}
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .gsc-specs { grid-template-columns: repeat(2, 1fr); }
+  table.qt  { font-size: 12px; }
+}

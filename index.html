@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ComPair — Comparison Engine for AI Hardware &amp; Solar ROI</title>
+<meta name="description" content="ComPair คือ Comparison Engine สำหรับ AI Hardware VRAM Calculator และ Solar Cell ROI Calculator — ตรวจสอบ GPU compatibility กับ LLM และคำนวณผลตอบแทนโซล่าเซลล์ได้ทันที">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://compair.app/">
+
+<!-- Open Graph -->
+<meta property="og:type"        content="website">
+<meta property="og:url"         content="https://compair.app/">
+<meta property="og:title"       content="ComPair — Comparison Engine for AI Hardware &amp; Solar ROI">
+<meta property="og:description" content="ตรวจสอบ GPU compatibility กับ LLM ทุกขนาด และคำนวณ ROI โซล่าเซลล์ตลอด 25 ปี — Pure JS, No Database">
+<meta property="og:locale"      content="th_TH">
+
+<!-- Static JSON-LD: WebSite + FAQPage -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "ComPair",
+  "url": "https://compair.app/",
+  "description": "Comparison Engine สำหรับ AI Hardware VRAM และ Solar Cell ROI",
+  "inLanguage": "th",
+  "hasPart": [
+    {
+      "@type": "WebPage",
+      "name": "AI Hardware VRAM Calculator",
+      "url": "https://compair.app/html/ai-calculator.html",
+      "description": "ตรวจสอบว่า GPU รัน Local LLM ได้ไหม พร้อมผล Quantization ทุกระดับ"
+    },
+    {
+      "@type": "WebPage",
+      "name": "Solar Cell ROI & Sizing Calculator",
+      "url": "https://compair.app/html/solar-calculator.html",
+      "description": "คำนวณขนาดระบบโซล่าเซลล์ที่เหมาะสมและ ROI ตลอด 25 ปี"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "ComPair คืออะไร?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ComPair คือ Comparison Engine สำหรับ AI Hardware และ Solar Cell ROI ออกแบบมาเพื่อ Answer Engine Optimization (AEO) และ Programmatic SEO โดยใช้ Pure HTML/CSS/JS และ Flat-file JSON ไม่มีฐานข้อมูล"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "GPU ไหนเหมาะกับการรัน Local LLM?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ขึ้นอยู่กับขนาด Model และ Quantization ที่ต้องการ — ใช้ AI Hardware VRAM Calculator เพื่อดูว่า GPU ที่มีรัน LLM ขนาดใดได้บ้าง ตั้งแต่ 1B ถึง 70B parameters"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "ระบบโซล่าเซลล์คืนทุนกี่ปี?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "สำหรับบ้านพักในไทยที่ใช้ไฟฟ้า 300–500 หน่วย/เดือน ระบบ 3–5 kW มักคืนทุนใน 6–8 ปี และมี ROI ตลอด 25 ปีอยู่ที่ 150–250% ขึ้นอยู่กับแผงและอินเวอร์เตอร์ที่เลือก"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Q4_K_M quantization คืออะไร?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Q4_K_M คือ 4-bit quantization แบบ K-quant ที่ให้สมดุลระหว่าง VRAM ที่ใช้กับคุณภาพผลลัพธ์ ใช้ VRAM น้อยกว่า FP16 ประมาณ 4 เท่า แต่คุณภาพยังอยู่ที่ ~97% ถือเป็น quantization ที่นิยมที่สุดสำหรับการรัน LLM บน consumer GPU"
+      }
+    }
+  ]
+}
+</script>
+
+<link rel="stylesheet" href="/css/theme-ai.css">
+<link rel="stylesheet" href="/css/shared.css">
+<style>
+/* Index — layout overrides + index-only components */
+body { display: flex; flex-direction: column; }
+.wrap { max-width: 1040px; }
+
+/* Hero: centered (overrides shared.css 2-col grid) */
+.hero {
+  padding: 100px 0 80px;
+  display: block;
+  text-align: center;
+}
+.hero-label {
+  justify-content: center;
+}
+.hero-label::before { display: none; }
+.hero-label::after  {
+  content: ''; display: block;
+  width: 40px; height: 1px; background: var(--primary3);
+}
+.hero-desc { max-width: 500px; margin: 0 auto 60px; }
+footer { margin-top: auto; }
+
+/* ── Stats Bar ─────────────────────── */
+.stats-bar {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0; margin-bottom: 56px;
+  background: var(--surface); border: 1px solid var(--border);
+  box-shadow: 0 1px 12px rgba(0,0,0,.04);
+}
+.stat-item {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 16px 32px; gap: 4px; flex: 1;
+}
+.stat-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px; font-weight: 600;
+  color: var(--primary); line-height: 1;
+}
+.stat-lbl {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; color: var(--text3);
+  letter-spacing: .1em; text-transform: uppercase;
+}
+.stat-sep { width: 1px; height: 36px; background: var(--border); flex-shrink: 0; }
+
+/* ── Domain Cards ──────────────────── */
+.domain-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+  margin-bottom: 80px;
+}
+.domain-card {
+  background: var(--surface); border: 1px solid var(--border);
+  padding: 40px; text-decoration: none; color: inherit;
+  display: flex; flex-direction: column;
+  transition: border-color .25s, box-shadow .25s, transform .25s;
+  box-shadow: 0 2px 24px rgba(0,0,0,.04);
+  position: relative; overflow: hidden;
+}
+.domain-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(212,188,150,.04) 0%, transparent 60%);
+  opacity: 0; transition: opacity .25s;
+}
+.domain-card:hover {
+  border-color: var(--primary3);
+  box-shadow: 0 8px 40px rgba(139,115,85,.12);
+  transform: translateY(-2px);
+}
+.domain-card:hover::before { opacity: 1; }
+
+.dc-index {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; color: var(--text3);
+  letter-spacing: .14em; text-transform: uppercase;
+  margin-bottom: 24px;
+  display: flex; align-items: center; gap: 12px;
+}
+.dc-index::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+.dc-icon {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 64px; font-weight: 300;
+  color: var(--primary3); line-height: 1; margin-bottom: 20px;
+}
+.dc-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 30px; font-weight: 600;
+  letter-spacing: .01em; margin-bottom: 14px;
+}
+.dc-desc { font-size: 15px; color: var(--text2); line-height: 1.75; flex: 1; }
+.dc-cta {
+  margin-top: 28px;
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px; color: var(--primary);
+  letter-spacing: .14em; text-transform: uppercase;
+  border-top: 1px solid var(--border); padding-top: 20px;
+}
+.dc-cta svg { width: 14px; height: 14px; transition: transform .2s; }
+.domain-card:hover .dc-cta svg { transform: translateX(4px); }
+
+.dc-coming {
+  position: absolute; top: 16px; right: 16px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--text3); background: var(--bg); border: 1px solid var(--border);
+  padding: 4px 12px;
+}
+.dc-disabled { opacity: .65; cursor: default; pointer-events: none; }
+
+/* ── Spotlight ─────────────────────── */
+.dc-spotlight {
+  margin: 16px 0 0; display: flex; flex-direction: column; gap: 8px;
+  padding-top: 16px; border-top: 1px solid var(--border);
+}
+.sp-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; min-height: 28px; }
+.sp-name {
+  font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text2);
+  letter-spacing: .03em; flex-shrink: 0;
+}
+.sp-chip {
+  font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500;
+  padding: 3px 10px; border: 1px solid var(--border);
+  color: var(--text3); background: var(--bg);
+  letter-spacing: .04em; white-space: nowrap;
+}
+.sp-chip-score   { color: var(--primary); border-color: rgba(139,115,85,.4);  background: rgba(212,188,150,.12); }
+.sp-chip-speed   { color: #2D5A8E;        border-color: rgba(45,90,142,.3);   background: #EEF3FA; }
+.sp-chip-backend { color: #3D7A5A;        border-color: rgba(61,122,90,.3);   background: #EDF5F0; }
+
+/* ── Responsive ────────────────────── */
+@media (max-width: 720px) {
+  .domain-grid  { grid-template-columns: 1fr; }
+  .hero         { padding: 64px 0 40px; }
+  .stats-bar    { flex-wrap: wrap; }
+  .stat-item    { padding: 14px 20px; }
+  .stat-sep     { display: none; }
+}
+
+/* animation delay variants */
+.fade-up-1 { animation-delay: .1s; }
+.fade-up-2 { animation-delay: .22s; }
+.fade-up-3 { animation-delay: .34s; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <div class="logo">
+      <div class="logo-mark">C</div>
+      <div>
+        <div class="logo-text">ComPair</div>
+        <div class="logo-sub">Comparison Engine</div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="hero-label fade-up">AEO · Programmatic SEO · Calculator</div>
+    <h1 class="fade-up fade-up-1">Compare <em>Smarter,</em><br>Decide <em>Faster.</em></h1>
+    <p class="hero-desc fade-up fade-up-2">เครื่องมือเปรียบเทียบที่ออกแบบมาเพื่อ Answer Engine Optimization — ข้อมูลชัดเจน เชิงลึก พร้อมคำนวณผลลัพธ์จริงสำหรับคุณ</p>
+  </div>
+
+  <!-- Stats bar (populated by JS from JSON) -->
+  <div class="stats-bar fade-up fade-up-2" id="statsBar">
+    <div class="stat-item"><span class="stat-val" id="statGPUs">—</span><span class="stat-lbl">GPU รุ่นที่รองรับ</span></div>
+    <div class="stat-sep"></div>
+    <div class="stat-item"><span class="stat-val" id="statPanels">—</span><span class="stat-lbl">Solar Panel รุ่น</span></div>
+    <div class="stat-sep"></div>
+    <div class="stat-item"><span class="stat-val" id="statInverters">—</span><span class="stat-lbl">Inverter รุ่น</span></div>
+    <div class="stat-sep"></div>
+    <div class="stat-item"><span class="stat-val">JSON-LD</span><span class="stat-lbl">AEO Schema ฝังอัตโนมัติ</span></div>
+  </div>
+
+  <div class="domain-grid fade-up fade-up-3">
+
+    <!-- Domain A: AI Hardware -->
+    <a class="domain-card" href="/html/ai-calculator.html">
+      <div class="dc-index">Domain A · AI Hardware</div>
+      <div class="dc-icon">◈</div>
+      <div class="dc-title">AI Hardware<br>VRAM Calculator</div>
+      <div class="dc-desc">ตรวจสอบว่า GPU ของคุณรัน Local LLM ขนาดใดได้บ้าง — พร้อมผลการประเมิน Quantization ทุกระดับและการประมาณ Tokens/sec</div>
+      <!-- GPU spotlight populated by JS -->
+      <div class="dc-spotlight" id="spotlightA">
+        <div class="sp-row" id="spA1"></div>
+        <div class="sp-row" id="spA2"></div>
+      </div>
+      <div class="dc-cta">
+        เปิดเครื่องมือ
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M3 8h10M9 4l4 4-4 4"/>
+        </svg>
+      </div>
+    </a>
+
+    <!-- Domain B: Solar ROI -->
+    <a class="domain-card" href="/html/solar-calculator.html">
+      <div class="dc-index">Domain B · Clean Energy</div>
+      <div class="dc-icon">◉</div>
+      <div class="dc-title">Solar Cell ROI<br>&amp; Sizing Calculator</div>
+      <div class="dc-desc">คำนวณขนาดระบบโซล่าเซลล์ที่เหมาะสม, ระยะเวลาคืนทุน (Payback Period) และ ROI ตลอดอายุการใช้งาน 25 ปี</div>
+      <!-- Solar example populated by JS -->
+      <div class="dc-spotlight" id="spotlightB">
+        <div class="sp-row" id="spB1"></div>
+        <div class="sp-row" id="spB2"></div>
+      </div>
+      <div class="dc-cta">
+        เปิดเครื่องมือ
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M3 8h10M9 4l4 4-4 4"/>
+        </svg>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-logo">ComPair · Comparison Engine</div>
+      <div class="footer-meta" id="footerMeta">Static · AEO-Optimized · No Database · Pure JS</div>
+    </div>
+  </div>
+</footer>
+
+<!-- ES Module entry point — ใช้โครงสร้าง js/ ทั้งหมด -->
+<script type="module">
+import { fetchData, injectJsonLd, buildFaqSchema, buildHowToSchema, formatTHB } from '/js/shared/utils.js';
+import { scoreGPU, estimateTokPerSec, getComputeBackend } from '/js/ai/calculator.js';
+import { calcROI, calcSystemSize, calcPanelCount, calcCO2Savings, calcDailyEnergy } from '/js/solar/calculator.js';
+
+async function main() {
+
+  // ── 1. Load data from JSON files ──────────────────────────
+  const [gpuData, panelData, inverterData] = await Promise.all([
+    fetchData('/data/ai-models/gpus.json'),
+    fetchData('/data/solar/panels.json'),
+    fetchData('/data/solar/inverters.json'),
+  ]);
+
+  const gpus      = gpuData.gpus;
+  const panels    = panelData.panels;
+  const inverters = inverterData.inverters;
+
+  // ── 2. Update stats bar ──────────────────────────────────
+  document.getElementById('statGPUs').textContent      = gpus.length + '+';
+  document.getElementById('statPanels').textContent    = panels.length;
+  document.getElementById('statInverters').textContent = inverters.length;
+
+  // ── 3. Domain A spotlight — top 2 GPUs by score ─────────
+  const scored = gpus
+    .map(g => ({ ...g, score: scoreGPU(g.perfScore, g.vramGB) }))
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 2);
+
+  scored.forEach((g, i) => {
+    const backend = getComputeBackend(g);
+    const tokSec  = estimateTokPerSec(80, g.bandwidthGBs); // 7B model baseline
+    const el = document.getElementById(`spA${i + 1}`);
+    if (!el) return;
+    el.innerHTML = `
+      <span class="sp-name">${g.name}</span>
+      <span class="sp-chip sp-chip-score">${g.score}/100</span>
+      <span class="sp-chip">${g.vramGB} GB VRAM</span>
+      <span class="sp-chip sp-chip-speed">~${tokSec} tok/s</span>
+      <span class="sp-chip sp-chip-backend">${backend}</span>`;
+  });
+
+  // ── 4. Domain B spotlight — example ROI calculation ─────
+  const examplePanel    = panels[0]; // Jinko 550W
+  const exampleInverter = inverters[0]; // GoodWe 5kW
+  const systemKW        = 5;
+  const totalCost       = examplePanel.priceTHB * calcPanelCount(systemKW, examplePanel.ratedWattage)
+                        + exampleInverter.priceTHB
+                        + 25000; // installation est.
+
+  const roi    = calcROI({ systemKW, totalCostTHB: totalCost });
+  const co2    = calcCO2Savings(roi.yearlyBreakdown[0].energyKWh);
+  const daily  = calcDailyEnergy(systemKW);
+
+  document.getElementById('spB1').innerHTML = `
+    <span class="sp-name">${systemKW} kW · ${examplePanel.brand} ${examplePanel.ratedWattage}W</span>
+    <span class="sp-chip sp-chip-score">${roi.roiPct}% ROI</span>
+    <span class="sp-chip">${roi.paybackYears} ปี คืนทุน</span>`;
+
+  document.getElementById('spB2').innerHTML = `
+    <span class="sp-name">ผลิตไฟฟ้า ~${daily.toFixed(1)} kWh/วัน</span>
+    <span class="sp-chip sp-chip-speed">ประหยัด ${formatTHB(Math.round(roi.lifetimeSavingsTHB / 1000) * 1000)}</span>
+    <span class="sp-chip">ลด CO₂ ${co2.toLocaleString()} kg/ปี</span>`;
+
+  // ── 5. Inject JSON-LD for AEO ────────────────────────────
+  injectJsonLd(buildFaqSchema([
+    {
+      question: 'ComPair คืออะไร?',
+      answer: 'ComPair คือ Comparison Engine สำหรับ AI Hardware และ Solar Cell ROI ออกแบบมาเพื่อ Answer Engine Optimization (AEO) และ Programmatic SEO โดยใช้ Pure HTML/CSS/JS และ Flat-file JSON'
+    },
+    {
+      question: 'GPU ไหนเหมาะกับการรัน Local LLM มากที่สุด?',
+      answer: `${scored[0].name} ได้คะแนนสูงสุด ${scored[0].score}/100 จาก ${gpus.length} รุ่นที่ประเมิน มี VRAM ${scored[0].vramGB} GB และ Bandwidth ${scored[0].bandwidthGBs} GB/s`
+    },
+    {
+      question: 'ระบบโซล่าเซลล์ 5 kW คืนทุนกี่ปี?',
+      answer: `ระบบ ${systemKW} kW ใช้แผง ${examplePanel.brand} ${examplePanel.ratedWattage}W คืนทุนประมาณ ${roi.paybackYears} ปี ได้ ROI ${roi.roiPct}% ตลอด 25 ปี และลด CO₂ ได้ ${co2.toLocaleString()} kg ต่อปี`
+    },
+  ]), 'jsonld-main');
+
+  injectJsonLd(buildHowToSchema({
+    name: 'วิธีตรวจสอบว่า GPU รัน AI Model ได้ไหม',
+    description: 'ใช้ ComPair VRAM Calculator ตรวจสอบ compatibility ระหว่าง GPU และ LLM Model',
+    steps: [
+      { name: 'เลือก GPU', text: 'เลือกรุ่น GPU จาก dropdown — ระบบมีข้อมูล 50+ รุ่น' },
+      { name: 'ระบุ RAM', text: 'เลือกขนาด System RAM ที่ติดตั้งในเครื่อง' },
+      { name: 'ดูผลทันที', text: 'ระบบแสดง compatibility สำหรับ LLM ทุกขนาด (1B–70B) พร้อม Quantization ที่เหมาะสม' },
+    ],
+  }), 'jsonld-howto');
+
+  // ── 6. Footer meta ───────────────────────────────────────
+  document.getElementById('footerMeta').textContent =
+    `Static · AEO-Optimized · ${gpus.length} GPUs · ${panels.length} Solar Panels · Pure JS`;
+}
+
+main().catch(err => {
+  console.warn('[ComPair] Data load skipped (open via HTTP server):', err.message);
+});
+</script>
+
+</body>
+</html>

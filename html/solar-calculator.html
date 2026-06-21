@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solar Cell ROI Calculator — คำนวณโซล่าเซลล์คืนทุนกี่ปี | ComPair</title>
+<meta name="description" content="คำนวณขนาดระบบโซล่าเซลล์ที่เหมาะสม ระยะเวลาคืนทุน และ ROI ตลอด 25 ปี — เปรียบเทียบแผง 10+ รุ่น และอินเวอร์เตอร์หลายยี่ห้อ สำหรับบ้านพักและธุรกิจในไทย">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://compair.app/html/solar-calculator.html">
+
+<!-- Open Graph -->
+<meta property="og:type"        content="website">
+<meta property="og:url"         content="https://compair.app/html/solar-calculator.html">
+<meta property="og:title"       content="Solar Cell ROI Calculator — คำนวณโซล่าเซลล์คืนทุนกี่ปี | ComPair">
+<meta property="og:description" content="ป้อนค่าไฟและภูมิภาค ระบบคำนวณขนาดที่เหมาะสม เปรียบเทียบแผง และแสดง ROI ตลอด 25 ปีทันที">
+<meta property="og:locale"      content="th_TH">
+
+<!-- Static JSON-LD: WebPage + FAQPage + HowTo -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Solar Cell ROI & Sizing Calculator",
+  "url": "https://compair.app/html/solar-calculator.html",
+  "description": "คำนวณขนาดระบบโซล่าเซลล์ที่เหมาะสมและ ROI ตลอด 25 ปีสำหรับบ้านพักและธุรกิจในไทย",
+  "inLanguage": "th",
+  "isPartOf": { "@type": "WebSite", "url": "https://compair.app/" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "โซล่าเซลล์กี่ kW เหมาะสำหรับบ้านที่ใช้ไฟ 300 หน่วยต่อเดือน?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "บ้านที่ใช้ไฟฟ้า 300 หน่วย/เดือน ควรติดตั้งระบบขนาดประมาณ 2.5–3.5 kW ขึ้นอยู่กับภูมิภาค (กรุงเทพฯ ได้รับแสงอาทิตย์เฉลี่ย 4.5 ชั่วโมง/วัน) ใช้แผง 400W ประมาณ 7–9 แผง"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "ระบบโซล่าเซลล์คืนทุนกี่ปี?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "สำหรับบ้านพักในไทยที่ใช้ไฟ 300–500 หน่วย/เดือน ระบบ 3–5 kW มักคืนทุนใน 6–8 ปี โดยมี ROI ตลอด 25 ปีอยู่ที่ 150–250% ขึ้นอยู่กับประสิทธิภาพแผงและค่าไฟที่ประหยัดได้"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Monocrystalline กับ Polycrystalline ต่างกันอย่างไร?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Monocrystalline มีประสิทธิภาพสูงกว่า (20–22%) ใช้พื้นที่น้อยกว่า เหมาะกับหลังคาที่มีพื้นที่จำกัด ส่วน Polycrystalline มีราคาถูกกว่าแต่ประสิทธิภาพต่ำกว่า (15–17%) เหมาะเมื่องบประมาณจำกัดและมีพื้นที่หลังคาเพียงพอ"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "ติดโซล่าเซลล์ประหยัดค่าไฟได้เท่าไหร่ต่อปี?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ระบบ 5 kW ในกรุงเทพฯ ผลิตไฟได้ประมาณ 6,750 kWh/ปี ที่ค่าไฟ 4 บาท/หน่วย ประหยัดได้ประมาณ 27,000 บาท/ปี และช่วยลด CO₂ ได้ประมาณ 3,375 kg/ปี"
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "วิธีคำนวณขนาดระบบโซล่าเซลล์ที่เหมาะสม",
+  "description": "ใช้ ComPair Solar ROI Calculator คำนวณขนาดระบบ ระยะคืนทุน และ ROI 25 ปี",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "position": 1,
+      "name": "ป้อนค่าไฟเฉลี่ย",
+      "text": "ใส่ค่าไฟฟ้าเฉลี่ยต่อเดือน (หน่วย) จากบิลค่าไฟ"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 2,
+      "name": "เลือกภูมิภาคและอุปกรณ์",
+      "text": "เลือกจังหวัด/ภูมิภาคเพื่อใช้ค่า Peak Sun Hours ที่ถูกต้อง และเลือกแผงโซล่าและอินเวอร์เตอร์ที่สนใจ"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 3,
+      "name": "ดูผลและเปรียบเทียบ",
+      "text": "ระบบแสดงขนาดที่แนะนำ, จำนวนแผง, ระยะคืนทุน, ROI 25 ปี และตารางเปรียบเทียบแผงทุกรุ่น"
+    }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/theme-solar.css">
+<link rel="stylesheet" href="/css/shared.css">
+<link rel="stylesheet" href="/css/solar-specific.css">
+<style>
+/* Solar — sc-green/amber/teal/blue aliases for summary card colors */
+.sc-green { color: var(--primary); }
+.sc-amber { color: var(--warn); }
+.sc-teal  { color: var(--teal); }
+.sc-blue  { color: var(--info); }
+.cumulative-positive { color: var(--primary); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a class="logo" href="/index.html">
+      <div class="logo-mark">C</div>
+      <div>
+        <div class="logo-text">ComPair</div>
+        <div class="logo-sub">Comparison Engine</div>
+      </div>
+    </a>
+    <div class="nav-right">
+      <span class="nav-badge" id="panelCount">— Panels</span>
+      <a class="nav-link" href="#selector">คำนวณระบบ</a>
+      <a class="nav-link" href="#roi">ROI Table</a>
+      <a class="nav-link" href="#panel-compare">เปรียบเทียบแผง</a>
+      <a class="nav-link" href="/html/ai-calculator.html">AI VRAM →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <div class="hero-label">Domain B · Solar Energy · ROI Calculator</div>
+      <h1>ระบบโซล่าเซลล์<br>ที่ <em>ใช่สำหรับคุณ</em><br>คือแบบไหน?</h1>
+      <p class="hero-desc">กรอกข้อมูลการใช้ไฟและที่ตั้ง — ระบบจะคำนวณขนาดระบบที่เหมาะสม, ROI, ระยะคืนทุน และ CO₂ ที่ช่วยลดในระยะ 25 ปี</p>
+    </div>
+    <div class="hero-card">
+      <div class="hc-title">// วิธีใช้งาน</div>
+      <div class="hc-steps">
+        <div class="hc-step"><div class="step-num">1</div><div class="step-txt"><strong>ระบุค่าไฟ</strong> เฉลี่ยต่อเดือน (THB) หรือ การใช้ไฟ (kWh)</div></div>
+        <div class="hc-step"><div class="step-num">2</div><div class="step-txt"><strong>เลือกภูมิภาค</strong> ในประเทศไทย — ส่งผลต่อ Peak Sun Hours</div></div>
+        <div class="hc-step"><div class="step-num">3</div><div class="step-txt"><strong>เลือกแผงและ Inverter</strong> จากฐานข้อมูลสินค้าจริง</div></div>
+        <div class="hc-step"><div class="step-num">4</div><div class="step-txt">ระบบแสดง<strong>ROI 25 ปี</strong>, ระยะคืนทุน และ CO₂ ที่ลดได้</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SELECTOR FORM -->
+<div class="wrap" id="selector">
+  <div class="form-section">
+    <div class="form-header">
+      <div class="form-title">ข้อมูลระบบของคุณ</div>
+      <div class="form-subtitle">// ข้อมูลโหลดจาก /data/solar/</div>
+    </div>
+    <div class="form-body">
+
+      <!-- Energy Input -->
+      <div class="form-col">
+        <label class="field-label">การใช้ไฟฟ้า</label>
+        <p class="field-hint">ค่าไฟเฉลี่ย/เดือน (THB) หรือระบุการใช้ไฟโดยตรง</p>
+        <div class="num-input-wrap">
+          <input class="num-input" type="number" id="billInput" placeholder="2,500" min="0" step="100">
+          <span class="num-unit">THB/เดือน</span>
+        </div>
+        <p style="font-size:11px;color:var(--text3);margin-bottom:8px;text-align:center">— หรือ —</p>
+        <div class="num-input-wrap">
+          <input class="num-input" type="number" id="kwhInput" placeholder="600" min="0" step="10" style="font-size:16px">
+          <span class="num-unit">kWh/เดือน</span>
+        </div>
+        <div class="info-block"><p id="energyInfo">กรอกค่าไฟหรือ kWh เพื่อคำนวณขนาดระบบที่เหมาะสม</p></div>
+      </div>
+
+      <!-- Location -->
+      <div class="form-col">
+        <label class="field-label">ภูมิภาค / ที่ตั้ง</label>
+        <p class="field-hint">ส่งผลต่อ Peak Sun Hours ซึ่งกระทบโดยตรงต่อพลังงานที่ผลิตได้</p>
+        <div class="select-wrap">
+          <select id="regionSelect">
+            <option value="4.5">ภาคกลาง / กรุงเทพฯ (4.5 hr)</option>
+            <option value="5.0">ภาคเหนือ / เชียงใหม่ (5.0 hr)</option>
+            <option value="5.2">ภาคตะวันออกเฉียงเหนือ (5.2 hr)</option>
+            <option value="4.8">ภาคตะวันออก (4.8 hr)</option>
+            <option value="4.3">ภาคใต้ / ฝั่งอ่าวไทย (4.3 hr)</option>
+            <option value="4.6">ภาคใต้ / ฝั่งอันดามัน (4.6 hr)</option>
+            <option value="5.5">ภาคแล้ง / พื้นที่แสงดีที่สุด (5.5 hr)</option>
+          </select>
+        </div>
+        <div class="num-input-wrap" style="margin-top:12px">
+          <input class="num-input" type="number" id="selfConsumeInput" value="80" min="10" max="100" step="5">
+          <span class="num-unit">% self-use</span>
+        </div>
+        <div class="info-block"><p><strong>Self-consumption</strong> คือสัดส่วนไฟที่ใช้เองในบ้าน/ธุรกิจ ส่วนที่เหลือขายคืนการไฟฟ้า (Sell-back)</p></div>
+      </div>
+
+      <!-- Panel -->
+      <div class="form-col">
+        <label class="field-label">แผงโซล่าเซลล์</label>
+        <p class="field-hint">เลือกรุ่นแผงที่ต้องการ — ส่งผลต่อพื้นที่ที่ใช้และราคาระบบ</p>
+        <div class="select-wrap">
+          <select id="panelSelect"></select>
+        </div>
+        <div class="info-block" id="panelInfoBox" style="display:none"><p id="panelInfoText"></p></div>
+      </div>
+
+      <!-- Inverter + Calculate -->
+      <div class="form-col">
+        <label class="field-label">Inverter</label>
+        <p class="field-hint">เลือก Inverter ที่เหมาะกับขนาดระบบ</p>
+        <div class="select-wrap">
+          <select id="inverterSelect"></select>
+        </div>
+        <div class="info-block" id="inverterInfoBox" style="display:none"><p id="inverterInfoText"></p></div>
+        <button class="calc-btn" id="calcBtn" onclick="calculate()">คำนวณ ROI →</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- SUMMARY CARDS -->
+<div class="wrap" id="summaryWrap">
+  <div class="summary-section" id="summarySection">
+    <div class="summary-grid">
+      <div class="summary-card"><div class="sc-val sc-green" id="sumSystemKW">—</div><div class="sc-unit">kW</div><div class="sc-label">ขนาดระบบที่แนะนำ</div></div>
+      <div class="summary-card"><div class="sc-val sc-amber" id="sumPayback">—</div><div class="sc-unit">ปี</div><div class="sc-label">ระยะคืนทุน</div></div>
+      <div class="summary-card"><div class="sc-val sc-teal" id="sumSavings">—</div><div class="sc-unit">THB / 25 ปี</div><div class="sc-label">รายได้/ประหยัดสะสม</div></div>
+      <div class="summary-card"><div class="sc-val sc-blue" id="sumCO2">—</div><div class="sc-unit">kg CO₂/ปี</div><div class="sc-label">CO₂ ที่ช่วยลด</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- RECOMMENDATION -->
+<div class="wrap">
+  <div class="rec-section" id="recSection">
+    <div class="rec-header">
+      <div class="rec-title">ระบบที่ <em style="font-style:italic;color:var(--green)">แนะนำ</em></div>
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3)" id="recMeta">—</div>
+    </div>
+    <div class="rec-body">
+      <div class="rec-col">
+        <div class="rec-col-title">// แผงโซล่าเซลล์</div>
+        <div id="panelSpecs"></div>
+      </div>
+      <div class="rec-col">
+        <div class="rec-col-title">// Inverter & ระบบ</div>
+        <div id="systemSpecs"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ROI TABLE -->
+<div class="wrap" id="roi">
+  <div class="roi-section" id="roiSection">
+    <div class="roi-header">
+      <div>
+        <div class="roi-title">ตาราง ROI รายปี</div>
+        <div class="roi-sub" id="roiSub">—</div>
+      </div>
+      <div class="roi-payback-badge" id="roiPaybackBadge">คืนทุนปีที่ —</div>
+    </div>
+    <table class="roi">
+      <thead>
+        <tr>
+          <th>ปีที่</th>
+          <th>พลังงาน (kWh)</th>
+          <th>ประหยัด (THB)</th>
+          <th>สะสม (THB)</th>
+          <th>สถานะ</th>
+        </tr>
+      </thead>
+      <tbody id="roiTableBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- PANEL COMPARISON -->
+<div class="wrap" id="panel-compare">
+  <div class="panel-compare-section">
+    <div class="pc-header">
+      <div class="pc-title">เปรียบเทียบแผงโซล่าเซลล์</div>
+      <div class="pc-sub">ข้อมูลจาก /data/solar/panels.json</div>
+    </div>
+    <table class="pc">
+      <thead>
+        <tr>
+          <th>ยี่ห้อ / รุ่น</th>
+          <th>Technology</th>
+          <th>Wattage</th>
+          <th>Efficiency</th>
+          <th>Degradation/ปี</th>
+          <th>Warranty</th>
+          <th>ราคา/แผง</th>
+          <th>หมายเหตุ</th>
+        </tr>
+      </thead>
+      <tbody id="panelCompareBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- TIPS -->
+<div class="wrap" style="margin-bottom:0">
+  <div class="tips-section">
+    <div class="tips-title">สิ่งที่ <em>ควรรู้</em></div>
+    <div class="tips-grid">
+      <div class="tip-item"><div class="ti-num">01</div><div class="ti-title">Peak Sun Hours ในไทย</div><div class="ti-text">ภาคอีสานและเหนือมี Peak Sun Hours สูงสุด (~5.2 hr/วัน) เหมาะกับการลงทุนระบบโซล่าเซลล์ กรุงเทพฯ อยู่ที่ ~4.5 hr ภาคใต้อาจต่ำกว่าในช่วงมรสุม</div></div>
+      <div class="tip-item"><div class="ti-num">02</div><div class="ti-title">N-type vs P-type</div><div class="ti-text">แผง N-type TOPCon (เช่น Jinko Neo, LONGi HPBC) มี Degradation ต่ำกว่า ~0.4%/ปี เทียบกับ P-type PERC ที่ ~0.55%/ปี ส่งผลให้ผลิตไฟได้มากกว่าในระยะยาว</div></div>
+      <div class="tip-item"><div class="ti-num">03</div><div class="ti-title">ขนาดระบบที่แนะนำ</div><div class="ti-text">สูตรเบื้องต้น: <code>kW = kWh/เดือน ÷ (ชั่วโมงแดด × 30 × 0.8)</code> บ้านใช้ไฟ ~600 kWh/เดือน ควรติดระบบ ~5 kW ค่าไฟ 2,000–3,000 THB/เดือน เหมาะกับ ~3–4 kW</div></div>
+      <div class="tip-item"><div class="ti-num">04</div><div class="ti-title">Hybrid vs String Inverter</div><div class="ti-text">Hybrid Inverter รองรับแบตเตอรี่ในอนาคต แต่ราคาสูงกว่า 30–50% String Inverter ราคาถูกกว่า เหมาะถ้ายังไม่มีแผนติดแบต Efficiency Hybrid อาจต่ำกว่าเล็กน้อย</div></div>
+      <div class="tip-item"><div class="ti-num">05</div><div class="ti-title">การขายไฟคืนการไฟฟ้า</div><div class="ti-text">MEA/PEA รับซื้อไฟ Net Metering ในอัตรา ~2.20 THB/kWh (ต่ำกว่าราคาซื้อ ~4.20 THB/kWh) ดังนั้นการใช้ไฟเองมากที่สุด (Self-consumption) ให้ผลตอบแทนดีกว่า</div></div>
+      <div class="tip-item"><div class="ti-num">06</div><div class="ti-title">ต้นทุนระบบโดยประมาณ</div><div class="ti-text">ระบบ 5 kW ติดตั้งสำหรับบ้านพักอาศัยอยู่ที่ ~150,000–200,000 THB รวมค่าแผง, Inverter, โครงสร้าง และติดตั้ง ราคาลดลง ~10%/ปีในช่วง 5 ปีที่ผ่านมา</div></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-logo">ComPair · Solar Cell ROI Calculator</div>
+      <div class="footer-meta" id="footerMeta">ข้อมูลอ้างอิงจาก EGAT · MEA · IEA Solar Resource</div>
+      <div class="footer-links">
+        <a href="/index.html">← หน้าหลัก</a>
+        <a href="/html/ai-calculator.html">AI VRAM →</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script type="module">
+import { fetchData, injectJsonLd, buildFaqSchema, buildHowToSchema, formatTHB, formatKWh } from '/js/shared/utils.js';
+import {
+  calcDailyEnergy, calcAnnualEnergy, calcSystemSize,
+  calcPanelCount, calcRoofArea, calcAnnualSavings,
+  calcROI, calcCO2Savings, panelDimsToAreaM2
+} from '/js/solar/calculator.js';
+
+// ── Data ──────────────────────────────────────────────────
+let PANELS = [], INVERTERS = [];
+const ELEC_RATE   = 4.20;   // THB/kWh
+const FIT_RATE    = 2.20;   // Feed-in tariff THB/kWh
+
+// ── Bootstrap ─────────────────────────────────────────────
+async function init() {
+  const [panelData, inverterData] = await Promise.all([
+    fetchData('/data/solar/panels.json'),
+    fetchData('/data/solar/inverters.json'),
+  ]);
+  PANELS    = panelData.panels;
+  INVERTERS = inverterData.inverters;
+
+  document.getElementById('panelCount').textContent = `${PANELS.length} Panels`;
+
+  // Panel select
+  const pSel = document.getElementById('panelSelect');
+  PANELS.forEach(p => pSel.appendChild(new Option(`${p.brand} ${p.model} · ${p.ratedWattage}W`, p.id)));
+  pSel.addEventListener('change', onPanelChange);
+  onPanelChange(); // show first
+
+  // Inverter select
+  const iSel = document.getElementById('inverterSelect');
+  INVERTERS.forEach(iv => iSel.appendChild(new Option(`${iv.brand} ${iv.model} · ${iv.ratedPowerKW} kW`, iv.id)));
+  iSel.addEventListener('change', onInverterChange);
+  onInverterChange();
+
+  // Sync kWh <-> Bill inputs
+  document.getElementById('billInput').addEventListener('input', () => {
+    const bill = parseFloat(document.getElementById('billInput').value) || 0;
+    if (bill > 0) {
+      const kwh = Math.round(bill / ELEC_RATE);
+      document.getElementById('kwhInput').value = kwh;
+      document.getElementById('energyInfo').textContent = `ค่าไฟ ฿${bill.toLocaleString()} ≈ ${kwh} kWh/เดือน (อัตรา ฿${ELEC_RATE}/kWh)`;
+    }
+  });
+  document.getElementById('kwhInput').addEventListener('input', () => {
+    const kwh = parseFloat(document.getElementById('kwhInput').value) || 0;
+    if (kwh > 0) {
+      const bill = Math.round(kwh * ELEC_RATE);
+      document.getElementById('billInput').value = bill;
+      document.getElementById('energyInfo').textContent = `${kwh} kWh/เดือน ≈ ค่าไฟ ฿${bill.toLocaleString()}/เดือน`;
+    }
+  });
+
+  // Panel comparison table (always visible)
+  renderPanelCompare();
+
+  // Footer
+  document.getElementById('footerMeta').textContent =
+    `${PANELS.length} แผง · ${INVERTERS.length} Inverter · อ้างอิงจาก EGAT · MEA · HuggingFace Solar Data`;
+
+  // AEO JSON-LD
+  injectJsonLd(buildFaqSchema([
+    { question: 'ติดโซล่าเซลล์ 5 kW คืนทุนกี่ปี?', answer: 'โดยเฉลี่ยระบบ 5 kW สำหรับบ้านพักอาศัยในไทย คืนทุน 7–9 ปี ขึ้นกับค่าไฟ ภูมิภาค และสัดส่วนการใช้ไฟเอง ROI ตลอด 25 ปีอยู่ที่ประมาณ 150–200%' },
+    { question: 'แผง N-type กับ P-type ต่างกันอย่างไร?', answer: 'N-type TOPCon มี Degradation ต่ำกว่า (~0.4%/ปี) เทียบกับ P-type PERC (~0.55%/ปี) ทำให้ผลิตไฟได้มากกว่าในระยะยาว 25 ปี แม้ราคาเริ่มต้นสูงกว่าเล็กน้อย' },
+    { question: 'ระบบ Hybrid Inverter คืออะไร?', answer: 'Hybrid Inverter รองรับการต่อแบตเตอรี่สำรอง ทำให้สามารถเก็บพลังงานไว้ใช้ตอนกลางคืนหรือไฟดับได้ เหมาะสำหรับผู้ที่วางแผนติดแบตเตอรี่ในอนาคต แต่มีราคาสูงกว่า String Inverter ~30–50%' },
+  ]));
+
+  injectJsonLd(buildHowToSchema({
+    name: 'วิธีคำนวณขนาดระบบโซล่าเซลล์ที่เหมาะสม',
+    description: 'ใช้ ComPair Solar ROI Calculator คำนวณขนาดระบบ, ระยะคืนทุน และ ROI สำหรับบ้านในประเทศไทย',
+    steps: [
+      { name: 'ระบุการใช้ไฟ', text: 'กรอกค่าไฟต่อเดือน (THB) หรือ kWh ต่อเดือน — ระบบจะคำนวณขนาดที่เหมาะสมให้อัตโนมัติ' },
+      { name: 'เลือกภูมิภาค', text: 'เลือกจังหวัด/ภูมิภาคเพื่อใช้ค่า Peak Sun Hours ที่ถูกต้อง' },
+      { name: 'เลือกแผงและ Inverter', text: 'เลือกจากฐานข้อมูลแผงและ Inverter ยี่ห้อจริงที่มีขายในไทย' },
+      { name: 'ดูผล ROI', text: 'ระบบแสดง Payback Period, ROI 25 ปี, CO₂ ที่ลดได้ และตาราง ROI รายปี' },
+    ],
+  }), 'jsonld-howto');
+}
+
+// ── Handlers ──────────────────────────────────────────────
+function onPanelChange() {
+  const id = document.getElementById('panelSelect').value;
+  const p  = PANELS.find(x => x.id === id);
+  if (!p) return;
+  const areaM2 = panelDimsToAreaM2(p.dimensionsMM.length, p.dimensionsMM.width);
+  document.getElementById('panelInfoBox').style.display = '';
+  document.getElementById('panelInfoText').innerHTML =
+    `<strong>${p.brand} ${p.model}</strong> · ${p.technology} · ${p.ratedWattage}W · Efficiency ${(p.efficiency*100).toFixed(1)}% · Warranty ${p.warrantyYears} ปี · ฿${p.priceTHB.toLocaleString()}/แผง · พื้นที่ ${areaM2} m²/แผง`;
+}
+
+function onInverterChange() {
+  const id = document.getElementById('inverterSelect').value;
+  const iv = INVERTERS.find(x => x.id === id);
+  if (!iv) return;
+  document.getElementById('inverterInfoBox').style.display = '';
+  document.getElementById('inverterInfoText').innerHTML =
+    `<strong>${iv.brand} ${iv.model}</strong> · ${iv.type} · ${iv.ratedPowerKW} kW · Efficiency ${(iv.efficiency*100).toFixed(1)}% · ${iv.batteryCompatible ? '✓ รองรับแบตเตอรี่' : 'ไม่รองรับแบตเตอรี่'} · Warranty ${iv.warrantyYears} ปี · ฿${iv.priceTHB.toLocaleString()}`;
+}
+
+// ── Calculate ─────────────────────────────────────────────
+window.calculate = function() {
+  const kwhPerMonth  = parseFloat(document.getElementById('kwhInput').value) || 0;
+  const peakSunHrs   = parseFloat(document.getElementById('regionSelect').value) || 4.5;
+  const selfPct      = (parseFloat(document.getElementById('selfConsumeInput').value) || 80) / 100;
+  const panelId      = document.getElementById('panelSelect').value;
+  const inverterId   = document.getElementById('inverterSelect').value;
+
+  if (kwhPerMonth <= 0) {
+    document.getElementById('kwhInput').focus();
+    document.getElementById('kwhInput').style.borderColor = '#e53';
+    setTimeout(() => document.getElementById('kwhInput').style.borderColor = '', 2000);
+    return;
+  }
+
+  const panel    = PANELS.find(p => p.id === panelId);
+  const inverter = INVERTERS.find(iv => iv.id === inverterId);
+  if (!panel || !inverter) return;
+
+  const dailyKWh   = kwhPerMonth / 30;
+  const systemKW   = calcSystemSize(dailyKWh, peakSunHrs, 0.20);
+  const panelCount = calcPanelCount(systemKW, panel.ratedWattage);
+  const panelArea  = panelDimsToAreaM2(panel.dimensionsMM.length, panel.dimensionsMM.width);
+  const roofArea   = calcRoofArea(panelCount, panelArea);
+
+  // Cost estimate
+  const panelCost    = panelCount * panel.priceTHB;
+  const inverterCost = inverter.priceTHB;
+  const installCost  = Math.round(systemKW * 15000); // ~15,000 THB/kW installation
+  const totalCost    = panelCost + inverterCost + installCost;
+
+  // ROI
+  const roi = calcROI({
+    systemKW,
+    totalCostTHB: totalCost,
+    electricityRate: ELEC_RATE,
+    selfConsumptionPct: selfPct,
+    feedInTariffTHB: 2.20,
+    peakSunHours: peakSunHrs,
+    lossFactor: 0.20,
+    degradationYear1: panel.degradationYearOnePct / 100,
+    degradationAnnual: panel.degradationAnnualPct / 100,
+    systemLifetimeYears: 25,
+  });
+
+  const yr1Energy = roi.yearlyBreakdown[0].energyKWh;
+  const co2       = calcCO2Savings(yr1Energy);
+
+  // ── Summary Cards ────────────────────────────────────────
+  document.getElementById('sumSystemKW').textContent   = systemKW.toFixed(1);
+  document.getElementById('sumPayback').textContent    = roi.paybackYears;
+  document.getElementById('sumSavings').textContent    = (roi.lifetimeSavingsTHB / 1000).toFixed(0) + 'K';
+  document.getElementById('sumCO2').textContent        = co2.toLocaleString();
+  document.getElementById('summarySection').classList.add('visible');
+
+  // ── Recommendation ───────────────────────────────────────
+  document.getElementById('recMeta').textContent =
+    `${systemKW.toFixed(1)} kW · ${panelCount} แผง · ต้นทุนรวม ฿${totalCost.toLocaleString()}`;
+
+  document.getElementById('panelSpecs').innerHTML = [
+    ['ยี่ห้อ / รุ่น',   `${panel.brand} ${panel.model}`],
+    ['Technology',       panel.technology],
+    ['Wattage/แผง',     `${panel.ratedWattage} W`],
+    ['จำนวนแผง',        `${panelCount} แผง`],
+    ['พื้นที่หลังคา',   `~${roofArea} m²`],
+    ['ประสิทธิภาพ',     `${(panel.efficiency*100).toFixed(1)}%`],
+    ['Degradation/ปี',  `${panel.degradationAnnualPct}%`],
+    ['ราคาแผงรวม',      `฿${panelCost.toLocaleString()}`],
+  ].map(([k,v]) => `<div class="spec-row"><span class="spec-key">${k}</span><span class="spec-val">${v}</span></div>`).join('');
+
+  document.getElementById('systemSpecs').innerHTML = [
+    ['Inverter',         `${inverter.brand} ${inverter.model}`],
+    ['ประเภท',          `${inverter.type}${inverter.batteryCompatible ? ' · Battery Ready' : ''}`],
+    ['กำลังไฟ',         `${inverter.ratedPowerKW} kW`],
+    ['ประสิทธิภาพ',     `${(inverter.efficiency*100).toFixed(1)}%`],
+    ['ค่าติดตั้งโดยประมาณ', `฿${installCost.toLocaleString()}`],
+    ['ต้นทุนรวมทั้งหมด', `฿${totalCost.toLocaleString()}`],
+    ['พลังงานปีแรก',    `${yr1Energy.toLocaleString()} kWh`],
+    ['ประหยัดปีแรก',    `฿${roi.yearlyBreakdown[0].savingsTHB.toLocaleString()}`],
+  ].map(([k,v], i) => `<div class="spec-row"><span class="spec-key">${k}</span><span class="spec-val ${i>=5?'highlight':''}">${v}</span></div>`).join('');
+
+  document.getElementById('recSection').classList.add('visible');
+
+  // ── ROI Table ────────────────────────────────────────────
+  document.getElementById('roiSub').textContent =
+    `${systemKW.toFixed(1)} kW · ต้นทุน ฿${totalCost.toLocaleString()} · ROI 25 ปี: ${roi.roiPct}%`;
+  document.getElementById('roiPaybackBadge').textContent = `คืนทุนปีที่ ${roi.paybackYears}`;
+
+  const paybackYr = typeof roi.paybackYears === 'number' ? Math.ceil(roi.paybackYears) : 99;
+  const rows = roi.yearlyBreakdown.map(row => {
+    const isPaybackYear = row.year === paybackYr;
+    const isPositive    = row.cumulativeSavingsTHB >= totalCost;
+    return `<tr class="${isPaybackYear ? 'payback-row' : ''}">
+      <td>ปีที่ ${row.year}</td>
+      <td>${row.energyKWh.toLocaleString()} kWh</td>
+      <td>฿${row.savingsTHB.toLocaleString()}</td>
+      <td class="${isPositive ? 'cumulative-positive' : ''}">฿${row.cumulativeSavingsTHB.toLocaleString()}</td>
+      <td style="font-size:11px;color:${isPositive?'var(--green)':'var(--text3)'}">${isPaybackYear ? '🎯 คืนทุน' : isPositive ? '✓ กำไร' : `เหลือ ฿${(totalCost - row.cumulativeSavingsTHB).toLocaleString()}`}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('roiTableBody').innerHTML = rows;
+  document.getElementById('roiSection').classList.add('visible');
+
+  // Scroll to results
+  document.getElementById('summaryWrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
+
+// ── Panel Comparison Table ─────────────────────────────────
+function renderPanelCompare() {
+  const tbody = document.getElementById('panelCompareBody');
+  tbody.innerHTML = PANELS.map((p, i) => {
+    const isRec = p.degradationAnnualPct <= 0.4; // N-type
+    return `<tr>
+      <td>${p.brand}<br><span style="font-size:11px;color:var(--text2)">${p.model}</span></td>
+      <td>${p.technology}${isRec ? ' <span class="pc-rec">N-type ✓</span>' : ''}</td>
+      <td style="font-weight:600">${p.ratedWattage} W</td>
+      <td>${(p.efficiency*100).toFixed(1)}%</td>
+      <td>${p.degradationAnnualPct}%/ปี</td>
+      <td>${p.warrantyYears} ปี</td>
+      <td>฿${p.priceTHB.toLocaleString()}</td>
+      <td style="font-size:11px;color:var(--text3)">${p.degradationYearOnePct}% ปีแรก · ${p.certifications.join(', ')}</td>
+    </tr>`;
+  }).join('');
+}
+
+init().catch(err => console.error('[Solar Calculator] init failed:', err));
+</script>
+
+</body>
+</html>
