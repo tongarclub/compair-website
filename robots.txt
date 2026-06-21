@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://compair.app/sitemap.xml
+Sitemap: https://tongarclub.github.io/compair-website/sitemap.xml

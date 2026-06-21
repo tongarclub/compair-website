@@ -2,19 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <url>
-    <loc>https://compair.app/</loc>
+    <loc>https://tongarclub.github.io/compair-website/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
-    <loc>https://compair.app/html/ai-calculator.html</loc>
+    <loc>https://tongarclub.github.io/compair-website/html/ai-calculator.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://compair.app/html/solar-calculator.html</loc>
+    <loc>https://tongarclub.github.io/compair-website/html/solar-calculator.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
