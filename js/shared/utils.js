@@ -97,8 +97,8 @@ export function buildHowToSchema({ name, description, steps }) {
  * const gpuData = await fetchData('/data/ai-models/gpus.json');
  */
 export async function fetchData(relativePath) {
-  if (typeof relativePath !== 'string' || !relativePath.startsWith('/')) {
-    throw new TypeError('relativePath must be an absolute path string starting with /');
+  if (typeof relativePath !== 'string' || relativePath.trim() === '') {
+    throw new TypeError('relativePath must be a non-empty string');
   }
   const res = await fetch(relativePath);
   if (!res.ok) throw new Error(`Failed to load ${relativePath}: HTTP ${res.status}`);

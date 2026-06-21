@@ -79,13 +79,40 @@ css/
 | `html/ai-calculator.html` | `theme-ai.css` + `shared.css` + `ai-specific.css` |
 | `html/solar-calculator.html` | `theme-solar.css` + `shared.css` + `solar-specific.css` |
 
+## Path Rules — GitHub Pages Compatible
+
+> **สำคัญ**: ใช้ **relative path** เสมอ ห้ามใช้ absolute path `/css/...`
+> เพราะ GitHub Pages serve จาก subdirectory `/compair-website/`
+
+```html
+<!-- index.html (อยู่ที่ root) -->
+<link rel="stylesheet" href="css/theme-ai.css">
+<link rel="stylesheet" href="css/shared.css">
+
+<!-- html/*.html (อยู่ใน html/ folder) -->
+<link rel="stylesheet" href="../css/theme-ai.css">
+<link rel="stylesheet" href="../css/shared.css">
+<link rel="stylesheet" href="../css/ai-specific.css">
+```
+
 ## เพิ่มหน้าใหม่
 
-1. ถ้าใช้ gold palette → `<link rel="stylesheet" href="/css/theme-ai.css">`
-2. ถ้าใช้ green palette → `<link rel="stylesheet" href="/css/theme-solar.css">`
-3. โหลด `shared.css` เสมอ
-4. สร้าง `css/<page>-specific.css` สำหรับ component เฉพาะหน้า
+**หน้าที่อยู่ใน `html/`:**
+1. ถ้าใช้ gold palette → `<link rel="stylesheet" href="../css/theme-ai.css">`
+2. ถ้าใช้ green palette → `<link rel="stylesheet" href="../css/theme-solar.css">`
+3. `<link rel="stylesheet" href="../css/shared.css">` เสมอ
+4. สร้าง `css/<page>-specific.css` + link ด้วย `href="../css/<page>-specific.css"`
 5. ใช้ `var(--primary)` สำหรับ accent color — ไม่ใช้ hard-coded hex
+
+**Links ใน HTML:**
+```html
+<!-- จาก html/*.html กลับ root -->
+<a href="../index.html">หน้าหลัก</a>
+
+<!-- ระหว่างหน้าใน html/ folder เดียวกัน -->
+<a href="solar-calculator.html">Solar</a>
+<a href="ai-calculator.html">AI</a>
+```
 
 ## Fonts (Google Fonts)
 
