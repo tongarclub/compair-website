@@ -467,7 +467,15 @@ function render() {
   document.getElementById('modelGrid').innerHTML = cards.join('');
 }
 
-init().catch(err => console.error('[AI Calculator] init failed:', err));
+init().catch(err => {
+  console.error('[AI Calculator] init failed:', err);
+  document.getElementById('modelGrid').innerHTML = `
+    <div style="padding:32px;border:1px solid #E4DDD3;background:#fff;font-family:monospace;font-size:13px;color:#8B3A3A">
+      <strong>⚠ Data load error</strong><br><br>
+      ${err.message}<br><br>
+      <span style="color:#A89E94">กรุณาเปิด DevTools (F12) → Console เพื่อดูรายละเอียด</span>
+    </div>`;
+});
 </script>
 
 </body>

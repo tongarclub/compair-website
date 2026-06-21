@@ -559,7 +559,14 @@ function renderPanelCompare() {
   }).join('');
 }
 
-init().catch(err => console.error('[Solar Calculator] init failed:', err));
+init().catch(err => {
+  console.error('[Solar Calculator] init failed:', err);
+  const el = document.getElementById('panelCount');
+  if (el) el.closest('.form-header')?.insertAdjacentHTML('afterend', `
+    <div style="padding:20px 32px;background:#FDF0EF;border-bottom:1px solid #E4DDD3;font-family:monospace;font-size:13px;color:#8B3A3A">
+      <strong>⚠ Data load error:</strong> ${err.message}
+    </div>`);
+});
 </script>
 
 </body>
