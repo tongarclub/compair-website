@@ -98,9 +98,9 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/theme-solar.css">
-<link rel="stylesheet" href="/css/shared.css">
-<link rel="stylesheet" href="/css/solar-specific.css">
+<link rel="stylesheet" href="../css/theme-solar.css">
+<link rel="stylesheet" href="../css/shared.css">
+<link rel="stylesheet" href="../css/solar-specific.css">
 <style>
 /* Solar — sc-green/amber/teal/blue aliases for summary card colors */
 .sc-green { color: var(--primary); }
@@ -334,12 +334,12 @@
 </footer>
 
 <script type="module">
-import { fetchData, injectJsonLd, buildFaqSchema, buildHowToSchema, formatTHB, formatKWh } from '/js/shared/utils.js';
+import { fetchData, injectJsonLd, buildFaqSchema, buildHowToSchema, formatTHB, formatKWh } from '../js/shared/utils.js';
 import {
   calcDailyEnergy, calcAnnualEnergy, calcSystemSize,
   calcPanelCount, calcRoofArea, calcAnnualSavings,
   calcROI, calcCO2Savings, panelDimsToAreaM2
-} from '/js/solar/calculator.js';
+} from '../js/solar/calculator.js';
 
 // ── Data ──────────────────────────────────────────────────
 let PANELS = [], INVERTERS = [];
@@ -349,8 +349,8 @@ const FIT_RATE    = 2.20;   // Feed-in tariff THB/kWh
 // ── Bootstrap ─────────────────────────────────────────────
 async function init() {
   const [panelData, inverterData] = await Promise.all([
-    fetchData('/data/solar/panels.json'),
-    fetchData('/data/solar/inverters.json'),
+    fetchData('../data/solar/panels.json'),
+    fetchData('../data/solar/inverters.json'),
   ]);
   PANELS    = panelData.panels;
   INVERTERS = inverterData.inverters;

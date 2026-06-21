@@ -98,9 +98,9 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/theme-ai.css">
-<link rel="stylesheet" href="/css/shared.css">
-<link rel="stylesheet" href="/css/ai-specific.css">
+<link rel="stylesheet" href="../css/theme-ai.css">
+<link rel="stylesheet" href="../css/shared.css">
+<link rel="stylesheet" href="../css/ai-specific.css">
 <style>
 /* AI Calculator — 3-column form layout */
 .form-body { grid-template-columns: 1fr 1fr 1fr; }
@@ -277,11 +277,11 @@
 </footer>
 
 <script type="module">
-import { fetchData, injectJsonLd, buildFaqSchema, buildHowToSchema } from '/js/shared/utils.js';
+import { fetchData, injectJsonLd, buildFaqSchema, buildHowToSchema } from '../js/shared/utils.js';
 import {
   evaluateModelQuants, getBestCompatStatus, scoreGPU,
   estimateTokPerSec, getComputeBackend, recommendQuant
-} from '/js/ai/calculator.js';
+} from '../js/ai/calculator.js';
 
 // ── State ──────────────────────────────────────────────────
 const state = { gpu: null, ram: 32, cpu: null };
@@ -290,9 +290,9 @@ let GPUS = [], CPUS = [], MODELS = [], QUANT_KEYS = [];
 // ── Bootstrap ──────────────────────────────────────────────
 async function init() {
   const [gpuData, cpuData, modelData] = await Promise.all([
-    fetchData('/data/ai-models/gpus.json'),
-    fetchData('/data/ai-models/cpus.json'),
-    fetchData('/data/ai-models/models.json'),
+    fetchData('../data/ai-models/gpus.json'),
+    fetchData('../data/ai-models/cpus.json'),
+    fetchData('../data/ai-models/models.json'),
   ]);
 
   GPUS       = gpuData.gpus;

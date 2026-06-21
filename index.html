@@ -81,8 +81,8 @@
 }
 </script>
 
-<link rel="stylesheet" href="/css/theme-ai.css">
-<link rel="stylesheet" href="/css/shared.css">
+<link rel="stylesheet" href="css/theme-ai.css">
+<link rel="stylesheet" href="css/shared.css">
 <style>
 /* Index — layout overrides + index-only components */
 body { display: flex; flex-direction: column; }
@@ -314,17 +314,17 @@ footer { margin-top: auto; }
 
 <!-- ES Module entry point — ใช้โครงสร้าง js/ ทั้งหมด -->
 <script type="module">
-import { fetchData, injectJsonLd, buildFaqSchema, buildHowToSchema, formatTHB } from '/js/shared/utils.js';
-import { scoreGPU, estimateTokPerSec, getComputeBackend } from '/js/ai/calculator.js';
-import { calcROI, calcSystemSize, calcPanelCount, calcCO2Savings, calcDailyEnergy } from '/js/solar/calculator.js';
+import { fetchData, injectJsonLd, buildFaqSchema, buildHowToSchema, formatTHB } from './js/shared/utils.js';
+import { scoreGPU, estimateTokPerSec, getComputeBackend } from './js/ai/calculator.js';
+import { calcROI, calcSystemSize, calcPanelCount, calcCO2Savings, calcDailyEnergy } from './js/solar/calculator.js';
 
 async function main() {
 
   // ── 1. Load data from JSON files ──────────────────────────
   const [gpuData, panelData, inverterData] = await Promise.all([
-    fetchData('/data/ai-models/gpus.json'),
-    fetchData('/data/solar/panels.json'),
-    fetchData('/data/solar/inverters.json'),
+    fetchData('./data/ai-models/gpus.json'),
+    fetchData('./data/solar/panels.json'),
+    fetchData('./data/solar/inverters.json'),
   ]);
 
   const gpus      = gpuData.gpus;
