@@ -1,7 +1,17 @@
 # ComPair — Quick Links & Admin Portals
 
 > ลิงก์สำคัญสำหรับจัดการและติดตามเว็บไซต์ ComPair  
-> อัปเดต: มิถุนายน 2026
+> อัปเดต: 24 มิถุนายน 2026
+
+---
+
+## Google Analytics
+
+| รายการ | ลิงก์ |
+|---|---|
+| **Dashboard** | [Analytics — ComPair](https://analytics.google.com) |
+| **Realtime Report** | [Realtime](https://analytics.google.com/analytics/web/#/realtime) |
+| **Measurement ID** | `G-J3C1X16FZ5` |
 
 ---
 
@@ -33,6 +43,7 @@
 | **หน้าแรก** | https://tongarclub.github.io/compair-website/ |
 | **AI Calculator** | https://tongarclub.github.io/compair-website/html/ai-calculator.html |
 | **Solar Calculator** | https://tongarclub.github.io/compair-website/html/solar-calculator.html |
+| **Mac / Apple Silicon** | https://tongarclub.github.io/compair-website/html/mac-llm-calculator.html |
 | **Sitemap XML** | https://tongarclub.github.io/compair-website/sitemap.xml |
 | **robots.txt** | https://tongarclub.github.io/compair-website/robots.txt |
 
@@ -40,10 +51,11 @@
 
 ## Checklist ประจำสัปดาห์
 
+- [ ] เช็ค Google Analytics → มี session / user เข้ามาไหม
 - [ ] เช็ค Google Search Console → Coverage มี error ไหม
 - [ ] เช็ค Performance → มี impression / click เพิ่มไหม
 - [ ] เช็ค Sitemap → สถานะเป็น "สำเร็จ" หรือยัง
-- [ ] เช็ค GitHub Actions → deploy สำเร็จทุกครั้ง
+- [ ] เช็ค GitHub Deployments → deploy สำเร็จทุกครั้ง
 
 ---
 
@@ -51,5 +63,5 @@
 
 | Sitemap | สถานะ | หมายเหตุ |
 |---|---|---|
-| `/sitemap.xml` | ส่งแล้ว 22 มิ.ย. 2026 | รอ Google re-crawl (24–72 ชม.) |
+| `/sitemap.xml` | ส่งแล้ว 24 มิ.ย. 2026 | รอ Google re-crawl — ไฟล์ live ปกติ (HTTP 200) |
 | `/html/ai-calculator.html` | ❌ ควรลบออก | ไม่ใช่ sitemap — ส่งผิด URL |
