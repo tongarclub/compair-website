@@ -25,4 +25,64 @@
     <priority>0.9</priority>
   </url>
 
+  <url>
+    <loc>https://tongarclub.github.io/compair-website/html/gpu/rtx-4060.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://tongarclub.github.io/compair-website/html/gpu/rtx-4070.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://tongarclub.github.io/compair-website/html/gpu/rtx-4090.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://tongarclub.github.io/compair-website/html/gpu/rtx-3080.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://tongarclub.github.io/compair-website/html/gpu/rtx-3060-12gb.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://tongarclub.github.io/compair-website/html/gpu/rtx-4080.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://tongarclub.github.io/compair-website/html/gpu/rtx-4070-super.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://tongarclub.github.io/compair-website/html/gpu/rtx-3090.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://tongarclub.github.io/compair-website/html/gpu/rtx-4060-ti-16gb.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://tongarclub.github.io/compair-website/html/gpu/rtx-3070.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
 </urlset>

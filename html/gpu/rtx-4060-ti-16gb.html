@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-J3C1X16FZ5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-J3C1X16FZ5');
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RTX 4060 Ti 16GB รัน Local LLM ได้ไหม — VRAM 16 GB | ComPair</title>
+<meta name="description" content="ตรวจสอบว่า RTX 4060 Ti 16GB (16 GB VRAM) รัน Local LLM ขนาดใดได้บ้าง — ผล Quantization ทุกระดับ Q2–Q8 พร้อมตาราง compatibility และ Token/s โดยประมาณ">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://tongarclub.github.io/compair-website/html/gpu/rtx-4060-ti-16gb.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tongarclub.github.io/compair-website/html/gpu/rtx-4060-ti-16gb.html">
+<meta property="og:title" content="RTX 4060 Ti 16GB รัน LLM ได้ไหม — VRAM 16 GB | ComPair">
+<meta property="og:description" content="ตรวจสอบว่า RTX 4060 Ti 16GB (16 GB VRAM) รัน Local LLM ขนาดใดได้บ้าง — ผล Quantization ทุกระดับ Q2–Q8 พร้อมตาราง compatibility และ Token/s โดยประมาณ">
+<meta property="og:locale" content="th_TH">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "RTX 4060 Ti 16GB รัน Local LLM ได้ไหม",
+  "url": "https://tongarclub.github.io/compair-website/html/gpu/rtx-4060-ti-16gb.html",
+  "description": "ตรวจสอบว่า RTX 4060 Ti 16GB (16 GB VRAM) รัน Local LLM ขนาดใดได้บ้าง — ผล Quantization ทุกระดับ Q2–Q8 พร้อมตาราง compatibility และ Token/s โดยประมาณ",
+  "inLanguage": "th",
+  "isPartOf": { "@type": "WebSite", "url": "https://tongarclub.github.io/compair-website/" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "RTX 4060 Ti 16GB รัน Llama 3 8B ได้ไหม?",
+      "acceptedAnswer": { "@type": "Answer", "text": "ได้ครับ RTX 4060 Ti 16GB มี VRAM 16 GB รัน Llama 3 8B ด้วย Q4_K_M ได้ ใช้ VRAM ประมาณ 4.1 GB ความเร็วประมาณ 38 tok/s" }
+    },
+    {
+      "@type": "Question",
+      "name": "RTX 4060 Ti 16GB รัน 13B model ได้ไหม?",
+      "acceptedAnswer": { "@type": "Answer", "text": "ได้ด้วย Q4_K_M (7.9 GB) ครับ RTX 4060 Ti 16GB VRAM 16 GB รัน 13B ด้วย Q4_K_M ได้ และ Q3_K_M ด้วย ไม่รองรับ Q8 (14 GB)" }
+    },
+    {
+      "@type": "Question",
+      "name": "เทียบ RTX 4060 Ti 16GB กับ RTX 4090 สำหรับ LLM?",
+      "acceptedAnswer": { "@type": "Answer", "text": "RTX 4090 (24 GB, 1008 GB/s) เร็วกว่าและรัน model ขนาดใหญ่กว่าได้ แต่ RTX 4060 Ti 16GB (16 GB, 288 GB/s) ราคาถูกกว่ามากและรัน 7B–13B ได้ดี ถ้างบจำกัดและใช้ model ไม่เกิน 13B RTX 4060 Ti 16GB คุ้มค่ากว่า" }
+    }
+  ]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/gpu-page.css">
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a href="../../index.html" class="logo">
+      <div class="logo-mark">C</div>
+      <div><div class="logo-text">ComPair</div><div class="logo-sub">Comparison Engine</div></div>
+    </a>
+    <div class="nav-right">
+      <a class="nav-link" href="../ai-calculator.html">GPU Calculator</a>
+      <a class="nav-link" href="../mac-llm-calculator.html">Mac / Apple Silicon</a>
+      <a class="nav-link" href="../../index.html">หน้าแรก</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="hero fade-up">
+    <div class="hero-label">NVIDIA · Ada Lovelace · NVIDIA RTX 40 Series</div>
+    <h1><em>RTX 4060 Ti 16GB</em><br>รัน LLM ได้ไหน?</h1>
+    <p class="hero-desc">RTX 4060 Ti 16GB มี VRAM 16 GB — รัน 13B ทุก Quantization ได้ รัน 30B บาง Quantization ได้ เหมาะกับงาน Dev และ Research ระดับกลาง</p>
+    <div class="hero-meta">
+      <span class="hero-chip gold">16 GB VRAM</span>
+      <span class="hero-chip">288 GB/s Bandwidth</span>
+      <span class="hero-chip">Ada Lovelace</span>
+      <span class="hero-chip">CUDA ✓</span>
+      <span class="hero-chip">฿15,000–20,000</span>
+      <span class="hero-chip">AI Score 57/100</span>
+    </div>
+    <a href="../ai-calculator.html#gpu=4060ti16" class="cta-link">เปิด Calculator พร้อม RTX 4060 Ti 16GB →</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="spec-bar">
+    <div class="sb-cell"><div class="sb-lbl">VRAM</div><div class="sb-val gold">16 GB</div><div class="sb-sub">Video RAM</div></div>
+    <div class="sb-cell"><div class="sb-lbl">Bandwidth</div><div class="sb-val">288 <span style="font-size:12px;font-weight:400;color:var(--text3)">GB/s</span></div><div class="sb-sub">Memory Bandwidth</div></div>
+    <div class="sb-cell"><div class="sb-lbl">Architecture</div><div class="sb-val" style="font-size:14px">Ada Lovelace</div><div class="sb-sub">NVIDIA RTX 40 Series</div></div>
+    <div class="sb-cell"><div class="sb-lbl">7B tok/s (Q4)</div><div class="sb-val" style="color:var(--blue)">~38</div><div class="sb-sub">Token per second</div></div>
+    <div class="sb-cell"><div class="sb-lbl">ราคาโดยประมาณ</div><div class="sb-val" style="font-size:13px">฿15,000–20,000</div><div class="sb-sub">ตลาดไทย</div></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="section">
+    <div class="section-head">
+      <div class="section-title">ตาราง LLM Compatibility — RTX 4060 Ti 16GB</div>
+      <div class="section-sub">VRAM ที่ใช้งานได้จริง: 16 GB · ✓ รันได้ · ~ รันได้แต่ตึง · ✗ VRAM ไม่พอ</div>
+    </div>
+    <table class="compat">
+      <thead>
+        <tr>
+          <th>Model Size</th>
+          <th>Q8.0</th>
+          <th>Q4_K_M ⭐</th>
+          <th>Q3_K_M</th>
+          <th>Q2_K</th>
+          <th>แนะนำ</th>
+          <th>ความเร็ว</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>1–3B</strong><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--text3);margin-top:2px">Phi-3-mini · Gemma-2B · TinyLlama</div></td><td><span class="badge badge-ok">✓ 2.0 GB</span></td><td><span class="badge badge-ok">✓ 1.5 GB</span></td><td><span class="badge badge-ok">✓ 1.2 GB</span></td><td><span class="badge badge-ok">✓ 0.9 GB</span></td><td><span class="rec-badge">Q8.0</span></td><td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text2)">~86 tok/s</td></tr>
+<tr><td><strong>7B</strong><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--text3);margin-top:2px">Llama-3.1-8B · Mistral-7B · Qwen2-7B</div></td><td><span class="badge badge-ok">✓ 7.2 GB</span></td><td><span class="badge badge-ok">✓ 4.1 GB</span></td><td><span class="badge badge-ok">✓ 3.1 GB</span></td><td><span class="badge badge-ok">✓ 2.4 GB</span></td><td><span class="rec-badge">Q8.0</span></td><td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text2)">~38 tok/s</td></tr>
+<tr><td><strong>13B</strong><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--text3);margin-top:2px">Llama-2-13B · CodeLlama-13B · Vicuna-13B</div></td><td><span class="badge badge-ok">✓ 14 GB</span></td><td><span class="badge badge-ok">✓ 7.9 GB</span></td><td><span class="badge badge-ok">✓ 5.9 GB</span></td><td><span class="badge badge-ok">✓ 4.5 GB</span></td><td><span class="rec-badge">Q8.0</span></td><td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text2)">~19 tok/s</td></tr>
+<tr><td><strong>30–34B</strong><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--text3);margin-top:2px">Yi-34B · CodeLlama-34B · Mixtral-8x7B</div></td><td><span class="badge badge-no">✗ 34 GB</span></td><td><span class="badge badge-no">✗ 19 GB</span></td><td><span class="badge badge-warn">~ 15 GB</span></td><td><span class="badge badge-ok">✓ 11 GB</span></td><td><span class="rec-badge">Q3_K_M</span></td><td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text2)">~9 tok/s</td></tr>
+<tr><td><strong>70B</strong><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--text3);margin-top:2px">Llama-3.1-70B · Qwen2-72B · DeepSeek-V2</div></td><td><span class="badge badge-no">✗ 70 GB</span></td><td><span class="badge badge-no">✗ 40 GB</span></td><td><span class="badge badge-no">✗ 30 GB</span></td><td><span class="badge badge-no">✗ 22 GB</span></td><td><span style="color:var(--text3);font-size:12px">ไม่รองรับ</span></td><td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text2)">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="divider"><div class="div-line"></div><div class="div-label">Tips สำหรับ RTX 4060 Ti 16GB</div><div class="div-line"></div></div>
+  <div class="section">
+    <div class="tips-grid">
+      <div class="tip">
+        <div class="tip-num">01</div>
+        <div class="tip-title">Q8.0 ให้คุณภาพดีกว่า</div>
+        <div class="tip-text">VRAM 16 GB ของ RTX 4060 Ti 16GB เพียงพอรัน 7B และ 13B ด้วย Q8.0 ซึ่งให้คุณภาพ ~99% ของ FP16 ดีกว่า Q4 พอสังเกตได้</div>
+      </div>
+      <div class="tip">
+        <div class="tip-num">02</div>
+        <div class="tip-title">CUDA Acceleration</div>
+        <div class="tip-text">RTX 4060 Ti 16GB รองรับ CUDA ซึ่ง llama.cpp ใช้งานได้เต็มประสิทธิภาพ ติดตั้ง Ollama หรือ LM Studio แล้วใช้ได้เลย — ระบบ detect GPU อัตโนมัติ</div>
+      </div>
+      <div class="tip">
+        <div class="tip-num">03</div>
+        <div class="tip-title">Context Window ควบคุมได้</div>
+        <div class="tip-text">Context ใหญ่ขึ้นใช้ VRAM เพิ่ม Context 4K ≈ +0.5 GB, 8K ≈ +1 GB, 32K ≈ +4 GB ถ้า VRAM ตึงให้ลด Context ด้วย <code>--ctx-size 4096</code></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="divider"><div class="div-line"></div><div class="div-label">GPU อื่นที่น่าสนใจ</div><div class="div-line"></div></div>
+  <div class="related-grid">
+    <a href="rtx-4060.html" class="related-card"><div class="rc-name">RTX 4060</div><div class="rc-vram">8 GB · 272 GB/s</div><div class="rc-arrow">ดูรายละเอียด →</div></a>
+<a href="rtx-4070.html" class="related-card"><div class="rc-name">RTX 4070</div><div class="rc-vram">12 GB · 504 GB/s</div><div class="rc-arrow">ดูรายละเอียด →</div></a>
+<a href="rtx-4090.html" class="related-card"><div class="rc-name">RTX 4090</div><div class="rc-vram">24 GB · 1008 GB/s</div><div class="rc-arrow">ดูรายละเอียด →</div></a>
+<a href="rtx-3080.html" class="related-card"><div class="rc-name">RTX 3080 10GB</div><div class="rc-vram">10 GB · 760 GB/s</div><div class="rc-arrow">ดูรายละเอียด →</div></a>
+<a href="rtx-3060-12gb.html" class="related-card"><div class="rc-name">RTX 3060 12GB</div><div class="rc-vram">12 GB · 360 GB/s</div><div class="rc-arrow">ดูรายละเอียด →</div></a>
+<a href="rtx-4080.html" class="related-card"><div class="rc-name">RTX 4080</div><div class="rc-vram">16 GB · 717 GB/s</div><div class="rc-arrow">ดูรายละเอียด →</div></a>
+<a href="rtx-4070-super.html" class="related-card"><div class="rc-name">RTX 4070 Super</div><div class="rc-vram">12 GB · 504 GB/s</div><div class="rc-arrow">ดูรายละเอียด →</div></a>
+<a href="rtx-3090.html" class="related-card"><div class="rc-name">RTX 3090</div><div class="rc-vram">24 GB · 936 GB/s</div><div class="rc-arrow">ดูรายละเอียด →</div></a>
+<a href="rtx-3070.html" class="related-card"><div class="rc-name">RTX 3070</div><div class="rc-vram">8 GB · 448 GB/s</div><div class="rc-arrow">ดูรายละเอียด →</div></a>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-logo">ComPair — RTX 4060 Ti 16GB LLM Guide</div>
+      <div class="footer-meta">ข้อมูลอ้างอิงจาก llama.cpp · HuggingFace · 2025–2026</div>
+      <div class="footer-links">
+        <a href="../../index.html">หน้าแรก</a>
+        <a href="../ai-calculator.html">GPU Calculator</a>
+        <a href="../mac-llm-calculator.html">Mac / Apple Silicon</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
