@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate 10 static GPU pages for ComPair SEO."""
+"""Generate static GPU pages for ComPair SEO."""
 import os, math
 
 BASE = os.path.join(os.path.dirname(__file__), '..')
@@ -9,15 +9,23 @@ os.makedirs(OUT, exist_ok=True)
 BASE_URL = "https://tongarclub.github.io/compair-website"
 
 GPUS = [
+    # NVIDIA RTX 50 Series (Blackwell)
+    dict(id="5090",     slug="rtx-5090",          name="RTX 5090",          vram=32, bw=1792, perf=10, price="฿85,000–110,000", arch="Blackwell",     gen="NVIDIA RTX 50 Series"),
+    dict(id="5080",     slug="rtx-5080",          name="RTX 5080",          vram=16, bw=960,  perf=9,  price="฿45,000–62,000",  arch="Blackwell",     gen="NVIDIA RTX 50 Series"),
+    dict(id="5070ti",   slug="rtx-5070-ti",       name="RTX 5070 Ti",       vram=16, bw=896,  perf=8,  price="฿28,000–38,000",  arch="Blackwell",     gen="NVIDIA RTX 50 Series"),
+    dict(id="5070",     slug="rtx-5070",          name="RTX 5070",          vram=12, bw=672,  perf=7,  price="฿20,000–28,000",  arch="Blackwell",     gen="NVIDIA RTX 50 Series"),
+    dict(id="5060ti",   slug="rtx-5060-ti-16gb",  name="RTX 5060 Ti 16GB",  vram=16, bw=448,  perf=6,  price="฿18,000–26,000",  arch="Blackwell",     gen="NVIDIA RTX 50 Series"),
+    # NVIDIA RTX 40 Series (Ada Lovelace)
     dict(id="4060",     slug="rtx-4060",          name="RTX 4060",          vram=8,  bw=272,  perf=4,  price="฿9,000–13,000",   arch="Ada Lovelace",  gen="NVIDIA RTX 40 Series"),
     dict(id="4070",     slug="rtx-4070",          name="RTX 4070",          vram=12, bw=504,  perf=6,  price="฿16,000–22,000",  arch="Ada Lovelace",  gen="NVIDIA RTX 40 Series"),
     dict(id="4090",     slug="rtx-4090",          name="RTX 4090",          vram=24, bw=1008, perf=10, price="฿55,000–70,000",  arch="Ada Lovelace",  gen="NVIDIA RTX 40 Series"),
-    dict(id="3080",     slug="rtx-3080",          name="RTX 3080 10GB",     vram=10, bw=760,  perf=7,  price="฿12,000–18,000",  arch="Ampere",        gen="NVIDIA RTX 30 Series"),
-    dict(id="3060",     slug="rtx-3060-12gb",     name="RTX 3060 12GB",     vram=12, bw=360,  perf=5,  price="฿7,000–11,000",   arch="Ampere",        gen="NVIDIA RTX 30 Series"),
     dict(id="4080",     slug="rtx-4080",          name="RTX 4080",          vram=16, bw=717,  perf=8,  price="฿30,000–40,000",  arch="Ada Lovelace",  gen="NVIDIA RTX 40 Series"),
     dict(id="4070s",    slug="rtx-4070-super",    name="RTX 4070 Super",    vram=12, bw=504,  perf=6,  price="฿18,000–24,000",  arch="Ada Lovelace",  gen="NVIDIA RTX 40 Series"),
-    dict(id="3090",     slug="rtx-3090",          name="RTX 3090",          vram=24, bw=936,  perf=8,  price="฿18,000–26,000",  arch="Ampere",        gen="NVIDIA RTX 30 Series"),
     dict(id="4060ti16", slug="rtx-4060-ti-16gb",  name="RTX 4060 Ti 16GB",  vram=16, bw=288,  perf=5,  price="฿15,000–20,000",  arch="Ada Lovelace",  gen="NVIDIA RTX 40 Series"),
+    # NVIDIA RTX 30 Series (Ampere)
+    dict(id="3080",     slug="rtx-3080",          name="RTX 3080 10GB",     vram=10, bw=760,  perf=7,  price="฿12,000–18,000",  arch="Ampere",        gen="NVIDIA RTX 30 Series"),
+    dict(id="3060",     slug="rtx-3060-12gb",     name="RTX 3060 12GB",     vram=12, bw=360,  perf=5,  price="฿7,000–11,000",   arch="Ampere",        gen="NVIDIA RTX 30 Series"),
+    dict(id="3090",     slug="rtx-3090",          name="RTX 3090",          vram=24, bw=936,  perf=8,  price="฿18,000–26,000",  arch="Ampere",        gen="NVIDIA RTX 30 Series"),
     dict(id="3070",     slug="rtx-3070",          name="RTX 3070",          vram=8,  bw=448,  perf=6,  price="฿9,000–13,000",   arch="Ampere",        gen="NVIDIA RTX 30 Series"),
 ]
 

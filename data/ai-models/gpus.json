@@ -1,7 +1,12 @@
 {
   "schema": "1.0",
-  "updatedAt": "2025-01-01",
+  "updatedAt": "2026-06",
   "gpus": [
+    { "id": "5090",     "brand": "NVIDIA", "name": "RTX 5090",          "vramGB": 32, "bandwidthGBs": 1792, "arch": "Blackwell",      "gen": "NVIDIA RTX 50 Series",  "cuda": true,  "perfScore": 10, "priceTHB": "85000–110000" },
+    { "id": "5080",     "brand": "NVIDIA", "name": "RTX 5080",          "vramGB": 16, "bandwidthGBs": 960,  "arch": "Blackwell",      "gen": "NVIDIA RTX 50 Series",  "cuda": true,  "perfScore": 9,  "priceTHB": "45000–62000" },
+    { "id": "5070ti",   "brand": "NVIDIA", "name": "RTX 5070 Ti",       "vramGB": 16, "bandwidthGBs": 896,  "arch": "Blackwell",      "gen": "NVIDIA RTX 50 Series",  "cuda": true,  "perfScore": 8,  "priceTHB": "28000–38000" },
+    { "id": "5070",     "brand": "NVIDIA", "name": "RTX 5070",          "vramGB": 12, "bandwidthGBs": 672,  "arch": "Blackwell",      "gen": "NVIDIA RTX 50 Series",  "cuda": true,  "perfScore": 7,  "priceTHB": "20000–28000" },
+    { "id": "5060ti",   "brand": "NVIDIA", "name": "RTX 5060 Ti 16GB",  "vramGB": 16, "bandwidthGBs": 448,  "arch": "Blackwell",      "gen": "NVIDIA RTX 50 Series",  "cuda": true,  "perfScore": 6,  "priceTHB": "18000–26000" },
     { "id": "4090",     "brand": "NVIDIA", "name": "RTX 4090",          "vramGB": 24, "bandwidthGBs": 1008, "arch": "Ada Lovelace",  "gen": "NVIDIA RTX 40 Series",  "cuda": true,  "perfScore": 10, "priceTHB": "55000–70000" },
     { "id": "4080s",    "brand": "NVIDIA", "name": "RTX 4080 Super",    "vramGB": 16, "bandwidthGBs": 736,  "arch": "Ada Lovelace",  "gen": "NVIDIA RTX 40 Series",  "cuda": true,  "perfScore": 8,  "priceTHB": "35000–45000" },
     { "id": "4080",     "brand": "NVIDIA", "name": "RTX 4080",          "vramGB": 16, "bandwidthGBs": 717,  "arch": "Ada Lovelace",  "gen": "NVIDIA RTX 40 Series",  "cuda": true,  "perfScore": 8,  "priceTHB": "30000–40000" },
