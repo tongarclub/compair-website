@@ -100,33 +100,46 @@
 <body>
 
 <!-- ── Navigation ─────────────────────────────────────── -->
-<nav class="nav">
-  <a class="logo" href="../index.html">◈ ComPair</a>
-  <div class="nav-right">
-    <a href="ai-calculator.html">GPU VRAM</a>
-    <a href="mac-llm-calculator.html">Mac AI</a>
-    <a href="gold-calculator.html">ทองคำ vs กองทุน</a>
+<nav>
+  <div class="wrap nav-inner">
+    <a href="../index.html" class="logo">
+      <div class="logo-mark">C</div>
+      <div>
+        <div class="logo-text">ComPair</div>
+        <div class="logo-sub">Comparison Engine</div>
+      </div>
+    </a>
+    <div class="nav-right">
+      <a class="nav-link" href="ai-calculator.html">GPU VRAM</a>
+      <a class="nav-link" href="mac-llm-calculator.html">Mac AI</a>
+      <a class="nav-link" href="gold-calculator.html">ทองคำ vs กองทุน</a>
+      <a class="nav-link" href="ev-calculator.html">EV Cost</a>
+    </div>
   </div>
 </nav>
 
 <!-- ── Hero ───────────────────────────────────────────── -->
 <div class="hero">
   <div class="wrap">
+    <div class="hero-label">Domain F · AI Image Generation</div>
+    <h1>AI Image Gen<br><em>GPU ไหนรันได้บ้าง?</em></h1>
+    <p class="hero-desc">เลือก VRAM ของ GPU คุณ — ระบบแสดง model ที่รองรับ พร้อมเปรียบเทียบต้นทุน Self-hosted vs Midjourney vs DALL-E 3 ทันที</p>
     <div class="hero-chips">
-      <span class="hero-chip">◈ Domain F · AI Image Gen</span>
-      <span class="hero-chip">FLUX · Stable Diffusion · DALL-E</span>
+      <span class="hero-chip">FLUX.1 Schnell / Dev</span>
+      <span class="hero-chip">Stable Diffusion XL</span>
+      <span class="hero-chip">Midjourney vs Self-hosted</span>
+      <span class="hero-chip">Break-even Calculator</span>
     </div>
-    <h1 class="hero-title">AI Image Gen<br>GPU ไหนรันได้บ้าง?</h1>
-    <p class="hero-sub">เลือก VRAM ของ GPU คุณ — ระบบแสดง model ที่รองรับ<br>พร้อมเปรียบเทียบต้นทุน Self-hosted vs Midjourney vs DALL-E 3 ทันที</p>
   </div>
 </div>
 
 <!-- ── Main Content ───────────────────────────────────── -->
-<main class="wrap">
+<main>
+<div class="wrap">
   <div class="two-col">
 
     <!-- ── Left: GPU Selector ─────────────────────── -->
-    <section class="form-section">
+    <div class="form-section">
       <div class="form-header">
         <span class="form-icon">🖥️</span>
         <div>
@@ -134,37 +147,38 @@
           <div class="form-sub">เลือกจากรุ่นยอดนิยม หรือกรอก VRAM เอง</div>
         </div>
       </div>
+      <div class="form-pad">
+        <!-- GPU Presets -->
+        <div class="field-label" style="margin-bottom:.5rem;">GPU รุ่นยอดนิยม</div>
+        <div class="vram-chips" id="gpuChips"></div>
 
-      <!-- GPU Presets -->
-      <div class="field-label" style="margin-bottom:.5rem;">GPU รุ่นยอดนิยม</div>
-      <div class="vram-chips" id="gpuChips"></div>
+        <!-- Manual VRAM input -->
+        <div class="field-group">
+          <label class="field-label" for="vramInput">หรือกรอก VRAM (GB)</label>
+          <input class="num-input" type="number" id="vramInput" value="8" min="4" max="80" step="2" oninput="renderFromInput()">
+        </div>
 
-      <!-- Manual VRAM input -->
-      <div class="field-group">
-        <label class="field-label" for="vramInput">หรือกรอก VRAM (GB)</label>
-        <input class="num-input" type="number" id="vramInput" value="8" min="4" max="80" step="2" oninput="renderFromInput()">
+        <!-- Usage intensity -->
+        <div class="field-group">
+          <label class="field-label" for="imagesPerMonth">จำนวนรูปที่สร้าง / เดือน</label>
+          <input class="num-input" type="number" id="imagesPerMonth" value="500" min="10" step="50" oninput="renderCost()">
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="hoursPerDay">ชั่วโมงใช้งาน / วัน (สำหรับ electricity)</label>
+          <input class="num-input" type="number" id="hoursPerDay" value="3" min="0.5" max="24" step="0.5" oninput="renderCost()">
+        </div>
+
+        <!-- Notes -->
+        <div class="hist-note" style="background:var(--info-bg);border-color:var(--primary);">
+          💡 <strong>หมายเหตุ:</strong> VRAM requirement ขึ้นอยู่กับ batch size, resolution, และ VAE<br>
+          ค่าที่แสดงเป็น <strong>ขั้นต่ำ recommended</strong> สำหรับ 1024×1024 @ batch 1
+        </div>
       </div>
-
-      <!-- Usage intensity -->
-      <div class="field-group" style="margin-top:1rem;">
-        <label class="field-label" for="imagesPerMonth">จำนวนรูปที่สร้าง / เดือน</label>
-        <input class="num-input" type="number" id="imagesPerMonth" value="500" min="10" step="50" oninput="renderCost()">
-      </div>
-
-      <div class="field-group">
-        <label class="field-label" for="hoursPerDay">ชั่วโมงใช้งาน / วัน (สำหรับ electricity)</label>
-        <input class="num-input" type="number" id="hoursPerDay" value="3" min="0.5" max="24" step="0.5" oninput="renderCost()">
-      </div>
-
-      <!-- Notes -->
-      <div class="hist-note" style="background:var(--info-bg);border-color:var(--info);">
-        💡 <strong>หมายเหตุ:</strong> VRAM requirement ขึ้นอยู่กับ batch size, resolution, และ VAE<br>
-        ค่าที่แสดงเป็น <strong>ขั้นต่ำ recommended</strong> สำหรับ 1024×1024 @ batch 1
-      </div>
-    </section>
+    </div>
 
     <!-- ── Right: Results ─────────────────────────── -->
-    <section class="form-section">
+    <div class="form-section">
       <div class="form-header">
         <span class="form-icon">🎨</span>
         <div>
@@ -172,33 +186,34 @@
           <div class="form-sub" id="compatSummary">—</div>
         </div>
       </div>
+      <div class="form-pad">
+        <!-- Compat Table -->
+        <div style="overflow-x:auto;">
+          <table class="model-table" id="modelTable">
+            <thead>
+              <tr>
+                <th>Model</th>
+                <th>VRAM</th>
+                <th>รัน?</th>
+                <th>ความเร็ว</th>
+                <th>คุณภาพ</th>
+              </tr>
+            </thead>
+            <tbody id="modelBody"></tbody>
+          </table>
+        </div>
 
-      <!-- Compat Table -->
-      <div style="overflow-x:auto;">
-        <table class="model-table" id="modelTable">
-          <thead>
-            <tr>
-              <th>Model</th>
-              <th>VRAM</th>
-              <th>รัน?</th>
-              <th>ความเร็ว</th>
-              <th>คุณภาพ</th>
-            </tr>
-          </thead>
-          <tbody id="modelBody"></tbody>
-        </table>
+        <!-- Share -->
+        <div class="share-row" style="margin-top:1rem;">
+          <button class="share-btn" id="shareBtn" onclick="copyURL()">⎘ แชร์ผลนี้</button>
+          <span id="shareMsg">✓ คัดลอก URL แล้ว</span>
+        </div>
       </div>
-
-      <!-- Share -->
-      <div class="share-row">
-        <button class="share-btn" id="shareBtn" onclick="copyURL()">⎘ แชร์ผลนี้</button>
-        <span id="shareMsg">✓ คัดลอก URL แล้ว</span>
-      </div>
-    </section>
+    </div>
   </div>
 
   <!-- ── Cost Comparison ───────────────────────────────── -->
-  <section class="form-section" style="margin-bottom:2rem;">
+  <div class="form-section" style="margin-bottom:2rem;">
     <div class="form-header">
       <span class="form-icon">💰</span>
       <div>
@@ -206,13 +221,15 @@
         <div class="form-sub">คำนวณจากจำนวนรูปต่อเดือนที่กำหนด</div>
       </div>
     </div>
-    <div class="cost-grid" id="costGrid"></div>
-    <div class="breakeven-bar" id="breakevenNote"></div>
-  </section>
+    <div class="form-pad">
+      <div class="cost-grid" id="costGrid"></div>
+      <div class="breakeven-bar" id="breakevenNote"></div>
+    </div>
+  </div>
 
   <!-- ── Static Model Guide ────────────────────────────── -->
   <section class="tips-section">
-    <h2 class="tips-heading">คู่มือเลือก AI Image Gen — เหมาะกับใคร?</h2>
+    <div class="tips-heading">คู่มือเลือก AI Image Gen — เหมาะกับใคร?</div>
     <div class="tips-grid">
       <div class="tip-card">
         <div class="tip-icon">⚡</div>
@@ -257,19 +274,21 @@
       <a class="cl-item" href="ev-calculator.html">🚗 EV Cost</a>
     </div>
   </div>
+</div>
 </main>
 
 <!-- ── Footer ─────────────────────────────────────────── -->
-<footer class="footer">
+<footer>
   <div class="wrap">
-    <div class="footer-logo">◈ ComPair</div>
-    <div class="footer-tagline">เปรียบเทียบอย่างมีข้อมูล — ตัดสินใจอย่างมั่นใจ</div>
-    <div class="footer-links">
-      <a href="../index.html">Home</a>
-      <a href="ai-calculator.html">AI GPU</a>
-      <a href="mac-llm-calculator.html">Mac AI</a>
-      <a href="gold-calculator.html">ทองคำ</a>
-      <a href="ev-calculator.html">EV</a>
+    <div class="footer-inner">
+      <div class="footer-logo">◈ ComPair · AI Image Gen</div>
+      <div class="footer-links">
+        <a href="../index.html">Home</a>
+        <a href="ai-calculator.html">AI GPU</a>
+        <a href="mac-llm-calculator.html">Mac AI</a>
+        <a href="gold-calculator.html">ทองคำ</a>
+        <a href="ev-calculator.html">EV</a>
+      </div>
     </div>
     <div class="footer-note">ข้อมูล VRAM requirements อ้างอิงจาก community benchmarks — อาจต่างกันตาม driver, resolution, และ settings</div>
   </div>

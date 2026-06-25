@@ -100,33 +100,46 @@
 <body>
 
 <!-- ── Navigation ─────────────────────────────────────── -->
-<nav class="nav">
-  <a class="logo" href="../index.html">◈ ComPair</a>
-  <div class="nav-right">
-    <a href="ai-calculator.html">GPU VRAM</a>
-    <a href="solar-calculator.html">Solar ROI</a>
-    <a href="ev-calculator.html">EV Cost</a>
+<nav>
+  <div class="wrap nav-inner">
+    <a href="../index.html" class="logo">
+      <div class="logo-mark">C</div>
+      <div>
+        <div class="logo-text">ComPair</div>
+        <div class="logo-sub">Comparison Engine</div>
+      </div>
+    </a>
+    <div class="nav-right">
+      <a class="nav-link" href="ai-calculator.html">GPU VRAM</a>
+      <a class="nav-link" href="solar-calculator.html">Solar ROI</a>
+      <a class="nav-link" href="ev-calculator.html">EV Cost</a>
+      <a class="nav-link" href="image-gen-calculator.html">AI Image Gen</a>
+    </div>
   </div>
 </nav>
 
 <!-- ── Hero ───────────────────────────────────────────── -->
 <div class="hero">
   <div class="wrap">
+    <div class="hero-label">Domain E · ทองคำ vs กองทุน</div>
+    <h1>ทองคำ vs กองทุน<br><em>ลงทุนอะไรดีกว่ากัน?</em></h1>
+    <p class="hero-desc">ใส่เงินต้นและเงินลงทุนรายเดือน — ระบบคำนวณผลตอบแทนแบบ Compound interest<br>เปรียบเทียบ ทองคำ · กองทุนหุ้นไทย · S&amp;P500 · ฝากประจำ ทันที</p>
     <div class="hero-chips">
-      <span class="hero-chip">◈ Domain E · ทองคำ vs กองทุน</span>
       <span class="hero-chip">Compound Interest</span>
+      <span class="hero-chip">DCA รายเดือน</span>
+      <span class="hero-chip">4 สินทรัพย์</span>
+      <span class="hero-chip">ปรับ % ได้เอง</span>
     </div>
-    <h1 class="hero-title">ทองคำ vs กองทุน<br>ลงทุนอะไรดีกว่ากัน?</h1>
-    <p class="hero-sub">ใส่เงินต้นและเงินลงทุนรายเดือน — ระบบคำนวณผลตอบแทนแบบ Compound interest<br>เปรียบเทียบ ทองคำ · กองทุนหุ้นไทย · S&amp;P500 · ฝากประจำ ทันที</p>
   </div>
 </div>
 
 <!-- ── Main Content ───────────────────────────────────── -->
-<main class="wrap">
+<main>
+<div class="wrap">
   <div class="two-col">
 
     <!-- ── Left: Inputs ───────────────────────────── -->
-    <section class="form-section">
+    <div class="form-section">
       <div class="form-header">
         <span class="form-icon">💰</span>
         <div>
@@ -134,66 +147,67 @@
           <div class="form-sub">ลงทุนเดือนละเท่าไหร่ นานแค่ไหน</div>
         </div>
       </div>
+      <div class="form-pad">
+        <!-- Preset Scenarios -->
+        <div class="field-label" style="margin-bottom:.5rem;">ตัวอย่าง scenario</div>
+        <div class="asset-chips">
+          <div class="asset-chip" onclick="setPreset(1)">มือใหม่ 3,000/เดือน</div>
+          <div class="asset-chip active" onclick="setPreset(2)">มนุษย์เงินเดือน 5,000/เดือน</div>
+          <div class="asset-chip" onclick="setPreset(3)">ลงทุนเยอะ 20,000/เดือน</div>
+          <div class="asset-chip" onclick="setPreset(4)">เงินก้อน 500,000</div>
+        </div>
 
-      <!-- Preset Scenarios -->
-      <div class="field-label" style="margin-bottom:.5rem;">ตัวอย่าง scenario</div>
-      <div class="asset-chips">
-        <div class="asset-chip" onclick="setPreset(1)">มือใหม่ 3,000/เดือน</div>
-        <div class="asset-chip active" onclick="setPreset(2)">มนุษย์เงินเดือน 5,000/เดือน</div>
-        <div class="asset-chip" onclick="setPreset(3)">ลงทุนเยอะ 20,000/เดือน</div>
-        <div class="asset-chip" onclick="setPreset(4)">เงินก้อน 500,000</div>
-      </div>
+        <!-- Amount & Duration -->
+        <div class="field-group">
+          <label class="field-label" for="initAmt">เงินก้อนเริ่มต้น (บาท)</label>
+          <input class="num-input" type="number" id="initAmt" value="100000" min="0" step="10000" oninput="render()">
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="monthly">ลงทุนเพิ่ม / เดือน (บาท)</label>
+          <input class="num-input" type="number" id="monthly" value="5000" min="0" step="1000" oninput="render()">
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="years">ระยะเวลา (ปี)</label>
+          <input class="num-input" type="number" id="years" value="10" min="1" max="40" step="1" oninput="render()">
+        </div>
 
-      <!-- Amount & Duration -->
-      <div class="field-group">
-        <label class="field-label" for="initAmt">เงินก้อนเริ่มต้น (บาท)</label>
-        <input class="num-input" type="number" id="initAmt" value="100000" min="0" step="10000" oninput="render()">
-      </div>
-      <div class="field-group">
-        <label class="field-label" for="monthly">ลงทุนเพิ่ม / เดือน (บาท)</label>
-        <input class="num-input" type="number" id="monthly" value="5000" min="0" step="1000" oninput="render()">
-      </div>
-      <div class="field-group">
-        <label class="field-label" for="years">ระยะเวลา (ปี)</label>
-        <input class="num-input" type="number" id="years" value="10" min="1" max="40" step="1" oninput="render()">
-      </div>
+        <!-- Return Rates sub-header -->
+        <div style="display:flex;align-items:center;gap:.6rem;padding:.75rem 0 .5rem;border-top:1px solid var(--border);margin-top:.5rem;">
+          <span class="form-icon">📊</span>
+          <div>
+            <div class="form-title" style="font-size:1rem;">อัตราผลตอบแทนต่อปี (%)</div>
+            <div class="form-sub">ปรับได้ตามมุมมองของคุณ</div>
+          </div>
+        </div>
+        <div class="rate-grid">
+          <div class="rate-field">
+            <label><span class="rate-dot gold-dot"></span>ทองคำ (XAU/THB)</label>
+            <input class="num-input" type="number" id="rGold" value="8" min="0" max="50" step="0.5" oninput="render()">
+          </div>
+          <div class="rate-field">
+            <label><span class="rate-dot thai-dot"></span>กองทุนหุ้นไทย (SET)</label>
+            <input class="num-input" type="number" id="rThai" value="7" min="0" max="50" step="0.5" oninput="render()">
+          </div>
+          <div class="rate-field">
+            <label><span class="rate-dot sp500-dot"></span>กองทุน S&amp;P500 (USD)</label>
+            <input class="num-input" type="number" id="rSP500" value="11" min="0" max="50" step="0.5" oninput="render()">
+          </div>
+          <div class="rate-field">
+            <label><span class="rate-dot fd-dot"></span>ฝากประจำ 12 เดือน</label>
+            <input class="num-input" type="number" id="rFD" value="1.7" min="0" max="20" step="0.1" oninput="render()">
+          </div>
+        </div>
 
-      <!-- Return Rates -->
-      <div class="form-header" style="margin-top:1.5rem;">
-        <span class="form-icon">📊</span>
-        <div>
-          <div class="form-title">อัตราผลตอบแทนต่อปี (%)</div>
-          <div class="form-sub">ปรับได้ตามมุมมองของคุณ</div>
+        <div class="hist-note">
+          💡 <strong>ค่าเริ่มต้น</strong> อ้างอิงจากผลตอบแทนเฉลี่ยย้อนหลัง 10 ปี (2015–2025)<br>
+          ทองคำ ~8% · SET TRI ~7% · S&amp;P500 (THB) ~11% · ฝากประจำ ~1.7%<br>
+          <span style="color:var(--err)">⚠ ผลตอบแทนในอดีตไม่ได้รับประกันผลตอบแทนในอนาคต</span>
         </div>
       </div>
-      <div class="rate-grid">
-        <div class="rate-field">
-          <label><span class="rate-dot gold-dot"></span>ทองคำ (XAU/THB)</label>
-          <input class="num-input" type="number" id="rGold" value="8" min="0" max="50" step="0.5" oninput="render()">
-        </div>
-        <div class="rate-field">
-          <label><span class="rate-dot thai-dot"></span>กองทุนหุ้นไทย (SET)</label>
-          <input class="num-input" type="number" id="rThai" value="7" min="0" max="50" step="0.5" oninput="render()">
-        </div>
-        <div class="rate-field">
-          <label><span class="rate-dot sp500-dot"></span>กองทุน S&amp;P500 (USD)</label>
-          <input class="num-input" type="number" id="rSP500" value="11" min="0" max="50" step="0.5" oninput="render()">
-        </div>
-        <div class="rate-field">
-          <label><span class="rate-dot fd-dot"></span>ฝากประจำ 12 เดือน</label>
-          <input class="num-input" type="number" id="rFD" value="1.7" min="0" max="20" step="0.1" oninput="render()">
-        </div>
-      </div>
-
-      <div class="hist-note">
-        💡 <strong>ค่าเริ่มต้น</strong> อ้างอิงจากผลตอบแทนเฉลี่ยย้อนหลัง 10 ปี (2015–2025)<br>
-        ทองคำ ~8% · SET TRI ~7% · S&amp;P500 (THB) ~11% · ฝากประจำ ~1.7%<br>
-        <span style="color:var(--err)">⚠ ผลตอบแทนในอดีตไม่ได้รับประกันผลตอบแทนในอนาคต</span>
-      </div>
-    </section>
+    </div>
 
     <!-- ── Right: Results ─────────────────────────── -->
-    <section class="form-section" id="results">
+    <div class="form-section" id="results">
       <div class="form-header">
         <span class="form-icon">📈</span>
         <div>
@@ -201,25 +215,26 @@
           <div class="form-sub" id="summaryLine">—</div>
         </div>
       </div>
+      <div class="form-pad">
+        <!-- Asset Cards -->
+        <div class="asset-grid" id="assetGrid"></div>
 
-      <!-- Asset Cards -->
-      <div class="asset-grid" id="assetGrid"></div>
+        <!-- Bar Chart -->
+        <div class="form-title" style="margin-bottom:.75rem;font-size:.95rem;">เปรียบเทียบมูลค่าสุทธิ</div>
+        <div class="bar-chart" id="barChart"></div>
 
-      <!-- Bar Chart -->
-      <div class="form-title" style="margin-bottom:.75rem;font-size:.95rem;">เปรียบเทียบมูลค่าสุทธิ</div>
-      <div class="bar-chart" id="barChart"></div>
-
-      <!-- Share -->
-      <div class="share-row" style="margin-top:1.5rem;">
-        <button class="share-btn" id="shareBtn" onclick="copyURL()">⎘ แชร์ผลนี้</button>
-        <span id="shareMsg">✓ คัดลอก URL แล้ว</span>
+        <!-- Share -->
+        <div class="share-row" style="margin-top:1.5rem;">
+          <button class="share-btn" id="shareBtn" onclick="copyURL()">⎘ แชร์ผลนี้</button>
+          <span id="shareMsg">✓ คัดลอก URL แล้ว</span>
+        </div>
       </div>
-    </section>
+    </div>
   </div>
 
   <!-- ── Tips ─────────────────────────────────────────── -->
   <section class="tips-section">
-    <h2 class="tips-heading">คู่มือลงทุน — ทองคำ vs กองทุนรวม</h2>
+    <div class="tips-heading">คู่มือลงทุน — ทองคำ vs กองทุนรวม</div>
     <div class="tips-grid">
       <div class="tip-card">
         <div class="tip-icon">🥇</div>
@@ -262,21 +277,22 @@
       <a class="cl-item" href="solar-calculator.html">☀️ Solar ROI</a>
       <a class="cl-item" href="ai-calculator.html">🖥️ AI GPU VRAM</a>
       <a class="cl-item" href="image-gen-calculator.html">🎨 AI Image Gen</a>
-    </div>
   </div>
+</div>
 </main>
 
 <!-- ── Footer ─────────────────────────────────────────── -->
-<footer class="footer">
+<footer>
   <div class="wrap">
-    <div class="footer-logo">◈ ComPair</div>
-    <div class="footer-tagline">เปรียบเทียบอย่างมีข้อมูล — ตัดสินใจอย่างมั่นใจ</div>
-    <div class="footer-links">
-      <a href="../index.html">Home</a>
-      <a href="ai-calculator.html">AI GPU</a>
-      <a href="solar-calculator.html">Solar</a>
-      <a href="ev-calculator.html">EV</a>
-      <a href="image-gen-calculator.html">Image Gen</a>
+    <div class="footer-inner">
+      <div class="footer-logo">◈ ComPair · ทองคำ vs กองทุน</div>
+      <div class="footer-links">
+        <a href="../index.html">Home</a>
+        <a href="ai-calculator.html">AI GPU</a>
+        <a href="solar-calculator.html">Solar</a>
+        <a href="ev-calculator.html">EV</a>
+        <a href="image-gen-calculator.html">Image Gen</a>
+      </div>
     </div>
     <div class="footer-note">⚠️ ข้อมูลนี้เพื่อการศึกษาเท่านั้น ไม่ใช่คำแนะนำการลงทุน ผลตอบแทนในอดีตไม่รับประกันผลในอนาคต</div>
   </div>

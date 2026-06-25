@@ -382,6 +382,119 @@ footer { border-top: 1px solid var(--border); padding: 40px 0; }
 .footer-links a:hover { color: var(--primary); }
 
 /* ═══════════════════════════════════════════════
+   HERO CHIPS (used across pages — defined here
+   so all pages can reference without inline CSS)
+═══════════════════════════════════════════════ */
+.hero-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.hero-chip {
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  color: var(--text3); border: 1px solid var(--border);
+  padding: 5px 12px; letter-spacing: .08em; white-space: nowrap;
+}
+
+/* hero-title / hero-sub — simplified aliases for pages without sidebar */
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(40px, 5.5vw, 72px);
+  font-weight: 300; line-height: 1.1;
+  letter-spacing: -.01em; margin-bottom: 20px;
+}
+.hero-sub { font-size: 16px; color: var(--text2); line-height: 1.85; max-width: 560px; font-weight: 300; }
+
+/* ═══════════════════════════════════════════════
+   FORM UTILITIES (shared across newer pages)
+═══════════════════════════════════════════════ */
+
+/* icon in form-header */
+.form-icon { font-size: 1.4rem; flex-shrink: 0; }
+
+/* secondary subtitle inside form-header */
+.form-sub { font-size: 13px; color: var(--text3); margin-top: 2px; }
+
+/* field wrapper with bottom spacing */
+.field-group { margin-bottom: 1.25rem; }
+
+/* two-column layout for side-by-side form sections */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  align-items: start;
+}
+
+/* padded container for form content (after form-header) */
+.form-pad { padding: 1.5rem 2rem; }
+
+/* ═══════════════════════════════════════════════
+   TIPS — CARD VARIANT (emoji-based tips)
+═══════════════════════════════════════════════ */
+.tips-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px; font-weight: 300;
+  margin-bottom: 24px; letter-spacing: .01em;
+}
+.tip-card {
+  background: var(--surface); border: 1px solid var(--border);
+  padding: 22px; transition: border-color .2s;
+  border-radius: 2px;
+}
+.tip-card:hover { border-color: var(--primary3); }
+.tip-icon  { font-size: 1.5rem; margin-bottom: .45rem; }
+.tip-title { font-size: 15px; font-weight: 600; margin-bottom: .45rem; color: var(--text); }
+.tip-body  { font-size: 14px; color: var(--text2); line-height: 1.75; }
+.tip-body strong { color: var(--text); font-weight: 600; }
+
+/* ═══════════════════════════════════════════════
+   CROSS-LINK BANNER
+═══════════════════════════════════════════════ */
+.cross-link-banner {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem 1.5rem;
+}
+.cl-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; color: var(--text3);
+  text-transform: uppercase; letter-spacing: .14em;
+  margin-bottom: .6rem;
+}
+.cl-links { display: flex; flex-wrap: wrap; gap: .5rem; }
+.cl-item {
+  padding: .38rem .85rem;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  text-decoration: none;
+  color: var(--text2);
+  font-size: .84rem;
+  transition: border-color .2s, color .2s;
+  border-radius: 2px;
+}
+.cl-item:hover { border-color: var(--primary); color: var(--primary); }
+
+/* ═══════════════════════════════════════════════
+   HINT / NOTE BOX
+═══════════════════════════════════════════════ */
+.hist-note {
+  background: var(--warn-bg);
+  border-left: 3px solid var(--warn3);
+  padding: .85rem 1rem;
+  border-radius: 0 6px 6px 0;
+  font-size: .84rem;
+  color: var(--text2);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+.hist-note strong { color: var(--text); font-weight: 600; }
+
+/* ═══════════════════════════════════════════════
+   FOOTER EXTRAS
+═══════════════════════════════════════════════ */
+.footer-tagline { font-size: 13px; color: var(--text3); margin: 4px 0 12px; }
+.footer-note    { font-size: 12px; color: var(--text3); margin-top: 16px; line-height: 1.6; }
+
+/* ═══════════════════════════════════════════════
    ANIMATIONS
 ═══════════════════════════════════════════════ */
 @keyframes fadeUp {
@@ -400,4 +513,9 @@ footer { border-top: 1px solid var(--border); padding: 40px 0; }
   .form-col { border-right: none; border-bottom: 1px solid var(--border); }
   .form-col:last-child { border-bottom: none; }
   .tips-grid { grid-template-columns: 1fr; }
+  .two-col   { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .wrap { padding: 0 16px; }
+  .form-pad { padding: 1rem 1.25rem; }
 }

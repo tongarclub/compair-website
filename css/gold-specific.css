@@ -145,17 +145,7 @@
 .rate-dot.sp500-dot { background: #2E7D32; }
 .rate-dot.fd-dot    { background: #888; }
 
-/* ── Tip box ─────────────────────────────────────────── */
-.hist-note {
-  background: var(--warn-bg);
-  border-left: 3px solid var(--warn3);
-  padding: .9rem 1rem;
-  border-radius: 0 8px 8px 0;
-  font-size: .85rem;
-  color: var(--text2);
-  line-height: 1.55;
-  margin-bottom: 1rem;
-}
+/* .hist-note is defined in shared.css — no override needed here */
 
 /* ── Share Row ───────────────────────────────────────── */
 .share-row {
