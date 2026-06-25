@@ -1,0 +1,57 @@
+/**
+ * Theme: Gold vs Fund ROI Calculator
+ * Palette: Deep Gold / Amber / Warm Parchment
+ *
+ * Distinguished from theme-ai.css by deeper amber primary
+ * and richer warm-tone surface colors.
+ */
+
+:root {
+  /* ── Backgrounds ─────────────────── */
+  --bg:        #F9F5EE;
+  --bg2:       #FEFCF8;
+  --surface:   #FFFFFF;
+  --surface2:  #F4EFE6;
+  --body-grad-1: rgba(184,134,11,.08);
+  --body-grad-2: rgba(139,107,30,.05);
+
+  /* ── Borders ─────────────────────── */
+  --border:    #E6DBCc;
+  --border2:   #C8B89A;
+
+  /* ── Text ────────────────────────── */
+  --text:      #1C1810;
+  --text2:     #6E5E42;
+  --text3:     #A8967A;
+
+  /* ── Primary Accent (Deep Gold) ─── */
+  --primary:   #B8860B;
+  --primary2:  #D4A52A;
+  --primary3:  #EDD27A;
+
+  /* ── Status Colors ───────────────── */
+  --ok:        #2E7D32;
+  --ok-bg:     #EBF5EC;
+  --warn:      #8B6914;
+  --warn-bg:   #FDF6E3;
+  --warn3:     #D4BC60;
+  --err:       #8B3A3A;
+  --err-bg:    #FDF0EF;
+  --info:      #1565C0;
+  --info-bg:   #E8F1FD;
+  --teal:      #00695C;
+  --teal-bg:   #E0F2F1;
+
+  /* ── Aliases ─────────────────────── */
+  --gold:      var(--primary);
+  --gold2:     var(--primary2);
+  --gold3:     var(--primary3);
+  --green:     var(--ok);
+  --green-bg:  var(--ok-bg);
+  --amber:     var(--warn);
+  --amber-bg:  var(--warn-bg);
+  --red:       var(--err);
+  --red-bg:    var(--err-bg);
+  --blue:      var(--info);
+  --blue-bg:   var(--info-bg);
+}

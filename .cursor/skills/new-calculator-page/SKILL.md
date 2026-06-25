@@ -13,18 +13,36 @@ disable-model-invocation: true
 ## โครงสร้างโปรเจกต์
 
 ```
-index.html                  ← หน้าแรก (domain cards grid)
+index.html                      ← หน้าแรก (domain cards grid)
 html/
-  ai-calculator.html        ← Domain A: GPU + LLM
-  solar-calculator.html     ← Domain B: Solar ROI
-  mac-llm-calculator.html   ← Domain C: Apple Silicon + LLM
+  ai-calculator.html            ← Domain A: GPU + LLM VRAM
+  solar-calculator.html         ← Domain B: Solar ROI
+  mac-llm-calculator.html       ← Domain C: Apple Silicon + LLM
+  ev-calculator.html            ← Domain D: EV vs Gasoline TCO
+  gold-calculator.html          ← Domain E: ทองคำ vs กองทุน ROI
+  image-gen-calculator.html     ← Domain F: AI Image Gen VRAM + Cost
+css/
+  theme-ai.css                  ← Gold/Warm palette (Domain A, C)
+  theme-solar.css               ← Green palette (Domain B)
+  theme-ev.css                  ← Beige/Warm palette (Domain D)
+  theme-gold.css                ← Deep Gold/Amber palette (Domain E)
+  theme-image-gen.css           ← Cool Indigo/Slate palette (Domain F)
+  shared.css                    ← All shared components
+  ai-specific.css               ← Domain A styles
+  solar-specific.css            ← Domain B styles
+  ev-specific.css               ← Domain D styles
+  gold-specific.css             ← Domain E styles
+  image-gen-specific.css        ← Domain F styles
 data/
-  ai-models/gpus.json       ← GPU data (50+ รุ่น)
-  ai-models/models.json     ← LLM model sizes
+  ai-models/gpus.json           ← GPU data (50+ รุ่น)
+  ai-models/models.json         ← LLM model sizes
+  ai-models/llm-models.json     ← Specific LLM models for detail pages
   solar/panels.json
   solar/inverters.json
-sitemap.xml                 ← ต้องเพิ่ม URL ใหม่ทุกครั้ง
+sitemap.xml                     ← ต้องเพิ่ม URL ใหม่ทุกครั้ง
 ```
+
+**Next Domain Letter**: G (Domain G onward)
 
 ---
 
@@ -169,8 +187,45 @@ Path ใน `html/*.html` ต้องใช้ `../` prefix:
 
 ## หน้าที่มีอยู่แล้ว (อย่า duplicate keyword)
 
-| หน้า | Keywords หลัก |
-|---|---|
-| `ai-calculator.html` | GPU รัน LLM, VRAM calculator, RTX vs LLM |
-| `solar-calculator.html` | โซล่าเซลล์คืนทุน, ROI 25 ปี |
-| `mac-llm-calculator.html` | MacBook Pro รัน LLM, Apple Silicon vs RTX |
+| หน้า | Domain | Theme CSS | Keywords หลัก |
+|---|---|---|---|
+| `ai-calculator.html` | A | theme-ai.css | GPU รัน LLM, VRAM calculator, RTX vs LLM |
+| `solar-calculator.html` | B | theme-solar.css | โซล่าเซลล์คืนทุน, ROI 25 ปี |
+| `mac-llm-calculator.html` | C | theme-ai.css | MacBook Pro รัน LLM, Apple Silicon vs RTX |
+| `ev-calculator.html` | D | theme-ev.css | BYD Seal ค่าชาร์จ, EV vs น้ำมัน, TCO |
+| `gold-calculator.html` | E | theme-gold.css | ทองคำ vs กองทุน, ลงทุน Compound interest |
+| `image-gen-calculator.html` | F | theme-image-gen.css | FLUX.1 VRAM, SD XL GPU, Midjourney vs self-hosted |
+
+---
+
+## Share URL Pattern (ทุกหน้าต้องมี)
+
+เพิ่ม `syncURL()`, `loadFromURL()`, และปุ่ม Share ทุกหน้าใหม่:
+
+```js
+function syncURL() {
+  const params = new URLSearchParams({ key1: val1, key2: val2 });
+  history.replaceState(null, '', '?' + params.toString());
+}
+function loadFromURL() {
+  const p = new URLSearchParams(location.search);
+  if (!p.has('key1')) return;
+  document.getElementById('input1').value = p.get('key1');
+  // ...restore all inputs
+}
+function copyURL() {
+  navigator.clipboard.writeText(location.href).then(() => {
+    const msg = document.getElementById('shareMsg');
+    msg.style.opacity = '1';
+    setTimeout(() => msg.style.opacity = '0', 2500);
+  });
+}
+```
+
+Share button HTML:
+```html
+<div class="share-row">
+  <button class="share-btn" id="shareBtn" onclick="copyURL()">⎘ แชร์ผลนี้</button>
+  <span id="shareMsg">✓ คัดลอก URL แล้ว</span>
+</div>
+```

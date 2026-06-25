@@ -27,23 +27,29 @@ disable-model-invocation: true
 
 ```
 css/
-├── theme-ai.css       ← :root variables — Gold/Warm Brown palette (AI pages)
-├── theme-solar.css    ← :root variables — Forest Green palette (Solar page)
-├── theme-ev.css       ← :root variables — Warm Beige/Gold palette (EV page)
-├── shared.css         ← ทุกอย่างที่ใช้ร่วมกัน (nav, hero, forms, tips, footer)
-├── ai-specific.css    ← GPU card, model cards, quant table, score bar
-├── solar-specific.css ← summary cards, ROI table, panel compare
-├── ev-specific.css    ← preset cards, bar chart, TCO table, solar CTA
-└── gpu-page.css       ← GPU/Model detail pages (html/gpu/, html/model/)
+├── theme-ai.css           ← :root variables — Gold/Warm Brown palette (Domain A, C)
+├── theme-solar.css        ← :root variables — Forest Green palette (Domain B)
+├── theme-ev.css           ← :root variables — Warm Beige/Gold palette (Domain D)
+├── theme-gold.css         ← :root variables — Deep Gold/Amber palette (Domain E)
+├── theme-image-gen.css    ← :root variables — Cool Indigo/Slate palette (Domain F)
+├── shared.css             ← ทุกอย่างที่ใช้ร่วมกัน (nav, hero, forms, tips, footer)
+├── ai-specific.css        ← GPU card, model cards, quant table, score bar
+├── solar-specific.css     ← summary cards, ROI table, panel compare
+├── ev-specific.css        ← preset cards, bar chart, TCO table, solar CTA
+├── gold-specific.css      ← asset cards, bar chart, rate inputs (Domain E)
+├── image-gen-specific.css ← model compat table, cost cards, vram chips (Domain F)
+└── gpu-page.css           ← GPU/Model detail pages (html/gpu/, html/model/)
 ```
 
 ## Rule: แก้ที่ไหน?
 
 | ต้องการแก้ | ไฟล์ |
 |---|---|
-| สี accent ของหน้า AI | `css/theme-ai.css` → `--primary`, `--primary2`, `--primary3` |
-| สี accent ของหน้า Solar | `css/theme-solar.css` → `--primary`, `--primary2`, `--primary3` |
-| สี accent ของหน้า EV | `css/theme-ev.css` → `--primary`, `--primary2`, `--primary3` |
+| สี accent ของหน้า AI (Domain A, C) | `css/theme-ai.css` → `--primary`, `--primary2`, `--primary3` |
+| สี accent ของหน้า Solar (Domain B) | `css/theme-solar.css` → `--primary`, `--primary2`, `--primary3` |
+| สี accent ของหน้า EV (Domain D) | `css/theme-ev.css` → `--primary`, `--primary2`, `--primary3` |
+| สี accent ของหน้า Gold (Domain E) | `css/theme-gold.css` → `--primary`, `--primary2`, `--primary3` |
+| สี accent ของหน้า Image Gen (Domain F) | `css/theme-image-gen.css` → `--primary`, `--primary2`, `--primary3` |
 | Typography, font size | `css/shared.css` |
 | Navigation bar | `css/shared.css` → section `NAVIGATION` |
 | Hero section | `css/shared.css` → section `HERO` |
@@ -53,18 +59,22 @@ css/
 | GPU card, model cards, quant table | `css/ai-specific.css` |
 | Solar ROI table, panel compare | `css/solar-specific.css` |
 | EV preset cards, bar chart, TCO table | `css/ev-specific.css` |
+| Gold asset cards, rate inputs, bar chart | `css/gold-specific.css` |
+| Image Gen model table, cost cards, VRAM chips | `css/image-gen-specific.css` |
 
 ## HTML Page → CSS Files
 
-| HTML file | โหลด CSS (ตามลำดับ) |
-|---|---|
-| `index.html` | `theme-ai.css` → `shared.css` |
-| `html/ai-calculator.html` | `theme-ai.css` → `shared.css` → `ai-specific.css` |
-| `html/solar-calculator.html` | `theme-solar.css` → `shared.css` → `solar-specific.css` |
-| `html/ev-calculator.html` | `theme-ev.css` → `shared.css` → `ev-specific.css` |
-| `html/mac-llm-calculator.html` | `theme-ai.css` → `shared.css` |
-| `html/gpu/*.html` | `gpu-page.css` (standalone, no shared.css) |
-| `html/model/*.html` | `gpu-page.css` (standalone, no shared.css) |
+| HTML file | Domain | โหลด CSS (ตามลำดับ) |
+|---|---|---|
+| `index.html` | — | `theme-ai.css` → `shared.css` |
+| `html/ai-calculator.html` | A | `theme-ai.css` → `shared.css` → `ai-specific.css` |
+| `html/solar-calculator.html` | B | `theme-solar.css` → `shared.css` → `solar-specific.css` |
+| `html/mac-llm-calculator.html` | C | `theme-ai.css` → `shared.css` |
+| `html/ev-calculator.html` | D | `theme-ev.css` → `shared.css` → `ev-specific.css` |
+| `html/gold-calculator.html` | E | `theme-gold.css` → `shared.css` → `gold-specific.css` |
+| `html/image-gen-calculator.html` | F | `theme-image-gen.css` → `shared.css` → `image-gen-specific.css` |
+| `html/gpu/*.html` | — | `gpu-page.css` (standalone, no shared.css) |
+| `html/model/*.html` | — | `gpu-page.css` (standalone, no shared.css) |
 
 ## ⚠️ Class Names — ใช้ให้ถูกต้อง (shared.css)
 

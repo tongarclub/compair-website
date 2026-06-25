@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-J3C1X16FZ5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-J3C1X16FZ5');
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Image Gen VRAM Calculator — FLUX vs SD ใช้ GPU อะไรรันได้? | ComPair</title>
+<meta name="description" content="เช็ค VRAM ที่ต้องการสำหรับ AI Image Generation — FLUX.1, Stable Diffusion XL, SD 3.5 รันบน RTX 4060/4070/4090 ได้ไหม? เปรียบเทียบ Self-hosted vs Midjourney vs DALL-E 3">
+<meta name="keywords" content="FLUX.1 VRAM ต้องการเท่าไหร่, Stable Diffusion รันบน RTX 4060, AI Image Gen GPU, SDXL VRAM minimum, FLUX Dev 12GB, Midjourney vs Stable Diffusion ไทย, AI วาดรูป GPU">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://tongarclub.github.io/compair-website/html/image-gen-calculator.html">
+
+<!-- Open Graph -->
+<meta property="og:type"        content="website">
+<meta property="og:url"         content="https://tongarclub.github.io/compair-website/html/image-gen-calculator.html">
+<meta property="og:title"       content="AI Image Gen VRAM Calculator — FLUX vs SD | ComPair">
+<meta property="og:description" content="GPU VRAM เท่าไหร่รัน FLUX.1, Stable Diffusion, SD XL ได้? คำนวณ self-hosted vs cloud ทันที">
+<meta property="og:locale"      content="th_TH">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- JSON-LD: WebPage -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "AI Image Gen VRAM Calculator",
+  "url": "https://tongarclub.github.io/compair-website/html/image-gen-calculator.html",
+  "description": "ตรวจสอบ GPU VRAM ที่ต้องการสำหรับ AI Image Generation — FLUX.1, Stable Diffusion XL, SD 3.5",
+  "inLanguage": "th",
+  "isPartOf": { "@type": "WebSite", "url": "https://tongarclub.github.io/compair-website/" }
+}
+</script>
+
+<!-- JSON-LD: FAQPage -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "FLUX.1 ต้องการ VRAM เท่าไหร่?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "FLUX.1 Schnell (Q4/Q8 quantized) ต้องการ VRAM ขั้นต่ำ 6–8 GB รัน RTX 4060 8GB ได้สบาย FLUX.1 Dev (FP8) ต้องการ 10–14 GB เหมาะกับ RTX 4070 12GB หรือสูงกว่า ส่วน FLUX.1 Dev (BF16 full precision) ต้องการ 20–24 GB สำหรับ RTX 4090 เท่านั้น"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Stable Diffusion XL ต้องการ VRAM เท่าไหร่?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Stable Diffusion XL (SDXL) ต้องการ VRAM ขั้นต่ำ 6 GB (ด้วย xformers/offloading) หรือ 8 GB สำหรับ full resolution 1024×1024 โดยไม่มีปัญหา RTX 4060 8GB เป็นจุด minimum ที่ดี"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "RTX 4060 8GB รัน AI Image Gen ได้ไหม?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "RTX 4060 8GB รัน Stable Diffusion 1.5, SDXL, SD 3.5 (FP8), และ FLUX.1 Schnell (Q4) ได้ทุกตัว แต่รัน FLUX.1 Dev (FP8) ไม่ได้เพราะต้องการ 10–14 GB เหมาะสำหรับผู้เริ่มต้น self-hosted image gen งบประมาณสมเหตุสมผล"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Self-hosted vs Midjourney อันไหนคุ้มกว่า?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ถ้าสร้างรูปมากกว่า 500 รูป/เดือน self-hosted ด้วย RTX 4060 (ราคา ~11,000 บาท) คืนทุนใน 4–6 เดือนเทียบกับ Midjourney Standard $30/เดือน (~1,050 บาท) นอกจากนี้ self-hosted ไม่มีข้อจำกัดด้านเนื้อหา และ customization ได้เต็มที่ผ่าน LoRA, ControlNet"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "DALL-E 3 vs Stable Diffusion คุณภาพต่างกันไหม?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "DALL-E 3 (ผ่าน ChatGPT Plus) เก่งด้านการเข้าใจ text prompt ภาษาธรรมชาติ และ prompt following แต่ rate-limited และ $0.04–0.12/ภาพ FLUX.1 Dev (self-hosted) ให้คุณภาพใกล้เคียงหรือดีกว่าในแง่ photorealism แต่ต้องการ GPU 12GB+ และ setup เอง"
+      }
+    }
+  ]
+}
+</script>
+
+<!-- CSS: theme → shared → page-specific -->
+<link rel="stylesheet" href="../css/theme-image-gen.css">
+<link rel="stylesheet" href="../css/shared.css">
+<link rel="stylesheet" href="../css/image-gen-specific.css">
+</head>
+<body>
+
+<!-- ── Navigation ─────────────────────────────────────── -->
+<nav class="nav">
+  <a class="logo" href="../index.html">◈ ComPair</a>
+  <div class="nav-right">
+    <a href="ai-calculator.html">GPU VRAM</a>
+    <a href="mac-llm-calculator.html">Mac AI</a>
+    <a href="gold-calculator.html">ทองคำ vs กองทุน</a>
+  </div>
+</nav>
+
+<!-- ── Hero ───────────────────────────────────────────── -->
+<div class="hero">
+  <div class="wrap">
+    <div class="hero-chips">
+      <span class="hero-chip">◈ Domain F · AI Image Gen</span>
+      <span class="hero-chip">FLUX · Stable Diffusion · DALL-E</span>
+    </div>
+    <h1 class="hero-title">AI Image Gen<br>GPU ไหนรันได้บ้าง?</h1>
+    <p class="hero-sub">เลือก VRAM ของ GPU คุณ — ระบบแสดง model ที่รองรับ<br>พร้อมเปรียบเทียบต้นทุน Self-hosted vs Midjourney vs DALL-E 3 ทันที</p>
+  </div>
+</div>
+
+<!-- ── Main Content ───────────────────────────────────── -->
+<main class="wrap">
+  <div class="two-col">
+
+    <!-- ── Left: GPU Selector ─────────────────────── -->
+    <section class="form-section">
+      <div class="form-header">
+        <span class="form-icon">🖥️</span>
+        <div>
+          <div class="form-title">เลือก GPU ของคุณ</div>
+          <div class="form-sub">เลือกจากรุ่นยอดนิยม หรือกรอก VRAM เอง</div>
+        </div>
+      </div>
+
+      <!-- GPU Presets -->
+      <div class="field-label" style="margin-bottom:.5rem;">GPU รุ่นยอดนิยม</div>
+      <div class="vram-chips" id="gpuChips"></div>
+
+      <!-- Manual VRAM input -->
+      <div class="field-group">
+        <label class="field-label" for="vramInput">หรือกรอก VRAM (GB)</label>
+        <input class="num-input" type="number" id="vramInput" value="8" min="4" max="80" step="2" oninput="renderFromInput()">
+      </div>
+
+      <!-- Usage intensity -->
+      <div class="field-group" style="margin-top:1rem;">
+        <label class="field-label" for="imagesPerMonth">จำนวนรูปที่สร้าง / เดือน</label>
+        <input class="num-input" type="number" id="imagesPerMonth" value="500" min="10" step="50" oninput="renderCost()">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label" for="hoursPerDay">ชั่วโมงใช้งาน / วัน (สำหรับ electricity)</label>
+        <input class="num-input" type="number" id="hoursPerDay" value="3" min="0.5" max="24" step="0.5" oninput="renderCost()">
+      </div>
+
+      <!-- Notes -->
+      <div class="hist-note" style="background:var(--info-bg);border-color:var(--info);">
+        💡 <strong>หมายเหตุ:</strong> VRAM requirement ขึ้นอยู่กับ batch size, resolution, และ VAE<br>
+        ค่าที่แสดงเป็น <strong>ขั้นต่ำ recommended</strong> สำหรับ 1024×1024 @ batch 1
+      </div>
+    </section>
+
+    <!-- ── Right: Results ─────────────────────────── -->
+    <section class="form-section">
+      <div class="form-header">
+        <span class="form-icon">🎨</span>
+        <div>
+          <div class="form-title">Model ที่รองรับ — <span id="vramLabel">8</span> GB VRAM</div>
+          <div class="form-sub" id="compatSummary">—</div>
+        </div>
+      </div>
+
+      <!-- Compat Table -->
+      <div style="overflow-x:auto;">
+        <table class="model-table" id="modelTable">
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>VRAM</th>
+              <th>รัน?</th>
+              <th>ความเร็ว</th>
+              <th>คุณภาพ</th>
+            </tr>
+          </thead>
+          <tbody id="modelBody"></tbody>
+        </table>
+      </div>
+
+      <!-- Share -->
+      <div class="share-row">
+        <button class="share-btn" id="shareBtn" onclick="copyURL()">⎘ แชร์ผลนี้</button>
+        <span id="shareMsg">✓ คัดลอก URL แล้ว</span>
+      </div>
+    </section>
+  </div>
+
+  <!-- ── Cost Comparison ───────────────────────────────── -->
+  <section class="form-section" style="margin-bottom:2rem;">
+    <div class="form-header">
+      <span class="form-icon">💰</span>
+      <div>
+        <div class="form-title">เปรียบเทียบต้นทุน — Self-hosted vs Cloud</div>
+        <div class="form-sub">คำนวณจากจำนวนรูปต่อเดือนที่กำหนด</div>
+      </div>
+    </div>
+    <div class="cost-grid" id="costGrid"></div>
+    <div class="breakeven-bar" id="breakevenNote"></div>
+  </section>
+
+  <!-- ── Static Model Guide ────────────────────────────── -->
+  <section class="tips-section">
+    <h2 class="tips-heading">คู่มือเลือก AI Image Gen — เหมาะกับใคร?</h2>
+    <div class="tips-grid">
+      <div class="tip-card">
+        <div class="tip-icon">⚡</div>
+        <div class="tip-title">FLUX.1 Schnell — งบน้อย เร็วสุด</div>
+        <div class="tip-body">เหมาะกับ RTX 4060 8GB ขึ้นไป ใช้ <strong>Q4/Q8 quantized</strong> ต้องการ VRAM 6–8 GB สร้างรูปใน 3–8 วินาที/ภาพ คุณภาพดีมากสำหรับ generation ด่วน</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">🔮</div>
+        <div class="tip-title">FLUX.1 Dev — คุณภาพสูงสุด self-hosted</div>
+        <div class="tip-body">ต้องการ RTX 4070 12GB+ (FP8) หรือ RTX 4090 (BF16) ให้คุณภาพ photorealism ระดับ commercial ปรับได้ผ่าน LoRA, ControlNet, IP-Adapter</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">🎯</div>
+        <div class="tip-title">Stable Diffusion XL — ecosystem ใหญ่สุด</div>
+        <div class="tip-body">มี model checkpoint, LoRA, ControlNet มากกว่า 100,000 รายการบน CivitAI รัน RTX 4060 8GB ขึ้นไป ใช้ Automatic1111 หรือ ComfyUI</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">☁️</div>
+        <div class="tip-title">Midjourney — ง่ายสุด ไม่ต้องลง GPU</div>
+        <div class="tip-body">ใช้ผ่าน Discord หรือ Web UI เริ่มต้น $10/เดือน (200 ภาพ) ไม่ต้องการ GPU แต่มีข้อจำกัดด้านเนื้อหาและ customization ราคา scale ตามการใช้งาน</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">🤖</div>
+        <div class="tip-title">DALL-E 3 — เข้าใจ prompt ดีที่สุด</div>
+        <div class="tip-body">ผ่าน ChatGPT Plus ($20/เดือน) หรือ API ($0.04–0.12/ภาพ) เก่งเรื่อง text rendering ในภาพและ instruction following แต่ไม่เหมาะกับ high-volume generation</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">💡</div>
+        <div class="tip-title">เลือก GPU ให้เหมาะกับงาน</div>
+        <div class="tip-body"><strong>เริ่มต้น:</strong> RTX 4060 8GB (~11,000฿) · SDXL + FLUX Schnell<br><strong>จริงจัง:</strong> RTX 4070 12GB (~19,000฿) · FLUX Dev FP8<br><strong>โปร:</strong> RTX 4090 24GB (~55,000฿) · ทุก model full precision</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Cross-links ───────────────────────────────────── -->
+  <div class="cross-link-banner" style="margin-bottom:2rem;">
+    <div class="cl-title">เครื่องมือคำนวณอื่นๆ</div>
+    <div class="cl-links">
+      <a class="cl-item" href="ai-calculator.html">🖥️ AI GPU VRAM (LLM)</a>
+      <a class="cl-item" href="mac-llm-calculator.html">🍎 Mac LLM</a>
+      <a class="cl-item" href="gold-calculator.html">💰 ทองคำ vs กองทุน</a>
+      <a class="cl-item" href="ev-calculator.html">🚗 EV Cost</a>
+    </div>
+  </div>
+</main>
+
+<!-- ── Footer ─────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-logo">◈ ComPair</div>
+    <div class="footer-tagline">เปรียบเทียบอย่างมีข้อมูล — ตัดสินใจอย่างมั่นใจ</div>
+    <div class="footer-links">
+      <a href="../index.html">Home</a>
+      <a href="ai-calculator.html">AI GPU</a>
+      <a href="mac-llm-calculator.html">Mac AI</a>
+      <a href="gold-calculator.html">ทองคำ</a>
+      <a href="ev-calculator.html">EV</a>
+    </div>
+    <div class="footer-note">ข้อมูล VRAM requirements อ้างอิงจาก community benchmarks — อาจต่างกันตาม driver, resolution, และ settings</div>
+  </div>
+</footer>
+
+<script>
+// ── Model Data ────────────────────────────────────────────
+const MODELS = [
+  {
+    name: 'SD 1.5',
+    badge: 'local',
+    vramMin: 4,
+    vramRec: 4,
+    speed: 'เร็วมาก',
+    speedSec: 2,
+    quality: 3,
+    desc: 'Classic 512×512, ecosystem ใหญ่',
+    imgPerHour: 600,
+  },
+  {
+    name: 'Stable Diffusion XL',
+    badge: 'local',
+    vramMin: 6,
+    vramRec: 8,
+    speed: 'เร็ว',
+    speedSec: 8,
+    quality: 4,
+    desc: '1024×1024, LoRA ล้านตัว',
+    imgPerHour: 250,
+  },
+  {
+    name: 'SD 3.5 Large (FP8)',
+    badge: 'local',
+    vramMin: 8,
+    vramRec: 10,
+    speed: 'ปานกลาง',
+    speedSec: 12,
+    quality: 4.5,
+    desc: 'Improved architecture จาก SDXL',
+    imgPerHour: 150,
+  },
+  {
+    name: 'FLUX.1 Schnell (Q4)',
+    badge: 'rec',
+    vramMin: 6,
+    vramRec: 8,
+    speed: 'เร็วมาก',
+    speedSec: 5,
+    quality: 4.5,
+    desc: 'Best value สำหรับ GPU น้อย',
+    imgPerHour: 400,
+  },
+  {
+    name: 'FLUX.1 Dev (FP8)',
+    badge: 'local',
+    vramMin: 10,
+    vramRec: 12,
+    speed: 'ปานกลาง',
+    speedSec: 18,
+    quality: 5,
+    desc: 'คุณภาพสูงสุด self-hosted',
+    imgPerHour: 100,
+  },
+  {
+    name: 'FLUX.1 Dev (BF16)',
+    badge: 'local',
+    vramMin: 20,
+    vramRec: 24,
+    speed: 'ปานกลาง',
+    speedSec: 12,
+    quality: 5,
+    desc: 'Full precision — RTX 4090 only',
+    imgPerHour: 130,
+  },
+  {
+    name: 'Midjourney Basic',
+    badge: 'cloud',
+    vramMin: 0,
+    vramRec: 0,
+    speed: 'ปานกลาง',
+    speedSec: 30,
+    quality: 5,
+    desc: '$10/mo — 200 fast images',
+    imgPerHour: null,
+    cloudPricePerImg: null,
+    cloudMonthly: 350,
+    cloudImages: 200,
+  },
+  {
+    name: 'Midjourney Standard',
+    badge: 'cloud',
+    vramMin: 0,
+    vramRec: 0,
+    speed: 'ปานกลาง',
+    speedSec: 25,
+    quality: 5,
+    desc: '$30/mo — unlimited relax',
+    imgPerHour: null,
+    cloudMonthly: 1050,
+    cloudImages: 999999,
+  },
+  {
+    name: 'DALL-E 3 (API)',
+    badge: 'cloud',
+    vramMin: 0,
+    vramRec: 0,
+    speed: 'ช้า',
+    speedSec: 20,
+    quality: 4.5,
+    desc: '$0.04–0.12/image — API',
+    imgPerHour: null,
+    cloudPricePerImg: 1.4,
+    cloudMonthly: null,
+  },
+];
+
+const GPU_PRESETS = [
+  { label: 'GTX 1650 (4 GB)',   vram: 4,  watt: 75,  priceTHB: 4500  },
+  { label: 'RTX 3060 (8 GB)',   vram: 8,  watt: 170, priceTHB: 9000  },
+  { label: 'RTX 4060 (8 GB)',   vram: 8,  watt: 115, priceTHB: 11000 },
+  { label: 'RTX 4070 (12 GB)',  vram: 12, watt: 200, priceTHB: 19000 },
+  { label: 'RTX 4070 Ti (12 GB)',vram: 12, watt: 285, priceTHB: 28000 },
+  { label: 'RTX 4080 (16 GB)',  vram: 16, watt: 320, priceTHB: 40000 },
+  { label: 'RTX 5080 (16 GB)',  vram: 16, watt: 360, priceTHB: 45000 },
+  { label: 'RTX 4090 (24 GB)',  vram: 24, watt: 450, priceTHB: 55000 },
+  { label: 'RTX 5090 (32 GB)',  vram: 32, watt: 575, priceTHB: 85000 },
+];
+
+let selectedGpuIdx = 2; // RTX 4060 default
+
+function buildChips() {
+  const c = document.getElementById('gpuChips');
+  c.innerHTML = GPU_PRESETS.map((g, i) => `
+    <div class="vram-chip ${i === selectedGpuIdx ? 'active' : ''}" onclick="selectGpu(${i})">${g.label}</div>
+  `).join('');
+}
+
+function selectGpu(idx) {
+  selectedGpuIdx = idx;
+  document.getElementById('vramInput').value = GPU_PRESETS[idx].vram;
+  buildChips();
+  renderAll();
+}
+
+function renderFromInput() {
+  const v = parseInt(document.getElementById('vramInput').value) || 8;
+  selectedGpuIdx = -1;
+  buildChips();
+  renderAll();
+}
+
+function getVram() {
+  return parseInt(document.getElementById('vramInput').value) || 8;
+}
+
+function stars(n) {
+  const full = Math.floor(n);
+  const half = n % 1 >= 0.5 ? 1 : 0;
+  return '★'.repeat(full) + (half ? '½' : '') + '☆'.repeat(5 - full - half);
+}
+
+function compatIcon(vram, model) {
+  if (model.badge === 'cloud') return '<span class="compat-yes">☁</span>';
+  if (vram >= model.vramRec) return '<span class="compat-yes">✓</span>';
+  if (vram >= model.vramMin) return '<span class="compat-warn">△</span>';
+  return '<span class="compat-no">✗</span>';
+}
+
+function badgeHtml(badge, name) {
+  if (badge === 'cloud') return `<span class="model-type-badge badge-cloud">Cloud</span>`;
+  if (badge === 'rec')   return `<span class="model-type-badge badge-rec">推薦</span>`;
+  return `<span class="model-type-badge badge-local">Local</span>`;
+}
+
+function renderModelTable() {
+  const vram = getVram();
+  document.getElementById('vramLabel').textContent = vram;
+
+  const localModels = MODELS.filter(m => m.badge !== 'cloud');
+  const compatible  = localModels.filter(m => vram >= m.vramMin).length;
+  document.getElementById('compatSummary').textContent =
+    `รัน local model ได้ ${compatible}/${localModels.length} รุ่น`;
+
+  const tbody = document.getElementById('modelBody');
+  tbody.innerHTML = MODELS.map(m => {
+    const isCloud   = m.badge === 'cloud';
+    const canRun    = isCloud || vram >= m.vramMin;
+    const rowClass  = canRun ? 'compat-row' : 'no-compat';
+    const vramCell  = isCloud ? '—' : `${m.vramMin}–${m.vramRec} GB`;
+    const runCell   = compatIcon(vram, m);
+    const qualCell  = `<span title="${m.quality}/5">${stars(m.quality)}</span>`;
+    return `
+      <tr class="${rowClass}">
+        <td>
+          <span class="model-name-cell">${m.name}</span>${badgeHtml(m.badge)}
+          <div style="font-size:.75rem;color:var(--text3);margin-top:.2rem;">${m.desc}</div>
+        </td>
+        <td style="font-family:'DM Mono',monospace;font-size:.82rem;">${vramCell}</td>
+        <td style="text-align:center;">${runCell}</td>
+        <td style="font-size:.82rem;">${m.speed}<br><span style="font-family:'DM Mono',monospace;font-size:.72rem;color:var(--text3);">~${m.speedSec}s</span></td>
+        <td style="font-size:.85rem;color:#B8860B;">${qualCell}</td>
+      </tr>`;
+  }).join('');
+}
+
+function renderCost() {
+  const vram      = getVram();
+  const imgMonth  = parseInt(document.getElementById('imagesPerMonth').value) || 500;
+  const hoursDay  = parseFloat(document.getElementById('hoursPerDay').value) || 3;
+  const gpu       = selectedGpuIdx >= 0 ? GPU_PRESETS[selectedGpuIdx] : { priceTHB: 11000, watt: 115 };
+  const ELEC_RATE = 4.18; // บาท/kWh
+  const AMORT_YRS = 3;
+
+  // Self-hosted monthly cost
+  const gpuMonthly   = gpu.priceTHB / (AMORT_YRS * 12);
+  const kwhMonth     = (gpu.watt / 1000) * hoursDay * 30;
+  const elecMonth    = kwhMonth * ELEC_RATE;
+  const selfHostedTot = gpuMonthly + elecMonth;
+
+  // Midjourney
+  const mjBasic = 350;    // $10
+  const mjStd   = 1050;   // $30
+  const mjPro   = 2100;   // $60
+
+  // DALL-E 3 ($0.04/img standard)
+  const dallePerImg = 0.04 * 35; // to THB
+  const dalleMonth  = dallePerImg * imgMonth;
+
+  const plans = [
+    {
+      icon: '🖥️', label: 'Self-hosted', sub: `GPU ${gpu.priceTHB.toLocaleString('th-TH')} ฿ / ${AMORT_YRS}ปี + ค่าไฟ`,
+      monthly: selfHostedTot, perImg: selfHostedTot / imgMonth, best: false,
+    },
+    {
+      icon: '🎨', label: 'Midjourney Basic', sub: `$10/เดือน — 200 fast images`,
+      monthly: mjBasic, perImg: null, best: false,
+    },
+    {
+      icon: '🎨', label: 'Midjourney Standard', sub: `$30/เดือน — unlimited relax`,
+      monthly: mjStd, perImg: null, best: false,
+    },
+    {
+      icon: '🤖', label: 'DALL-E 3 (API)', sub: `~$0.04/image × ${imgMonth} images`,
+      monthly: dalleMonth, perImg: dallePerImg, best: false,
+    },
+  ];
+
+  const minIdx = plans.reduce((a, b, i, arr) => arr[i].monthly < arr[a].monthly ? i : a, 0);
+  plans[minIdx].best = true;
+
+  const grid = document.getElementById('costGrid');
+  grid.innerHTML = plans.map(p => `
+    <div class="cost-card ${p.best ? 'best-value' : ''}">
+      <div class="cost-icon">${p.icon}</div>
+      <div class="cost-label">${p.label}</div>
+      <div class="cost-price">${Math.round(p.monthly).toLocaleString('th-TH')} ฿/เดือน</div>
+      <div class="cost-sub">${p.sub}</div>
+      ${p.perImg ? `<div class="cost-sub">${p.perImg.toFixed(2)} ฿/ภาพ</div>` : ''}
+      ${p.best ? '<div class="best-badge">🏆 ประหยัดสุด</div>' : ''}
+    </div>
+  `).join('');
+
+  // Break-even note
+  const breakevenMonths = Math.ceil(gpu.priceTHB / (mjStd - elecMonth));
+  const note = document.getElementById('breakevenNote');
+  if (breakevenMonths > 0 && breakevenMonths < 60) {
+    note.innerHTML = `💡 <strong>Break-even:</strong> ถ้าใช้แทน Midjourney Standard ($30/เดือน) — GPU ${gpu.priceTHB.toLocaleString('th-TH')} ฿ คืนทุนใน <strong>~${breakevenMonths} เดือน</strong> (ประหยัด ${Math.round(mjStd - selfHostedTot).toLocaleString('th-TH')} ฿/เดือนหลังจากนั้น)`;
+  } else {
+    note.innerHTML = `ℹ️ คำนวณ break-even อ้างอิงค่าไฟ ${ELEC_RATE} บาท/kWh และ GPU amortize ${AMORT_YRS} ปี`;
+  }
+
+  syncURL();
+}
+
+function renderAll() {
+  renderModelTable();
+  renderCost();
+}
+
+// ── Share URL ─────────────────────────────────────────────
+function syncURL() {
+  const vram   = getVram();
+  const imgs   = document.getElementById('imagesPerMonth').value;
+  const hrs    = document.getElementById('hoursPerDay').value;
+  const params = new URLSearchParams({ vram, imgs, hrs });
+  if (selectedGpuIdx >= 0) params.set('gpu', selectedGpuIdx);
+  history.replaceState(null, '', '?' + params.toString());
+}
+
+function loadFromURL() {
+  const p = new URLSearchParams(location.search);
+  if (!p.has('vram') && !p.has('gpu')) return;
+  if (p.has('gpu')) {
+    const idx = parseInt(p.get('gpu'));
+    if (idx >= 0 && idx < GPU_PRESETS.length) {
+      selectedGpuIdx = idx;
+      document.getElementById('vramInput').value = GPU_PRESETS[idx].vram;
+    }
+  } else if (p.has('vram')) {
+    document.getElementById('vramInput').value = p.get('vram');
+    selectedGpuIdx = -1;
+  }
+  if (p.has('imgs')) document.getElementById('imagesPerMonth').value = p.get('imgs');
+  if (p.has('hrs'))  document.getElementById('hoursPerDay').value    = p.get('hrs');
+}
+
+function copyURL() {
+  navigator.clipboard.writeText(location.href).then(() => {
+    const msg = document.getElementById('shareMsg');
+    msg.style.opacity = '1';
+    setTimeout(() => msg.style.opacity = '0', 2500);
+  });
+}
+
+// ── Init ─────────────────────────────────────────────────
+loadFromURL();
+buildChips();
+renderAll();
+</script>
+</body>
+</html>

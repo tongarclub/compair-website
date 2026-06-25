@@ -1,0 +1,179 @@
+/* ── Gold vs Fund — Page-specific styles ─────────────── */
+
+/* ── Asset Chips ──────────────────────────────────────── */
+.asset-chips {
+  display: flex;
+  gap: .5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+.asset-chip {
+  padding: .45rem 1rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  font-family: 'DM Mono', monospace;
+  font-size: .8rem;
+  cursor: pointer;
+  color: var(--text2);
+  transition: all .2s;
+  white-space: nowrap;
+}
+.asset-chip.active,
+.asset-chip:hover {
+  border-color: var(--primary);
+  background: var(--primary3);
+  color: var(--text);
+  transform: translateY(-1px);
+}
+
+/* ── Results Grid ─────────────────────────────────────── */
+.asset-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.asset-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem 1.25rem 1rem;
+  transition: border-color .2s, transform .2s;
+}
+.asset-card:hover { border-color: var(--primary2); transform: translateY(-2px); }
+.asset-card.winner {
+  border-color: var(--primary);
+  background: linear-gradient(135deg, #FFFCE8 0%, #FFF8D6 100%);
+  box-shadow: 0 4px 16px rgba(184,134,11,.12);
+}
+.asset-card .ac-icon { font-size: 1.5rem; margin-bottom: .5rem; }
+.asset-card .ac-label {
+  font-family: 'DM Mono', monospace;
+  font-size: .75rem;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  margin-bottom: .25rem;
+}
+.asset-card .ac-value {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.1;
+}
+.asset-card .ac-rate {
+  font-size: .8rem;
+  color: var(--text2);
+  margin-top: .3rem;
+}
+.asset-card.winner .ac-value { color: var(--primary); }
+.winner-badge {
+  display: inline-block;
+  font-size: .7rem;
+  font-family: 'DM Mono', monospace;
+  background: var(--primary);
+  color: #fff;
+  padding: .2rem .55rem;
+  border-radius: 4px;
+  margin-top: .5rem;
+}
+
+/* ── Bar Chart ────────────────────────────────────────── */
+.bar-chart { display: flex; flex-direction: column; gap: .9rem; }
+.bar-row { display: flex; align-items: center; gap: .75rem; }
+.bar-row-label {
+  font-size: .85rem;
+  color: var(--text2);
+  min-width: 130px;
+  text-align: right;
+  flex-shrink: 0;
+}
+.bar-track {
+  flex: 1;
+  background: var(--surface2);
+  border-radius: 4px;
+  height: 22px;
+  overflow: hidden;
+  position: relative;
+}
+.bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width .6s cubic-bezier(.25,.8,.25,1);
+  position: relative;
+}
+.bar-fill.gold-bar    { background: linear-gradient(90deg, var(--primary), var(--primary3)); }
+.bar-fill.thai-bar    { background: linear-gradient(90deg, #1565C0, #90CAF9); }
+.bar-fill.sp500-bar   { background: linear-gradient(90deg, #2E7D32, #81C784); }
+.bar-fill.fd-bar      { background: linear-gradient(90deg, #666, #aaa); }
+.bar-amount {
+  font-family: 'DM Mono', monospace;
+  font-size: .8rem;
+  color: var(--text2);
+  min-width: 100px;
+  flex-shrink: 0;
+}
+
+/* ── Rate Inputs ──────────────────────────────────────── */
+.rate-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .75rem;
+  margin-bottom: 1rem;
+}
+@media (max-width: 480px) { .rate-grid { grid-template-columns: 1fr; } }
+.rate-field label {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  font-size: .8rem;
+  color: var(--text2);
+  font-family: 'DM Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  margin-bottom: .3rem;
+}
+.rate-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.rate-dot.gold-dot  { background: var(--primary); }
+.rate-dot.thai-dot  { background: #1565C0; }
+.rate-dot.sp500-dot { background: #2E7D32; }
+.rate-dot.fd-dot    { background: #888; }
+
+/* ── Tip box ─────────────────────────────────────────── */
+.hist-note {
+  background: var(--warn-bg);
+  border-left: 3px solid var(--warn3);
+  padding: .9rem 1rem;
+  border-radius: 0 8px 8px 0;
+  font-size: .85rem;
+  color: var(--text2);
+  line-height: 1.55;
+  margin-bottom: 1rem;
+}
+
+/* ── Share Row ───────────────────────────────────────── */
+.share-row {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin-top: 1rem;
+}
+.share-btn {
+  padding: .45rem 1rem;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text2);
+  font-size: .8rem;
+  cursor: pointer;
+  transition: all .2s;
+  font-family: 'DM Mono', monospace;
+}
+.share-btn:hover { border-color: var(--primary); color: var(--primary); }
+#shareMsg { font-size: .8rem; color: var(--ok); opacity: 0; transition: opacity .3s; }

@@ -1,0 +1,57 @@
+/**
+ * Theme: AI Image Gen Calculator
+ * Palette: Cool Indigo / Slate — distinct from warm gold tones of other pages
+ *
+ * --primary* = accent color for this page (indigo/violet)
+ * ใช้ร่วมกับ shared.css, image-gen-specific.css
+ */
+
+:root {
+  /* ── Backgrounds ─────────────────── */
+  --bg:        #F1F3FA;
+  --bg2:       #F8F9FD;
+  --surface:   #FFFFFF;
+  --surface2:  #E8EBF5;
+  --body-grad-1: rgba(90,80,160,.07);
+  --body-grad-2: rgba(60,55,120,.04);
+
+  /* ── Borders ─────────────────────── */
+  --border:    #D5DAF0;
+  --border2:   #B0B8DE;
+
+  /* ── Text ────────────────────────── */
+  --text:      #1A1C30;
+  --text2:     #50547A;
+  --text3:     #8E94B8;
+
+  /* ── Primary Accent (Indigo) ─────── */
+  --primary:   #5046E5;
+  --primary2:  #7B74F0;
+  --primary3:  #C4C0FA;
+
+  /* ── Status Colors ───────────────── */
+  --ok:        #0A7C5A;
+  --ok-bg:     #E6F5F0;
+  --warn:      #996A00;
+  --warn-bg:   #FEF9E7;
+  --warn3:     #F0CE50;
+  --err:       #B03030;
+  --err-bg:    #FBE9E9;
+  --info:      #1850A8;
+  --info-bg:   #E6EDFB;
+  --teal:      #0E6B6B;
+  --teal-bg:   #E0F5F5;
+
+  /* ── Aliases ─────────────────────── */
+  --gold:      #B8860B;
+  --gold2:     #D4A52A;
+  --gold3:     #EDD27A;
+  --green:     var(--ok);
+  --green-bg:  var(--ok-bg);
+  --amber:     var(--warn);
+  --amber-bg:  var(--warn-bg);
+  --red:       var(--err);
+  --red-bg:    var(--err-bg);
+  --blue:      var(--info);
+  --blue-bg:   var(--info-bg);
+}

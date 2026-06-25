@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-J3C1X16FZ5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-J3C1X16FZ5');
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ทองคำ vs กองทุน คำนวณผลตอบแทน — ลงทุนอะไรดีกว่ากัน 10 ปี | ComPair</title>
+<meta name="description" content="คำนวณผลตอบแทนทองคำเทียบกองทุนรวม — ลงทุน 5,000/เดือน ใน 10 ปีได้เท่าไหร่? เปรียบเทียบ ทองคำ vs กองทุนหุ้นไทย vs S&P500 vs ฝากประจำ แบบ Compound interest">
+<meta name="keywords" content="ลงทุนทองคำ vs กองทุนรวม, ทองคำ 10 ปีผลตอบแทน, กองทุน S&P500 ไทย, ซื้อทอง กี่ปีคืนทุน, ทองคำ vs หุ้น ไทย, ลงทุนทองคำ ดีไหม, ผลตอบแทน Compound Interest">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://tongarclub.github.io/compair-website/html/gold-calculator.html">
+
+<!-- Open Graph -->
+<meta property="og:type"        content="website">
+<meta property="og:url"         content="https://tongarclub.github.io/compair-website/html/gold-calculator.html">
+<meta property="og:title"       content="ทองคำ vs กองทุน คำนวณผลตอบแทน | ComPair">
+<meta property="og:description" content="ลงทุน 5,000/เดือน ใน 10 ปี ทองคำ vs กองทุนหุ้น ได้เท่าไหร่ — คำนวณทันที">
+<meta property="og:locale"      content="th_TH">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- JSON-LD: WebPage -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "ทองคำ vs กองทุน ROI Calculator",
+  "url": "https://tongarclub.github.io/compair-website/html/gold-calculator.html",
+  "description": "คำนวณผลตอบแทนทองคำเทียบกองทุนรวมแบบ Compound Interest สำหรับตลาดไทย",
+  "inLanguage": "th",
+  "isPartOf": { "@type": "WebSite", "url": "https://tongarclub.github.io/compair-website/" }
+}
+</script>
+
+<!-- JSON-LD: FAQPage -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "ทองคำให้ผลตอบแทนเฉลี่ยกี่เปอร์เซ็นต์ต่อปี?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ทองคำในรูปสกุลเงินบาท (THB) ให้ผลตอบแทนเฉลี่ยประมาณ 6–9% ต่อปีในช่วง 10 ปีที่ผ่านมา (2015–2025) เนื่องจากราคาทองโลกปรับขึ้นและค่าเงินบาทอ่อนตัว ทำให้ได้กำไรสองทาง อย่างไรก็ตาม ผลตอบแทนไม่สม่ำเสมอ — บางปีอาจลงได้ 10–15%"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "กองทุนหุ้น S&P500 ในไทยผลตอบแทนเฉลี่ยเท่าไหร่?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "กองทุนรวมที่ติดตาม S&P500 ในประเทศไทย (เช่น SCBS&P500, KKP POSITIVE) ให้ผลตอบแทนเฉลี่ย 10–14% ต่อปีในรูปเงินบาท (รวมผลของค่าเงิน USD/THB) ในช่วง 10 ปีที่ผ่านมา แต่มีความผันผวนสูง บางปีลง 20–30%"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "ทองคำ vs กองทุนรวม อันไหนดีกว่าสำหรับระยะยาว?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "สำหรับระยะ 10 ปีขึ้นไป กองทุนหุ้น S&P500 มักให้ผลตอบแทนสูงกว่าทองคำในระยะยาว อย่างไรก็ตาม ทองคำมีความผันผวนต่ำกว่าและเป็น safe haven ในวิกฤต นักลงทุนส่วนมากแนะนำ 70/30 — หุ้น 70% + ทอง 10–15% + สินทรัพย์อื่น 15–20%"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "ลงทุนทองคำ 5,000 บาทต่อเดือน นาน 10 ปี ได้เท่าไหร่?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ลงทุน 5,000 บาท/เดือน ใน 10 ปี เงินต้นรวม 600,000 บาท ถ้าผลตอบแทน 8%/ปี จะได้ประมาณ 917,000 บาท กำไร 317,000 บาท (+52%) โดยใช้สูตร Compound Interest รายเดือน"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "ซื้อทอง 1 บาท เก็บไว้ 10 ปี จะได้กำไรไหม?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ทองคำ 1 บาท (15.244 กรัม) ราคาปัจจุบันประมาณ 41,500 บาท ถ้าราคาขึ้นเฉลี่ย 8%/ปี ใน 10 ปีจะมีมูลค่าประมาณ 89,600 บาท กำไรประมาณ 48,100 บาท (+116%) อย่างไรก็ตามทองแท่งมีค่าเฟ้อ (spread) ซื้อ-ขาย ประมาณ 300–400 บาท/บาท"
+      }
+    }
+  ]
+}
+</script>
+
+<!-- CSS: theme → shared → page-specific -->
+<link rel="stylesheet" href="../css/theme-gold.css">
+<link rel="stylesheet" href="../css/shared.css">
+<link rel="stylesheet" href="../css/gold-specific.css">
+</head>
+<body>
+
+<!-- ── Navigation ─────────────────────────────────────── -->
+<nav class="nav">
+  <a class="logo" href="../index.html">◈ ComPair</a>
+  <div class="nav-right">
+    <a href="ai-calculator.html">GPU VRAM</a>
+    <a href="solar-calculator.html">Solar ROI</a>
+    <a href="ev-calculator.html">EV Cost</a>
+  </div>
+</nav>
+
+<!-- ── Hero ───────────────────────────────────────────── -->
+<div class="hero">
+  <div class="wrap">
+    <div class="hero-chips">
+      <span class="hero-chip">◈ Domain E · ทองคำ vs กองทุน</span>
+      <span class="hero-chip">Compound Interest</span>
+    </div>
+    <h1 class="hero-title">ทองคำ vs กองทุน<br>ลงทุนอะไรดีกว่ากัน?</h1>
+    <p class="hero-sub">ใส่เงินต้นและเงินลงทุนรายเดือน — ระบบคำนวณผลตอบแทนแบบ Compound interest<br>เปรียบเทียบ ทองคำ · กองทุนหุ้นไทย · S&amp;P500 · ฝากประจำ ทันที</p>
+  </div>
+</div>
+
+<!-- ── Main Content ───────────────────────────────────── -->
+<main class="wrap">
+  <div class="two-col">
+
+    <!-- ── Left: Inputs ───────────────────────────── -->
+    <section class="form-section">
+      <div class="form-header">
+        <span class="form-icon">💰</span>
+        <div>
+          <div class="form-title">ตั้งค่าการลงทุน</div>
+          <div class="form-sub">ลงทุนเดือนละเท่าไหร่ นานแค่ไหน</div>
+        </div>
+      </div>
+
+      <!-- Preset Scenarios -->
+      <div class="field-label" style="margin-bottom:.5rem;">ตัวอย่าง scenario</div>
+      <div class="asset-chips">
+        <div class="asset-chip" onclick="setPreset(1)">มือใหม่ 3,000/เดือน</div>
+        <div class="asset-chip active" onclick="setPreset(2)">มนุษย์เงินเดือน 5,000/เดือน</div>
+        <div class="asset-chip" onclick="setPreset(3)">ลงทุนเยอะ 20,000/เดือน</div>
+        <div class="asset-chip" onclick="setPreset(4)">เงินก้อน 500,000</div>
+      </div>
+
+      <!-- Amount & Duration -->
+      <div class="field-group">
+        <label class="field-label" for="initAmt">เงินก้อนเริ่มต้น (บาท)</label>
+        <input class="num-input" type="number" id="initAmt" value="100000" min="0" step="10000" oninput="render()">
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="monthly">ลงทุนเพิ่ม / เดือน (บาท)</label>
+        <input class="num-input" type="number" id="monthly" value="5000" min="0" step="1000" oninput="render()">
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="years">ระยะเวลา (ปี)</label>
+        <input class="num-input" type="number" id="years" value="10" min="1" max="40" step="1" oninput="render()">
+      </div>
+
+      <!-- Return Rates -->
+      <div class="form-header" style="margin-top:1.5rem;">
+        <span class="form-icon">📊</span>
+        <div>
+          <div class="form-title">อัตราผลตอบแทนต่อปี (%)</div>
+          <div class="form-sub">ปรับได้ตามมุมมองของคุณ</div>
+        </div>
+      </div>
+      <div class="rate-grid">
+        <div class="rate-field">
+          <label><span class="rate-dot gold-dot"></span>ทองคำ (XAU/THB)</label>
+          <input class="num-input" type="number" id="rGold" value="8" min="0" max="50" step="0.5" oninput="render()">
+        </div>
+        <div class="rate-field">
+          <label><span class="rate-dot thai-dot"></span>กองทุนหุ้นไทย (SET)</label>
+          <input class="num-input" type="number" id="rThai" value="7" min="0" max="50" step="0.5" oninput="render()">
+        </div>
+        <div class="rate-field">
+          <label><span class="rate-dot sp500-dot"></span>กองทุน S&amp;P500 (USD)</label>
+          <input class="num-input" type="number" id="rSP500" value="11" min="0" max="50" step="0.5" oninput="render()">
+        </div>
+        <div class="rate-field">
+          <label><span class="rate-dot fd-dot"></span>ฝากประจำ 12 เดือน</label>
+          <input class="num-input" type="number" id="rFD" value="1.7" min="0" max="20" step="0.1" oninput="render()">
+        </div>
+      </div>
+
+      <div class="hist-note">
+        💡 <strong>ค่าเริ่มต้น</strong> อ้างอิงจากผลตอบแทนเฉลี่ยย้อนหลัง 10 ปี (2015–2025)<br>
+        ทองคำ ~8% · SET TRI ~7% · S&amp;P500 (THB) ~11% · ฝากประจำ ~1.7%<br>
+        <span style="color:var(--err)">⚠ ผลตอบแทนในอดีตไม่ได้รับประกันผลตอบแทนในอนาคต</span>
+      </div>
+    </section>
+
+    <!-- ── Right: Results ─────────────────────────── -->
+    <section class="form-section" id="results">
+      <div class="form-header">
+        <span class="form-icon">📈</span>
+        <div>
+          <div class="form-title">ผลลัพธ์หลัง <span id="yrsLabel">10</span> ปี</div>
+          <div class="form-sub" id="summaryLine">—</div>
+        </div>
+      </div>
+
+      <!-- Asset Cards -->
+      <div class="asset-grid" id="assetGrid"></div>
+
+      <!-- Bar Chart -->
+      <div class="form-title" style="margin-bottom:.75rem;font-size:.95rem;">เปรียบเทียบมูลค่าสุทธิ</div>
+      <div class="bar-chart" id="barChart"></div>
+
+      <!-- Share -->
+      <div class="share-row" style="margin-top:1.5rem;">
+        <button class="share-btn" id="shareBtn" onclick="copyURL()">⎘ แชร์ผลนี้</button>
+        <span id="shareMsg">✓ คัดลอก URL แล้ว</span>
+      </div>
+    </section>
+  </div>
+
+  <!-- ── Tips ─────────────────────────────────────────── -->
+  <section class="tips-section">
+    <h2 class="tips-heading">คู่มือลงทุน — ทองคำ vs กองทุนรวม</h2>
+    <div class="tips-grid">
+      <div class="tip-card">
+        <div class="tip-icon">🥇</div>
+        <div class="tip-title">ทองคำ — เหมาะกับใคร?</div>
+        <div class="tip-body">ทองคำเหมาะสำหรับผู้ที่ต้องการ <strong>ประกันความเสี่ยง</strong> และ hedge เงินเฟ้อ ไม่ต้องการติดตามตลาดรายวัน แนะนำถือ 10–20% ของพอร์ต ซื้อผ่าน AAAI/YLG หรือ Gold Futures</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">📊</div>
+        <div class="tip-title">กองทุนหุ้นไทย (SET) — เหมาะกับใคร?</div>
+        <div class="tip-body">กองทุนรวมไทยเหมาะกับผู้ที่รับความเสี่ยงได้ปานกลาง มีระยะเวลาลงทุน 5 ปีขึ้นไป ผลตอบแทนดีในช่วงตลาดขาขึ้น แต่ SET มี <strong>ความผันผวนสูง</strong> กว่า S&amp;P500</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">🌐</div>
+        <div class="tip-title">กองทุน S&amp;P500 — เหมาะกับใคร?</div>
+        <div class="tip-body">กองทุน S&amp;P500 เช่น SCBS&amp;P500, KKP POSITIVE ให้ผลตอบแทนสูงในระยะยาว แต่มีความเสี่ยงค่าเงิน USD/THB หากบาทแข็งค่า ผลตอบแทนจะลดลงในรูปเงินบาท</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">🏦</div>
+        <div class="tip-title">ฝากประจำ — เหมาะกับใคร?</div>
+        <div class="tip-body">ฝากประจำเหมาะกับเงินสำรองฉุกเฉิน 3–6 เดือน ปลอดภัย 100% (คุ้มครอง DPA 1 ล้านบาท/สถาบัน) แต่ <strong>ไม่ชนะเงินเฟ้อ</strong> ในระยะยาว</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">⚖️</div>
+        <div class="tip-title">Diversification — กระจายความเสี่ยง</div>
+        <div class="tip-body">พอร์ตแนะนำ: กองทุนหุ้น 60% + ทองคำ 15% + ตราสารหนี้ 20% + สำรองฉุกเฉิน 5% การลงทุนหลายสินทรัพย์ช่วยลด drawdown ในช่วงวิกฤต</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">🔁</div>
+        <div class="tip-title">DCA — ลงทุนสม่ำเสมอ</div>
+        <div class="tip-body">Dollar Cost Averaging (DCA) หรือลงทุนสม่ำเสมอทุกเดือน ช่วยลดความเสี่ยงจากจังหวะซื้อไม่ดี ไม่ต้องเดาจุดต่ำสุด — สม่ำเสมอสำคัญกว่าจังหวะ</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Cross-links ───────────────────────────────── -->
+  <div class="cross-link-banner" style="margin-bottom:2rem;">
+    <div class="cl-title">เครื่องมือคำนวณอื่นๆ</div>
+    <div class="cl-links">
+      <a class="cl-item" href="ev-calculator.html">🚗 EV vs รถน้ำมัน</a>
+      <a class="cl-item" href="solar-calculator.html">☀️ Solar ROI</a>
+      <a class="cl-item" href="ai-calculator.html">🖥️ AI GPU VRAM</a>
+      <a class="cl-item" href="image-gen-calculator.html">🎨 AI Image Gen</a>
+    </div>
+  </div>
+</main>
+
+<!-- ── Footer ─────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-logo">◈ ComPair</div>
+    <div class="footer-tagline">เปรียบเทียบอย่างมีข้อมูล — ตัดสินใจอย่างมั่นใจ</div>
+    <div class="footer-links">
+      <a href="../index.html">Home</a>
+      <a href="ai-calculator.html">AI GPU</a>
+      <a href="solar-calculator.html">Solar</a>
+      <a href="ev-calculator.html">EV</a>
+      <a href="image-gen-calculator.html">Image Gen</a>
+    </div>
+    <div class="footer-note">⚠️ ข้อมูลนี้เพื่อการศึกษาเท่านั้น ไม่ใช่คำแนะนำการลงทุน ผลตอบแทนในอดีตไม่รับประกันผลในอนาคต</div>
+  </div>
+</footer>
+
+<script>
+// ── Compound Interest Formula ─────────────────────────────
+// FV = PV*(1+r)^n + PMT * ((1+r)^n - 1) / r
+// where r = monthly rate, n = total months
+function fv(pv, pmt, annualRate, years) {
+  const r = annualRate / 100 / 12;
+  const n = years * 12;
+  if (r === 0) return pv + pmt * n;
+  return pv * Math.pow(1 + r, n) + pmt * (Math.pow(1 + r, n) - 1) / r;
+}
+
+function fmt(n) {
+  return Math.round(n).toLocaleString('th-TH');
+}
+
+const ASSETS = [
+  { key: 'gold',  label: 'ทองคำ (XAU/THB)', icon: '🥇', rateId: 'rGold',  barClass: 'gold-bar'  },
+  { key: 'thai',  label: 'กองทุนหุ้นไทย SET', icon: '📊', rateId: 'rThai',  barClass: 'thai-bar'  },
+  { key: 'sp500', label: 'กองทุน S&P500',     icon: '🌐', rateId: 'rSP500', barClass: 'sp500-bar' },
+  { key: 'fd',    label: 'ฝากประจำ 12 เดือน', icon: '🏦', rateId: 'rFD',    barClass: 'fd-bar'    },
+];
+
+function getInputs() {
+  return {
+    init:    parseFloat(document.getElementById('initAmt').value) || 0,
+    monthly: parseFloat(document.getElementById('monthly').value) || 0,
+    years:   parseInt(document.getElementById('years').value) || 10,
+    rates: ASSETS.map(a => parseFloat(document.getElementById(a.rateId).value) || 0),
+  };
+}
+
+function render() {
+  const { init, monthly, years, rates } = getInputs();
+  document.getElementById('yrsLabel').textContent = years;
+  const principal = init + monthly * years * 12;
+
+  const values = ASSETS.map((a, i) => fv(init, monthly, rates[i], years));
+  const maxVal  = Math.max(...values);
+  const winner  = values.indexOf(maxVal);
+
+  // Summary line
+  document.getElementById('summaryLine').textContent =
+    `เงินต้นรวม ${fmt(principal)} บาท`;
+
+  // Asset Cards
+  const grid = document.getElementById('assetGrid');
+  grid.innerHTML = ASSETS.map((a, i) => {
+    const gain  = values[i] - principal;
+    const pct   = principal > 0 ? ((gain / principal) * 100).toFixed(1) : '0.0';
+    const isWin = i === winner;
+    return `
+      <div class="asset-card ${isWin ? 'winner' : ''}">
+        <div class="ac-icon">${a.icon}</div>
+        <div class="ac-label">${a.label}</div>
+        <div class="ac-value">${fmt(values[i])} ฿</div>
+        <div class="ac-rate">กำไร ${gain >= 0 ? '+' : ''}${fmt(gain)} บาท (${gain >= 0 ? '+' : ''}${pct}%)</div>
+        ${isWin ? '<div class="winner-badge">🏆 สูงสุด</div>' : ''}
+      </div>`;
+  }).join('');
+
+  // Bar Chart
+  const chart = document.getElementById('barChart');
+  chart.innerHTML = ASSETS.map((a, i) => {
+    const pct = maxVal > 0 ? (values[i] / maxVal * 100).toFixed(1) : 0;
+    return `
+      <div class="bar-row">
+        <div class="bar-row-label">${a.icon} ${a.label.split(' ')[0]}</div>
+        <div class="bar-track">
+          <div class="bar-fill ${a.barClass}" style="width:${pct}%"></div>
+        </div>
+        <div class="bar-amount">${fmt(values[i])} ฿</div>
+      </div>`;
+  }).join('');
+
+  syncURL();
+}
+
+// ── Presets ───────────────────────────────────────────────
+const PRESETS = [
+  { init: 0,      monthly: 3000,  years: 10 },
+  { init: 100000, monthly: 5000,  years: 10 },
+  { init: 200000, monthly: 20000, years: 10 },
+  { init: 500000, monthly: 0,     years: 10 },
+];
+function setPreset(n) {
+  const p = PRESETS[n - 1];
+  document.getElementById('initAmt').value = p.init;
+  document.getElementById('monthly').value = p.monthly;
+  document.getElementById('years').value   = p.years;
+  document.querySelectorAll('.asset-chip').forEach((c, i) => {
+    c.classList.toggle('active', i === n - 1);
+  });
+  render();
+}
+
+// ── Share URL ─────────────────────────────────────────────
+function syncURL() {
+  const { init, monthly, years, rates } = getInputs();
+  const params = new URLSearchParams({
+    init, monthly, years,
+    rg: rates[0], rt: rates[1], rs: rates[2], rf: rates[3],
+  });
+  history.replaceState(null, '', '?' + params.toString());
+}
+
+function loadFromURL() {
+  const p = new URLSearchParams(location.search);
+  if (!p.has('init')) return;
+  document.getElementById('initAmt').value = p.get('init');
+  document.getElementById('monthly').value = p.get('monthly');
+  document.getElementById('years').value   = p.get('years');
+  if (p.has('rg')) document.getElementById('rGold').value  = p.get('rg');
+  if (p.has('rt')) document.getElementById('rThai').value  = p.get('rt');
+  if (p.has('rs')) document.getElementById('rSP500').value = p.get('rs');
+  if (p.has('rf')) document.getElementById('rFD').value    = p.get('rf');
+}
+
+function copyURL() {
+  navigator.clipboard.writeText(location.href).then(() => {
+    const msg = document.getElementById('shareMsg');
+    msg.style.opacity = '1';
+    setTimeout(() => msg.style.opacity = '0', 2500);
+  });
+}
+
+// ── Init ─────────────────────────────────────────────────
+loadFromURL();
+render();
+</script>
+</body>
+</html>
