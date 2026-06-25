@@ -13,7 +13,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EV vs รถน้ำมัน คำนวณต้นทุนจริง — BYD Seal/Atto 3 ประหยัดกว่าจริงไหม | ComPair</title>
 <meta name="description" content="คำนวณต้นทุนรถ EV เทียบรถน้ำมันแบบละเอียด — ค่าพลังงาน ค่าบำรุงรักษา ระยะเวลาคืนทุน และ Total Cost of Ownership 10 ปี สำหรับรถในไทย BYD, Tesla, MG, Neta">
-<meta name="keywords" content="BYD Seal ค่าชาร์จต่อเดือน, EV vs น้ำมัน ประหยัดกว่ากันไหม, ค่าไฟ EV บ้าน vs ปั๊มชาร์จ, รถ EV ค่าใช้จ่ายต่อ km, รถ EV คืนทุนกี่ปี, BYD Atto 3 ค่าชาร์จ, Total Cost of Ownership รถยนต์ไฟฟ้า">
+<meta name="keywords" content="BYD Seal ค่าชาร์จต่อเดือน, EV vs น้ำมัน ประหยัดกว่ากันไหม, ค่าไฟ EV บ้าน vs ปั๊มชาร์จ, รถ EV ค่าใช้จ่ายต่อ km, รถ EV คืนทุนกี่ปี, BYD Atto 3 ค่าชาร์จ">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://tongarclub.github.io/compair-website/html/ev-calculator.html">
 
@@ -21,7 +21,7 @@
 <meta property="og:type"        content="website">
 <meta property="og:url"         content="https://tongarclub.github.io/compair-website/html/ev-calculator.html">
 <meta property="og:title"       content="EV vs รถน้ำมัน คำนวณต้นทุนจริง | ComPair">
-<meta property="og:description" content="ป้อนระยะทางขับขี่และราคาพลังงาน ระบบคำนวณต้นทุนรถ EV เทียบน้ำมัน พร้อม break-even และ 10-year TCO ทันที">
+<meta property="og:description" content="ป้อนระยะทางและราคาพลังงาน — ระบบคำนวณ Total Cost of Ownership ทันที">
 <meta property="og:locale"      content="th_TH">
 
 <!-- JSON-LD: WebPage -->
@@ -56,7 +56,7 @@
       "name": "รถ EV vs รถน้ำมัน ประหยัดกว่ากันเท่าไหร่ต่อปี?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "สำหรับการขับ 15,000 km/ปี ที่ราคาน้ำมัน 40 บาท/L และรถน้ำมัน 15 km/L ค่าน้ำมัน 40,000 บาท/ปี เทียบกับ EV ที่ประสิทธิภาพ 7 km/kWh ค่าไฟ 4.18 บาท/kWh จะอยู่ที่ 8,957 บาท/ปี ประหยัดค่าพลังงานได้ประมาณ 31,000 บาท/ปี และยังประหยัดค่าบำรุงรักษาอีก 8,000–15,000 บาท/ปี"
+        "text": "สำหรับการขับ 15,000 km/ปี ที่ราคาน้ำมัน 40 บาท/L และรถน้ำมัน 15 km/L ค่าน้ำมัน 40,000 บาท/ปี เทียบกับ EV ที่ประสิทธิภาพ 7 km/kWh ค่าไฟ 4.18 บาท/kWh จะอยู่ที่ 8,957 บาท/ปี ประหยัดค่าพลังงานได้ประมาณ 31,000 บาท/ปี"
       }
     },
     {
@@ -64,7 +64,7 @@
       "name": "รถ EV คืนทุนกี่ปี เทียบกับรถน้ำมัน?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "ระยะคืนทุน (Break-even) ขึ้นกับส่วนต่างราคารถ ค่าไฟ และระยะทางขับขี่ ตัวอย่าง BYD Atto 3 (฿899,900) เทียบ Honda HR-V (฿939,000) ต่างราคาน้อย แต่ประหยัดพลังงาน+บำรุงรักษา ~40,000 บาท/ปี คืนทุนเพิ่มเพียง 1 ปีหรือน้อยกว่า ขณะที่ BYD Seal (฿1,299,900) เทียบ Honda CR-V (฿1,089,000) ส่วนต่างสูงกว่า คืนทุนประมาณ 5–7 ปี"
+        "text": "ระยะคืนทุน (Break-even) ขึ้นกับส่วนต่างราคารถ ค่าไฟ และระยะทางขับขี่ ตัวอย่าง BYD Atto 3 (฿899,900) เทียบ Honda HR-V (฿939,000) ส่วนต่างราคาน้อยและประหยัดพลังงาน+บำรุงรักษา ~40,000 บาท/ปี คืนทุนเพิ่มเพียง 1 ปี"
       }
     },
     {
@@ -72,7 +72,7 @@
       "name": "ชาร์จ EV ที่บ้านกับปั๊มชาร์จ ค่าใช้จ่ายต่างกันเท่าไหร่?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "ชาร์จที่บ้าน (Flat rate ~4.18 บาท/kWh หรือ TOU นอกพีค ~2.60 บาท/kWh) ถูกกว่าปั๊มชาร์จสาธารณะ (EA Anywhere ~6.5–9.5 บาท/kWh, PEA Volta ~8–10 บาท/kWh) ถึง 50–70% ควรชาร์จบ้านเป็นหลักและใช้ปั๊มเสริมเฉพาะเมื่อเดินทางไกล"
+        "text": "ชาร์จที่บ้าน TOU นอกพีค ~2.60 บาท/kWh ถูกกว่าปั๊มสาธารณะ (EA Anywhere ~6.5–9.5 บาท/kWh) ถึง 60–70% ควรชาร์จบ้านเป็นหลักและใช้ปั๊มเสริมเฉพาะเมื่อเดินทางไกล"
       }
     },
     {
@@ -80,7 +80,7 @@
       "name": "ค่าบำรุงรักษารถ EV กับรถน้ำมันต่างกันอย่างไร?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "รถ EV ไม่มีระบบเครื่องยนต์สันดาป จึงไม่ต้องเปลี่ยนน้ำมันเครื่อง ไส้กรอง หัวเทียน ชุดจุดระเบิด ค่าบำรุงรักษาเฉลี่ยต่ำกว่ารถน้ำมัน 40–60% โดยประมาณ ประหยัดได้ 8,000–20,000 บาท/ปี ขึ้นอยู่กับรุ่นรถ"
+        "text": "รถ EV ไม่มีระบบเครื่องยนต์สันดาป จึงไม่ต้องเปลี่ยนน้ำมันเครื่อง ไส้กรอง หัวเทียน ค่าบำรุงรักษาเฉลี่ยต่ำกว่ารถน้ำมัน 40–60% ประหยัดได้ 8,000–20,000 บาท/ปี"
       }
     }
   ]
@@ -89,185 +89,172 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<!-- Theme must load BEFORE shared.css -->
+<link rel="stylesheet" href="../css/theme-ev.css">
 <link rel="stylesheet" href="../css/shared.css">
 <link rel="stylesheet" href="../css/ev-specific.css">
 </head>
 <body>
 
-<!-- ── Navigation ───────────────────────────────────── -->
-<nav class="top-nav">
-  <div class="nav-inner">
-    <a href="../index.html" class="logo-link">
-      <span class="logo-mark">ComPair</span>
-      <span class="logo-sub">Comparison Engine</span>
-    </a>
-    <div class="nav-links">
-      <a href="ai-calculator.html" class="nav-link">AI VRAM</a>
-      <a href="mac-llm-calculator.html" class="nav-link">Mac / LLM</a>
-      <a href="solar-calculator.html" class="nav-link">Solar ROI</a>
-      <a href="ev-calculator.html" class="nav-link nav-link-active">EV Cost</a>
+<!-- ── Navigation ──────────────────────────────────────── -->
+<nav>
+  <div class="wrap">
+    <div class="nav-inner">
+      <a href="../index.html" class="logo">
+        <div class="logo-mark">C</div>
+        <div>
+          <div class="logo-text">ComPair</div>
+          <div class="logo-sub">Comparison Engine</div>
+        </div>
+      </a>
+      <div class="nav-right">
+        <a href="ai-calculator.html"   class="nav-link">AI VRAM</a>
+        <a href="mac-llm-calculator.html" class="nav-link">Mac / LLM</a>
+        <a href="solar-calculator.html" class="nav-link">Solar ROI</a>
+        <span class="nav-badge">EV Cost</span>
+      </div>
     </div>
   </div>
 </nav>
 
-<!-- ── Hero ──────────────────────────────────────────── -->
-<header class="hero">
-  <div class="hero-inner">
+<!-- ── Hero ────────────────────────────────────────────── -->
+<div class="hero">
+  <div class="wrap">
     <div class="hero-label">Domain E · EV vs Gasoline</div>
-    <h1 class="hero-title">EV vs รถน้ำมัน<br>คำนวณต้นทุนจริง</h1>
-    <p class="hero-desc">ป้อนระยะทางและราคาพลังงาน — ระบบคำนวณ Total Cost of Ownership ทันที<br>ครอบคลุม BYD · Tesla · MG · Neta และรถน้ำมันยอดนิยมในไทย</p>
-    <div class="hero-chips">
-      <span class="hero-chip">Break-even Period</span>
-      <span class="hero-chip">10-Year TCO</span>
-      <span class="hero-chip">ค่าชาร์จบ้าน vs ปั๊ม</span>
-      <span class="hero-chip">ค่าบำรุงรักษา</span>
+    <h1>EV vs รถน้ำมัน<br><em>คำนวณต้นทุนจริง</em></h1>
+    <p class="hero-desc">ป้อนระยะทางและราคาพลังงาน — ระบบคำนวณ Total Cost of Ownership ทันที ครอบคลุม BYD · Tesla · MG · Neta และรถน้ำมันยอดนิยมในไทย</p>
+    <div class="ev-chips">
+      <span class="ev-chip">Break-even Period</span>
+      <span class="ev-chip">10-Year TCO</span>
+      <span class="ev-chip">ค่าชาร์จบ้าน vs ปั๊ม</span>
+      <span class="ev-chip">ค่าบำรุงรักษา</span>
     </div>
   </div>
-</header>
+</div>
 
-<!-- ── Calculator ─────────────────────────────────────── -->
+<!-- ── Calculator ──────────────────────────────────────── -->
 <main>
-<div class="calc-wrap">
+<div class="wrap">
 
   <!-- ═══ EV Preset Selection ═══════════════════════════ -->
-  <section class="calc-section">
-    <div class="section-hd">
-      <div class="section-label">ขั้นตอนที่ 1</div>
-      <div class="section-title">เลือก EV ที่สนใจ</div>
-      <p class="section-sub">เลือก preset หรือกรอกข้อมูลเองด้านล่าง</p>
+  <div class="form-section">
+    <div class="form-header">
+      <div>
+        <div class="form-title">เลือก EV ที่สนใจ</div>
+        <div class="form-subtitle">ขั้นตอนที่ 1 — เลือก preset หรือกรอกข้อมูลเองด้านล่าง</div>
+      </div>
     </div>
-    <div class="preset-grid" id="evPresetGrid">
-      <!-- Populated by JS -->
+    <div style="padding:24px 32px">
+      <div class="preset-grid" id="evPresetGrid"></div>
     </div>
-  </section>
+  </div>
 
   <!-- ═══ Gasoline Preset Selection ═══════════════════════ -->
-  <section class="calc-section">
-    <div class="section-hd">
-      <div class="section-label">ขั้นตอนที่ 2</div>
-      <div class="section-title">เลือกรถน้ำมันสำหรับเปรียบเทียบ</div>
+  <div class="form-section">
+    <div class="form-header">
+      <div>
+        <div class="form-title">เลือกรถน้ำมันสำหรับเปรียบเทียบ</div>
+        <div class="form-subtitle">ขั้นตอนที่ 2</div>
+      </div>
     </div>
-    <div class="preset-grid" id="gasPresetGrid">
-      <!-- Populated by JS -->
+    <div style="padding:24px 32px">
+      <div class="preset-grid" id="gasPresetGrid"></div>
     </div>
-  </section>
+  </div>
 
   <!-- ═══ Input Fields ═════════════════════════════════════ -->
-  <section class="calc-section">
-    <div class="section-hd">
-      <div class="section-label">ขั้นตอนที่ 3</div>
-      <div class="section-title">ปรับพารามิเตอร์ส่วนตัว</div>
+  <div class="form-section">
+    <div class="form-header">
+      <div>
+        <div class="form-title">ปรับพารามิเตอร์ส่วนตัว</div>
+        <div class="form-subtitle">ขั้นตอนที่ 3 — ค่าเริ่มต้นสะท้อนการใช้งานเฉลี่ยในไทย</div>
+      </div>
     </div>
+    <div class="form-body" style="grid-template-columns:repeat(3,1fr)">
 
-    <div class="field-grid">
-      <!-- Driving -->
-      <div class="field-group">
+      <div class="form-col">
         <label class="field-label">ระยะทางขับขี่ต่อปี</label>
-        <div class="input-row">
-          <input type="number" id="kmPerYear" class="field-input" value="15000" min="1000" max="100000" step="1000">
-          <span class="field-unit">km/ปี</span>
+        <div class="num-input-wrap">
+          <input type="number" id="kmPerYear" class="num-input" value="15000" min="1000" max="100000" step="1000">
+          <span class="num-unit">km/ปี</span>
         </div>
         <div class="field-hint">ค่าเฉลี่ยคนไทย ≈ 12,000–18,000 km/ปี</div>
-      </div>
 
-      <!-- Gasoline price -->
-      <div class="field-group">
-        <label class="field-label">ราคาน้ำมัน (ปัจจุบัน)</label>
-        <div class="input-row">
-          <input type="number" id="fuelPrice" class="field-input" value="40" min="20" max="80" step="0.5">
-          <span class="field-unit">บาท/L</span>
+        <label class="field-label">ราคาน้ำมัน</label>
+        <div class="num-input-wrap">
+          <input type="number" id="fuelPrice" class="num-input" value="40" min="20" max="80" step="0.5">
+          <span class="num-unit">บาท/L</span>
         </div>
         <div class="field-hint">E20 ≈ 36–38 · Benzine 95 ≈ 40–44 บาท/L</div>
-      </div>
 
-      <!-- Electricity rate -->
-      <div class="field-group">
         <label class="field-label">ค่าไฟชาร์จ EV</label>
-        <div class="input-row">
-          <input type="number" id="electricRate" class="field-input" value="4.18" min="1" max="12" step="0.1">
-          <span class="field-unit">บาท/kWh</span>
+        <div class="num-input-wrap">
+          <input type="number" id="electricRate" class="num-input" value="4.18" min="1" max="12" step="0.1">
+          <span class="num-unit">บาท/kWh</span>
         </div>
-        <div class="field-hint">บ้าน Flat ≈ 4.18 · TOU นอกพีค ≈ 2.60 · EA Anywhere ≈ 7–9</div>
+        <div class="field-hint">Flat ≈ 4.18 · TOU Off-peak ≈ 2.60 · EA Anywhere ≈ 7–9</div>
       </div>
 
-      <!-- EV price override -->
-      <div class="field-group">
+      <div class="form-col">
         <label class="field-label">ราคารถ EV</label>
-        <div class="input-row">
-          <input type="number" id="evPrice" class="field-input" value="899900" min="100000" max="5000000" step="10000">
-          <span class="field-unit">บาท</span>
+        <div class="num-input-wrap">
+          <input type="number" id="evPrice" class="num-input" value="899900" min="100000" max="5000000" step="10000">
+          <span class="num-unit">บาท</span>
         </div>
-        <div class="field-hint">ราคาเต็ม (ก่อนเงินดาวน์)</div>
-      </div>
+        <div class="field-hint">ราคาเต็มก่อนเงินดาวน์ (อัปเดตตามรุ่นที่เลือก)</div>
 
-      <!-- EV efficiency -->
-      <div class="field-group">
-        <label class="field-label">ประสิทธิภาพ EV</label>
-        <div class="input-row">
-          <input type="number" id="evEfficiency" class="field-input" value="6.0" min="3" max="12" step="0.1">
-          <span class="field-unit">km/kWh</span>
+        <label class="field-label">ประสิทธิภาพ EV (Real-world)</label>
+        <div class="num-input-wrap">
+          <input type="number" id="evEfficiency" class="num-input" value="6.8" min="3" max="12" step="0.1">
+          <span class="num-unit">km/kWh</span>
         </div>
-        <div class="field-hint">Real-world (ไม่ใช่ WLTP) ส่วนใหญ่ 5–8 km/kWh</div>
-      </div>
+        <div class="field-hint">ไม่ใช่ค่า WLTP — real-world ส่วนใหญ่ 5–8 km/kWh</div>
 
-      <!-- Gas car price -->
-      <div class="field-group">
-        <label class="field-label">ราคารถน้ำมัน</label>
-        <div class="input-row">
-          <input type="number" id="gasPrice" class="field-input" value="939000" min="100000" max="5000000" step="10000">
-          <span class="field-unit">บาท</span>
-        </div>
-        <div class="field-hint">ราคาเต็มรุ่นที่เปรียบเทียบ</div>
-      </div>
-
-      <!-- Gas efficiency -->
-      <div class="field-group">
-        <label class="field-label">อัตราสิ้นเปลือง (รถน้ำมัน)</label>
-        <div class="input-row">
-          <input type="number" id="gasEfficiency" class="field-input" value="14" min="5" max="40" step="0.5">
-          <span class="field-unit">km/L</span>
-        </div>
-        <div class="field-hint">Real-world (ในเมือง/ทางด่วน)</div>
-      </div>
-
-      <!-- EV maintenance -->
-      <div class="field-group">
         <label class="field-label">ค่าบำรุงรักษา EV/ปี</label>
-        <div class="input-row">
-          <input type="number" id="evMaint" class="field-input" value="8000" min="0" max="100000" step="1000">
-          <span class="field-unit">บาท/ปี</span>
+        <div class="num-input-wrap">
+          <input type="number" id="evMaint" class="num-input" value="8000" min="0" max="100000" step="1000">
+          <span class="num-unit">บาท/ปี</span>
         </div>
         <div class="field-hint">ยาง + เบรก + ตรวจสภาพ เฉลี่ย 6,000–12,000 บาท/ปี</div>
       </div>
 
-      <!-- Gas maintenance -->
-      <div class="field-group">
-        <label class="field-label">ค่าบำรุงรักษารถน้ำมัน/ปี</label>
-        <div class="input-row">
-          <input type="number" id="gasMaint" class="field-input" value="20000" min="0" max="200000" step="1000">
-          <span class="field-unit">บาท/ปี</span>
+      <div class="form-col">
+        <label class="field-label">ราคารถน้ำมัน</label>
+        <div class="num-input-wrap">
+          <input type="number" id="gasPrice" class="num-input" value="939000" min="100000" max="5000000" step="10000">
+          <span class="num-unit">บาท</span>
+        </div>
+        <div class="field-hint">ราคาเต็มรุ่นที่เปรียบเทียบ (อัปเดตตามรุ่นที่เลือก)</div>
+
+        <label class="field-label">อัตราสิ้นเปลือง (Real-world)</label>
+        <div class="num-input-wrap">
+          <input type="number" id="gasEfficiency" class="num-input" value="14" min="5" max="40" step="0.5">
+          <span class="num-unit">km/L</span>
+        </div>
+        <div class="field-hint">การขับขี่จริงในเมือง/ทางด่วนผสมกัน</div>
+
+        <label class="field-label">ค่าบำรุงรักษาน้ำมัน/ปี</label>
+        <div class="num-input-wrap">
+          <input type="number" id="gasMaint" class="num-input" value="20000" min="0" max="200000" step="1000">
+          <span class="num-unit">บาท/ปี</span>
         </div>
         <div class="field-hint">น้ำมันเครื่อง + ไส้กรอง + ยาง เฉลี่ย 15,000–30,000 บาท/ปี</div>
       </div>
     </div>
-
-    <button class="calc-btn" id="calcBtn" onclick="calculate()">คำนวณเปรียบเทียบ</button>
-  </section>
+    <div style="padding:0 32px 28px">
+      <button class="calc-btn" onclick="calculate()">คำนวณเปรียบเทียบ</button>
+    </div>
+  </div>
 
   <!-- ═══ Results ══════════════════════════════════════════ -->
-  <section class="calc-section" id="resultsSection" style="display:none">
-    <div class="section-hd">
-      <div class="section-label">ผลการคำนวณ</div>
-      <div class="section-title">สรุปต้นทุนเปรียบเทียบ</div>
-      <p class="section-sub" id="resultSubtitle"></p>
-    </div>
+  <div id="resultsSection" style="display:none">
 
-    <!-- Monthly energy cost -->
-    <div class="result-grid">
+    <!-- Monthly summary cards -->
+    <div class="result-grid" style="margin-bottom:24px">
       <div class="result-box ev">
         <div class="rb-label">
-          <span class="dot" style="background:#C4A56A"></span>
+          <span class="dot" style="background:var(--primary3)"></span>
           ค่าพลังงาน EV/เดือน
         </div>
         <div class="rb-main" id="evMonthlyCost">—</div>
@@ -283,38 +270,48 @@
       </div>
     </div>
 
-    <!-- Annual cost bars -->
-    <div class="bar-compare">
-      <div class="bar-row">
-        <div class="bar-label">ค่าพลังงาน EV</div>
-        <div class="bar-track"><div class="bar-fill ev" id="barEV" style="width:0%"></div></div>
-        <div class="bar-value" id="barEVVal">—</div>
+    <!-- Bar chart -->
+    <div class="form-section">
+      <div class="form-header">
+        <div>
+          <div class="form-title">เปรียบเทียบค่าใช้จ่ายรายปี</div>
+          <div class="form-subtitle" id="resultSubtitle"></div>
+        </div>
       </div>
-      <div class="bar-row">
-        <div class="bar-label">ค่าน้ำมัน</div>
-        <div class="bar-track"><div class="bar-fill gas" id="barGas" style="width:0%"></div></div>
-        <div class="bar-value" id="barGasVal">—</div>
-      </div>
-      <div class="bar-row">
-        <div class="bar-label">ค่าบำรุงรักษา EV</div>
-        <div class="bar-track"><div class="bar-fill ev" id="barEVMaint" style="width:0%"></div></div>
-        <div class="bar-value" id="barEVMaintVal">—</div>
-      </div>
-      <div class="bar-row">
-        <div class="bar-label">ค่าบำรุงรักษาน้ำมัน</div>
-        <div class="bar-track"><div class="bar-fill gas" id="barGasMaint" style="width:0%"></div></div>
-        <div class="bar-value" id="barGasMaintVal">—</div>
-      </div>
-      <div class="bar-row">
-        <div class="bar-label" style="color:#3E7050;font-weight:600">ประหยัดรวม/ปี</div>
-        <div class="bar-track"><div class="bar-fill save" id="barSave" style="width:0%"></div></div>
-        <div class="bar-value" style="color:#3E7050;font-weight:600" id="barSaveVal">—</div>
+      <div style="padding:28px 32px">
+        <div class="bar-compare">
+          <div class="bar-row">
+            <div class="bar-label">ค่าพลังงาน EV</div>
+            <div class="bar-track"><div class="bar-fill ev" id="barEV" style="width:0%"></div></div>
+            <div class="bar-value" id="barEVVal">—</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">ค่าน้ำมัน</div>
+            <div class="bar-track"><div class="bar-fill gas" id="barGas" style="width:0%"></div></div>
+            <div class="bar-value" id="barGasVal">—</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">บำรุงรักษา EV</div>
+            <div class="bar-track"><div class="bar-fill ev" id="barEVMaint" style="width:0%"></div></div>
+            <div class="bar-value" id="barEVMaintVal">—</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">บำรุงรักษาน้ำมัน</div>
+            <div class="bar-track"><div class="bar-fill gas" id="barGasMaint" style="width:0%"></div></div>
+            <div class="bar-value" id="barGasMaintVal">—</div>
+          </div>
+          <div class="bar-row" style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">
+            <div class="bar-label" style="color:var(--ok);font-weight:600">ประหยัดรวม/ปี</div>
+            <div class="bar-track"><div class="bar-fill save" id="barSave" style="width:0%"></div></div>
+            <div class="bar-value" style="color:var(--ok);font-weight:600" id="barSaveVal">—</div>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- Break-even -->
-    <div class="breakeven-block" id="breakevenBlock">
-      <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#8B7355;margin-bottom:12px">Break-even Period</div>
+    <div class="breakeven-block">
+      <div class="section-divider"><div class="sd-line"></div><div class="sd-label">Break-even Period</div><div class="sd-line"></div></div>
       <div>
         <span class="be-number" id="beYears">—</span>
         <span class="be-unit">ปี</span>
@@ -322,20 +319,24 @@
       <p class="be-desc" id="beDesc"></p>
     </div>
 
-    <!-- 10-year TCO table -->
-    <div style="margin-bottom:28px">
-      <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#8B7355;margin-bottom:16px">Total Cost of Ownership — 10 ปี</div>
-      <table class="ten-yr">
-        <thead>
-          <tr>
-            <th>หมวดค่าใช้จ่าย</th>
-            <th>รถ EV (10 ปี)</th>
-            <th>รถน้ำมัน (10 ปี)</th>
-            <th>EV ประหยัด</th>
-          </tr>
-        </thead>
-        <tbody id="tcoTableBody"></tbody>
-      </table>
+    <!-- 10-year TCO -->
+    <div class="form-section">
+      <div class="form-header">
+        <div class="form-title">Total Cost of Ownership — 10 ปี</div>
+      </div>
+      <div style="padding:0 0 0 0;overflow-x:auto">
+        <table class="ten-yr">
+          <thead>
+            <tr>
+              <th>หมวดค่าใช้จ่าย</th>
+              <th>รถ EV (10 ปี)</th>
+              <th>รถน้ำมัน (10 ปี)</th>
+              <th>EV ประหยัด</th>
+            </tr>
+          </thead>
+          <tbody id="tcoTableBody"></tbody>
+        </table>
+      </div>
     </div>
 
     <!-- Solar cross-link -->
@@ -347,125 +348,112 @@
       </div>
       <span class="solar-cta-arrow">→</span>
     </a>
-  </section>
+  </div>
 
-</div>
+</div><!-- /.wrap -->
 </main>
 
-<!-- ── Tips Section ────────────────────────────────────── -->
-<section style="background:#F5F0E8;border-top:1px solid #E4DDD3;padding:64px 0;margin-top:8px">
-  <div style="max-width:1160px;margin:0 auto;padding:0 32px">
-    <div style="margin-bottom:40px">
-      <div style="font-family:'DM Mono',monospace;font-size:11px;color:#8B7355;letter-spacing:.2em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:12px">
-        <span style="display:block;width:24px;height:1px;background:#8B7355;flex-shrink:0"></span>
-        เคล็ดลับประหยัดค่าใช้จ่าย
+<!-- ── Tips Section ─────────────────────────────────── -->
+<div style="background:var(--surface2);border-top:1px solid var(--border);padding:64px 0;margin-top:40px">
+  <div class="wrap">
+    <div class="section-divider"><div class="sd-line"></div><div class="sd-label">เคล็ดลับประหยัดค่าใช้จ่าย</div><div class="sd-line"></div></div>
+    <div class="tips-title">5 วิธีลดต้นทุน <em>EV ในไทย</em></div>
+    <div class="tips-grid" style="grid-template-columns:repeat(5,1fr)">
+      <div class="tip-item">
+        <div class="ti-num">01</div>
+        <div class="ti-title">ชาร์จ TOU</div>
+        <div class="ti-text">ตั้งชาร์จช่วงนอกพีค 22:00–09:00 ค่าไฟลดเหลือ ~2.60 บาท/kWh ประหยัดกว่า Flat rate เกือบ 40%</div>
       </div>
-      <div style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;color:#1C1916">5 วิธีลดต้นทุน EV ในไทย</div>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:20px">
-      <div style="background:#fff;padding:24px;border:1px solid #E4DDD3">
-        <div style="font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;color:#C4A56A;line-height:1;margin-bottom:10px">01</div>
-        <div style="font-size:15px;font-weight:600;color:#1C1916;margin-bottom:8px">ชาร์จ TOU</div>
-        <div style="font-size:14px;color:#6B6259;line-height:1.7">ตั้งชาร์จช่วงนอกพีค 22:00–09:00 ค่าไฟลดเหลือ ~2.60 บาท/kWh ประหยัดกว่า Flat rate เกือบ 40%</div>
+      <div class="tip-item">
+        <div class="ti-num">02</div>
+        <div class="ti-title">Wall Box ที่บ้าน</div>
+        <div class="ti-text">ลงทุน Wall Charger 7–22 kW ค่าชาร์จถูกที่สุด ชาร์จเต็มข้ามคืน ราคา Wall Box เริ่ม ฿8,000–20,000</div>
       </div>
-      <div style="background:#fff;padding:24px;border:1px solid #E4DDD3">
-        <div style="font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;color:#C4A56A;line-height:1;margin-bottom:10px">02</div>
-        <div style="font-size:15px;font-weight:600;color:#1C1916;margin-bottom:8px">Wall Box ที่บ้าน</div>
-        <div style="font-size:14px;color:#6B6259;line-height:1.7">ลงทุน Wall Charger 7–22 kW ค่าชาร์จถูกที่สุด ชาร์จเต็มข้ามคืนสะดวก ราคา Wall Box เริ่มต้น ฿8,000–20,000</div>
+      <div class="tip-item">
+        <div class="ti-num">03</div>
+        <div class="ti-title">โซล่าเซลล์</div>
+        <div class="ti-text">ติดโซล่า 3–5 kW ค่าไฟจาก Solar ≈ 1.5–2 บาท/kWh คืนทุนระบบโซล่า 5–7 ปี และชาร์จ EV นานกว่า 20 ปี</div>
       </div>
-      <div style="background:#fff;padding:24px;border:1px solid #E4DDD3">
-        <div style="font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;color:#C4A56A;line-height:1;margin-bottom:10px">03</div>
-        <div style="font-size:15px;font-weight:600;color:#1C1916;margin-bottom:8px">โซล่าเซลล์</div>
-        <div style="font-size:14px;color:#6B6259;line-height:1.7">ติดโซล่า 3–5 kW ค่าไฟจาก Solar ≈ 1.5–2 บาท/kWh คืนทุนระบบโซล่า 5–7 ปี และชาร์จ EV ได้นานกว่า 20 ปี</div>
+      <div class="tip-item">
+        <div class="ti-num">04</div>
+        <div class="ti-title">ขับแบบ Eco</div>
+        <div class="ti-text">หลีกเลี่ยงการเร่งแรง ใช้ Regen Braking เต็มที่ ปิด AC เมื่อไม่จำเป็น ประสิทธิภาพสูงขึ้น 15–25%</div>
       </div>
-      <div style="background:#fff;padding:24px;border:1px solid #E4DDD3">
-        <div style="font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;color:#C4A56A;line-height:1;margin-bottom:10px">04</div>
-        <div style="font-size:15px;font-weight:600;color:#1C1916;margin-bottom:8px">ขับแบบ Eco</div>
-        <div style="font-size:14px;color:#6B6259;line-height:1.7">หลีกเลี่ยงการเร่งแรง ใช้ Regen Braking เต็มที่ ปิด AC เมื่อไม่จำเป็น ประสิทธิภาพจะสูงขึ้น 15–25%</div>
-      </div>
-      <div style="background:#fff;padding:24px;border:1px solid #E4DDD3">
-        <div style="font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;color:#C4A56A;line-height:1;margin-bottom:10px">05</div>
-        <div style="font-size:15px;font-weight:600;color:#1C1916;margin-bottom:8px">ใช้ Freemium</div>
-        <div style="font-size:14px;color:#6B6259;line-height:1.7">ชาร์จฟรีที่ห้างบางแห่ง (Central, The Mall) หรือ Condo EV Charge Plan สะสมฟรี 50–200 kWh/เดือน</div>
+      <div class="tip-item">
+        <div class="ti-num">05</div>
+        <div class="ti-title">ใช้ Freemium</div>
+        <div class="ti-text">ชาร์จฟรีที่ห้างบางแห่ง (Central, The Mall) หรือ Condo EV Plan สะสมฟรี 50–200 kWh/เดือน</div>
       </div>
     </div>
   </div>
-</section>
+</div>
 
-<!-- ── FAQ Section ─────────────────────────────────────── -->
-<section style="background:#fff;border-top:1px solid #E4DDD3;padding:64px 0">
-  <div style="max-width:800px;margin:0 auto;padding:0 32px">
-    <div style="font-family:'DM Mono',monospace;font-size:11px;color:#8B7355;letter-spacing:.2em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:12px">
-      <span style="display:block;width:24px;height:1px;background:#8B7355;flex-shrink:0"></span>
-      FAQ
-    </div>
-    <div style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;color:#1C1916;margin-bottom:40px">คำถามที่พบบ่อย</div>
+<!-- ── FAQ ─────────────────────────────────────────── -->
+<div style="border-top:1px solid var(--border);padding:64px 0">
+  <div class="wrap" style="max-width:800px">
+    <div class="section-divider"><div class="sd-line"></div><div class="sd-label">FAQ</div><div class="sd-line"></div></div>
+    <div class="tips-title">คำถามที่พบบ่อย</div>
 
     <div style="display:flex;flex-direction:column;gap:0">
-      <div style="border-bottom:1px solid #E4DDD3;padding:22px 0">
-        <div style="font-size:16px;font-weight:600;color:#1C1916;margin-bottom:10px">EV ชาร์จที่ปั๊มชาร์จสาธารณะ ค่าไฟแพงกว่าบ้านเท่าไหร่?</div>
-        <div style="font-size:14px;color:#6B6259;line-height:1.75">ปั๊มสาธารณะในไทย เช่น EA Anywhere อยู่ที่ ~6.50–9.50 บาท/kWh, PEA Volta ~8–10 บาท/kWh เทียบกับ Flat rate บ้าน ~4.18 บาท/kWh แพงกว่า 55–130% และแพงกว่า TOU นอกพีค (~2.60) ถึง 150–265% ควรชาร์จบ้านเป็นหลักเสมอ</div>
+      <div style="border-bottom:1px solid var(--border);padding:22px 0">
+        <div style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:10px">EV ชาร์จที่ปั๊มสาธารณะ ค่าไฟแพงกว่าบ้านเท่าไหร่?</div>
+        <p class="step-txt">ปั๊มสาธารณะในไทย EA Anywhere ~6.50–9.50 บาท/kWh, PEA Volta ~8–10 บาท/kWh เทียบกับ Flat rate บ้าน ~4.18 บาท/kWh แพงกว่า 55–130% และแพงกว่า TOU นอกพีค (~2.60) ถึง 150–265% ควรชาร์จบ้านเป็นหลัก</p>
       </div>
-      <div style="border-bottom:1px solid #E4DDD3;padding:22px 0">
-        <div style="font-size:16px;font-weight:600;color:#1C1916;margin-bottom:10px">ค่า อุปกรณ์ประกันภัย EV สูงกว่ารถน้ำมันไหม?</div>
-        <div style="font-size:14px;color:#6B6259;line-height:1.75">ประกันชั้น 1 ของ EV ในไทยปัจจุบัน (2026) ยังสูงกว่ารถน้ำมันระดับเดียวกันประมาณ 10–30% เพราะค่าซ่อมแบตและชิ้นส่วน High Voltage ยังแพง แต่แนวโน้มลดลงทุกปีตามการแข่งขัน</div>
+      <div style="border-bottom:1px solid var(--border);padding:22px 0">
+        <div style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:10px">ประกันภัย EV แพงกว่ารถน้ำมันไหม?</div>
+        <p class="step-txt">ประกันชั้น 1 EV ในไทย (2026) สูงกว่ารถน้ำมันระดับเดียวกัน ~10–30% เพราะค่าซ่อมแบตและชิ้นส่วน High Voltage ยังแพง แต่แนวโน้มลดลงทุกปีตามการแข่งขัน</p>
       </div>
-      <div style="border-bottom:1px solid #E4DDD3;padding:22px 0">
-        <div style="font-size:16px;font-weight:600;color:#1C1916;margin-bottom:10px">แบตเตอรี่ EV อายุกี่ปี ต้องเปลี่ยนแบตเสียค่าใช้จ่ายเท่าไหร่?</div>
-        <div style="font-size:14px;color:#6B6259;line-height:1.75">แบตเตอรี่ EV ยุคใหม่ (LFP / NMC) อายุการใช้งาน 10–15 ปี หรือ 150,000–300,000 km ผู้ผลิตส่วนใหญ่ให้การรับประกัน 8 ปีหรือ 160,000 km ถ้าต้องเปลี่ยนหลังประกัน ราคาแบตเตอรี่ประมาณ ฿150,000–400,000 ขึ้นกับรุ่น</div>
+      <div style="border-bottom:1px solid var(--border);padding:22px 0">
+        <div style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:10px">แบตเตอรี่ EV อายุกี่ปี ต้องเปลี่ยนเสียค่าใช้จ่ายเท่าไหร่?</div>
+        <p class="step-txt">แบตเตอรี่ EV ยุคใหม่ (LFP/NMC) อายุ 10–15 ปี หรือ 150,000–300,000 km ผู้ผลิตรับประกัน 8 ปีหรือ 160,000 km ค่าเปลี่ยนแบตหลังประกัน ประมาณ ฿150,000–400,000 ขึ้นกับรุ่น</p>
       </div>
       <div style="padding:22px 0">
-        <div style="font-size:16px;font-weight:600;color:#1C1916;margin-bottom:10px">ภาษีรถยนต์ EV กับรถน้ำมันต่างกันอย่างไรในไทย?</div>
-        <div style="font-size:14px;color:#6B6259;line-height:1.75">ไทยจัดเก็บภาษีสรรพสามิตตามปริมาณ CO₂ — รถ EV ปล่อย CO₂ 0 g/km จึงเสียภาษี 0% เทียบรถน้ำมัน 120–180 g/km เสียภาษี 25–35% ทำให้ต้นทุนหลัง VAT+ภาษีของ EV ถูกกว่าที่ควรจะเป็นตามสมรรถนะ</div>
+        <div style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:10px">ภาษีรถยนต์ EV กับรถน้ำมันต่างกันอย่างไรในไทย?</div>
+        <p class="step-txt">รถ EV ปล่อย CO₂ 0 g/km เสียภาษีสรรพสามิต 0% เทียบรถน้ำมัน 120–180 g/km เสียภาษี 25–35% ทำให้ต้นทุนรวม (VAT+ภาษี) ของ EV ต่ำกว่าที่ควรจะเป็นตามสมรรถนะ</p>
       </div>
     </div>
   </div>
-</section>
+</div>
 
-<!-- ── Footer ──────────────────────────────────────────── -->
-<footer class="site-footer">
-  <div class="footer-inner">
-    <div class="footer-logo">ComPair · Comparison Engine</div>
-    <nav class="footer-links">
-      <a href="../index.html">หน้าแรก</a>
-      <a href="ai-calculator.html">AI VRAM</a>
-      <a href="mac-llm-calculator.html">Mac / LLM</a>
-      <a href="solar-calculator.html">Solar ROI</a>
-    </nav>
-    <div class="footer-meta">ข้อมูลอ้างอิง: MEA/PEA Tariff 2024 · ราคารถยนต์ ณ มิ.ย. 2026 · อัตราสิ้นเปลือง Real-world Test</div>
+<!-- ── Footer ──────────────────────────────────────── -->
+<footer>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-logo">ComPair · EV Total Cost Calculator</div>
+      <div class="footer-meta">ข้อมูลอ้างอิง: MEA/PEA Tariff 2024 · ราคารถยนต์ มิ.ย. 2026 · Real-world Test</div>
+      <div class="footer-links">
+        <a href="../index.html">← หน้าหลัก</a>
+        <a href="solar-calculator.html">Solar ROI →</a>
+        <a href="ai-calculator.html">AI VRAM →</a>
+      </div>
+    </div>
   </div>
 </footer>
 
-<!-- ── JavaScript ────────────────────────────────────────── -->
+<!-- ── JavaScript ────────────────────────────────────── -->
 <script>
-/* ── Data ─────────────────────────────────────── */
 const EV_PRESETS = [
-  { name: "BYD Atto 3", sub: "Standard Range · LFP", spec: "49.9 kWh · 6.8 km/kWh", price: 899900, efficiency: 6.8, type: "SUV" },
-  { name: "BYD Seal", sub: "Long Range · LFP", spec: "82.6 kWh · 7.9 km/kWh", price: 1299900, efficiency: 7.9, type: "Sedan" },
-  { name: "MG4 Electric", sub: "Standard · LFP", spec: "64 kWh · 6.6 km/kWh", price: 1089000, efficiency: 6.6, type: "Hatchback" },
-  { name: "Tesla Model 3", sub: "Long Range AWD", spec: "82 kWh · 7.7 km/kWh", price: 1699000, efficiency: 7.7, type: "Sedan" },
-  { name: "Neta V Pro", sub: "สำหรับในเมือง", spec: "38.5 kWh · 7.5 km/kWh", price: 549000, efficiency: 7.5, type: "Hatchback" },
-  { name: "ORA Good Cat", sub: "GT Pro · LFP", spec: "63 kWh · 6.3 km/kWh", price: 799000, efficiency: 6.3, type: "Hatchback" },
+  { name:"BYD Atto 3",    sub:"Standard Range · LFP", spec:"49.9 kWh · 6.8 km/kWh", price:899900,  efficiency:6.8, type:"SUV" },
+  { name:"BYD Seal",      sub:"Long Range · LFP",     spec:"82.6 kWh · 7.9 km/kWh", price:1299900, efficiency:7.9, type:"Sedan" },
+  { name:"MG4 Electric",  sub:"Standard · LFP",       spec:"64 kWh · 6.6 km/kWh",   price:1089000, efficiency:6.6, type:"Hatchback" },
+  { name:"Tesla Model 3", sub:"Long Range AWD",        spec:"82 kWh · 7.7 km/kWh",   price:1699000, efficiency:7.7, type:"Sedan" },
+  { name:"Neta V Pro",    sub:"สำหรับในเมือง",        spec:"38.5 kWh · 7.5 km/kWh", price:549000,  efficiency:7.5, type:"Hatchback" },
+  { name:"ORA Good Cat",  sub:"GT Pro · LFP",          spec:"63 kWh · 6.3 km/kWh",   price:799000,  efficiency:6.3, type:"Hatchback" },
 ];
 
 const GAS_PRESETS = [
-  { name: "Toyota Corolla Cross", sub: "Hybrid 1.8 HEV", spec: "22 km/L · Hybrid", price: 879000, efficiency: 22, type: "SUV" },
-  { name: "Honda HR-V", sub: "e:HEV 1.5", spec: "21 km/L · Hybrid", price: 939000, efficiency: 21, type: "SUV" },
-  { name: "Honda CR-V", sub: "Turbo 1.5 EL", spec: "16 km/L · Petrol", price: 1289000, efficiency: 16, type: "SUV" },
-  { name: "Toyota Fortuner", sub: "2.4 Legender 4x2", spec: "12 km/L · Diesel", price: 1399000, efficiency: 12, type: "SUV" },
-  { name: "Mazda CX-5", sub: "2.0 C Plus", spec: "15 km/L · Petrol", price: 1199000, efficiency: 15, type: "SUV" },
-  { name: "Toyota Yaris", sub: "1.2 Smart", spec: "20 km/L · Petrol", price: 549000, efficiency: 20, type: "Hatchback" },
+  { name:"Toyota Corolla Cross", sub:"Hybrid 1.8 HEV",      spec:"22 km/L · Hybrid", price:879000,  efficiency:22, type:"SUV" },
+  { name:"Honda HR-V",           sub:"e:HEV 1.5",           spec:"21 km/L · Hybrid", price:939000,  efficiency:21, type:"SUV" },
+  { name:"Honda CR-V",           sub:"Turbo 1.5 EL",        spec:"16 km/L · Petrol", price:1289000, efficiency:16, type:"SUV" },
+  { name:"Toyota Fortuner",      sub:"2.4 Legender 4x2",    spec:"12 km/L · Diesel", price:1399000, efficiency:12, type:"SUV" },
+  { name:"Mazda CX-5",           sub:"2.0 C Plus",          spec:"15 km/L · Petrol", price:1199000, efficiency:15, type:"SUV" },
+  { name:"Toyota Yaris",         sub:"1.2 Smart",           spec:"20 km/L · Petrol", price:549000,  efficiency:20, type:"Hatchback" },
 ];
 
-let activeEV  = 0;
-let activeGas = 1;
+let activeEV = 0, activeGas = 1;
 
-/* ── Render presets ──────────────────────────── */
 function renderPresets() {
-  const evGrid  = document.getElementById('evPresetGrid');
-  const gasGrid = document.getElementById('gasPresetGrid');
-
-  evGrid.innerHTML = EV_PRESETS.map((p, i) => `
+  document.getElementById('evPresetGrid').innerHTML = EV_PRESETS.map((p,i) => `
     <button class="preset-card ${i===activeEV?'active':''}" onclick="selectEV(${i})">
       <div class="pc-type">EV · ${p.type}</div>
       <div class="pc-name">${p.name}</div>
@@ -473,7 +461,7 @@ function renderPresets() {
       <div class="pc-price">฿${p.price.toLocaleString()}</div>
     </button>`).join('');
 
-  gasGrid.innerHTML = GAS_PRESETS.map((p, i) => `
+  document.getElementById('gasPresetGrid').innerHTML = GAS_PRESETS.map((p,i) => `
     <button class="preset-card ${i===activeGas?'active':''}" onclick="selectGas(${i})">
       <div class="pc-type">น้ำมัน · ${p.type}</div>
       <div class="pc-name">${p.name}</div>
@@ -484,82 +472,55 @@ function renderPresets() {
 
 function selectEV(i) {
   activeEV = i;
-  const p = EV_PRESETS[i];
-  document.getElementById('evPrice').value      = p.price;
-  document.getElementById('evEfficiency').value = p.efficiency;
+  document.getElementById('evPrice').value      = EV_PRESETS[i].price;
+  document.getElementById('evEfficiency').value = EV_PRESETS[i].efficiency;
   renderPresets();
 }
 
 function selectGas(i) {
   activeGas = i;
-  const p = GAS_PRESETS[i];
-  document.getElementById('gasPrice').value      = p.price;
-  document.getElementById('gasEfficiency').value = p.efficiency;
+  document.getElementById('gasPrice').value      = GAS_PRESETS[i].price;
+  document.getElementById('gasEfficiency').value = GAS_PRESETS[i].efficiency;
   renderPresets();
 }
 
-/* ── Format helpers ───────────────────────────── */
-function fmt(n) {
-  return '฿' + Math.round(n).toLocaleString('th-TH');
-}
-function fmtShort(n) {
-  if (n >= 1000000) return '฿' + (n/1000000).toFixed(2) + 'M';
-  return '฿' + Math.round(n/1000) + 'K';
-}
+function fmt(n) { return '฿' + Math.round(n).toLocaleString('th-TH'); }
 
-/* ── Calculate ────────────────────────────────── */
 function calculate() {
-  const km       = parseFloat(document.getElementById('kmPerYear').value)    || 15000;
-  const fuelPx   = parseFloat(document.getElementById('fuelPrice').value)    || 40;
-  const elecPx   = parseFloat(document.getElementById('electricRate').value) || 4.18;
-  const evPx     = parseFloat(document.getElementById('evPrice').value)      || 899900;
-  const evEff    = parseFloat(document.getElementById('evEfficiency').value) || 6.8;
-  const gasPx    = parseFloat(document.getElementById('gasPrice').value)     || 939000;
-  const gasEff   = parseFloat(document.getElementById('gasEfficiency').value)|| 14;
-  const evMaint  = parseFloat(document.getElementById('evMaint').value)      || 8000;
-  const gasMaint = parseFloat(document.getElementById('gasMaint').value)     || 20000;
+  const km       = parseFloat(document.getElementById('kmPerYear').value)     || 15000;
+  const fuelPx   = parseFloat(document.getElementById('fuelPrice').value)     || 40;
+  const elecPx   = parseFloat(document.getElementById('electricRate').value)  || 4.18;
+  const evPx     = parseFloat(document.getElementById('evPrice').value)       || 899900;
+  const evEff    = parseFloat(document.getElementById('evEfficiency').value)  || 6.8;
+  const gasPx    = parseFloat(document.getElementById('gasPrice').value)      || 939000;
+  const gasEff   = parseFloat(document.getElementById('gasEfficiency').value) || 14;
+  const evMaint  = parseFloat(document.getElementById('evMaint').value)       || 8000;
+  const gasMaint = parseFloat(document.getElementById('gasMaint').value)      || 20000;
 
-  /* Energy cost per year */
   const evEnergyYear  = (km / evEff)  * elecPx;
   const gasEnergyYear = (km / gasEff) * fuelPx;
-
-  /* Annual total running cost */
-  const evTotal  = evEnergyYear  + evMaint;
-  const gasTotal = gasEnergyYear + gasMaint;
-
-  const savingsPerYear = gasTotal - evTotal;
+  const savingsPerYear = (gasEnergyYear + gasMaint) - (evEnergyYear + evMaint);
   const priceDiff      = evPx - gasPx;
 
-  /* Break-even */
   let beYears;
-  if (savingsPerYear <= 0) {
-    beYears = null;
-  } else if (priceDiff <= 0) {
-    beYears = 0;
-  } else {
-    beYears = priceDiff / savingsPerYear;
-  }
+  if (savingsPerYear <= 0) { beYears = null; }
+  else if (priceDiff <= 0) { beYears = 0; }
+  else { beYears = priceDiff / savingsPerYear; }
 
-  /* Monthly */
-  const evMonthly  = evEnergyYear  / 12;
-  const gasMonthly = gasEnergyYear / 12;
+  /* Monthly energy */
+  document.getElementById('evMonthlyCost').textContent  = fmt(evEnergyYear / 12);
+  document.getElementById('gasMonthlyCost').textContent = fmt(gasEnergyYear / 12);
+  document.getElementById('evMonthlySub').textContent   = `${(km/12).toFixed(0)} km · ${(km/(evEff*12)).toFixed(0)} kWh/เดือน`;
+  document.getElementById('gasMonthlySub').textContent  = `${(km/12).toFixed(0)} km · ${(km/(gasEff*12)).toFixed(1)} L/เดือน`;
 
-  /* ── Update DOM ── */
-  document.getElementById('evMonthlyCost').textContent  = fmt(evMonthly);
-  document.getElementById('gasMonthlyCost').textContent = fmt(gasMonthly);
-  document.getElementById('evMonthlySub').textContent   = `${(km/12).toFixed(0)} km/เดือน · ${(km/(evEff*12)).toFixed(0)} kWh/เดือน`;
-  document.getElementById('gasMonthlySub').textContent  = `${(km/12).toFixed(0)} km/เดือน · ${(km/(gasEff*12)).toFixed(1)} L/เดือน`;
-
-  /* Bar chart */
-  const maxVal = Math.max(evEnergyYear, gasEnergyYear, evMaint, gasMaint, savingsPerYear, 1);
+  /* Bars */
+  const maxVal = Math.max(evEnergyYear, gasEnergyYear, evMaint, gasMaint, Math.abs(savingsPerYear), 1);
   const pct = v => Math.max(4, Math.round(Math.abs(v)/maxVal*100)) + '%';
-
-  document.getElementById('barEV').style.width        = pct(evEnergyYear);
-  document.getElementById('barGas').style.width       = pct(gasEnergyYear);
-  document.getElementById('barEVMaint').style.width   = pct(evMaint);
-  document.getElementById('barGasMaint').style.width  = pct(gasMaint);
-  document.getElementById('barSave').style.width      = savingsPerYear > 0 ? pct(savingsPerYear) : '4%';
-
+  document.getElementById('barEV').style.width       = pct(evEnergyYear);
+  document.getElementById('barGas').style.width      = pct(gasEnergyYear);
+  document.getElementById('barEVMaint').style.width  = pct(evMaint);
+  document.getElementById('barGasMaint').style.width = pct(gasMaint);
+  document.getElementById('barSave').style.width     = savingsPerYear > 0 ? pct(savingsPerYear) : '4%';
   document.getElementById('barEVVal').textContent      = fmt(evEnergyYear) + '/ปี';
   document.getElementById('barGasVal').textContent     = fmt(gasEnergyYear) + '/ปี';
   document.getElementById('barEVMaintVal').textContent = fmt(evMaint) + '/ปี';
@@ -567,59 +528,51 @@ function calculate() {
   document.getElementById('barSaveVal').textContent    = savingsPerYear > 0 ? fmt(savingsPerYear) + '/ปี' : 'ไม่ประหยัด';
 
   /* Break-even */
-  if (beYears === null) {
+  if (!beYears && beYears !== 0) {
     document.getElementById('beYears').textContent = '∞';
-    document.getElementById('beDesc').textContent  = 'ต้นทุนรายปีของรถ EV รุ่นนี้ยังสูงกว่ารถน้ำมัน ลองปรับค่าไฟหรือลดค่าบำรุงรักษาดูครับ';
+    document.getElementById('beDesc').textContent  = 'ต้นทุนรายปีของ EV รุ่นนี้ยังสูงกว่ารถน้ำมัน ลองปรับค่าไฟหรือลดค่าบำรุงรักษาดู';
   } else if (beYears === 0) {
     document.getElementById('beYears').textContent = '< 1';
-    document.getElementById('beDesc').textContent  = `ราคา EV ต่ำกว่าหรือเท่ากับรถน้ำมัน ประหยัดรายปีได้ ${fmt(savingsPerYear)} ถือว่าคุ้มค่าตั้งแต่วันแรก`;
+    document.getElementById('beDesc').textContent  = `ราคา EV ต่ำกว่าหรือเท่ากับรถน้ำมัน ประหยัดรายปีได้ ${fmt(savingsPerYear)} คุ้มค่าตั้งแต่วันแรก`;
   } else {
     document.getElementById('beYears').textContent = beYears.toFixed(1);
     const desc = beYears < 3 ? 'คุ้มค่ามาก — คืนทุนเร็วกว่าค่าเฉลี่ยรถ EV ทั่วไป'
-                : beYears < 6 ? 'คุ้มค่าพอสมควร ถ้าถือรถเกิน ' + Math.ceil(beYears) + ' ปี จะประหยัดในระยะยาว'
-                : beYears < 10 ? 'ระยะคืนทุนนาน ควรพิจารณาการใช้ Solar หรือ TOU เพื่อลดค่าไฟ'
-                : 'ระยะคืนทุนนานมาก อาจไม่คุ้มในเชิงการเงินล้วน แต่อาจมีปัจจัยอื่น (สิ่งแวดล้อม, ภาพลักษณ์)';
-    document.getElementById('beDesc').textContent = `ส่วนต่างราคารถ ${fmt(priceDiff)} ÷ ประหยัดรายปี ${fmt(savingsPerYear)} = ${beYears.toFixed(1)} ปี · ${desc}`;
+               : beYears < 6 ? `คุ้มพอสมควร ถ้าถือรถเกิน ${Math.ceil(beYears)} ปี จะประหยัดในระยะยาว`
+               : beYears < 10 ? 'ระยะคืนทุนนาน ควรพิจารณาใช้ Solar หรือ TOU เพื่อลดค่าไฟ'
+               : 'ระยะคืนทุนนานมาก มีปัจจัยนอกเหนือการเงิน (สิ่งแวดล้อม, ภาพลักษณ์)';
+    document.getElementById('beDesc').textContent = `ส่วนต่างราคา ${fmt(priceDiff)} ÷ ประหยัด ${fmt(savingsPerYear)}/ปี = ${beYears.toFixed(1)} ปี · ${desc}`;
   }
 
-  /* 10-year TCO table */
-  const evEnergy10  = evEnergyYear  * 10;
-  const gasEnergy10 = gasEnergyYear * 10;
-  const evMaint10   = evMaint  * 10;
-  const gasMaint10  = gasMaint * 10;
-  const evTotal10   = evPx + evEnergy10  + evMaint10;
-  const gasTotal10  = gasPx + gasEnergy10 + gasMaint10;
-  const totalSave   = gasTotal10 - evTotal10;
+  /* TCO table */
+  const ev10  = { energy: evEnergyYear*10,  maint: evMaint*10  };
+  const gas10 = { energy: gasEnergyYear*10, maint: gasMaint*10 };
+  const tcoEV  = evPx  + ev10.energy  + ev10.maint;
+  const tcoGas = gasPx + gas10.energy + gas10.maint;
 
-  const rows = [
+  document.getElementById('tcoTableBody').innerHTML = [
     ['ราคาซื้อรถ', evPx, gasPx],
-    ['ค่าพลังงาน (10 ปี)', evEnergy10, gasEnergy10],
-    ['ค่าบำรุงรักษา (10 ปี)', evMaint10, gasMaint10],
-    ['<strong>รวม TCO 10 ปี</strong>', evTotal10, gasTotal10],
-  ];
-
-  document.getElementById('tcoTableBody').innerHTML = rows.map((r, i) => {
-    const save  = r[2] - r[1];
-    const isLast = i === rows.length - 1;
+    ['ค่าพลังงาน (10 ปี)', ev10.energy, gas10.energy],
+    ['ค่าบำรุงรักษา (10 ปี)', ev10.maint, gas10.maint],
+    ['<strong>รวม TCO 10 ปี</strong>', tcoEV, tcoGas],
+  ].map((r, i) => {
+    const save = r[2] - r[1];
+    const last = i === 3;
     return `<tr>
-      <td${isLast?' style="font-weight:600"':''}>${r[0]}</td>
-      <td class="${isLast?'highlight':''}">${fmt(r[1])}</td>
+      <td${last?' style="font-weight:600"':''}>${r[0]}</td>
+      <td${last?' class="highlight"':''}>${fmt(r[1])}</td>
       <td>${fmt(r[2])}</td>
-      <td class="positive">${save > 0 ? fmt(save) : (save < 0 ? '-'+fmt(-save) : '—')}</td>
+      <td class="positive">${save>0?fmt(save):save<0?'–'+fmt(-save):'—'}</td>
     </tr>`;
   }).join('');
 
-  /* Subtitle */
-  const evName  = EV_PRESETS[activeEV].name;
-  const gasName = GAS_PRESETS[activeGas].name;
-  document.getElementById('resultSubtitle').textContent = `${evName} (EV) เทียบ ${gasName} (น้ำมัน) · ขับ ${km.toLocaleString()} km/ปี`;
+  document.getElementById('resultSubtitle').textContent =
+    `${EV_PRESETS[activeEV].name} เทียบ ${GAS_PRESETS[activeGas].name} · ขับ ${km.toLocaleString()} km/ปี`;
 
-  /* Show results */
   document.getElementById('resultsSection').style.display = '';
-  document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.getElementById('resultsSection').scrollIntoView({ behavior:'smooth', block:'start' });
 }
 
-/* ── Init ─────────────────────────────────────── */
+/* init */
 renderPresets();
 selectEV(0);
 selectGas(1);

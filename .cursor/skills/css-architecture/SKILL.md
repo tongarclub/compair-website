@@ -1,144 +1,253 @@
 ---
 name: css-architecture
 description: >-
-  Guides CSS edits for the ComPair website. Enforces the 5-file CSS
-  architecture (theme-*.css, shared.css, ai-specific.css, solar-specific.css).
-  Use when the user asks to change colors, typography, component styles, add a
-  new page, or edit any .css file in this project.
+  Guides CSS edits for the ComPair website. Enforces the CSS architecture
+  (theme-*.css → shared.css → page-specific.css). Use when the user asks to
+  change colors, typography, component styles, or add a new page.
   For SEO/AEO changes (JSON-LD, meta tags, sitemap), use the seo-aeo skill instead.
 disable-model-invocation: true
 ---
 
 # ComPair CSS Architecture
 
-## File Map — แก้ที่เดียวได้ทุกที่
+## ⚠️ Critical: CSS Loading Order
+
+**ทุกหน้าต้องโหลด CSS ในลำดับนี้เสมอ — มิฉะนั้น CSS variables จะไม่มีค่า:**
+
+```html
+<!-- 1. Theme ก่อน — defines --primary, --bg, --border, --text* ฯลฯ -->
+<link rel="stylesheet" href="../css/theme-ev.css">
+<!-- 2. Shared — ใช้ var() ที่ theme กำหนด -->
+<link rel="stylesheet" href="../css/shared.css">
+<!-- 3. Page-specific — override หรือเพิ่มเติมจาก shared -->
+<link rel="stylesheet" href="../css/ev-specific.css">
+```
+
+## File Map
 
 ```
 css/
-├── theme-ai.css       ← สีและตัวแปร :root ของหน้า AI (gold palette)
-├── theme-solar.css    ← สีและตัวแปร :root ของหน้า Solar (green palette)
+├── theme-ai.css       ← :root variables — Gold/Warm Brown palette (AI pages)
+├── theme-solar.css    ← :root variables — Forest Green palette (Solar page)
+├── theme-ev.css       ← :root variables — Warm Beige/Gold palette (EV page)
 ├── shared.css         ← ทุกอย่างที่ใช้ร่วมกัน (nav, hero, forms, tips, footer)
-├── ai-specific.css    ← เฉพาะหน้า AI (GPU card, model cards, quant table, score bar)
-└── solar-specific.css ← เฉพาะหน้า Solar (summary cards, ROI table, panel compare)
+├── ai-specific.css    ← GPU card, model cards, quant table, score bar
+├── solar-specific.css ← summary cards, ROI table, panel compare
+├── ev-specific.css    ← preset cards, bar chart, TCO table, solar CTA
+└── gpu-page.css       ← GPU/Model detail pages (html/gpu/, html/model/)
 ```
 
 ## Rule: แก้ที่ไหน?
 
 | ต้องการแก้ | ไฟล์ |
 |---|---|
-| สี accent ของหน้า AI (gold) | `css/theme-ai.css` → `--primary`, `--primary2`, `--primary3` |
-| สี accent ของหน้า Solar (green) | `css/theme-solar.css` → `--primary`, `--primary2`, `--primary3` |
-| สีพื้นหลัง / border / text ของหน้า AI | `css/theme-ai.css` → `--bg`, `--border`, `--text*` |
-| สีพื้นหลัง / border / text ของหน้า Solar | `css/theme-solar.css` |
-| Status colors (ok/warn/err/info) | เหมือนกันทั้งสอง theme — แก้ทั้ง `theme-ai.css` และ `theme-solar.css` |
+| สี accent ของหน้า AI | `css/theme-ai.css` → `--primary`, `--primary2`, `--primary3` |
+| สี accent ของหน้า Solar | `css/theme-solar.css` → `--primary`, `--primary2`, `--primary3` |
+| สี accent ของหน้า EV | `css/theme-ev.css` → `--primary`, `--primary2`, `--primary3` |
 | Typography, font size | `css/shared.css` |
 | Navigation bar | `css/shared.css` → section `NAVIGATION` |
 | Hero section | `css/shared.css` → section `HERO` |
-| Form elements (select, chips, inputs) | `css/shared.css` → section `FORM SECTION` |
+| Form elements (inputs, labels, buttons) | `css/shared.css` → section `FORM SECTION` |
 | Tips section | `css/shared.css` → section `TIPS SECTION` |
 | Footer | `css/shared.css` → section `FOOTER` |
-| GPU card, model cards, quant table, score bar | `css/ai-specific.css` |
-| Summary cards, rec section, ROI table, panel compare | `css/solar-specific.css` |
-
-## CSS Variable System
-
-### Semantic accent variables (defined differently per theme)
-
-```css
---primary   /* main accent color */
---primary2  /* medium variant */
---primary3  /* light variant (borders, decorative) */
-```
-
-### Backward-compatible aliases (ใช้ใน inline styles ใน HTML)
-
-```css
-/* theme-ai.css aliases */
---gold  → var(--primary)
---gold3 → var(--primary3)
-
-/* theme-solar.css aliases */
---green  → var(--primary)
---green3 → var(--primary3)
-
-/* both themes */
---amber → var(--warn)   --amber-bg → var(--warn-bg)
---green → var(--ok)     --green-bg → var(--ok-bg)    (AI only)
---blue  → var(--info)   --blue-bg  → var(--info-bg)
---red   → var(--err)    --red-bg   → var(--err-bg)
-```
-
-> **สำคัญ**: อย่าใช้ `--gold` หรือ `--green` ใน CSS ไฟล์ใหม่ — ใช้ `--primary` แทน
-> aliases มีไว้เพื่อความเข้ากันได้กับ inline styles ที่มีอยู่แล้วเท่านั้น
+| GPU card, model cards, quant table | `css/ai-specific.css` |
+| Solar ROI table, panel compare | `css/solar-specific.css` |
+| EV preset cards, bar chart, TCO table | `css/ev-specific.css` |
 
 ## HTML Page → CSS Files
 
-| HTML file | โหลด CSS |
+| HTML file | โหลด CSS (ตามลำดับ) |
 |---|---|
-| `index.html` | `theme-ai.css` + `shared.css` + inline overrides |
-| `html/ai-calculator.html` | `theme-ai.css` + `shared.css` + `ai-specific.css` |
-| `html/solar-calculator.html` | `theme-solar.css` + `shared.css` + `solar-specific.css` |
+| `index.html` | `theme-ai.css` → `shared.css` |
+| `html/ai-calculator.html` | `theme-ai.css` → `shared.css` → `ai-specific.css` |
+| `html/solar-calculator.html` | `theme-solar.css` → `shared.css` → `solar-specific.css` |
+| `html/ev-calculator.html` | `theme-ev.css` → `shared.css` → `ev-specific.css` |
+| `html/mac-llm-calculator.html` | `theme-ai.css` → `shared.css` |
+| `html/gpu/*.html` | `gpu-page.css` (standalone, no shared.css) |
+| `html/model/*.html` | `gpu-page.css` (standalone, no shared.css) |
+
+## ⚠️ Class Names — ใช้ให้ถูกต้อง (shared.css)
+
+นี่คือ class names ที่มีใน `shared.css` — **ห้ามสร้าง class ซ้ำในชื่อที่ไม่มีอยู่จริง**
+
+### Navigation
+```html
+<nav>
+  <div class="wrap">
+    <div class="nav-inner">
+      <a href="../index.html" class="logo">
+        <div class="logo-mark">C</div>
+        <div>
+          <div class="logo-text">ComPair</div>
+          <div class="logo-sub">Comparison Engine</div>
+        </div>
+      </a>
+      <div class="nav-right">
+        <a href="..." class="nav-link">Link</a>
+        <span class="nav-badge">Current Page</span>  <!-- active indicator -->
+      </div>
+    </div>
+  </div>
+</nav>
+```
+
+> **ห้ามใช้**: `.top-nav`, `.logo-link`, `.nav-links`, `.nav-link-active` — ไม่มีใน shared.css
+
+### Hero
+```html
+<div class="hero">
+  <div class="wrap">
+    <div class="hero-label">Domain X · Category</div>
+    <h1>Title<br><em>Subtitle</em></h1>  <!-- h1 มี global style ใน shared.css -->
+    <p class="hero-desc">Description</p>
+    <!-- hero-card (optional sidebar card) -->
+  </div>
+</div>
+```
+
+> **ห้ามใช้**: `.hero-inner`, `.hero-title`, `.hero-chips`, `.hero-chip`
+> **ทางเลือก**: ถ้าต้องการ chips/tags ให้เพิ่มใน page-specific CSS แทน (เช่น `.ev-chips`, `.ev-chip`)
+
+### Form Sections
+```html
+<div class="form-section">
+  <div class="form-header">
+    <div class="form-title">Section Title</div>
+    <div class="form-subtitle">Subtitle / step info</div>
+  </div>
+  <div class="form-body" style="grid-template-columns:repeat(3,1fr)">
+    <div class="form-col">
+      <label class="field-label">Label</label>
+      <div class="num-input-wrap">
+        <input class="num-input" type="number">
+        <span class="num-unit">unit</span>
+      </div>
+      <div class="field-hint">Hint text</div>
+    </div>
+  </div>
+  <div style="padding:0 32px 28px">
+    <button class="calc-btn">คำนวณ</button>
+  </div>
+</div>
+```
+
+> **ห้ามใช้**: `.calc-wrap`, `.calc-section`, `.section-hd`, `.section-label`, `.section-title`, `.section-sub`, `.field-grid`, `.field-group`, `.field-input`, `.input-row`, `.field-unit`
+> **ใช้แทน**: `.form-section`, `.form-header`, `.form-title`, `.form-subtitle`, `.form-body`, `.form-col`, `.num-input-wrap`, `.num-input`, `.num-unit`, `.field-hint`, `.field-label`
+
+### Tips Section
+```html
+<div class="tips-section">
+  <div class="tips-title">Tips Title <em>highlight</em></div>
+  <div class="tips-grid">  <!-- 3-col by default, override with style="" -->
+    <div class="tip-item">
+      <div class="ti-num">01</div>
+      <div class="ti-title">Tip Title</div>
+      <div class="ti-text">Tip content <code>code snippet</code></div>
+    </div>
+  </div>
+</div>
+```
+
+### Footer
+```html
+<footer>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-logo">ComPair · Page Name</div>
+      <div class="footer-meta">source attribution</div>
+      <div class="footer-links">
+        <a href="../index.html">← หน้าหลัก</a>
+        <a href="other-page.html">Other →</a>
+      </div>
+    </div>
+  </div>
+</footer>
+```
+
+> **ห้ามใช้**: `.site-footer` — ใช้แค่ `footer` (element selector)
+
+### Section Divider
+```html
+<div class="section-divider">
+  <div class="sd-line"></div>
+  <div class="sd-label">Label Text</div>
+  <div class="sd-line"></div>
+</div>
+```
+
+### Utilities
+```html
+.wrap          <!-- max-width container, centered -->
+.fade-up       <!-- fade-in animation -->
+.placeholder   <!-- empty state box -->
+.info-block    <!-- bordered info text block -->
+.ram-chips / .ram-chip  <!-- chip selector (AI page) -->
+.select-wrap   <!-- custom select dropdown -->
+```
+
+## เพิ่มหน้าใหม่ — Checklist
+
+1. **สร้าง `css/theme-<page>.css`** กำหนด `:root { --primary, --bg, --surface, --border, --text* }`
+2. **โหลด CSS ถูกลำดับ**: `theme-<page>.css` → `shared.css` → `<page>-specific.css`
+3. **ใช้ class จาก shared.css** ตามตัวอย่างข้างบน — ห้ามสร้าง class ชื่อซ้ำที่ไม่มีใน shared.css
+4. **เพิ่มใน page-specific.css** เฉพาะ component ใหม่ที่ shared.css ไม่มี
+5. **ใช้ `var(--primary)`** แทน hard-coded hex สำหรับ accent color
+6. **Relative path**: จาก `html/*.html` ใช้ `href="../css/..."` เสมอ
+
+## CSS Variable System
+
+### Core variables (defined in theme-*.css)
+```css
+--bg          /* page background */
+--bg2         /* secondary background */
+--surface     /* card/box background */
+--surface2    /* alternate surface (form headers) */
+--border      /* default border color */
+--border2     /* stronger border */
+--text        /* primary text */
+--text2       /* secondary text */
+--text3       /* tertiary / muted text */
+--primary     /* main accent color */
+--primary2    /* dark variant */
+--primary3    /* light variant */
+--ok / --ok-bg        /* success state */
+--warn / --warn-bg    /* warning state */
+--err / --err-bg      /* error state */
+--info / --info-bg    /* info state */
+```
 
 ## Path Rules — GitHub Pages Compatible
 
-> **สำคัญ**: ใช้ **relative path** เสมอ ห้ามใช้ absolute path `/css/...`
-> เพราะ GitHub Pages serve จาก subdirectory `/compair-website/`
-
 ```html
-<!-- index.html (อยู่ที่ root) -->
+<!-- index.html (root) -->
 <link rel="stylesheet" href="css/theme-ai.css">
-<link rel="stylesheet" href="css/shared.css">
 
-<!-- html/*.html (อยู่ใน html/ folder) -->
-<link rel="stylesheet" href="../css/theme-ai.css">
-<link rel="stylesheet" href="../css/shared.css">
-<link rel="stylesheet" href="../css/ai-specific.css">
-```
+<!-- html/*.html -->
+<link rel="stylesheet" href="../css/theme-ev.css">
 
-## เพิ่มหน้าใหม่
-
-**หน้าที่อยู่ใน `html/`:**
-1. ถ้าใช้ gold palette → `<link rel="stylesheet" href="../css/theme-ai.css">`
-2. ถ้าใช้ green palette → `<link rel="stylesheet" href="../css/theme-solar.css">`
-3. `<link rel="stylesheet" href="../css/shared.css">` เสมอ
-4. สร้าง `css/<page>-specific.css` + link ด้วย `href="../css/<page>-specific.css"`
-5. ใช้ `var(--primary)` สำหรับ accent color — ไม่ใช้ hard-coded hex
-
-**Links ใน HTML:**
-```html
-<!-- จาก html/*.html กลับ root -->
+<!-- navigation links from html/ back to root -->
 <a href="../index.html">หน้าหลัก</a>
 
-<!-- ระหว่างหน้าใน html/ folder เดียวกัน -->
+<!-- between pages in html/ -->
 <a href="solar-calculator.html">Solar</a>
-<a href="ai-calculator.html">AI</a>
 ```
 
 ## Typography Scale (Readable — อัปเดต มิ.ย. 2026)
 
-ใช้ scale นี้เป็น baseline เมื่อเพิ่มหรือแก้ไข font-size ใดๆ
-
 | Role | Size | ไฟล์ | หมายเหตุ |
 |---|---|---|---|
-| Body text | **16px** | `shared.css` body | เดิม 15px |
-| Body line-height | **1.75** | `shared.css` body | เดิม 1.7 |
-| Hero description | **16–17px** | `shared.css` `.hero-desc` | |
-| Tips body text | **14px** | `shared.css` `.ti-text` | เดิม 13px |
-| Tips title | **16px** | `shared.css` `.ti-title` | เดิม 14px |
-| Field hints | **14px** | `shared.css` `.field-hint` | เดิม 13px |
-| Info block text | **14px** | `shared.css` `.info-block p` | เดิม 13px |
-| Table cells (body) | **14px** | `ai-specific.css` `table.qt td` | |
-| Table footer text | **14px** | `ai-specific.css` `.mc-foot-*` | เดิม 13px |
-| Footer links | **14px** | `shared.css` `.footer-links a` | เดิม 13px |
-| Nav links | **13px** | `shared.css` `.nav-link` | |
-| Mono labels (field) | **11px** | `shared.css` `.field-label` | เดิม 9px |
-| Mono labels (GPU page) | **11px** | `gpu-page.css` `.sb-lbl` | เดิม 9px |
-| Caption / meta text | **12px** | ทุกไฟล์ | เดิม 10–11px |
-| Hero chips | **12px** | `gpu-page.css` `.hero-chip` | เดิม 10px |
-| Badge text | **12px** | `gpu-page.css` `.badge`, `.rec-badge` | เดิม 10–11px |
+| Body text | **16px** | `shared.css` body | |
+| Body line-height | **1.75** | `shared.css` body | |
+| Hero description | **16px** | `shared.css` `.hero-desc` | |
+| h1 | `clamp(48px, 6vw, 80px)` | `shared.css` `h1` | |
+| Tips body text | **14px** | `shared.css` `.ti-text` | |
+| Tips title | **16px** | `shared.css` `.ti-title` | |
+| Field hints | **14px** | `shared.css` `.field-hint` | |
+| Footer links | **14px** | `shared.css` `.footer-links a` | |
+| Mono labels | **11px** | `shared.css` `.field-label` | |
+| Caption / meta | **12px** | ทุกไฟล์ | |
 
-> **กฎ**: อย่าใช้ font-size ต่ำกว่า **11px** สำหรับ text ที่คนต้องอ่าน  
-> ยกเว้น decorative element (เส้น, icon, separator) เท่านั้น
+> **กฎ**: อย่าใช้ font-size ต่ำกว่า **11px** สำหรับ text ที่คนต้องอ่าน
 
 ## Fonts (Google Fonts)
 
@@ -146,4 +255,11 @@ css/
 'Cormorant Garamond' — heading, display, decorative numbers
 'DM Sans'            — body text
 'DM Mono'            — labels, mono tags, code, metadata
+```
+
+โหลด font ใน `<head>` ก่อน CSS:
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 ```

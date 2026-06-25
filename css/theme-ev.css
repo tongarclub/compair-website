@@ -1,0 +1,44 @@
+/**
+ * Theme: EV Total Cost Calculator
+ * Palette: Warm Beige / Gold — เข้ากับ Design System ของ ComPair
+ *
+ * --primary*  = accent color สำหรับ page นี้ (warm brown / gold)
+ * ใช้ร่วมกับ shared.css, ev-specific.css
+ */
+
+:root {
+  /* ── Backgrounds ─────────────────── */
+  --bg:        #F5F0E8;
+  --bg2:       #FEFCF8;
+  --surface:   #FFFFFF;
+  --surface2:  #F2EFE9;
+  --body-grad-1: rgba(196,165,106,.06);
+  --body-grad-2: rgba(139,115,85,.05);
+
+  /* ── Borders ─────────────────────── */
+  --border:    #E4DDD3;
+  --border2:   #D4BC96;
+
+  /* ── Text ────────────────────────── */
+  --text:      #1C1916;
+  --text2:     #4A4240;
+  --text3:     #8B7355;
+
+  /* ── Primary Accent (Warm Brown / Gold) ── */
+  --primary:   #8B7355;
+  --primary2:  #6B5540;
+  --primary3:  #C4A56A;
+
+  /* ── Status Colors ───────────────── */
+  --ok:        #3E7050;
+  --ok-bg:     #EDF5F0;
+  --warn:      #8B6914;
+  --warn-bg:   #FDF6E3;
+  --warn3:     #D4BC60;
+  --err:       #8B3A3A;
+  --err-bg:    #FDF0EF;
+  --info:      #2D5A8E;
+  --info-bg:   #EEF3FA;
+  --teal:      #1B7A6E;
+  --teal-bg:   #E8F5F3;
+}

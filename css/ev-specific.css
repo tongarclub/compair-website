@@ -1,5 +1,24 @@
 /* ─── EV Calculator — Page-specific styles ──────────────────────────── */
 
+/* ── Hero chips (tags below hero desc) ──────────────── */
+.ev-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.ev-chip {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--primary);
+  border: 1px solid var(--border2);
+  padding: 6px 14px;
+  background: var(--surface);
+}
+
 /* ── Preset cards ──────────────────────────────────────────────── */
 .preset-grid {
   display: grid;
