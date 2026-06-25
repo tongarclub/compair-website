@@ -212,6 +212,7 @@
   <div class="results-header">
     <div class="results-title">Model <em>Compatibility</em></div>
     <div class="results-meta" id="resultsMeta">// เลือก GPU เพื่อดูผล</div>
+    <button id="shareBtn" onclick="shareURL()" style="display:none;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:9px 18px;border:1px solid var(--gold3,#C4A56A);background:var(--surface,#fff);color:var(--gold,#8B7355);cursor:pointer;transition:all .18s;margin-left:auto;flex-shrink:0" onmouseover="this.style.borderColor='var(--gold,#8B7355)'" onmouseout="this.style.borderColor='var(--gold3,#C4A56A)'">⎘ แชร์ผลนี้</button>
   </div>
 
   <div class="score-bar-wrap" id="scoreBarWrap" style="display:none">
@@ -358,6 +359,22 @@ async function init() {
     { question: 'Apple Silicon รัน LLM ได้ดีแค่ไหน?', answer: 'Apple M-series ใช้ Unified Memory ทำให้ RAM = VRAM เช่น M2 Max 96 GB รัน 70B ได้ง่ายๆ แต่ Bandwidth ต่ำกว่า NVIDIA RTX ดังนั้นความเร็วโดยประมาณจะช้ากว่า GPU สูงๆ ของ NVIDIA' },
   ]));
 
+  // Restore from URL params (must run after select is populated)
+  const _qp = new URLSearchParams(location.search);
+  if (_qp.has('gpu')) {
+    document.getElementById('gpuSelect').value = _qp.get('gpu');
+    onGPUChange();
+  }
+  if (_qp.has('ram')) {
+    const _ram = parseInt(_qp.get('ram')) || 32;
+    state.ram = _ram;
+    document.querySelectorAll('.ram-chip').forEach(b => b.classList.toggle('active', parseInt(b.dataset.val) === _ram));
+  }
+  if (_qp.has('cpu')) {
+    document.getElementById('cpuSelect').value = _qp.get('cpu');
+    onCPUChange();
+  }
+
   injectJsonLd(buildHowToSchema({
     name: 'วิธีตรวจสอบว่า GPU ของฉันรัน LLM ได้ไหม',
     description: 'ใช้ ComPair AI VRAM Calculator เพื่อประเมิน compatibility ระหว่าง GPU และ LLM Model',
@@ -473,7 +490,27 @@ function render() {
   });
 
   document.getElementById('modelGrid').innerHTML = cards.join('');
+  syncURL();
+  document.getElementById('shareBtn').style.display = 'inline-block';
 }
+
+function syncURL() {
+  const p = new URLSearchParams();
+  if (state.gpu) p.set('gpu', state.gpu.id);
+  p.set('ram', state.ram);
+  if (state.cpu) p.set('cpu', state.cpu.id);
+  history.replaceState(null, '', state.gpu ? '?' + p.toString() : location.pathname);
+}
+
+window.shareURL = function() {
+  navigator.clipboard.writeText(location.href).then(() => {
+    const btn = document.getElementById('shareBtn');
+    const orig = btn.innerHTML;
+    btn.innerHTML = '✓ คัดลอกแล้ว!';
+    Object.assign(btn.style, { background:'#3E7050', color:'#fff', borderColor:'#3E7050' });
+    setTimeout(() => { btn.innerHTML = orig; btn.style.background = btn.style.color = btn.style.borderColor = ''; }, 2200);
+  });
+};
 
 init().catch(err => {
   console.error('[AI Calculator] init failed:', err);

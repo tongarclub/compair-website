@@ -576,6 +576,7 @@ footer { border-top:1px solid var(--border); padding:40px 0; }
   <div class="results-header">
     <div class="results-title">LLM <em>Compatibility</em></div>
     <div class="results-meta" id="resultsMeta">// เลือก Mac เพื่อดูผล</div>
+    <button id="shareBtn" onclick="shareURL()" style="display:none;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:9px 18px;border:1px solid var(--gold3,#C4A56A);background:var(--surface,#fff);color:var(--gold,#8B7355);cursor:pointer;transition:all .18s;margin-left:auto;flex-shrink:0" onmouseover="this.style.borderColor='var(--gold,#8B7355)'" onmouseout="this.style.borderColor='var(--gold3,#C4A56A)'">⎘ แชร์ผลนี้</button>
   </div>
 
   <div class="score-bar-wrap" id="scoreBarWrap" style="display:none">
@@ -943,6 +944,9 @@ const QUANT_KEYS = [
     });
     sel.appendChild(og);
   });
+  // Restore from URL params
+  const _mq = new URLSearchParams(location.search);
+  if (_mq.has('mac')) { sel.value = _mq.get('mac'); onMacChange(); }
 })();
 
 // ═══════════════════════════════════════
@@ -1068,6 +1072,18 @@ function render(mac) {
   });
 
   document.getElementById('modelGrid').innerHTML = cards.join('');
+  history.replaceState(null, '', '?' + new URLSearchParams({ mac: mac.id }).toString());
+  document.getElementById('shareBtn').style.display = 'inline-block';
+}
+
+function shareURL() {
+  navigator.clipboard.writeText(location.href).then(() => {
+    const btn = document.getElementById('shareBtn');
+    const orig = btn.innerHTML;
+    btn.innerHTML = '✓ คัดลอกแล้ว!';
+    Object.assign(btn.style, { background:'#3E7050', color:'#fff', borderColor:'#3E7050' });
+    setTimeout(() => { btn.innerHTML = orig; btn.style.background = btn.style.color = btn.style.borderColor = ''; }, 2200);
+  });
 }
 </script>
 </body>

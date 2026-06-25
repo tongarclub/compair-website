@@ -225,6 +225,7 @@
         </div>
         <div class="info-block" id="inverterInfoBox" style="display:none"><p id="inverterInfoText"></p></div>
         <button class="calc-btn" id="calcBtn" onclick="calculate()">คำนวณ ROI →</button>
+        <button id="shareBtn" onclick="shareURL()" style="display:none;width:100%;margin-top:8px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:12px;border:1px solid var(--border2,#B8CCBA);background:var(--surface,#fff);color:var(--primary,#2D6A4F);cursor:pointer;transition:all .18s" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border2)'">⎘ แชร์ผลนี้</button>
       </div>
 
     </div>
@@ -417,6 +418,20 @@ async function init() {
   document.getElementById('footerMeta').textContent =
     `${PANELS.length} แผง · ${INVERTERS.length} Inverter · อ้างอิงจาก EGAT · MEA · HuggingFace Solar Data`;
 
+  // Restore from URL params
+  const _sq = new URLSearchParams(location.search);
+  if (_sq.has('kwh')) {
+    const _kwh = parseFloat(_sq.get('kwh')) || 0;
+    document.getElementById('kwhInput').value = _kwh;
+    document.getElementById('billInput').value = Math.round(_kwh * ELEC_RATE);
+    document.getElementById('energyInfo').textContent = `${_kwh} kWh/เดือน ≈ ค่าไฟ ฿${Math.round(_kwh * ELEC_RATE).toLocaleString()}/เดือน`;
+  }
+  if (_sq.has('region')) document.getElementById('regionSelect').value = _sq.get('region');
+  if (_sq.has('self'))   document.getElementById('selfConsumeInput').value = _sq.get('self');
+  if (_sq.has('panel'))  document.getElementById('panelSelect').value = _sq.get('panel');
+  if (_sq.has('inv'))    document.getElementById('inverterSelect').value = _sq.get('inv');
+  if (_sq.has('kwh'))    window.calculate();
+
   // AEO JSON-LD
   injectJsonLd(buildFaqSchema([
     { question: 'ติดโซล่าเซลล์ 5 kW คืนทุนกี่ปี?', answer: 'โดยเฉลี่ยระบบ 5 kW สำหรับบ้านพักอาศัยในไทย คืนทุน 7–9 ปี ขึ้นกับค่าไฟ ภูมิภาค และสัดส่วนการใช้ไฟเอง ROI ตลอด 25 ปีอยู่ที่ประมาณ 150–200%' },
@@ -560,8 +575,29 @@ window.calculate = function() {
   document.getElementById('roiTableBody').innerHTML = rows;
   document.getElementById('roiSection').classList.add('visible');
 
-  // Scroll to results
+  syncURL();
+  document.getElementById('shareBtn').style.display = 'block';
   document.getElementById('summaryWrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
+
+function syncURL() {
+  history.replaceState(null, '', '?' + new URLSearchParams({
+    kwh:    document.getElementById('kwhInput').value,
+    region: document.getElementById('regionSelect').value,
+    self:   document.getElementById('selfConsumeInput').value,
+    panel:  document.getElementById('panelSelect').value,
+    inv:    document.getElementById('inverterSelect').value,
+  }).toString());
+}
+
+window.shareURL = function() {
+  navigator.clipboard.writeText(location.href).then(() => {
+    const btn = document.getElementById('shareBtn');
+    const orig = btn.innerHTML;
+    btn.innerHTML = '✓ คัดลอกแล้ว!';
+    Object.assign(btn.style, { background:'#2D6A4F', color:'#fff', borderColor:'#2D6A4F' });
+    setTimeout(() => { btn.innerHTML = orig; btn.style.background = btn.style.color = btn.style.borderColor = ''; }, 2200);
+  });
 };
 
 // ── Panel Comparison Table ─────────────────────────────────

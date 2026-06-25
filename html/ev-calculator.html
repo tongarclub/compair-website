@@ -339,6 +339,11 @@
       </div>
     </div>
 
+    <!-- Share button -->
+    <div style="display:flex;justify-content:flex-end;margin-bottom:16px">
+      <button id="shareBtn" onclick="shareURL()" style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:11px 22px;border:1px solid var(--border);background:var(--surface);color:var(--primary);cursor:pointer;transition:all .18s" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border)'">⎘ แชร์ผลนี้</button>
+    </div>
+
     <!-- Solar cross-link -->
     <a href="solar-calculator.html" class="solar-cta">
       <span class="solar-cta-icon">☀</span>
@@ -568,9 +573,50 @@ function calculate() {
   document.getElementById('resultSubtitle').textContent =
     `${EV_PRESETS[activeEV].name} เทียบ ${GAS_PRESETS[activeGas].name} · ขับ ${km.toLocaleString()} km/ปี`;
 
+  syncURL();
   document.getElementById('resultsSection').style.display = '';
   document.getElementById('resultsSection').scrollIntoView({ behavior:'smooth', block:'start' });
 }
+
+/* ── Share URL ──────────────────────────────────── */
+function syncURL() {
+  history.replaceState(null, '', '?' + new URLSearchParams({
+    ev:       activeEV,
+    gas:      activeGas,
+    km:       document.getElementById('kmPerYear').value,
+    fuel:     document.getElementById('fuelPrice').value,
+    elec:     document.getElementById('electricRate').value,
+    evp:      document.getElementById('evPrice').value,
+    eveff:    document.getElementById('evEfficiency').value,
+    evmaint:  document.getElementById('evMaint').value,
+    gasp:     document.getElementById('gasPrice').value,
+    gaseff:   document.getElementById('gasEfficiency').value,
+    gasmaint: document.getElementById('gasMaint').value,
+  }).toString());
+}
+
+function shareURL() {
+  navigator.clipboard.writeText(location.href).then(() => {
+    const btn = document.getElementById('shareBtn');
+    const orig = btn.innerHTML;
+    btn.innerHTML = '✓ คัดลอกแล้ว!';
+    Object.assign(btn.style, { background:'#3E7050', color:'#fff', borderColor:'#3E7050' });
+    setTimeout(() => { btn.innerHTML = orig; btn.style.background = btn.style.color = btn.style.borderColor = ''; }, 2200);
+  });
+}
+
+/* ── Restore from URL on page load ──────────────── */
+(function loadFromURL() {
+  const p = new URLSearchParams(location.search);
+  if (!p.has('km') && !p.has('ev')) return;
+  if (p.has('ev'))       selectEV(parseInt(p.get('ev')) || 0);
+  if (p.has('gas'))      selectGas(parseInt(p.get('gas')) || 1);
+  const fields = { km:'kmPerYear', fuel:'fuelPrice', elec:'electricRate',
+    evp:'evPrice', eveff:'evEfficiency', evmaint:'evMaint',
+    gasp:'gasPrice', gaseff:'gasEfficiency', gasmaint:'gasMaint' };
+  Object.entries(fields).forEach(([k, id]) => { if (p.has(k)) document.getElementById(id).value = p.get(k); });
+  calculate();
+})();
 
 /* init */
 renderPresets();
