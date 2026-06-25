@@ -114,6 +114,32 @@ css/
 <a href="ai-calculator.html">AI</a>
 ```
 
+## Typography Scale (Readable — อัปเดต มิ.ย. 2026)
+
+ใช้ scale นี้เป็น baseline เมื่อเพิ่มหรือแก้ไข font-size ใดๆ
+
+| Role | Size | ไฟล์ | หมายเหตุ |
+|---|---|---|---|
+| Body text | **16px** | `shared.css` body | เดิม 15px |
+| Body line-height | **1.75** | `shared.css` body | เดิม 1.7 |
+| Hero description | **16–17px** | `shared.css` `.hero-desc` | |
+| Tips body text | **14px** | `shared.css` `.ti-text` | เดิม 13px |
+| Tips title | **16px** | `shared.css` `.ti-title` | เดิม 14px |
+| Field hints | **14px** | `shared.css` `.field-hint` | เดิม 13px |
+| Info block text | **14px** | `shared.css` `.info-block p` | เดิม 13px |
+| Table cells (body) | **14px** | `ai-specific.css` `table.qt td` | |
+| Table footer text | **14px** | `ai-specific.css` `.mc-foot-*` | เดิม 13px |
+| Footer links | **14px** | `shared.css` `.footer-links a` | เดิม 13px |
+| Nav links | **13px** | `shared.css` `.nav-link` | |
+| Mono labels (field) | **11px** | `shared.css` `.field-label` | เดิม 9px |
+| Mono labels (GPU page) | **11px** | `gpu-page.css` `.sb-lbl` | เดิม 9px |
+| Caption / meta text | **12px** | ทุกไฟล์ | เดิม 10–11px |
+| Hero chips | **12px** | `gpu-page.css` `.hero-chip` | เดิม 10px |
+| Badge text | **12px** | `gpu-page.css` `.badge`, `.rec-badge` | เดิม 10–11px |
+
+> **กฎ**: อย่าใช้ font-size ต่ำกว่า **11px** สำหรับ text ที่คนต้องอ่าน  
+> ยกเว้น decorative element (เส้น, icon, separator) เท่านั้น
+
 ## Fonts (Google Fonts)
 
 ```
