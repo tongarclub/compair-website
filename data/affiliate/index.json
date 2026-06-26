@@ -1,0 +1,30 @@
+{
+  "gpu": {
+    "desc": "Domain A+F: การ์ดจอสำหรับ AI/Image Gen",
+    "count": 100
+  },
+  "mac": {
+    "desc": "Domain C: MacBook",
+    "count": 100
+  },
+  "mac_accessories": {
+    "desc": "Domain C: MacBook Accessories",
+    "count": 95
+  },
+  "solar_panel": {
+    "desc": "Domain B: แผงโซล่าเซลล์",
+    "count": 100
+  },
+  "solar_inverter": {
+    "desc": "Domain B: Solar Inverter/Controller",
+    "count": 100
+  },
+  "ev_charger": {
+    "desc": "Domain D: EV Charger",
+    "count": 100
+  },
+  "gold_invest": {
+    "desc": "Domain E: ทองคำลงทุน",
+    "count": 100
+  }
+}
