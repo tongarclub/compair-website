@@ -1,2 +1,6 @@
 # Affiliate data exports — do not commit
 csv-affiliate-shoppe/
+
+# Playwright session (contains login cookies — never commit)
+scripts/shopee_session.json
+scripts/node_modules/

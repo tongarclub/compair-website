@@ -124,6 +124,63 @@ https://shopee.co.th/product/153078644/40303177573?mmp_pid=an_15358640421&utm_so
 
 ---
 
+---
+
+## Playwright Script — Auto Generate Short Links
+
+**ไฟล์:** `scripts/gen_affiliate_links.js`
+
+### Setup (ครั้งแรก)
+```bash
+cd scripts
+npm install
+npx playwright install chromium
+```
+
+### Run
+```bash
+node scripts/gen_affiliate_links.js
+```
+
+### Flow
+1. เปิด browser → ไปที่ affiliate.shopee.co.th/login
+2. **คุณ login ด้วยตัวเอง** (รองรับ OTP/captcha)
+3. Script บันทึก session → `scripts/shopee_session.json` (ใช้ซ้ำครั้งต่อไป)
+4. วน loop แต่ละ product → generate short link → save กลับ JSON
+5. มี checkpoint ทุก 10 items — ถ้า script หยุดกลางคัน เริ่มใหม่ได้เลย (ข้าม item ที่มี `shopee_short_link` แล้ว)
+
+### Files ที่ script จะประมวลผล
+| ไฟล์ | Items |
+|---|---|
+| `gpu.json` | 50 |
+| `mac.json` | 50 |
+| `mac_accessories.json` | 50 |
+| `solar_panel.json` | 50 |
+| `solar_inverter.json` | 50 |
+| `ev_charger.json` | 50 |
+| `gold_invest.json` | 50 |
+
+**หมายเหตุ:** `scripts/shopee_session.json` ห้าม commit ขึ้น GitHub (มี login cookies) — อยู่ใน `.gitignore` แล้ว
+
+---
+
+## ลำดับการทำงาน (Recommended)
+
+```
+Step 1 ✅ Method 2 — เพิ่ม mmp_pid ใน JSON (เสร็จแล้ว)
+           affiliate_link = product_link + ?mmp_pid=an_15358640421&...
+           → ใช้ได้เลย ได้ attribution
+
+Step 2 🔜 Playwright — upgrade เป็น short link
+           affiliate_link = https://s.shopee.co.th/XXXXX
+           → full tracking พร้อม utm_campaign + uls_trackid
+
+Step 3 🔜 Add Shopee section ในหน้า calculator
+           → แสดง product card grid โหลดจาก data/affiliate/*.json
+```
+
+---
+
 ## Links อ้างอิง
 
 - Shopee Affiliate Portal: [https://affiliate.shopee.co.th](https://affiliate.shopee.co.th)
