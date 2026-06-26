@@ -461,6 +461,91 @@ footer { border-top:1px solid var(--border); padding:40px 0; }
   .sc-header { grid-template-columns:auto 1fr; }
   .sc-score-val, .sc-score-lbl { display:none; }
 }
+
+/* ── Affiliate Strip ────────────────────────── */
+@keyframes affSlideIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.aff-strip {
+  margin-top: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  animation: affSlideIn .28s ease both;
+}
+.aff-strip-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface2);
+}
+.aff-strip-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--gold, #8B7355);
+}
+.aff-strip-more {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--text3); text-decoration: none;
+  display: flex; align-items: center; gap: 4px;
+  transition: color .2s;
+}
+.aff-strip-more:hover { color: var(--gold, #8B7355); }
+.aff-strip-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.aff-card {
+  display: flex; gap: 10px; padding: 12px 14px;
+  text-decoration: none; color: inherit;
+  border-right: 1px solid var(--border);
+  transition: background .2s;
+  position: relative;
+}
+.aff-card:last-child { border-right: none; }
+.aff-card:hover { background: var(--surface); }
+.aff-card-img {
+  width: 52px; height: 52px; flex-shrink: 0;
+  object-fit: cover; background: var(--surface2);
+}
+.aff-card-body { flex: 1; min-width: 0; }
+.aff-card-title {
+  font-size: 11.5px; line-height: 1.5; color: var(--text);
+  display: -webkit-box;
+  -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden; margin-bottom: 5px;
+}
+.aff-card-price {
+  display: flex; align-items: center; gap: 5px; flex-wrap: wrap;
+  margin-bottom: 3px;
+}
+.aff-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px; font-weight: 600;
+  color: #8B3A3A; line-height: 1;
+}
+.aff-orig { font-size: 10px; color: var(--text3); text-decoration: line-through; }
+.aff-disc {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  background: #8B3A3A; color: #fff;
+  padding: 1px 5px; letter-spacing: .03em;
+}
+.aff-card-meta {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; color: var(--text3); letter-spacing: .02em;
+}
+.aff-card-arrow {
+  position: absolute; right: 10px; bottom: 10px;
+  font-size: 10px; color: var(--text3);
+  transition: color .2s, transform .2s;
+}
+.aff-card:hover .aff-card-arrow { color: var(--gold,#8B7355); transform: translateX(2px); }
+@media (max-width: 640px) {
+  .aff-strip-cards { grid-template-columns: 1fr; }
+  .aff-card { border-right: none; border-bottom: 1px solid var(--border); }
+  .aff-card:last-child { border-bottom: none; }
+}
 </style>
 </head>
 <body>
@@ -543,6 +628,17 @@ footer { border-top:1px solid var(--border); padding:40px 0; }
         </div>
         <div class="info-block" id="macInfoBox" style="display:none">
           <p id="macInfoText"></p>
+        </div>
+        <!-- Affiliate Strip: shows on Mac select -->
+        <div class="aff-strip" id="macAffiliateBox" style="display:none">
+          <div class="aff-strip-header">
+            <span class="aff-strip-label">อุปกรณ์เสริม MacBook · Shopee</span>
+            <a class="aff-strip-more" href="shopee-deals.html?cat=mac" target="_blank">
+              ดูทั้งหมด
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+          <div class="aff-strip-cards" id="macAffCards"></div>
         </div>
       </div>
       <div class="form-col">
@@ -962,7 +1058,86 @@ function onMacChange() {
   } else {
     document.getElementById('macInfoBox').style.display = 'none';
   }
+  renderMacAffiliate(mac);
   render(mac);
+}
+
+// ── Affiliate Widget ──────────────────────────────────────────
+let _macAffCache = null;
+let _macAccCache = null;
+
+async function getMacAffData() {
+  if (_macAffCache && _macAccCache) return [..._macAffCache, ..._macAccCache];
+  try {
+    const [r1, r2] = await Promise.all([
+      fetch('../data/affiliate/mac.json'),
+      fetch('../data/affiliate/mac_accessories.json'),
+    ]);
+    const [d1, d2] = await Promise.all([r1.json(), r2.json()]);
+    _macAffCache = d1.items || [];
+    _macAccCache = d2.items || [];
+  } catch(e) { _macAffCache = []; _macAccCache = []; }
+  return [..._macAffCache, ..._macAccCache];
+}
+
+function macAffCardHTML(item) {
+  const disc  = parseInt(item.discount_percentage || 0);
+  const link  = item.affiliate_link || item.product_link || '#';
+  const saleP = parseInt(item.sale_price).toLocaleString('th-TH');
+  const origP = disc > 0 ? parseInt(item.price).toLocaleString('th-TH') : null;
+  const rating= parseFloat(item.item_rating || 0).toFixed(1);
+  const sold  = parseInt(item.item_sold || 0);
+  const sFmt  = sold >= 1000 ? (sold/1000).toFixed(1).replace('.0','') + 'K' : sold;
+  const title = item.title.replace(/^[^\w\u0E00-\u0E7F\u0020]+/, '').trim();
+  return `<a class="aff-card" href="${link}" target="_blank" rel="noopener sponsored">
+    <img class="aff-card-img" src="${item.image_link}" alt="${title}" loading="lazy"
+      onerror="this.style.background='var(--surface2)';this.style.display='block'">
+    <div class="aff-card-body">
+      <div class="aff-card-title">${title}</div>
+      <div class="aff-card-price">
+        <span class="aff-price">฿${saleP}</span>
+        ${origP ? `<span class="aff-orig">฿${origP}</span>` : ''}
+        ${disc > 0 ? `<span class="aff-disc">-${disc}%</span>` : ''}
+      </div>
+      <div class="aff-card-meta">★${rating} · ขาย ${sFmt}</div>
+    </div>
+    <span class="aff-card-arrow">→</span>
+  </a>`;
+}
+
+async function renderMacAffiliate(mac) {
+  const affBox = document.getElementById('macAffiliateBox');
+  if (!mac) { affBox.style.display = 'none'; return; }
+
+  const items = await getMacAffData();
+  if (!items.length) return;
+
+  // Match by chip generation (M1/M2/M3/M4) in title, then sort by discount + sold
+  const chipGen = mac.chip.replace(' ', '').toUpperCase(); // "M4", "M4PRO", "M3MAX"
+  const chipBase = mac.chip.split(' ')[0]; // "M4", "M3"...
+
+  // Score: matches chip gen = +10, has discount = +5, sort by sold
+  const scored = items.map(i => {
+    const t = i.title.toUpperCase();
+    let score = parseInt(i.item_sold || 0);
+    if (t.includes(chipBase.toUpperCase())) score += 5000;
+    if (parseInt(i.discount_percentage||0) > 20) score += 2000;
+    if (parseFloat(i.item_rating||0) >= 4.8) score += 1000;
+    return { item: i, score };
+  }).sort((a,b) => b.score - a.score);
+
+  const top3 = scored.slice(0, 3).map(s => s.item);
+
+  // Update label
+  const labelEl = affBox.querySelector('.aff-strip-label');
+  labelEl.textContent = `อุปกรณ์เสริม ${mac.full} · Shopee`;
+
+  document.getElementById('macAffCards').innerHTML = top3.map(macAffCardHTML).join('');
+
+  // Reset animation
+  affBox.style.display = 'none';
+  void affBox.offsetWidth;
+  affBox.style.display = '';
 }
 
 // ═══════════════════════════════════════

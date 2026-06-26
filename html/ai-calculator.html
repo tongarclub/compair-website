@@ -112,6 +112,91 @@
 <style>
 /* AI Calculator — 3-column form layout */
 .form-body { grid-template-columns: 1fr 1fr 1fr; }
+
+/* ── Affiliate Strip ────────────────────────── */
+@keyframes affSlideIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.aff-strip {
+  margin-top: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  animation: affSlideIn .28s ease both;
+}
+.aff-strip-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface2);
+}
+.aff-strip-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--primary);
+}
+.aff-strip-more {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--text3); text-decoration: none;
+  display: flex; align-items: center; gap: 4px;
+  transition: color .2s;
+}
+.aff-strip-more:hover { color: var(--primary); }
+.aff-strip-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.aff-card {
+  display: flex; gap: 10px; padding: 12px 14px;
+  text-decoration: none; color: inherit;
+  border-right: 1px solid var(--border);
+  transition: background .2s;
+  position: relative;
+}
+.aff-card:last-child { border-right: none; }
+.aff-card:hover { background: var(--surface); }
+.aff-card-img {
+  width: 52px; height: 52px; flex-shrink: 0;
+  object-fit: cover;
+  background: var(--surface2);
+}
+.aff-card-body { flex: 1; min-width: 0; }
+.aff-card-title {
+  font-size: 11.5px; line-height: 1.5; color: var(--text);
+  display: -webkit-box;
+  -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden; margin-bottom: 5px;
+}
+.aff-card-price {
+  display: flex; align-items: center; gap: 5px; flex-wrap: wrap;
+  margin-bottom: 3px;
+}
+.aff-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px; font-weight: 600; color: var(--err); line-height: 1;
+}
+.aff-orig { font-size: 10px; color: var(--text3); text-decoration: line-through; }
+.aff-disc {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  background: var(--err); color: #fff;
+  padding: 1px 5px; letter-spacing: .03em;
+}
+.aff-card-meta {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; color: var(--text3); letter-spacing: .02em;
+}
+.aff-card-arrow {
+  position: absolute; right: 10px; bottom: 10px;
+  font-size: 10px; color: var(--text3);
+  transition: color .2s, transform .2s;
+}
+.aff-card:hover .aff-card-arrow { color: var(--primary); transform: translateX(2px); }
+@media (max-width: 640px) {
+  .aff-strip-cards { grid-template-columns: 1fr; }
+  .aff-card { border-right: none; border-bottom: 1px solid var(--border); }
+  .aff-card:last-child { border-bottom: none; }
+}
 </style>
 </head>
 <body>
@@ -170,6 +255,17 @@
           <select id="gpuSelect"></select>
         </div>
         <div class="info-block" id="gpuInfoBox" style="display:none"><p id="gpuInfoText"></p></div>
+        <!-- Affiliate Strip: shows on GPU select -->
+        <div class="aff-strip" id="gpuAffiliateBox" style="display:none">
+          <div class="aff-strip-header">
+            <span class="aff-strip-label">สินค้าที่เกี่ยวข้อง · Shopee</span>
+            <a class="aff-strip-more" href="shopee-deals.html?cat=gpu" target="_blank">
+              ดูทั้งหมด
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+          <div class="aff-strip-cards" id="gpuAffCards"></div>
+        </div>
       </div>
       <div class="form-col">
         <label class="field-label">System RAM</label>
@@ -399,7 +495,87 @@ function onGPUChange() {
   } else {
     box.style.display = 'none';
   }
+  renderGpuAffiliate(state.gpu);
   render();
+}
+
+// ── Affiliate Widget ──────────────────────────────────────────
+let _gpuAffCache = null;
+
+async function getGpuAffData() {
+  if (_gpuAffCache) return _gpuAffCache;
+  try {
+    const r = await fetch('../data/affiliate/gpu.json');
+    const d = await r.json();
+    _gpuAffCache = d.items || [];
+  } catch(e) { _gpuAffCache = []; }
+  return _gpuAffCache;
+}
+
+function affCardHTML(item) {
+  const disc  = parseInt(item.discount_percentage || 0);
+  const link  = item.affiliate_link || item.product_link || '#';
+  const saleP = parseInt(item.sale_price).toLocaleString('th-TH');
+  const origP = disc > 0 ? parseInt(item.price).toLocaleString('th-TH') : null;
+  const rating= parseFloat(item.item_rating || 0).toFixed(1);
+  const sold  = parseInt(item.item_sold || 0);
+  const sFmt  = sold >= 1000 ? (sold/1000).toFixed(1).replace('.0','') + 'K' : sold;
+  const title = item.title.replace(/^[^\w\u0E00-\u0E7F\u0020]+/, '').trim();
+  const img   = item.image_link;
+  return `<a class="aff-card" href="${link}" target="_blank" rel="noopener sponsored">
+    <img class="aff-card-img" src="${img}" alt="${title}" loading="lazy"
+      onerror="this.style.background='var(--surface2)';this.style.display='block'">
+    <div class="aff-card-body">
+      <div class="aff-card-title">${title}</div>
+      <div class="aff-card-price">
+        <span class="aff-price">฿${saleP}</span>
+        ${origP ? `<span class="aff-orig">฿${origP}</span>` : ''}
+        ${disc > 0 ? `<span class="aff-disc">-${disc}%</span>` : ''}
+      </div>
+      <div class="aff-card-meta">★${rating} · ขาย ${sFmt}</div>
+    </div>
+    <span class="aff-card-arrow">→</span>
+  </a>`;
+}
+
+async function renderGpuAffiliate(gpu) {
+  const affBox = document.getElementById('gpuAffiliateBox');
+  if (!gpu) { affBox.style.display = 'none'; return; }
+
+  const items = await getGpuAffData();
+  if (!items.length) return;
+
+  // Extract GPU series: "RTX 5090" → "5090", "RTX 4070 Super" → "4070"
+  const mNum = gpu.name.match(/\b(\d{4})\b/);
+  const series = mNum ? mNum[1] : null;
+
+  let matched = series
+    ? items.filter(i => i.title.includes(series))
+    : [];
+
+  // Fallback to top sold if fewer than 3 specific matches
+  if (matched.length < 3) {
+    const others = [...items]
+      .filter(i => !matched.includes(i))
+      .sort((a, b) => parseInt(b.item_sold||0) - parseInt(a.item_sold||0));
+    matched = [...matched, ...others].slice(0, 3);
+  } else {
+    matched = matched.slice(0, 3);
+  }
+
+  // Update label
+  const labelEl = affBox.querySelector('.aff-strip-label');
+  labelEl.textContent = series
+    ? `RTX ${series} · สินค้าที่เกี่ยวข้อง`
+    : 'GPU · อุปกรณ์ยอดนิยม';
+
+  document.getElementById('gpuAffCards').innerHTML = matched.map(affCardHTML).join('');
+
+  // Reset animation
+  affBox.style.display = 'none';
+  // Force reflow then show
+  void affBox.offsetWidth;
+  affBox.style.display = '';
 }
 
 function onCPUChange() {
