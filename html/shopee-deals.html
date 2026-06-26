@@ -34,16 +34,21 @@ body { display: flex; flex-direction: column; }
    HERO
 ══════════════════════════════════════════ */
 .deals-hero {
-  padding: 72px 0 48px;
+  padding: 64px 0 44px;
   text-align: center;
+  overflow: hidden;
 }
-.deals-hero .hero-label { justify-content: center; }
+.deals-hero .hero-label {
+  justify-content: center;
+  flex-wrap: wrap; gap: 6px;
+}
 .deals-hero .hero-label::before { display: none; }
-.deals-hero .hero-label::after {
-  content: ''; display: block;
-  width: 40px; height: 1px; background: var(--primary3);
+.deals-hero .hero-label::after { display: none; }
+/* Override shared.css h1 size for this page */
+.deals-hero h1 {
+  font-size: clamp(30px, 6.5vw, 72px);
+  margin-bottom: 16px;
 }
-.deals-hero h1 { margin-bottom: 16px; }
 .deals-hero .hero-desc {
   max-width: 520px; margin: 0 auto 40px;
   font-size: 15px; color: var(--text2);
@@ -138,8 +143,8 @@ body { display: flex; flex-direction: column; }
   margin-bottom: 20px; flex-wrap: wrap; gap: 8px;
 }
 .results-count {
-  font-family: 'DM Mono', monospace; font-size: 11px;
-  color: var(--text3); letter-spacing: .08em; text-transform: uppercase;
+  font-family: 'DM Mono', monospace; font-size: 12px;
+  color: var(--text2); letter-spacing: .04em;
 }
 .results-count span { color: var(--primary); font-weight: 500; }
 
@@ -217,19 +222,19 @@ body { display: flex; flex-direction: column; }
 
 /* Body */
 .pc-body {
-  padding: 14px 14px 0;
+  padding: 14px 16px 12px;
   flex: 1; display: flex; flex-direction: column;
-  gap: 6px;
+  gap: 7px;
 }
 
 .pc-shop {
-  font-family: 'DM Mono', monospace; font-size: 9px;
-  letter-spacing: .1em; text-transform: uppercase;
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: .08em; text-transform: uppercase;
   color: var(--text3); line-height: 1;
 }
 
 .pc-title {
-  font-size: 12.5px; line-height: 1.55; color: var(--text);
+  font-size: 13.5px; line-height: 1.6; color: var(--text);
   font-weight: 400;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -253,7 +258,7 @@ body { display: flex; flex-direction: column; }
 
 .pc-meta {
   display: flex; align-items: center; gap: 10px;
-  font-family: 'DM Mono', monospace; font-size: 10px;
+  font-family: 'DM Mono', monospace; font-size: 11px;
   color: var(--text3); letter-spacing: .02em;
 }
 .pc-rating { display: flex; align-items: center; gap: 4px; }
@@ -262,11 +267,11 @@ body { display: flex; flex-direction: column; }
 
 /* CTA */
 .pc-cta {
-  margin-top: auto; padding: 12px 14px;
+  margin-top: auto; padding: 13px 14px;
   display: flex; align-items: center; justify-content: center; gap: 8px;
   background: transparent; border-top: 1px solid var(--border);
-  font-family: 'DM Mono', monospace; font-size: 11px;
-  letter-spacing: .1em; text-transform: uppercase;
+  font-family: 'DM Mono', monospace; font-size: 12px;
+  letter-spacing: .08em; text-transform: uppercase;
   color: var(--primary); cursor: pointer;
   transition: background .2s, color .2s;
 }
@@ -397,8 +402,8 @@ body { display: flex; flex-direction: column; }
   color: var(--primary); line-height: 1;
 }
 .ds-lbl {
-  font-family: 'DM Mono', monospace; font-size: 10px;
-  color: var(--text3); letter-spacing: .1em; text-transform: uppercase;
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  color: var(--text3); letter-spacing: .08em; text-transform: uppercase;
 }
 .ds-sep { width: 1px; height: 32px; background: var(--border); flex-shrink: 0; }
 
@@ -408,21 +413,110 @@ body { display: flex; flex-direction: column; }
 @media (max-width: 1100px) {
   .product-grid, .featured-grid { grid-template-columns: repeat(3, 1fr); }
 }
+
+/* Tablet */
 @media (max-width: 768px) {
-  .product-grid, .featured-grid { grid-template-columns: repeat(2, 1fr); }
-  .deals-hero { padding: 48px 0 32px; }
-  .cat-tabs { gap: 0; }
-  .cat-tab { padding: 10px 14px; font-size: 12px; }
+  .wrap { padding: 0 16px; }
+
+  .deals-hero { padding: 40px 0 28px; }
+  .deals-hero .hero-desc { font-size: 14px; margin-bottom: 24px; }
+
+  .product-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+
+  /* Featured: horizontal scroll strip */
+  .featured-grid {
+    display: flex; gap: 12px;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; scroll-snap-type: x mandatory;
+    padding-bottom: 8px;
+    grid-template-columns: unset;
+  }
+  .featured-grid::-webkit-scrollbar { display: none; }
+  .featured-card {
+    flex: 0 0 220px; scroll-snap-align: start;
+    min-width: 220px;
+  }
+
   .deals-stats { flex-wrap: wrap; }
   .ds-sep { display: none; }
-  .toolbar { flex-direction: column; }
-  .search-wrap { width: 100%; }
-  .sort-select { width: 100%; }
+  .ds-val { font-size: 20px; }
+  .deals-stat { padding: 14px 20px; }
+
+  .toolbar { flex-direction: column; gap: 8px; }
+  .search-wrap, .sort-select { width: 100%; min-width: unset; }
+
+  .section-title { font-size: 22px; }
+  .nav-right .nav-link { display: none; }
+
+  .pc-title { -webkit-line-clamp: 2; }
+  .pc-body { padding: 12px 12px 0; gap: 6px; }
 }
+
+/* Mobile */
 @media (max-width: 480px) {
-  .product-grid, .featured-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-  .pc-sale-price { font-size: 18px; }
-  .pc-title { font-size: 11.5px; }
+  /* Product grid: 1 col, horizontal card */
+  .product-grid { grid-template-columns: 1fr; gap: 8px; }
+
+  /* Horizontal card layout — image left, content right */
+  .product-card {
+    flex-direction: row;
+    align-items: stretch;
+    min-height: 110px;
+  }
+  .product-card .pc-img-wrap {
+    width: 110px; min-width: 110px;
+    aspect-ratio: unset; height: auto;
+    align-self: stretch;
+  }
+  .product-card .pc-img-wrap img {
+    width: 110px; height: 100%;
+    min-height: 110px;
+  }
+  .product-card .pc-body {
+    padding: 10px 10px 8px;
+    gap: 4px; flex: 1; min-width: 0;
+  }
+  .product-card .pc-title {
+    font-size: 13px;
+    -webkit-line-clamp: 2;
+    line-height: 1.5;
+  }
+  .product-card .pc-sale-price { font-size: 17px; }
+  .product-card .pc-shop { font-size: 9.5px; }
+  .product-card .pc-meta { font-size: 10.5px; }
+  /* Hide separate CTA button — whole card is tappable */
+  .product-card .pc-cta { display: none; }
+  /* Inline tap hint */
+  .product-card .pc-body::after {
+    content: 'ดูบน Shopee →';
+    display: block; margin-top: auto; padding-top: 4px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; letter-spacing: .06em;
+    color: var(--primary);
+  }
+
+  /* Featured horizontal scroll — bigger cards */
+  .featured-card { flex: 0 0 200px; min-width: 200px; }
+  .featured-card .pc-img-wrap { aspect-ratio: 1; height: auto; }
+  .featured-card .pc-sale-price { font-size: 20px; }
+  .featured-card .pc-cta { display: flex; }
+  .featured-card .pc-body::after { display: none; }
+
+  .deals-hero { padding: 28px 0 20px; }
+  .deals-hero .hero-desc { font-size: 13.5px; }
+
+  .deals-stat { padding: 12px 14px; }
+  .ds-val { font-size: 18px; }
+  .ds-lbl { font-size: 10px; }
+
+  .cat-tab { padding: 9px 10px; font-size: 11.5px; }
+  .cat-tab .tab-count { display: none; }
+
+  .section-title { font-size: 20px; }
+  .section-label { font-size: 9px; }
+
+  /* Toolbar */
+  #searchInput { font-size: 15px; }
 }
 
 /* ══════════════════════════════════════════
@@ -497,6 +591,10 @@ body { display: flex; flex-direction: column; }
         <div class="section-label">Top Picks</div>
         <div class="section-title">ดีลโดดเด่น ลดสูงสุด</div>
       </div>
+      <span id="featuredScrollHint" style="display:none;font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:.08em;align-items:center;gap:4px">
+        เลื่อนดูเพิ่ม
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </span>
     </div>
     <div class="featured-grid" id="featuredGrid">
       <!-- filled by JS -->
@@ -645,11 +743,14 @@ function renderCard(item, featured = false) {
   const title    = cleanTitle(item.title);
   const cls      = featured ? 'featured-card' : 'product-card';
 
+  // If HOT badge covers the discount, skip the top-left badge to avoid clutter
+  const showDiscBadge = hasDisc && !(badge && badge.cls === 'pc-badge-hot');
+
   return `
 <a class="${cls}" href="${link}" target="_blank" rel="noopener sponsored">
   <div class="pc-img-wrap">
     <img src="${item.image_link}" alt="${title}" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'200\\' height=\\'200\\'%3E%3Crect fill=\\'%23F2EFE9\\' width=\\'200\\' height=\\'200\\'/%3E%3C/svg%3E'">
-    ${hasDisc ? `<span class="pc-discount">-${disc}%</span>` : ''}
+    ${showDiscBadge ? `<span class="pc-discount">-${disc}%</span>` : ''}
     ${official ? `<span class="pc-official">Official</span>` : ''}
     ${badge ? `<span class="pc-badge ${badge.cls}">${badge.label}</span>` : ''}
   </div>
@@ -836,6 +937,12 @@ async function loadAllData() {
   renderFeatured();
   renderTabs();
   renderGrid();
+
+  // Show scroll hint on mobile
+  if (window.innerWidth <= 768) {
+    const hint = document.getElementById('featuredScrollHint');
+    if (hint) hint.style.display = 'flex';
+  }
 }
 
 /* ══════════════════════════════════════════════════════
