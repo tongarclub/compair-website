@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-J3C1X16FZ5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-J3C1X16FZ5');
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shopee Deals — GPU · MacBook · Solar · EV · ทอง | ComPair</title>
+<meta name="description" content="รวมดีลเด็ด Shopee คัดมาแล้ว — การ์ดจอ GPU, MacBook Accessories, แผงโซล่าเซลล์, EV Charger, ทองคำ ราคาดีที่สุด พร้อม affiliate link">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://tongarclub.github.io/compair-website/html/shopee-deals.html">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../css/theme-ai.css">
+<link rel="stylesheet" href="../css/shared.css">
+
+<style>
+/* ══════════════════════════════════════════
+   PAGE LAYOUT OVERRIDES
+══════════════════════════════════════════ */
+body { display: flex; flex-direction: column; }
+
+/* ══════════════════════════════════════════
+   HERO
+══════════════════════════════════════════ */
+.deals-hero {
+  padding: 72px 0 48px;
+  text-align: center;
+}
+.deals-hero .hero-label { justify-content: center; }
+.deals-hero .hero-label::before { display: none; }
+.deals-hero .hero-label::after {
+  content: ''; display: block;
+  width: 40px; height: 1px; background: var(--primary3);
+}
+.deals-hero h1 { margin-bottom: 16px; }
+.deals-hero .hero-desc {
+  max-width: 520px; margin: 0 auto 40px;
+  font-size: 15px; color: var(--text2);
+}
+
+/* ══════════════════════════════════════════
+   SEARCH + SORT BAR
+══════════════════════════════════════════ */
+.toolbar {
+  display: flex; gap: 12px; align-items: center;
+  margin-bottom: 28px; flex-wrap: wrap;
+}
+
+.search-wrap {
+  flex: 1; min-width: 240px;
+  position: relative;
+}
+.search-wrap svg {
+  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  width: 16px; height: 16px; color: var(--text3);
+  pointer-events: none;
+}
+#searchInput {
+  width: 100%; padding: 11px 14px 11px 40px;
+  background: var(--surface); border: 1px solid var(--border);
+  color: var(--text); font-family: 'DM Sans', sans-serif;
+  font-size: 14px; outline: none;
+  transition: border-color .2s;
+}
+#searchInput::placeholder { color: var(--text3); }
+#searchInput:focus { border-color: var(--primary2); }
+
+.sort-select {
+  padding: 11px 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  color: var(--text); font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
+  outline: none; cursor: pointer;
+  transition: border-color .2s;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23A89E94'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+}
+.sort-select:focus { border-color: var(--primary2); }
+
+/* ══════════════════════════════════════════
+   CATEGORY TABS
+══════════════════════════════════════════ */
+.cat-tabs {
+  display: flex; gap: 0; margin-bottom: 32px;
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  border-bottom: 1px solid var(--border);
+  scrollbar-width: none;
+}
+.cat-tabs::-webkit-scrollbar { display: none; }
+
+.cat-tab {
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 20px; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500;
+  color: var(--text3); white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color .2s, border-color .2s;
+  background: none; border-top: none; border-left: none; border-right: none;
+  border-bottom: 2px solid transparent;
+  outline: none;
+}
+.cat-tab:hover { color: var(--text2); }
+.cat-tab.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+.cat-tab .tab-count {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  color: var(--text3); background: var(--surface2);
+  border: 1px solid var(--border);
+  padding: 1px 6px; letter-spacing: .04em;
+}
+.cat-tab.active .tab-count {
+  color: var(--primary); border-color: rgba(139,115,85,.4);
+  background: rgba(212,188,150,.12);
+}
+
+/* ══════════════════════════════════════════
+   RESULTS META
+══════════════════════════════════════════ */
+.results-meta {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 20px; flex-wrap: wrap; gap: 8px;
+}
+.results-count {
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  color: var(--text3); letter-spacing: .08em; text-transform: uppercase;
+}
+.results-count span { color: var(--primary); font-weight: 500; }
+
+/* ══════════════════════════════════════════
+   PRODUCT GRID
+══════════════════════════════════════════ */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 48px;
+}
+
+/* ══════════════════════════════════════════
+   PRODUCT CARD
+══════════════════════════════════════════ */
+.product-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  text-decoration: none; color: inherit;
+  transition: border-color .2s, transform .2s;
+  position: relative; overflow: hidden;
+}
+.product-card:hover {
+  border-color: var(--primary2);
+  transform: translateY(-2px);
+}
+
+/* Image */
+.pc-img-wrap {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: var(--surface2);
+  flex-shrink: 0;
+}
+.pc-img-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .35s ease;
+}
+.product-card:hover .pc-img-wrap img { transform: scale(1.04); }
+
+/* Discount badge */
+.pc-discount {
+  position: absolute; top: 0; left: 0;
+  background: var(--err); color: #fff;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; font-weight: 500;
+  padding: 4px 8px; letter-spacing: .03em;
+  z-index: 2;
+}
+
+/* Official badge */
+.pc-official {
+  position: absolute; top: 0; right: 0;
+  background: var(--primary); color: #fff;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: .08em; text-transform: uppercase;
+  padding: 3px 7px;
+  z-index: 2;
+}
+
+/* Hot/Bestseller overlay */
+.pc-badge {
+  position: absolute; bottom: 8px; left: 8px;
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: .1em; text-transform: uppercase;
+  padding: 3px 8px; z-index: 2;
+}
+.pc-badge-hot  { background: #FF4D00; color: #fff; }
+.pc-badge-top  { background: var(--ok); color: #fff; }
+.pc-badge-new  { background: var(--info); color: #fff; }
+
+/* Body */
+.pc-body {
+  padding: 14px 14px 0;
+  flex: 1; display: flex; flex-direction: column;
+  gap: 6px;
+}
+
+.pc-shop {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--text3); line-height: 1;
+}
+
+.pc-title {
+  font-size: 12.5px; line-height: 1.55; color: var(--text);
+  font-weight: 400;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: 1;
+}
+
+.pc-price-row {
+  display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap;
+}
+.pc-sale-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; font-weight: 600;
+  color: var(--err); line-height: 1;
+}
+.pc-orig-price {
+  font-size: 12px; color: var(--text3);
+  text-decoration: line-through;
+}
+
+.pc-meta {
+  display: flex; align-items: center; gap: 10px;
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  color: var(--text3); letter-spacing: .02em;
+}
+.pc-rating { display: flex; align-items: center; gap: 4px; }
+.pc-rating svg { width: 11px; height: 11px; fill: #E8A83C; flex-shrink: 0; }
+.pc-sold { display: flex; align-items: center; gap: 3px; }
+
+/* CTA */
+.pc-cta {
+  margin-top: auto; padding: 12px 14px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  background: transparent; border-top: 1px solid var(--border);
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--primary); cursor: pointer;
+  transition: background .2s, color .2s;
+}
+.pc-cta svg { width: 12px; height: 12px; transition: transform .2s; }
+.product-card:hover .pc-cta {
+  background: var(--primary); color: #fff;
+}
+.product-card:hover .pc-cta svg { transform: translateX(3px); }
+
+/* ══════════════════════════════════════════
+   FEATURED SECTION (Top Deals)
+══════════════════════════════════════════ */
+.section-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 20px;
+}
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px; font-weight: 600;
+  letter-spacing: .01em;
+}
+.section-sub {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--text3); margin-top: 4px;
+}
+.section-label {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: .15em; text-transform: uppercase;
+  color: var(--primary); border-bottom: 1px solid var(--primary3);
+  padding-bottom: 2px;
+}
+
+.featured-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px; margin-bottom: 56px;
+}
+
+/* Featured card — bigger */
+.featured-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  text-decoration: none; color: inherit;
+  transition: border-color .2s, transform .2s;
+  position: relative; overflow: hidden;
+}
+.featured-card:hover {
+  border-color: var(--primary2);
+  transform: translateY(-2px);
+}
+.featured-card .pc-img-wrap { aspect-ratio: 1; }
+.featured-card .pc-sale-price { font-size: 26px; }
+
+/* ══════════════════════════════════════════
+   LOAD MORE
+══════════════════════════════════════════ */
+.load-more-wrap {
+  text-align: center; margin-bottom: 64px;
+}
+.load-more-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 40px;
+  background: var(--surface); border: 1px solid var(--border);
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--primary); cursor: pointer;
+  transition: background .2s, border-color .2s, color .2s;
+}
+.load-more-btn:hover {
+  background: var(--primary); border-color: var(--primary);
+  color: #fff;
+}
+.load-more-btn.hidden { display: none; }
+
+/* ══════════════════════════════════════════
+   SKELETON LOADING
+══════════════════════════════════════════ */
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+.skeleton {
+  background: linear-gradient(90deg, var(--surface2) 25%, var(--border) 50%, var(--surface2) 75%);
+  background-size: 200% auto;
+  animation: shimmer 1.4s infinite;
+}
+.skeleton-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+.skeleton-img { aspect-ratio: 1; }
+.skeleton-line {
+  height: 12px; margin: 4px 0;
+}
+.skeleton-body { padding: 14px; display: flex; flex-direction: column; gap: 8px; }
+
+/* ══════════════════════════════════════════
+   EMPTY STATE
+══════════════════════════════════════════ */
+.empty-state {
+  grid-column: 1 / -1;
+  padding: 80px 0; text-align: center;
+  color: var(--text3);
+}
+.empty-state svg { width: 40px; height: 40px; margin-bottom: 16px; }
+.empty-state p {
+  font-family: 'DM Mono', monospace; font-size: 12px;
+  letter-spacing: .1em; text-transform: uppercase;
+}
+
+/* ══════════════════════════════════════════
+   STATS BAR
+══════════════════════════════════════════ */
+.deals-stats {
+  display: flex; align-items: center; justify-content: center;
+  background: var(--surface); border: 1px solid var(--border);
+  margin-bottom: 40px;
+}
+.deals-stat {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 16px 28px; gap: 4px; flex: 1;
+}
+.ds-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; font-weight: 600;
+  color: var(--primary); line-height: 1;
+}
+.ds-lbl {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  color: var(--text3); letter-spacing: .1em; text-transform: uppercase;
+}
+.ds-sep { width: 1px; height: 32px; background: var(--border); flex-shrink: 0; }
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media (max-width: 1100px) {
+  .product-grid, .featured-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 768px) {
+  .product-grid, .featured-grid { grid-template-columns: repeat(2, 1fr); }
+  .deals-hero { padding: 48px 0 32px; }
+  .cat-tabs { gap: 0; }
+  .cat-tab { padding: 10px 14px; font-size: 12px; }
+  .deals-stats { flex-wrap: wrap; }
+  .ds-sep { display: none; }
+  .toolbar { flex-direction: column; }
+  .search-wrap { width: 100%; }
+  .sort-select { width: 100%; }
+}
+@media (max-width: 480px) {
+  .product-grid, .featured-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .pc-sale-price { font-size: 18px; }
+  .pc-title { font-size: 11.5px; }
+}
+
+/* ══════════════════════════════════════════
+   FADE ANIMATIONS
+══════════════════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp .6s ease both; }
+.fade-up-1 { animation-delay: .1s; }
+.fade-up-2 { animation-delay: .2s; }
+.fade-up-3 { animation-delay: .3s; }
+.fade-up-4 { animation-delay: .4s; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a href="../index.html" class="logo">
+      <div class="logo-mark">C</div>
+      <div>
+        <div class="logo-text">ComPair</div>
+        <div class="logo-sub">Comparison Engine</div>
+      </div>
+    </a>
+    <div class="nav-right">
+      <a href="../html/ai-calculator.html" class="nav-link">GPU Calculator</a>
+      <a href="../html/solar-calculator.html" class="nav-link">Solar ROI</a>
+      <span class="nav-badge">Shopee Deals</span>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <!-- Hero -->
+  <div class="deals-hero">
+    <div class="hero-label fade-up">Shopee Affiliate · คัดมาแล้ว</div>
+    <h1 class="fade-up fade-up-1">ดีลเด็ด <em>ราคาดี</em><br>คัดมาให้แล้ว</h1>
+    <p class="hero-desc fade-up fade-up-2">รวม GPU · MacBook · Solar · EV · ทองคำ — เรียงตามส่วนลด ยอดขาย และรีวิว เพื่อให้คุณตัดสินใจได้เร็วขึ้น</p>
+  </div>
+
+  <!-- Stats bar -->
+  <div class="deals-stats fade-up fade-up-2" id="statsBar">
+    <div class="deals-stat">
+      <span class="ds-val" id="statTotal">—</span>
+      <span class="ds-lbl">สินค้าทั้งหมด</span>
+    </div>
+    <div class="ds-sep"></div>
+    <div class="deals-stat">
+      <span class="ds-val" id="statCategories">7</span>
+      <span class="ds-lbl">หมวดหมู่</span>
+    </div>
+    <div class="ds-sep"></div>
+    <div class="deals-stat">
+      <span class="ds-val" id="statMaxDiscount">—</span>
+      <span class="ds-lbl">ลดสูงสุด</span>
+    </div>
+    <div class="ds-sep"></div>
+    <div class="deals-stat">
+      <span class="ds-val" id="statAvgRating">—</span>
+      <span class="ds-lbl">คะแนนเฉลี่ย</span>
+    </div>
+  </div>
+
+  <!-- Featured / Top Deals -->
+  <div class="fade-up fade-up-3">
+    <div class="section-header">
+      <div>
+        <div class="section-label">Top Picks</div>
+        <div class="section-title">ดีลโดดเด่น ลดสูงสุด</div>
+      </div>
+    </div>
+    <div class="featured-grid" id="featuredGrid">
+      <!-- filled by JS -->
+      <div class="skeleton-card"><div class="skeleton-img skeleton"></div><div class="skeleton-body"><div class="skeleton-line skeleton" style="width:60%"></div><div class="skeleton-line skeleton" style="width:100%"></div><div class="skeleton-line skeleton" style="width:80%"></div></div></div>
+      <div class="skeleton-card"><div class="skeleton-img skeleton"></div><div class="skeleton-body"><div class="skeleton-line skeleton" style="width:60%"></div><div class="skeleton-line skeleton" style="width:100%"></div><div class="skeleton-line skeleton" style="width:80%"></div></div></div>
+      <div class="skeleton-card"><div class="skeleton-img skeleton"></div><div class="skeleton-body"><div class="skeleton-line skeleton" style="width:60%"></div><div class="skeleton-line skeleton" style="width:100%"></div><div class="skeleton-line skeleton" style="width:80%"></div></div></div>
+      <div class="skeleton-card"><div class="skeleton-img skeleton"></div><div class="skeleton-body"><div class="skeleton-line skeleton" style="width:60%"></div><div class="skeleton-line skeleton" style="width:100%"></div><div class="skeleton-line skeleton" style="width:80%"></div></div></div>
+    </div>
+  </div>
+
+  <!-- Category tabs -->
+  <div class="cat-tabs fade-up fade-up-3" id="catTabs">
+    <!-- filled by JS -->
+  </div>
+
+  <!-- Toolbar: Search + Sort -->
+  <div class="toolbar fade-up fade-up-4">
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input type="text" id="searchInput" placeholder="ค้นหาสินค้า เช่น RTX 5090, MacBook M4, แผงโซล่า...">
+    </div>
+    <select class="sort-select" id="sortSelect">
+      <option value="discount">ลดมากสุด</option>
+      <option value="sold">ขายดีสุด</option>
+      <option value="rating">คะแนนสูงสุด</option>
+      <option value="price_asc">ราคาต่ำสุด</option>
+      <option value="price_desc">ราคาสูงสุด</option>
+    </select>
+  </div>
+
+  <!-- Results meta -->
+  <div class="results-meta fade-up fade-up-4">
+    <div class="results-count" id="resultsMeta">กำลังโหลด...</div>
+  </div>
+
+  <!-- Product grid -->
+  <div class="product-grid" id="productGrid">
+    <!-- skeleton -->
+    <div class="skeleton-card"><div class="skeleton-img skeleton"></div><div class="skeleton-body"><div class="skeleton-line skeleton" style="width:60%"></div><div class="skeleton-line skeleton" style="width:100%"></div><div class="skeleton-line skeleton" style="width:80%"></div></div></div>
+    <div class="skeleton-card"><div class="skeleton-img skeleton"></div><div class="skeleton-body"><div class="skeleton-line skeleton" style="width:60%"></div><div class="skeleton-line skeleton" style="width:100%"></div><div class="skeleton-line skeleton" style="width:80%"></div></div></div>
+    <div class="skeleton-card"><div class="skeleton-img skeleton"></div><div class="skeleton-body"><div class="skeleton-line skeleton" style="width:60%"></div><div class="skeleton-line skeleton" style="width:100%"></div><div class="skeleton-line skeleton" style="width:80%"></div></div></div>
+    <div class="skeleton-card"><div class="skeleton-img skeleton"></div><div class="skeleton-body"><div class="skeleton-line skeleton" style="width:60%"></div><div class="skeleton-line skeleton" style="width:100%"></div><div class="skeleton-line skeleton" style="width:80%"></div></div></div>
+    <div class="skeleton-card"><div class="skeleton-img skeleton"></div><div class="skeleton-body"><div class="skeleton-line skeleton" style="width:60%"></div><div class="skeleton-line skeleton" style="width:100%"></div><div class="skeleton-line skeleton" style="width:80%"></div></div></div>
+    <div class="skeleton-card"><div class="skeleton-img skeleton"></div><div class="skeleton-body"><div class="skeleton-line skeleton" style="width:60%"></div><div class="skeleton-line skeleton" style="width:100%"></div><div class="skeleton-line skeleton" style="width:80%"></div></div></div>
+    <div class="skeleton-card"><div class="skeleton-img skeleton"></div><div class="skeleton-body"><div class="skeleton-line skeleton" style="width:60%"></div><div class="skeleton-line skeleton" style="width:100%"></div><div class="skeleton-line skeleton" style="width:80%"></div></div></div>
+    <div class="skeleton-card"><div class="skeleton-img skeleton"></div><div class="skeleton-body"><div class="skeleton-line skeleton" style="width:60%"></div><div class="skeleton-line skeleton" style="width:100%"></div><div class="skeleton-line skeleton" style="width:80%"></div></div></div>
+  </div>
+
+  <!-- Load More -->
+  <div class="load-more-wrap">
+    <button class="load-more-btn hidden" id="loadMoreBtn">
+      โหลดเพิ่มเติม
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="6 9 12 15 18 9"/>
+      </svg>
+    </button>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<footer style="margin-top:auto; border-top:1px solid var(--border); padding: 32px 0; text-align:center;">
+  <div class="wrap">
+    <p style="font-family:'DM Mono',monospace; font-size:11px; color:var(--text3); letter-spacing:.1em; text-transform:uppercase;">
+      ComPair — Shopee Affiliate Deals · ราคา ณ วันที่ดึงข้อมูล อาจมีการเปลี่ยนแปลง
+    </p>
+  </div>
+</footer>
+
+<script>
+/* ══════════════════════════════════════════════════════
+   DATA CONFIG
+══════════════════════════════════════════════════════ */
+const CATEGORIES = [
+  { id: 'all',             label: 'ทั้งหมด',           icon: '◈', file: null },
+  { id: 'gpu',             label: 'GPU / การ์ดจอ',     icon: '⬡', file: '../data/affiliate/gpu.json' },
+  { id: 'mac',             label: 'MacBook',            icon: '◻', file: '../data/affiliate/mac.json' },
+  { id: 'mac_accessories', label: 'Mac Accessories',    icon: '◼', file: '../data/affiliate/mac_accessories.json' },
+  { id: 'solar_panel',     label: 'Solar Panel',        icon: '◇', file: '../data/affiliate/solar_panel.json' },
+  { id: 'solar_inverter',  label: 'Solar Inverter',     icon: '◈', file: '../data/affiliate/solar_inverter.json' },
+  { id: 'ev_charger',      label: 'EV Charger',         icon: '◉', file: '../data/affiliate/ev_charger.json' },
+  { id: 'gold_invest',     label: 'ทองคำ',              icon: '◆', file: '../data/affiliate/gold_invest.json' },
+];
+
+const PAGE_SIZE = 24;
+
+/* ══════════════════════════════════════════════════════
+   STATE
+══════════════════════════════════════════════════════ */
+let allItems   = [];  // all loaded items across categories
+let catCounts  = {};  // { catId: count }
+let activeTab  = 'all';
+let searchQ    = '';
+let sortMode   = 'discount';
+let displayedN = PAGE_SIZE;
+let loadingDone = false;
+
+/* ══════════════════════════════════════════════════════
+   UTILS
+══════════════════════════════════════════════════════ */
+function fmtPrice(n) {
+  return parseInt(n, 10).toLocaleString('th-TH');
+}
+
+function fmtSold(n) {
+  const v = parseInt(n, 10);
+  if (v >= 10000) return (v / 1000).toFixed(0) + 'K';
+  if (v >= 1000)  return (v / 1000).toFixed(1).replace('.0','') + 'K';
+  return v.toString();
+}
+
+function starSVG() {
+  return `<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
+}
+
+function getBadge(item) {
+  const disc = parseInt(item.discount_percentage || 0, 10);
+  const sold = parseInt(item.item_sold || 0, 10);
+  const rating = parseFloat(item.item_rating || 0);
+  if (disc >= 50) return { cls: 'pc-badge-hot', label: 'HOT -' + disc + '%' };
+  if (sold >= 500) return { cls: 'pc-badge-top', label: 'ขายดี' };
+  if (rating >= 4.9) return { cls: 'pc-badge-top', label: 'TOP RATED' };
+  return null;
+}
+
+function cleanTitle(t) {
+  // remove emoji clutter at start
+  return t.replace(/^[^\w\u0E00-\u0E7F]+/, '').trim();
+}
+
+/* ══════════════════════════════════════════════════════
+   RENDER CARD
+══════════════════════════════════════════════════════ */
+function renderCard(item, featured = false) {
+  const disc     = parseInt(item.discount_percentage || 0, 10);
+  const hasDisc  = disc > 0;
+  const badge    = getBadge(item);
+  const official = item.is_official_shop === 'Official shop';
+  const link     = item.affiliate_link || item.product_link || '#';
+  const rating   = parseFloat(item.item_rating || 0).toFixed(2);
+  const sold     = fmtSold(item.item_sold || 0);
+  const saleP    = fmtPrice(item.sale_price);
+  const origP    = hasDisc ? fmtPrice(item.price) : null;
+  const title    = cleanTitle(item.title);
+  const cls      = featured ? 'featured-card' : 'product-card';
+
+  return `
+<a class="${cls}" href="${link}" target="_blank" rel="noopener sponsored">
+  <div class="pc-img-wrap">
+    <img src="${item.image_link}" alt="${title}" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'200\\' height=\\'200\\'%3E%3Crect fill=\\'%23F2EFE9\\' width=\\'200\\' height=\\'200\\'/%3E%3C/svg%3E'">
+    ${hasDisc ? `<span class="pc-discount">-${disc}%</span>` : ''}
+    ${official ? `<span class="pc-official">Official</span>` : ''}
+    ${badge ? `<span class="pc-badge ${badge.cls}">${badge.label}</span>` : ''}
+  </div>
+  <div class="pc-body">
+    <div class="pc-shop">${item.shop_name || ''}</div>
+    <div class="pc-title">${title}</div>
+    <div class="pc-price-row">
+      <span class="pc-sale-price">฿${saleP}</span>
+      ${origP ? `<span class="pc-orig-price">฿${origP}</span>` : ''}
+    </div>
+    <div class="pc-meta">
+      <span class="pc-rating">${starSVG()} ${rating}</span>
+      <span>·</span>
+      <span class="pc-sold">ขาย ${sold}</span>
+    </div>
+  </div>
+  <div class="pc-cta">
+    ดูบน Shopee
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <path d="M5 12h14M12 5l7 7-7 7"/>
+    </svg>
+  </div>
+</a>`.trim();
+}
+
+/* ══════════════════════════════════════════════════════
+   FILTER + SORT
+══════════════════════════════════════════════════════ */
+function getFiltered() {
+  let items = allItems;
+
+  if (activeTab !== 'all') {
+    items = items.filter(i => i._cat === activeTab);
+  }
+
+  if (searchQ) {
+    const q = searchQ.toLowerCase();
+    items = items.filter(i =>
+      i.title.toLowerCase().includes(q) ||
+      (i.brand || '').toLowerCase().includes(q) ||
+      (i.shop_name || '').toLowerCase().includes(q) ||
+      (i.category1 || '').toLowerCase().includes(q) ||
+      (i.category2 || '').toLowerCase().includes(q)
+    );
+  }
+
+  items = [...items].sort((a, b) => {
+    switch (sortMode) {
+      case 'discount':
+        return parseInt(b.discount_percentage||0) - parseInt(a.discount_percentage||0);
+      case 'sold':
+        return parseInt(b.item_sold||0) - parseInt(a.item_sold||0);
+      case 'rating':
+        return parseFloat(b.item_rating||0) - parseFloat(a.item_rating||0);
+      case 'price_asc':
+        return parseInt(a.sale_price||0) - parseInt(b.sale_price||0);
+      case 'price_desc':
+        return parseInt(b.sale_price||0) - parseInt(a.sale_price||0);
+      default:
+        return 0;
+    }
+  });
+
+  return items;
+}
+
+/* ══════════════════════════════════════════════════════
+   RENDER GRID
+══════════════════════════════════════════════════════ */
+function renderGrid() {
+  const grid = document.getElementById('productGrid');
+  const meta = document.getElementById('resultsMeta');
+  const loadMoreBtn = document.getElementById('loadMoreBtn');
+
+  if (!loadingDone) return;
+
+  const filtered = getFiltered();
+  const total    = filtered.length;
+  const toShow   = filtered.slice(0, displayedN);
+
+  if (total === 0) {
+    grid.innerHTML = `<div class="empty-state">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <p>ไม่พบสินค้าที่ตรงกัน</p>
+    </div>`;
+    meta.innerHTML = 'ไม่พบสินค้า';
+    loadMoreBtn.classList.add('hidden');
+    return;
+  }
+
+  grid.innerHTML = toShow.map(item => renderCard(item)).join('');
+
+  const catLabel = activeTab === 'all' ? 'ทั้งหมด' :
+    CATEGORIES.find(c => c.id === activeTab)?.label || activeTab;
+  const q = searchQ ? ` · ค้นหา "${searchQ}"` : '';
+  meta.innerHTML = `แสดง <span>${toShow.length}</span> จาก <span>${total}</span> รายการ — ${catLabel}${q}`;
+
+  if (toShow.length < total) {
+    loadMoreBtn.classList.remove('hidden');
+  } else {
+    loadMoreBtn.classList.add('hidden');
+  }
+}
+
+/* ══════════════════════════════════════════════════════
+   RENDER FEATURED (Top Picks)
+══════════════════════════════════════════════════════ */
+function renderFeatured() {
+  const grid = document.getElementById('featuredGrid');
+  // Top 4 by discount with discount > 0, across all categories
+  const top = [...allItems]
+    .filter(i => parseInt(i.discount_percentage||0) > 20)
+    .sort((a,b) => parseInt(b.discount_percentage||0) - parseInt(a.discount_percentage||0))
+    .slice(0, 4);
+
+  if (top.length === 0) {
+    grid.innerHTML = '';
+    return;
+  }
+  grid.innerHTML = top.map(item => renderCard(item, true)).join('');
+}
+
+/* ══════════════════════════════════════════════════════
+   RENDER TABS
+══════════════════════════════════════════════════════ */
+function renderTabs() {
+  const tabsEl = document.getElementById('catTabs');
+  tabsEl.innerHTML = CATEGORIES.map(cat => {
+    const count = cat.id === 'all' ? allItems.length : (catCounts[cat.id] || 0);
+    const active = activeTab === cat.id ? 'active' : '';
+    return `<button class="cat-tab ${active}" data-cat="${cat.id}">
+      ${cat.label}
+      <span class="tab-count">${count}</span>
+    </button>`;
+  }).join('');
+
+  tabsEl.querySelectorAll('.cat-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeTab = btn.dataset.cat;
+      displayedN = PAGE_SIZE;
+      renderTabs();
+      renderGrid();
+    });
+  });
+}
+
+/* ══════════════════════════════════════════════════════
+   UPDATE STATS
+══════════════════════════════════════════════════════ */
+function updateStats() {
+  document.getElementById('statTotal').textContent =
+    allItems.length.toLocaleString('th-TH');
+
+  const maxDisc = Math.max(...allItems.map(i => parseInt(i.discount_percentage||0)));
+  document.getElementById('statMaxDiscount').textContent = maxDisc + '%';
+
+  const avgRating = allItems.reduce((s,i) => s + parseFloat(i.item_rating||0), 0) / allItems.length;
+  document.getElementById('statAvgRating').textContent = avgRating.toFixed(2);
+}
+
+/* ══════════════════════════════════════════════════════
+   LOAD DATA
+══════════════════════════════════════════════════════ */
+async function loadAllData() {
+  const cats = CATEGORIES.filter(c => c.file);
+
+  const results = await Promise.allSettled(
+    cats.map(cat => fetch(cat.file).then(r => r.json()).then(data => ({ cat, data })))
+  );
+
+  results.forEach(result => {
+    if (result.status !== 'fulfilled') return;
+    const { cat, data } = result.value;
+    if (!data.items) return;
+    const tagged = data.items.map(item => ({ ...item, _cat: cat.id }));
+    catCounts[cat.id] = tagged.length;
+    allItems.push(...tagged);
+  });
+
+  loadingDone = true;
+  updateStats();
+  renderFeatured();
+  renderTabs();
+  renderGrid();
+}
+
+/* ══════════════════════════════════════════════════════
+   EVENT LISTENERS
+══════════════════════════════════════════════════════ */
+let searchTimer;
+document.getElementById('searchInput').addEventListener('input', e => {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => {
+    searchQ    = e.target.value.trim();
+    displayedN = PAGE_SIZE;
+    renderGrid();
+  }, 250);
+});
+
+document.getElementById('sortSelect').addEventListener('change', e => {
+  sortMode   = e.target.value;
+  displayedN = PAGE_SIZE;
+  renderGrid();
+});
+
+document.getElementById('loadMoreBtn').addEventListener('click', () => {
+  displayedN += PAGE_SIZE;
+  renderGrid();
+});
+
+/* ══════════════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════════════ */
+loadAllData();
+</script>
+</body>
+</html>
