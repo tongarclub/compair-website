@@ -1,28 +1,24 @@
 # Shopee Affiliate Link Guide
-**Partner ID: 15358640421**
+**Partner ID: 15358640421**  
 Updated: 2026-06-26
 
 ---
 
 ## URL Format ที่ถูกต้อง
 
-### Short Link (จาก Portal)
+### Short Link (จาก Portal) — แนะนำ
 ```
 https://s.shopee.co.th/XXXXX
 ```
 → redirect ไปยัง full URL พร้อม affiliate parameters ครบ
 
-### Full Affiliate URL
+### Full Affiliate URL (Method 2)
 ```
 https://shopee.co.th/product/{shopid}/{itemid}
   ?mmp_pid=an_15358640421
   &utm_source=an_15358640421
   &utm_medium=affiliates
   &utm_content=----
-  &gads_t_sig={encrypted}         ← auto-generated โดย Shopee
-  &uls_trackid={unique_per_link}  ← auto-generated โดย Shopee
-  &utm_campaign=id_{campaign}     ← auto-generated โดย Shopee
-  &utm_term={term}                ← auto-generated โดย Shopee
 ```
 
 ---
@@ -42,15 +38,100 @@ https://shopee.co.th/product/{shopid}/{itemid}
 
 ---
 
-## วิธีสร้าง Affiliate Link
+## วิธีสร้าง Short Link (Manual Workflow — วิธีที่ใช้อยู่)
 
-### วิธีที่ 1 — Portal (Manual, Full Tracking)
-1. ไปที่ [https://affiliate.shopee.co.th](https://affiliate.shopee.co.th)
-2. คลิก **"Create Link"** หรือ **"Link Generator"**
-3. วาง product URL → ได้ `https://s.shopee.co.th/XXXXX`
-4. ลิงก์มี `utm_campaign`, `uls_trackid`, `utm_term` ครบ
+### ขั้นตอน
 
-### วิธีที่ 2 — เพิ่ม Partner ID กับ Product URL (Basic, ใช้กับ JSON data)
+**1. เปิดไฟล์ URL list**
+```
+data/affiliate/shopee-urls-to-shorten.txt
+```
+
+**2. Copy 5 URLs ต่อ batch (ตาม `--- Batch N ---`)**
+
+**3. ไปที่ Portal → สร้าง short links**
+- URL: https://affiliate.shopee.co.th/offer/custom_link
+- Paste 5 URLs ใน textarea → กด **รับลิงก์**
+- Copy short links ที่ได้ (5 อัน)
+
+**4. Paste short links กลับใน txt file** ใต้ original URLs ของ batch นั้น
+```
+--- Batch 1/10 ---
+https://shopee.co.th/product/AAA/111
+https://shopee.co.th/product/BBB/222
+...
+
+https://s.shopee.co.th/SHORT1   ← paste ที่นี่
+https://s.shopee.co.th/SHORT2
+...
+```
+
+**5. รัน script เพื่ออัปเดต JSON**
+```bash
+python3 scripts/apply_short_links.py
+```
+
+Script จะ:
+- จับคู่ original URL → short link ตามลำดับ
+- อัปเดต `shopee_short_link` และ `affiliate_link` ใน JSON files
+- ข้าม item ที่มี short link แล้ว (safe to rerun)
+
+---
+
+## ไฟล์ข้อมูลสินค้าที่เตรียมไว้
+
+| ไฟล์ | Domain | สินค้า | Items |
+|---|---|---|---|
+| `data/affiliate/gpu.json` | A+F: GPU/Image Gen | การ์ดจอ RTX, thermal accessories | 50 |
+| `data/affiliate/mac.json` | C: MacBook | เคส MacBook M1–M5, USB-C Hub | 50 |
+| `data/affiliate/mac_accessories.json` | C: MacBook | Thunderbolt cable, 4K monitor | 50 |
+| `data/affiliate/solar_panel.json` | B: Solar | อุปกรณ์ติดตั้ง solar, สายไฟ | 50 |
+| `data/affiliate/solar_inverter.json` | B: Solar | MPPT controller, MC4 connector | 50 |
+| `data/affiliate/ev_charger.json` | D: EV | BYD accessories, EV charger storage | 50 |
+| `data/affiliate/gold_invest.json` | E: Gold | แหวนทองคำแท้ 96.5%, ทอง 1 กรัม | 50 |
+
+**รวม: 350 URLs / 70 batches**
+
+---
+
+## JSON Item Schema
+
+```json
+{
+  "title": "ชื่อสินค้า",
+  "price": 1990,
+  "rating": 4.8,
+  "sold": 500,
+  "product_link": "https://shopee.co.th/product/...",
+  "affiliate_link": "https://s.shopee.co.th/XXXXX",
+  "shopee_short_link": "https://s.shopee.co.th/XXXXX"
+}
+```
+
+- `affiliate_link` — link ที่ใช้แสดงบนเว็บ (short link เมื่อมี, Method 2 ถ้ายังไม่มี)
+- `shopee_short_link` — short link จาก portal (ว่าง = ยังไม่ได้ generate)
+
+---
+
+## สถานะ Progress
+
+```
+Step 1 ✅ Method 2 — เพิ่ม mmp_pid ใน JSON (เสร็จแล้ว)
+           affiliate_link = product_link + ?mmp_pid=an_15358640421&...
+
+Step 2 🔄 Manual Short Links — copy-paste ผ่าน Portal
+           URL List: data/affiliate/shopee-urls-to-shorten.txt  (70 batches)
+           Script:   python3 scripts/apply_short_links.py
+           Progress: batch 1/70 เสร็จแล้ว (5 items จาก gpu.json)
+
+Step 3 🔜 Add Shopee section ในหน้า calculator
+           → แสดง product card grid โหลดจาก data/affiliate/*.json
+```
+
+---
+
+## Method 2 — Python Helper (Basic Tracking)
+
 ```python
 PARTNER_ID = "15358640421"
 
@@ -62,24 +143,10 @@ def make_affiliate_link(product_url: str) -> str:
         f"&utm_medium=affiliates"
         f"&utm_content=----"
     )
-
-# ตัวอย่าง
-url = "https://shopee.co.th/product/153078644/40303177573"
-affiliate = make_affiliate_link(url)
-# → https://shopee.co.th/product/153078644/40303177573
-#   ?mmp_pid=an_15358640421&utm_source=an_15358640421&utm_medium=affiliates&utm_content=----
 ```
+
 ✅ ได้รับ commission attribution  
 ⚠️ ไม่มี link-level tracking (`utm_campaign`, `uls_trackid`)
-
-### วิธีที่ 3 — Shopee Affiliate API (Batch, Full Tracking)
-```
-POST https://open.shopee.com/api/v2/affiliate/link
-Authorization: Bearer {access_token}
-Body: { "origin_url": "https://shopee.co.th/product/..." }
-```
-→ ได้ `https://s.shopee.co.th/XXXXX` พร้อม full tracking  
-⚠️ ต้องมี API credentials จาก Open Platform
 
 ---
 
@@ -90,98 +157,12 @@ https://shope.ee/an_redir?origin_link=https%3A%2F%2Fshopee.co.th%2Fproduct%2F...
 ```
 
 ❌ **ไม่มี `mmp_pid`** → ไม่ track กลับมาที่บัญชีของคุณ  
-❌ ไม่ควรใช้ตรง ๆ โดยไม่เพิ่ม affiliate parameters
-
-**วิธีแก้:** ใช้ `product_link` จาก JSON แล้วเพิ่ม affiliate parameters แทน (วิธีที่ 2)
-
----
-
-## ไฟล์ข้อมูลสินค้าที่เตรียมไว้
-
-| ไฟล์ | Domain | สินค้า |
-|---|---|---|
-| `data/affiliate/gpu.json` | A+F: GPU/Image Gen | การ์ดจอ RTX, thermal accessories |
-| `data/affiliate/mac.json` | C: MacBook | เคส MacBook M1–M5, USB-C Hub |
-| `data/affiliate/mac_accessories.json` | C: MacBook | Thunderbolt cable, 4K monitor |
-| `data/affiliate/solar_panel.json` | B: Solar | อุปกรณ์ติดตั้ง solar, สายไฟ |
-| `data/affiliate/solar_inverter.json` | B: Solar | MPPT controller, MC4 connector |
-| `data/affiliate/ev_charger.json` | D: EV | BYD accessories, EV charger storage |
-| `data/affiliate/gold_invest.json` | E: Gold | แหวนทองคำแท้ 96.5%, ทอง 1 กรัม |
-
-แต่ละ item มี field `product_link` → ใช้กับ `make_affiliate_link()` ได้เลย
-
----
-
-## ตัวอย่าง Affiliate Link สมบูรณ์
-
-จาก `data/affiliate/mac.json` item แรก (UGREEN USB-C to HDMI):
-```
-product_link: https://shopee.co.th/product/153078644/40303177573
-
-affiliate_link (วิธีที่ 2):
-https://shopee.co.th/product/153078644/40303177573?mmp_pid=an_15358640421&utm_source=an_15358640421&utm_medium=affiliates&utm_content=----
-```
-
----
-
----
-
-## Playwright Script — Auto Generate Short Links
-
-**ไฟล์:** `scripts/gen_affiliate_links.js`
-
-### Setup (ครั้งแรก)
-```bash
-cd scripts
-npm install
-npx playwright install chromium
-```
-
-### Run
-```bash
-node scripts/gen_affiliate_links.js
-```
-
-### Flow
-1. เปิด browser → ไปที่ affiliate.shopee.co.th/login
-2. **คุณ login ด้วยตัวเอง** (รองรับ OTP/captcha)
-3. Script บันทึก session → `scripts/shopee_session.json` (ใช้ซ้ำครั้งต่อไป)
-4. วน loop แต่ละ product → generate short link → save กลับ JSON
-5. มี checkpoint ทุก 10 items — ถ้า script หยุดกลางคัน เริ่มใหม่ได้เลย (ข้าม item ที่มี `shopee_short_link` แล้ว)
-
-### Files ที่ script จะประมวลผล
-| ไฟล์ | Items |
-|---|---|
-| `gpu.json` | 50 |
-| `mac.json` | 50 |
-| `mac_accessories.json` | 50 |
-| `solar_panel.json` | 50 |
-| `solar_inverter.json` | 50 |
-| `ev_charger.json` | 50 |
-| `gold_invest.json` | 50 |
-
-**หมายเหตุ:** `scripts/shopee_session.json` ห้าม commit ขึ้น GitHub (มี login cookies) — อยู่ใน `.gitignore` แล้ว
-
----
-
-## ลำดับการทำงาน (Recommended)
-
-```
-Step 1 ✅ Method 2 — เพิ่ม mmp_pid ใน JSON (เสร็จแล้ว)
-           affiliate_link = product_link + ?mmp_pid=an_15358640421&...
-           → ใช้ได้เลย ได้ attribution
-
-Step 2 🔜 Playwright — upgrade เป็น short link
-           affiliate_link = https://s.shopee.co.th/XXXXX
-           → full tracking พร้อม utm_campaign + uls_trackid
-
-Step 3 🔜 Add Shopee section ในหน้า calculator
-           → แสดง product card grid โหลดจาก data/affiliate/*.json
-```
+**วิธีแก้:** ใช้ `product_link` จาก JSON แล้วเพิ่ม affiliate parameters แทน
 
 ---
 
 ## Links อ้างอิง
 
-- Shopee Affiliate Portal: [https://affiliate.shopee.co.th](https://affiliate.shopee.co.th)
-- Shopee Open Platform: [https://open.shopee.com](https://open.shopee.com)
+- Shopee Affiliate Portal: https://affiliate.shopee.co.th
+- Custom Link Generator: https://affiliate.shopee.co.th/offer/custom_link
+- Shopee Open Platform: https://open.shopee.com
