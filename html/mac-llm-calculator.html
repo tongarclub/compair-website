@@ -422,6 +422,29 @@ table.gt td:first-child { font-family:'DM Mono',monospace; font-size:12px; color
 .gt-models { font-size:11px; color:var(--text3); margin-top:3px; }
 .gt-speed { font-family:'DM Mono',monospace; font-size:11px; color:var(--text2); white-space:nowrap; }
 
+/* ── Buying Guide — Shopee Column ── */
+.gt-table-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+table.gt th.gt-shopee-th { color:#ee4d2d; letter-spacing:.1em; white-space:nowrap; }
+.gt-shopee-cell { min-width:155px; }
+.gt-sp-pick { display:flex; flex-direction:column; gap:3px; }
+.gt-sp-name { font-size:11px; color:var(--text2); line-height:1.45;
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.gt-sp-hint { font-size:10px; color:var(--text3); font-style:italic; }
+.gt-sp-price { font-family:'DM Mono',monospace; font-size:12px; font-weight:600; color:#ee4d2d; margin-top:2px; }
+.gt-sp-cta {
+  display:inline-flex; align-items:center; gap:4px;
+  padding:5px 10px; margin-top:6px;
+  font-size:11px; font-weight:600;
+  background:rgba(238,77,45,.08); color:#ee4d2d;
+  border:1px solid rgba(238,77,45,.25);
+  text-decoration:none; white-space:nowrap;
+  transition:background .18s;
+}
+.gt-sp-cta:hover { background:rgba(238,77,45,.18); }
+@media (max-width:768px) {
+  .gt-shopee-cell, table.gt th.gt-shopee-th { display:none; }
+}
+
 /* ── TIPS ── */
 .tips-section { margin-bottom:56px; }
 .section-title {
@@ -817,6 +840,7 @@ footer { border-top:1px solid var(--border); padding:40px 0; }
       <div class="gs-title">ซื้อ Mac รุ่นไหนสำหรับรัน LLM?</div>
       <div class="gs-sub">แนะนำตามงบประมาณและการใช้งาน — ข้อมูลอ้างอิงปี 2025–2026</div>
     </div>
+    <div class="gt-table-wrap">
     <table class="gt">
       <thead>
         <tr>
@@ -826,6 +850,7 @@ footer { border-top:1px solid var(--border); padding:40px 0; }
           <th>LLM ที่รันได้</th>
           <th>~tok/s (7B)</th>
           <th>เหมาะกับ</th>
+          <th class="gt-shopee-th">🛒 Shopee</th>
         </tr>
       </thead>
       <tbody>
@@ -840,6 +865,7 @@ footer { border-top:1px solid var(--border); padding:40px 0; }
           <td>1B–7B (Q4 ดี) · 13B (Q2–Q3 ได้)</td>
           <td class="gt-speed">~28 tok/s</td>
           <td style="font-size:12px;color:var(--text2)">ทดลองรัน LLM ครั้งแรก · Chat ส่วนตัว</td>
+          <td class="gt-shopee-cell" data-pick="0"></td>
         </tr>
         <tr>
           <td>฿55,000–80,000</td>
@@ -851,6 +877,7 @@ footer { border-top:1px solid var(--border); padding:40px 0; }
           <td>1B–13B (Q4 ดีมาก) · 30B (Q3 ได้)</td>
           <td class="gt-speed">~28 tok/s</td>
           <td style="font-size:12px;color:var(--text2)">Dev ส่วนตัว · Coding assistant</td>
+          <td class="gt-shopee-cell" data-pick="1"></td>
         </tr>
         <tr>
           <td>฿65,000–85,000</td>
@@ -863,6 +890,7 @@ footer { border-top:1px solid var(--border); padding:40px 0; }
           <td>1B–13B (Q4 เร็วมาก) · 30B (เบา)</td>
           <td class="gt-speed">~45 tok/s</td>
           <td style="font-size:12px;color:var(--text2)">Developer จริงจัง · ใช้งานรายวัน</td>
+          <td class="gt-shopee-cell" data-pick="2"></td>
         </tr>
         <tr>
           <td>฿85,000–110,000</td>
@@ -874,6 +902,7 @@ footer { border-top:1px solid var(--border); padding:40px 0; }
           <td>1B–30B (Q4 ดีมาก) · 70B (Q2 ได้)</td>
           <td class="gt-speed">~45–63 tok/s</td>
           <td style="font-size:12px;color:var(--text2)">Researcher · ต้องการ model ใหญ่</td>
+          <td class="gt-shopee-cell" data-pick="3"></td>
         </tr>
         <tr>
           <td>฿95,000–120,000</td>
@@ -885,6 +914,7 @@ footer { border-top:1px solid var(--border); padding:40px 0; }
           <td>1B–30B (Q4 เร็วมาก) · 70B (Q3 เบา)</td>
           <td class="gt-speed">~63 tok/s</td>
           <td style="font-size:12px;color:var(--text2)">Power user · ต้องการความเร็ว + ขนาด</td>
+          <td class="gt-shopee-cell" data-pick="4"></td>
         </tr>
         <tr>
           <td>฿145,000+</td>
@@ -897,6 +927,7 @@ footer { border-top:1px solid var(--border); padding:40px 0; }
           <td>1B–70B (Q4 ทุก model) · 70B FP16 (partial)</td>
           <td class="gt-speed">~88 tok/s</td>
           <td style="font-size:12px;color:var(--text2)">AI Researcher · Production local AI</td>
+          <td class="gt-shopee-cell" data-pick="5"></td>
         </tr>
         <tr>
           <td>฿130,000–210,000+</td>
@@ -908,9 +939,11 @@ footer { border-top:1px solid var(--border); padding:40px 0; }
           <td>1B–70B+ · รัน FP16 70B ได้ (192 GB)</td>
           <td class="gt-speed">~88–120 tok/s</td>
           <td style="font-size:12px;color:var(--text2)">Workstation AI · ใช้ประจำที่ทำงาน</td>
+          <td class="gt-shopee-cell" data-pick="6"></td>
         </tr>
       </tbody>
     </table>
+    </div>
   </div>
 </div>
 
@@ -1260,6 +1293,30 @@ function shareURL() {
     setTimeout(() => { btn.innerHTML = orig; btn.style.background = btn.style.color = btn.style.borderColor = ''; }, 2200);
   });
 }
+
+// ── Buying Guide Shopee Column — โหลดจาก guide-picks.json ──────────
+(async function fillGuideShopeeCol() {
+  const ARROW = `<svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>`;
+  const cells = document.querySelectorAll('.gt-shopee-cell[data-pick]');
+  if (!cells.length) return;
+  try {
+    const data = await fetch('../data/affiliate/guide-picks.json').then(r => r.json());
+    const picks = data['mac-llm'] || [];
+    cells.forEach(cell => {
+      const p = picks.find(x => x.row === +cell.dataset.pick);
+      if (!p) return;
+      const priceHtml = p.price != null
+        ? `<div class="gt-sp-price">฿${p.price.toLocaleString()}</div>`
+        : `<div class="gt-sp-price" style="font-size:10px;color:var(--text3)">ดูราคาล่าสุด</div>`;
+      cell.innerHTML = `<div class="gt-sp-pick">
+        <div class="gt-sp-name">${p.name}</div>
+        <div class="gt-sp-hint">${p.hint}</div>
+        ${priceHtml}
+        <a class="gt-sp-cta" href="${p.link}" target="_blank" rel="noopener sponsored">ดูบน Shopee ${ARROW}</a>
+      </div>`;
+    });
+  } catch(e) { /* fetch fail — column stays empty, ไม่กระทบ UX หลัก */ }
+})();
 </script>
 </body>
 </html>

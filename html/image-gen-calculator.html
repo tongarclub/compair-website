@@ -264,6 +264,65 @@
     </div>
   </section>
 
+  <!-- ── GPU Buying Guide ─────────────────────────────── -->
+  <div class="gpu-guide-section">
+    <div class="gpu-guide-head">
+      <div class="gpu-guide-title">ซื้อ GPU สำหรับ AI Image Gen — แนะนำตามงบ</div>
+      <div class="gpu-guide-sub">ข้อมูลราคาอ้างอิงจาก Shopee ปี 2025–2026 · คลิก "ดูบน Shopee" เพื่อเช็คราคาปัจจุบัน</div>
+    </div>
+    <div class="gpu-guide-wrap">
+      <table class="gpu-gt">
+        <thead>
+          <tr>
+            <th>ระดับ</th>
+            <th>GPU แนะนำ</th>
+            <th>VRAM</th>
+            <th>รัน Model</th>
+            <th>เหมาะกับ</th>
+            <th class="gpu-shopee-th">🛒 Shopee</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>เริ่มต้น</td>
+            <td>
+              <div class="gpu-gt-rec">ประหยัดสุด</div><br>
+              RTX 5060 8 GB GDDR7
+              <div class="gpu-gt-note">หรือ RTX 4060 8 GB (ถ้าหาได้ราคาถูกกว่า)</div>
+            </td>
+            <td>8 GB</td>
+            <td>SD 1.5 · SDXL · FLUX Schnell Q4</td>
+            <td style="font-size:.75rem;color:var(--text2)">ทดลอง self-hosted · งบน้อย</td>
+            <td class="gpu-shopee-cell" data-gpu-pick="0"></td>
+          </tr>
+          <tr>
+            <td>จริงจัง</td>
+            <td>
+              <div class="gpu-gt-rec" style="background:var(--ok-bg);border-color:var(--ok);color:var(--ok)">คุ้มค่าสุด</div><br>
+              RTX 5060 Ti 16 GB GDDR7
+              <div class="gpu-gt-note">VRAM 16 GB — รัน FLUX Dev FP8 ได้สบาย</div>
+            </td>
+            <td>16 GB</td>
+            <td>FLUX Dev FP8 · SDXL FullRes · LoRA</td>
+            <td style="font-size:.75rem;color:var(--text2)">Creator จริงจัง · ComfyUI / A1111</td>
+            <td class="gpu-shopee-cell" data-gpu-pick="1"></td>
+          </tr>
+          <tr>
+            <td>โปร</td>
+            <td>
+              RTX 4090 24 GB / RTX 5080+
+              <div class="gpu-gt-note">VRAM 24 GB+ — ทุก model full precision + batch gen</div>
+            </td>
+            <td>24 GB+</td>
+            <td>FLUX Dev BF16 · SD 3.5 FP16 · Multi-model</td>
+            <td style="font-size:.75rem;color:var(--text2)">Production · Commercial · Studio</td>
+            <td class="gpu-shopee-cell" data-gpu-pick="2"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
   <!-- ── Cross-links ───────────────────────────────────── -->
   <div class="cross-link-banner" style="margin-bottom:2rem;">
     <div class="cl-title">เครื่องมือคำนวณอื่นๆ</div>
@@ -607,6 +666,30 @@ function copyURL() {
 loadFromURL();
 buildChips();
 renderAll();
+
+// ── GPU Buying Guide Shopee Column — โหลดจาก guide-picks.json ───────
+(async function fillGpuGuideCol() {
+  const ARROW = `<svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>`;
+  const cells = document.querySelectorAll('.gpu-shopee-cell[data-gpu-pick]');
+  if (!cells.length) return;
+  try {
+    const data = await fetch('../data/affiliate/guide-picks.json').then(r => r.json());
+    const picks = data['image-gen-gpu'] || [];
+    cells.forEach(cell => {
+      const p = picks.find(x => x.row === +cell.dataset.gpuPick);
+      if (!p) return;
+      const priceHtml = p.price != null
+        ? `<div class="gpu-sp-price">฿${p.price.toLocaleString()}</div>`
+        : `<div class="gpu-sp-price" style="font-size:.65rem;color:var(--text3)">ดูราคาล่าสุด</div>`;
+      cell.innerHTML = `<div class="gpu-sp-pick">
+        <div class="gpu-sp-name">${p.name}</div>
+        <div class="gpu-sp-hint">${p.hint}</div>
+        ${priceHtml}
+        <a class="gpu-sp-cta" href="${p.link}" target="_blank" rel="noopener sponsored">ดูบน Shopee ${ARROW}</a>
+      </div>`;
+    });
+  } catch(e) { /* fetch fail — column stays empty, ไม่กระทบ UX หลัก */ }
+})();
 </script>
 </body>
 </html>

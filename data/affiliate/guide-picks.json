@@ -1,0 +1,90 @@
+{
+  "_comment": "Buying Guide affiliate picks — แก้ไขที่นี่ที่เดียว ทุกหน้าจะอัปเดตอัตโนมัติ",
+  "_updated": "2026-06-27",
+
+  "mac-llm": [
+    {
+      "row": 0,
+      "label": "MacBook Air M4 16 GB (฿35k–55k)",
+      "name": "เคสโปร่งใส MacBook M2–M5",
+      "hint": "ปกป้องเครื่อง",
+      "price": 323,
+      "link": "https://s.shopee.co.th/9zvfwemdon"
+    },
+    {
+      "row": 1,
+      "label": "MacBook Air M4 32 GB (฿55k–80k)",
+      "name": "USB-C Hub 11-in-1 สำหรับ Mac",
+      "hint": "ต่อหน้าจอ + USB + SD",
+      "price": 589,
+      "link": "https://s.shopee.co.th/AKYWLGlN8t"
+    },
+    {
+      "row": 2,
+      "label": "MacBook Pro M4 Pro 24 GB (฿65k–85k)",
+      "name": "UGREEN USB-C to HDMI 4K@60Hz",
+      "hint": "ต่อจอภายนอก 4K",
+      "price": 790,
+      "link": "https://s.shopee.co.th/AAF68xm0To"
+    },
+    {
+      "row": 3,
+      "label": "MacBook Pro M4 Pro 48 GB (฿85k–110k)",
+      "name": "elago Ultra Slim Hard Case",
+      "hint": "เคสแข็งป้องกัน",
+      "price": 1790,
+      "link": "https://s.shopee.co.th/AUrwXZkjnu"
+    },
+    {
+      "row": 4,
+      "label": "MacBook Pro M4 Max 36 GB (฿95k–120k)",
+      "name": "Anker 140W USB-C Cable 2-in-1",
+      "hint": "ชาร์จเร็ว PD 140W",
+      "price": 681,
+      "link": "https://s.shopee.co.th/5q670oMyvP"
+    },
+    {
+      "row": 5,
+      "label": "MacBook Pro M4 Max 128 GB (฿145k+)",
+      "name": "Dell 27\" 4K Thunderbolt4 Monitor",
+      "hint": "จอ 4K TB4 99% DCI-P3",
+      "price": 21808,
+      "link": "https://s.shopee.co.th/W4afFAU4W"
+    },
+    {
+      "row": 6,
+      "label": "Mac Studio M4 Max (฿130k–210k+)",
+      "name": "Dell 27\" 4K Thunderbolt4 Monitor",
+      "hint": "Workstation Display",
+      "price": 21808,
+      "link": "https://s.shopee.co.th/W4afFAU4W"
+    }
+  ],
+
+  "image-gen-gpu": [
+    {
+      "row": 0,
+      "label": "เริ่มต้น — RTX 5060 8 GB",
+      "name": "การ์ดจอ ASUS RTX 5060 8GB GDDR7",
+      "hint": "OC Edition · รับประกัน 3 ปี",
+      "price": 12990,
+      "link": "https://s.shopee.co.th/7KuuhyOtpi"
+    },
+    {
+      "row": 1,
+      "label": "จริงจัง — RTX 5060 Ti 16 GB",
+      "name": "ZOTAC RTX 5060 Ti 16GB GDDR7",
+      "hint": "Twin Edge OC · รับประกัน 3 ปี",
+      "price": 22800,
+      "link": "https://s.shopee.co.th/5VTGY6i9VW"
+    },
+    {
+      "row": 2,
+      "label": "โปร — RTX 4090 / RTX 5080+",
+      "name": "ดูการ์ดจอ GPU ทั้งหมดบน Shopee",
+      "hint": "700+ รายการ · คัดมาแล้ว",
+      "price": null,
+      "link": "../html/shopee-deals.html?category=gpu"
+    }
+  ]
+}
