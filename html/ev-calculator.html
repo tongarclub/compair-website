@@ -344,6 +344,18 @@
       <button id="shareBtn" onclick="shareURL()" style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:11px 22px;border:1px solid var(--border);background:var(--surface);color:var(--primary);cursor:pointer;transition:all .18s" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border)'">⎘ แชร์ผลนี้</button>
     </div>
 
+    <!-- EV Charger Affiliate Strip -->
+    <div class="aff-strip" id="evAffBox" style="display:none" data-aff-placement="ev_strip">
+      <div class="aff-strip-header">
+        <span class="aff-strip-label">อุปกรณ์ชาร์จ EV แนะนำ · Shopee</span>
+        <a class="aff-strip-more" href="shopee-deals.html?cat=ev_charger" target="_blank" rel="noopener">
+          ดูทั้งหมด
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+      <div class="aff-strip-cards" id="evAffCards"></div>
+    </div>
+
     <!-- Solar cross-link -->
     <a href="solar-calculator.html" class="solar-cta">
       <span class="solar-cta-icon">☀</span>
@@ -576,6 +588,7 @@ function calculate() {
   syncURL();
   document.getElementById('resultsSection').style.display = '';
   document.getElementById('resultsSection').scrollIntoView({ behavior:'smooth', block:'start' });
+  renderEvAffiliate();
 }
 
 /* ── Share URL ──────────────────────────────────── */
@@ -618,11 +631,42 @@ function shareURL() {
   calculate();
 })();
 
+/* ── EV Affiliate Strip ──────────────────────────────────────────── */
+let _evAffCache = null;
+async function getEvAffData() {
+  if (_evAffCache) return _evAffCache;
+  try {
+    const r = await fetch('../data/affiliate/ev_charger.json');
+    const d = await r.json();
+    _evAffCache = d.items || [];
+  } catch(e) { _evAffCache = []; }
+  return _evAffCache;
+}
+
+async function renderEvAffiliate() {
+  const box = document.getElementById('evAffBox');
+  const cardsEl = document.getElementById('evAffCards');
+  const items = await getEvAffData();
+  if (!items.length) return;
+
+  const sorted = [...items].sort((a,b) =>
+    (parseInt(b.item_sold||0) + parseInt(b.discount_percentage||0)*10) -
+    (parseInt(a.item_sold||0) + parseInt(a.discount_percentage||0)*10)
+  );
+  const v = affVariant();
+  const picks = sorted.slice(0, v === 'B' ? 1 : 3);
+  box.classList.toggle('variant-b', v === 'B');
+  cardsEl.innerHTML = picks.map(i => affCardHTML(i, 'ev_calculator', 'strip')).join('');
+  box.style.display = 'none'; void box.offsetWidth; box.style.display = '';
+  affTrackImpression('ev_calculator', 'strip', picks.length);
+}
+
 /* init */
 renderPresets();
 selectEV(0);
 selectGas(1);
 </script>
+<script src="../js/aff-utils.js"></script>
 
 </body>
 </html>

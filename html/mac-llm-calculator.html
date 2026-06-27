@@ -718,7 +718,8 @@ footer { border-top:1px solid var(--border); padding:40px 0; }
     <div class="sc-specs" id="scSpecs"></div>
     <div class="sc-cta-row" id="scCtaRow">
       <span class="sc-cta-label">อุปกรณ์เสริมแนะนำ</span>
-      <a class="sc-cta-btn" id="scCtaBtn" href="#" target="_blank" rel="noopener sponsored">
+      <a class="sc-cta-btn" id="scCtaBtn" href="#" target="_blank" rel="noopener sponsored"
+         onclick="affTrackClick(this,'mac_llm_calculator','spec_card')">
         ดูบน Shopee
         <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
       </a>
@@ -1124,8 +1125,7 @@ function onMacChange() {
   } else {
     document.getElementById('macInfoBox').style.display = 'none';
   }
-  renderMacAffiliate(mac);
-  render(mac);
+  render(mac); // render() now drives affiliate strip too
 }
 
 // ── Affiliate Widget ──────────────────────────────────────────
@@ -1146,30 +1146,7 @@ async function getMacAffData() {
   return [..._macAffCache, ..._macAccCache];
 }
 
-function macAffCardHTML(item) {
-  const disc  = parseInt(item.discount_percentage || 0);
-  const link  = item.affiliate_link || item.product_link || '#';
-  const saleP = parseInt(item.sale_price).toLocaleString('th-TH');
-  const origP = disc > 0 ? parseInt(item.price).toLocaleString('th-TH') : null;
-  const rating= parseFloat(item.item_rating || 0).toFixed(1);
-  const sold  = parseInt(item.item_sold || 0);
-  const sFmt  = sold >= 1000 ? (sold/1000).toFixed(1).replace('.0','') + 'K' : sold;
-  const title = item.title.replace(/^[^\w\u0E00-\u0E7F\u0020]+/, '').trim();
-  return `<a class="aff-card" href="${link}" target="_blank" rel="noopener sponsored">
-    <img class="aff-card-img" src="${item.image_link}" alt="${title}" loading="lazy"
-      onerror="this.style.background='var(--surface2)';this.style.display='block'">
-    <div class="aff-card-body">
-      <div class="aff-card-title">${title}</div>
-      <div class="aff-card-price">
-        <span class="aff-price">฿${saleP}</span>
-        ${origP ? `<span class="aff-orig">฿${origP}</span>` : ''}
-        ${disc > 0 ? `<span class="aff-disc">-${disc}%</span>` : ''}
-      </div>
-      <div class="aff-card-meta">★${rating} · ขาย ${sFmt}</div>
-    </div>
-    <span class="aff-card-arrow">→</span>
-  </a>`;
-}
+// macAffCardHTML is replaced by shared affCardHTML from aff-utils.js
 
 async function renderMacAffiliate(mac) {
   const affBox = document.getElementById('macAffiliateBox');
@@ -1196,13 +1173,16 @@ async function renderMacAffiliate(mac) {
     return { item: i, score };
   }).sort((a,b) => b.score - a.score);
 
-  const top3 = scored.slice(0, 3).map(s => s.item);
+  // A/B variant: B shows 1 card only
+  const affV = affVariant();
+  const top3 = scored.slice(0, affV === 'B' ? 1 : 3).map(s => s.item);
+  affBox.classList.toggle('variant-b', affV === 'B');
 
   // Update affiliate strip label
   const labelEl = affBox.querySelector('.aff-strip-label');
   labelEl.textContent = `อุปกรณ์เสริม ${mac.full} · Shopee`;
 
-  document.getElementById('macAffCards').innerHTML = top3.map(macAffCardHTML).join('');
+  document.getElementById('macAffCards').innerHTML = top3.map(i => affCardHTML(i, 'mac_llm_calculator', 'strip')).join('');
 
   // Update spec card CTA button with best match
   if (ctaRow && ctaBtn && top3.length) {
@@ -1213,10 +1193,11 @@ async function renderMacAffiliate(mac) {
     ctaRow.classList.add('visible');
   }
 
-  // Reset animation
+  // Reset animation + track impression
   affBox.style.display = 'none';
   void affBox.offsetWidth;
   affBox.style.display = '';
+  affTrackImpression('mac_llm_calculator', 'strip', top3.length);
 }
 
 // ═══════════════════════════════════════
@@ -1328,6 +1309,9 @@ function render(mac) {
   document.getElementById('modelGrid').innerHTML = cards.join('');
   history.replaceState(null, '', '?' + new URLSearchParams({ mac: mac.id }).toString());
   document.getElementById('shareBtn').style.display = 'inline-block';
+
+  // Affiliate strip + spec card CTA — always in sync with render state
+  renderMacAffiliate(mac);
 }
 
 function shareURL() {
@@ -1358,11 +1342,13 @@ function shareURL() {
         <div class="gt-sp-name">${p.name}</div>
         <div class="gt-sp-hint">${p.hint}</div>
         ${priceHtml}
-        <a class="gt-sp-cta" href="${p.link}" target="_blank" rel="noopener sponsored">ดูบน Shopee ${ARROW}</a>
+        <a class="gt-sp-cta" href="${p.link}" target="_blank" rel="noopener sponsored"
+           onclick="affTrackClick(this,'mac_llm_calculator','guide_table')">ดูบน Shopee ${ARROW}</a>
       </div>`;
     });
   } catch(e) { /* fetch fail — column stays empty, ไม่กระทบ UX หลัก */ }
 })();
 </script>
+<script src="../js/aff-utils.js"></script>
 </body>
 </html>

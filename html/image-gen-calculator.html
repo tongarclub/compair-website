@@ -685,11 +685,13 @@ renderAll();
         <div class="gpu-sp-name">${p.name}</div>
         <div class="gpu-sp-hint">${p.hint}</div>
         ${priceHtml}
-        <a class="gpu-sp-cta" href="${p.link}" target="_blank" rel="noopener sponsored">ดูบน Shopee ${ARROW}</a>
+        <a class="gpu-sp-cta" href="${p.link}" target="_blank" rel="noopener sponsored"
+           onclick="affTrackClick(this,'image_gen_calculator','guide_table')">ดูบน Shopee ${ARROW}</a>
       </div>`;
     });
   } catch(e) { /* fetch fail — column stays empty, ไม่กระทบ UX หลัก */ }
 })();
 </script>
+<script src="../js/aff-utils.js"></script>
 </body>
 </html>

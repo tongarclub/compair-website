@@ -305,7 +305,8 @@
     <div class="gsc-specs" id="gscSpecs"></div>
     <div class="gsc-cta-row" id="gscCtaRow">
       <span class="gsc-cta-label">สนใจซื้อ?</span>
-      <a class="gsc-cta-btn" id="gscCtaBtn" href="#" target="_blank" rel="noopener sponsored">
+      <a class="gsc-cta-btn" id="gscCtaBtn" href="#" target="_blank" rel="noopener sponsored"
+         onclick="affTrackClick(this,'ai_calculator','spec_card')">
         ดูบน Shopee
         <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
       </a>
@@ -502,8 +503,7 @@ function onGPUChange() {
   } else {
     box.style.display = 'none';
   }
-  renderGpuAffiliate(state.gpu);
-  render();
+  render(); // render() now drives affiliate strip too
 }
 
 // ── Affiliate Widget ──────────────────────────────────────────
@@ -519,31 +519,7 @@ async function getGpuAffData() {
   return _gpuAffCache;
 }
 
-function affCardHTML(item) {
-  const disc  = parseInt(item.discount_percentage || 0);
-  const link  = item.affiliate_link || item.product_link || '#';
-  const saleP = parseInt(item.sale_price).toLocaleString('th-TH');
-  const origP = disc > 0 ? parseInt(item.price).toLocaleString('th-TH') : null;
-  const rating= parseFloat(item.item_rating || 0).toFixed(1);
-  const sold  = parseInt(item.item_sold || 0);
-  const sFmt  = sold >= 1000 ? (sold/1000).toFixed(1).replace('.0','') + 'K' : sold;
-  const title = item.title.replace(/^[^\w\u0E00-\u0E7F\u0020]+/, '').trim();
-  const img   = item.image_link;
-  return `<a class="aff-card" href="${link}" target="_blank" rel="noopener sponsored">
-    <img class="aff-card-img" src="${img}" alt="${title}" loading="lazy"
-      onerror="this.style.background='var(--surface2)';this.style.display='block'">
-    <div class="aff-card-body">
-      <div class="aff-card-title">${title}</div>
-      <div class="aff-card-price">
-        <span class="aff-price">฿${saleP}</span>
-        ${origP ? `<span class="aff-orig">฿${origP}</span>` : ''}
-        ${disc > 0 ? `<span class="aff-disc">-${disc}%</span>` : ''}
-      </div>
-      <div class="aff-card-meta">★${rating} · ขาย ${sFmt}</div>
-    </div>
-    <span class="aff-card-arrow">→</span>
-  </a>`;
-}
+// affCardHTML is provided by aff-utils.js (loaded after this script)
 
 async function renderGpuAffiliate(gpu) {
   const affBox = document.getElementById('gpuAffiliateBox');
@@ -576,13 +552,18 @@ async function renderGpuAffiliate(gpu) {
     matched = matched.slice(0, 3);
   }
 
+  // A/B variant: B shows 1 card only
+  const affV = affVariant();
+  if (affV === 'B') matched = matched.slice(0, 1);
+  affBox.classList.toggle('variant-b', affV === 'B');
+
   // Update label
   const labelEl = affBox.querySelector('.aff-strip-label');
   labelEl.textContent = series
     ? `RTX ${series} · สินค้าที่เกี่ยวข้อง`
     : 'GPU · อุปกรณ์ยอดนิยม';
 
-  document.getElementById('gpuAffCards').innerHTML = matched.map(affCardHTML).join('');
+  document.getElementById('gpuAffCards').innerHTML = matched.map(i => affCardHTML(i, 'ai_calculator', 'strip')).join('');
 
   // Update spec card CTA button with best match
   if (ctaRow && ctaBtn && matched.length) {
@@ -593,10 +574,11 @@ async function renderGpuAffiliate(gpu) {
     ctaRow.classList.add('visible');
   }
 
-  // Reset animation
+  // Reset animation + track impression
   affBox.style.display = 'none';
   void affBox.offsetWidth;
   affBox.style.display = '';
+  affTrackImpression('ai_calculator', 'strip', matched.length);
 }
 
 function onCPUChange() {
@@ -689,6 +671,9 @@ function render() {
   document.getElementById('modelGrid').innerHTML = cards.join('');
   syncURL();
   document.getElementById('shareBtn').style.display = 'inline-block';
+
+  // Affiliate strip + spec card CTA — always in sync with render state
+  renderGpuAffiliate(gpu);
 }
 
 function syncURL() {
@@ -719,6 +704,7 @@ init().catch(err => {
     </div>`;
 });
 </script>
+<script src="../js/aff-utils.js"></script>
 
 <!-- Static GPU Guide Links — Internal SEO Links -->
 <section style="background:#F2EFE9;border-top:1px solid #E4DDD3;padding:56px 0;margin-top:8px">

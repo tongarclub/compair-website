@@ -1,7 +1,7 @@
 # ComPair — Affiliate Placement Strategy
 
 > จุดวางลิงก์ affiliate ที่ดึงดูด click ได้มากที่สุด  
-> อัปเดต: 27 มิถุนายน 2026 (rev 2)
+> อัปเดต: 27 มิถุนายน 2026 (rev 4)
 
 ---
 
@@ -32,8 +32,7 @@
                                   ดูทั้งหมด →
 ```
 
-**สถานะปัจจุบัน:** ❌ ยังไม่มีในทุกหน้า (มีแค่หลัง dropdown change)  
-**ควรเพิ่มใน:** `onGPUChange()` + `render()`, `onMacChange()` + `render(mac)`, Solar/EV/Gold result
+**สถานะปัจจุบัน:** ✅ ทำแล้วทุกหน้า — `render()`/`calculate()` ใน `ai-calculator`, `mac-llm-calculator`, `solar-calculator`, `ev-calculator`, `gold-calculator`
 
 ---
 
@@ -49,7 +48,7 @@
 | `ev-calculator.html` | ผลเปรียบเทียบ EV | "ซื้อ EV Charger Shopee →" | `ev_charger.json` |
 | `gold-calculator.html` | กราฟผลตอบแทน | "ทองคำลงทุน บน Shopee →" | `gold_invest.json` |
 
-**สถานะปัจจุบัน:** ❌ ยังไม่มีในทุกหน้า
+**สถานะปัจจุบัน:** ✅ ทำแล้ว — `gscCtaRow` ใน GPU spec card, `scCtaRow` ใน Mac spec card
 
 ---
 
@@ -73,8 +72,7 @@
 
 affiliate strip แสดงใต้ info box ทันทีที่เลือก GPU หรือ Mac
 
-**สถานะปัจจุบัน:** ✅ มีแล้วใน `ai-calculator.html` และ `mac-llm-calculator.html`  
-**ขาดใน:** `solar-calculator.html`, `ev-calculator.html`, `gold-calculator.html`
+**สถานะปัจจุบัน:** ✅ มีทุกหน้า — ผ่าน `render()`/`calculate()` ใน 5 calculator ทั้งหมด
 
 ---
 
@@ -91,30 +89,34 @@ affiliate strip แสดงใต้ info box ทันทีที่เลื
 
 | จุด | Intent | Conversion | สถานะ | Effort |
 |---|---|---|---|---|
-| หลัง Result แสดง | ⭐⭐⭐⭐⭐ | สูงสุด | ❌ | กลาง |
-| ใน Spec Card | ⭐⭐⭐⭐⭐ | สูงมาก | ❌ | ต่ำ |
+| หลัง Result แสดง | ⭐⭐⭐⭐⭐ | สูงสุด | ✅ ครบทุกหน้า (5/5) | — |
+| ใน Spec Card | ⭐⭐⭐⭐⭐ | สูงมาก | ✅ GPU + Mac | — |
 | Buying Guide Table | ⭐⭐⭐⭐ | สูง | ✅ Mac + Image Gen | — |
-| หลัง Dropdown | ⭐⭐⭐⭐ | สูง | ✅ GPU + Mac | — |
-| Solar/EV/Gold Dropdown | ⭐⭐⭐⭐ | สูง | ❌ | ต่ำ |
+| Solar/EV/Gold Strip | ⭐⭐⭐⭐ | สูง | ✅ Phase 2 เสร็จ | — |
+| GA4 Click Tracking | ⭐⭐⭐⭐ | วัดผล | ✅ ทุก placement (Phase 3) | — |
+| A/B Test (3 cards vs 1) | ⭐⭐⭐ | ทดสอบ | ✅ ทุกหน้า (Phase 3) | — |
 | หน้า Shopee Deals | ⭐⭐⭐ | กลาง | ✅ | — |
 
 ---
 
 ## Roadmap การ Implement
 
-### Phase 1 — ง่าย + Impact สูง (ทำก่อนเลย)
+### Phase 1 — ง่าย + Impact สูง ✅ เสร็จทั้งหมด
 - [x] เพิ่ม affiliate link column ใน Buying Guide Table ทุกหน้า
-- [ ] เพิ่ม CTA button ใน Spec Card (`ai-calculator`, `mac-llm-calculator`)
-- [ ] เพิ่ม affiliate strip หลัง `render()` function (ไม่ใช่แค่ dropdown)
+- [x] เพิ่ม CTA button ใน Spec Card (`ai-calculator`, `mac-llm-calculator`)
+- [x] เพิ่ม affiliate strip หลัง `render()` function (ไม่ใช่แค่ dropdown)
 
-### Phase 2 — ขยาย Coverage
-- [ ] เพิ่ม affiliate strip ใน `solar-calculator.html` (แผงโซล่า + อินเวอร์เตอร์)
-- [ ] เพิ่ม affiliate strip ใน `ev-calculator.html` (EV Charger)
-- [ ] เพิ่ม affiliate strip ใน `gold-calculator.html` (ทองคำ)
+### Phase 2 — ขยาย Coverage ✅ เสร็จทั้งหมด
+- [x] เพิ่ม affiliate strip ใน `solar-calculator.html` (แผงโซล่า + อินเวอร์เตอร์) — แสดงหลัง `calculate()`
+- [x] เพิ่ม affiliate strip ใน `ev-calculator.html` (EV Charger) — แสดงหลัง `calculate()`
+- [x] เพิ่ม affiliate strip ใน `gold-calculator.html` (ทองคำ) — แสดงหลัง `render()`
 
-### Phase 3 — Optimize
-- [ ] A/B test: strip 3 cards vs inline button
-- [ ] เพิ่ม UTM tracking ต่างกันแต่ละ placement เพื่อวัด click rate
+### Phase 3 — Optimize ✅ เสร็จทั้งหมด
+- [x] A/B test: strip 3 cards (Variant A) vs 1 card (Variant B) — persistent via `localStorage`, class `variant-b`
+- [x] GA4 event tracking ทุก placement — `affiliate_click` + `affiliate_impression` events  
+  → ดูใน GA4: **Events → affiliate_click** (filter by `placement`: `strip`, `spec_card`, `guide_table`)  
+  → `affTrackImpression` บันทึก variant + จำนวน card ที่แสดง  
+  → ทุกหน้า (ai, mac-llm, image-gen, solar, ev, gold) ผ่าน `js/aff-utils.js` shared script
 
 ---
 
