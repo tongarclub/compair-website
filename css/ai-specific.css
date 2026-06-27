@@ -246,6 +246,32 @@ table.qt td:first-child {
   color: var(--warn); font-weight: 600; display: inline-block;
 }
 
+/* ── Spec Card — CTA footer row ────────────────────────── */
+.gsc-cta-row {
+  display: none;
+  padding: 12px 24px;
+  border-top: 1px solid var(--border);
+  background: var(--surface2);
+  align-items: center; justify-content: space-between; gap: 12px;
+  flex-wrap: wrap;
+}
+.gsc-cta-row.visible { display: flex; }
+.gsc-cta-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; color: var(--text3); letter-spacing: .12em; text-transform: uppercase;
+}
+.gsc-cta-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 18px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+  color: #ee4d2d; background: rgba(238,77,45,.08);
+  border: 1px solid rgba(238,77,45,.3);
+  text-decoration: none; white-space: nowrap;
+  transition: background .18s, border-color .18s;
+}
+.gsc-cta-btn:hover { background: rgba(238,77,45,.18); border-color: rgba(238,77,45,.6); }
+
 /* ═══════════════════════════════════════════════
    RESPONSIVE
 ═══════════════════════════════════════════════ */

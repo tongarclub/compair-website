@@ -303,6 +303,13 @@
       <div><div class="gsc-score-val" id="gscScore">—</div><div class="gsc-score-lbl">Overall Score / 100</div></div>
     </div>
     <div class="gsc-specs" id="gscSpecs"></div>
+    <div class="gsc-cta-row" id="gscCtaRow">
+      <span class="gsc-cta-label">สนใจซื้อ?</span>
+      <a class="gsc-cta-btn" id="gscCtaBtn" href="#" target="_blank" rel="noopener sponsored">
+        ดูบน Shopee
+        <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+    </div>
   </div>
 
   <div class="results-header">
@@ -540,7 +547,13 @@ function affCardHTML(item) {
 
 async function renderGpuAffiliate(gpu) {
   const affBox = document.getElementById('gpuAffiliateBox');
-  if (!gpu) { affBox.style.display = 'none'; return; }
+  const ctaRow = document.getElementById('gscCtaRow');
+  const ctaBtn = document.getElementById('gscCtaBtn');
+  if (!gpu) {
+    affBox.style.display = 'none';
+    ctaRow && ctaRow.classList.remove('visible');
+    return;
+  }
 
   const items = await getGpuAffData();
   if (!items.length) return;
@@ -571,9 +584,17 @@ async function renderGpuAffiliate(gpu) {
 
   document.getElementById('gpuAffCards').innerHTML = matched.map(affCardHTML).join('');
 
+  // Update spec card CTA button with best match
+  if (ctaRow && ctaBtn && matched.length) {
+    const best = matched[0];
+    ctaBtn.textContent = series ? `ซื้อ RTX ${series} บน Shopee` : 'GPU · ดูสินค้า Shopee';
+    ctaBtn.insertAdjacentHTML('beforeend', ` <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>`);
+    ctaBtn.href = best.affiliate_link || best.product_link || '#';
+    ctaRow.classList.add('visible');
+  }
+
   // Reset animation
   affBox.style.display = 'none';
-  // Force reflow then show
   void affBox.offsetWidth;
   affBox.style.display = '';
 }

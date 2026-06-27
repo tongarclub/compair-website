@@ -422,6 +422,32 @@ table.gt td:first-child { font-family:'DM Mono',monospace; font-size:12px; color
 .gt-models { font-size:11px; color:var(--text3); margin-top:3px; }
 .gt-speed { font-family:'DM Mono',monospace; font-size:11px; color:var(--text2); white-space:nowrap; }
 
+/* ── Spec Card — CTA footer row ── */
+.sc-cta-row {
+  display: none;
+  padding: 12px 24px;
+  border-top: 1px solid var(--border);
+  background: var(--surface2);
+  align-items: center; justify-content: space-between; gap: 12px;
+  flex-wrap: wrap;
+}
+.sc-cta-row.visible { display: flex; }
+.sc-cta-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; color: var(--text3); letter-spacing: .12em; text-transform: uppercase;
+}
+.sc-cta-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 18px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+  color: #ee4d2d; background: rgba(238,77,45,.08);
+  border: 1px solid rgba(238,77,45,.3);
+  text-decoration: none; white-space: nowrap;
+  transition: background .18s, border-color .18s;
+}
+.sc-cta-btn:hover { background: rgba(238,77,45,.18); border-color: rgba(238,77,45,.6); }
+
 /* ── Buying Guide — Shopee Column ── */
 .gt-table-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; }
 table.gt th.gt-shopee-th { color:#ee4d2d; letter-spacing:.1em; white-space:nowrap; }
@@ -690,6 +716,13 @@ footer { border-top:1px solid var(--border); padding:40px 0; }
       </div>
     </div>
     <div class="sc-specs" id="scSpecs"></div>
+    <div class="sc-cta-row" id="scCtaRow">
+      <span class="sc-cta-label">อุปกรณ์เสริมแนะนำ</span>
+      <a class="sc-cta-btn" id="scCtaBtn" href="#" target="_blank" rel="noopener sponsored">
+        ดูบน Shopee
+        <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+    </div>
   </div>
 
   <div class="results-header">
@@ -1140,16 +1173,20 @@ function macAffCardHTML(item) {
 
 async function renderMacAffiliate(mac) {
   const affBox = document.getElementById('macAffiliateBox');
-  if (!mac) { affBox.style.display = 'none'; return; }
+  const ctaRow = document.getElementById('scCtaRow');
+  const ctaBtn = document.getElementById('scCtaBtn');
+  if (!mac) {
+    affBox.style.display = 'none';
+    ctaRow && ctaRow.classList.remove('visible');
+    return;
+  }
 
   const items = await getMacAffData();
   if (!items.length) return;
 
   // Match by chip generation (M1/M2/M3/M4) in title, then sort by discount + sold
-  const chipGen = mac.chip.replace(' ', '').toUpperCase(); // "M4", "M4PRO", "M3MAX"
   const chipBase = mac.chip.split(' ')[0]; // "M4", "M3"...
 
-  // Score: matches chip gen = +10, has discount = +5, sort by sold
   const scored = items.map(i => {
     const t = i.title.toUpperCase();
     let score = parseInt(i.item_sold || 0);
@@ -1161,11 +1198,20 @@ async function renderMacAffiliate(mac) {
 
   const top3 = scored.slice(0, 3).map(s => s.item);
 
-  // Update label
+  // Update affiliate strip label
   const labelEl = affBox.querySelector('.aff-strip-label');
   labelEl.textContent = `อุปกรณ์เสริม ${mac.full} · Shopee`;
 
   document.getElementById('macAffCards').innerHTML = top3.map(macAffCardHTML).join('');
+
+  // Update spec card CTA button with best match
+  if (ctaRow && ctaBtn && top3.length) {
+    const best = top3[0];
+    ctaBtn.textContent = `อุปกรณ์เสริม ${chipBase} · Shopee`;
+    ctaBtn.insertAdjacentHTML('beforeend', ` <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>`);
+    ctaBtn.href = best.affiliate_link || best.product_link || '#';
+    ctaRow.classList.add('visible');
+  }
 
   // Reset animation
   affBox.style.display = 'none';
