@@ -1,7 +1,18 @@
 # ComPair — Quick Links & Admin Portals
 
 > ลิงก์สำคัญสำหรับจัดการและติดตามเว็บไซต์ ComPair  
-> อัปเดต: 24 มิถุนายน 2026
+> อัปเดต: 27 มิถุนายน 2026
+
+---
+
+## Shopee Affiliate
+
+| รายการ | ลิงก์ |
+|---|---|
+| **Dashboard** | [Affiliate Dashboard](https://affiliate.shopee.co.th/dashboard) |
+| **สร้าง Custom Link** | [Custom Link Portal](https://affiliate.shopee.co.th/offer/custom_link) |
+| **Partner ID** | `15358640421` |
+| **Shopee Deals (Live)** | https://tongarclub.github.io/compair-website/html/shopee-deals.html |
 
 ---
 
@@ -44,6 +55,7 @@
 | **AI Calculator** | https://tongarclub.github.io/compair-website/html/ai-calculator.html |
 | **Solar Calculator** | https://tongarclub.github.io/compair-website/html/solar-calculator.html |
 | **Mac / Apple Silicon** | https://tongarclub.github.io/compair-website/html/mac-llm-calculator.html |
+| **Shopee Deals** | https://tongarclub.github.io/compair-website/html/shopee-deals.html |
 | **Sitemap XML** | https://tongarclub.github.io/compair-website/sitemap.xml |
 | **robots.txt** | https://tongarclub.github.io/compair-website/robots.txt |
 
@@ -56,6 +68,8 @@
 - [ ] เช็ค Performance → มี impression / click เพิ่มไหม
 - [ ] เช็ค Sitemap → สถานะเป็น "สำเร็จ" หรือยัง
 - [ ] เช็ค GitHub Deployments → deploy สำเร็จทุกครั้ง
+- [ ] เช็ค Shopee Affiliate Dashboard → มี click / commission ไหม
+- [ ] อัปเดต short links ใหม่ (ถ้ามีสินค้าใหม่)
 
 ---
 
