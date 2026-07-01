@@ -1,7 +1,7 @@
 # คู่มือระบบ Affiliate — ComPair (Shopee + Lazada)
 
 > คู่มือปฏิบัติการสำหรับจัดการลิงก์ affiliate บนเว็บไซต์ ComPair  
-> อัปเดต: 1 กรกฎาคม 2026 — เพิ่ม Lazada integration
+> อัปเดต: 1 กรกฎาคม 2026 — เพิ่ม Lazada integration + keyword filter ความ relevant
 
 ---
 
@@ -25,16 +25,16 @@
 
 | หน้าเว็บ | Strip (หลัง result) | ปุ่ม Spec Card | Buying Guide | แหล่งข้อมูล |
 |---|:---:|:---:|:---:|---|
-| ai-calculator | ✅ GPU ตาม RTX series | ✅ | — | Shopee + **Lazada** |
+| ai-calculator | ✅ GPU ตาม RTX series (hidden ถ้าไม่มี match) | ✅ | — | Shopee + **Lazada** |
 | mac-llm-calculator | ✅ Mac ตาม chip | ✅ | ✅ 7 แถว | Shopee + **Lazada** |
 | image-gen-calculator | — | — | ✅ 3 แถว | Shopee |
-| solar-calculator | ✅ โซล่า + อินเวอร์เตอร์ | — | — | Shopee + **Lazada** |
-| ev-calculator | ✅ EV Charger | — | — | Shopee + **Lazada** |
+| solar-calculator | ✅ โซล่าแผง + อินเวอร์เตอร์ (keyword filter) | — | — | Shopee only* |
+| ev-calculator | ✅ EV Charger (keyword filter) | — | — | Shopee only* |
 | gold-calculator | ✅ ทองคำ | — | — | Shopee |
 
-**Source badge บน card:** `SP` (Shopee, สีส้ม) / `Laz` (Lazada, สีน้ำเงิน)
-| ev-calculator | ✅ EV Charger | — | — |
-| gold-calculator | ✅ ทองคำ | — | — |
+> **\*หมายเหตุ Lazada EV/Solar:** Lazada API ใช้ L1 category (Home Appliances = 3833) ซึ่งคืนสินค้าหลากหลาย เช่น เครื่องซักผ้า, เครื่องชงกาแฟ — จึง disabled ไว้ก่อนจนกว่าจะมี sub-category ที่ตรงกว่า
+
+**Display:** แยก 2 section (🛒 Shopee / 🟠 Lazada) — section ซ่อนตัวเองถ้าไม่มีสินค้าที่ relevant
 
 ### ไฟล์สำคัญ
 

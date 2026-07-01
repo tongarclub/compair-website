@@ -645,17 +645,29 @@ function shareURL() {
 })();
 
 /* ── EV Affiliate Strip ──────────────────────────────────────────── */
+// Keywords ที่ยืนยันว่า "ที่ชาร์จ EV จริง" ไม่ใช่อุปกรณ์รถ BYD อื่นๆ
+const _EV_KW = ['ev charger','ev ชาร์จ','ชาร์จ ev','charger ev',
+                'wallbox','wall box','type 2','type2','ac charger',
+                'home charger','home ev','โฮมชาร์จ','เครื่องชาร์จรถ',
+                'ev charging','charging station','ev station',
+                'schneider ev','abb ev','siemens ev','ampere time',
+                '7kw','11kw','22kw','3.7kw'];
+
+function _isEvCharger(item) {
+  const t = (item.title || '').toLowerCase();
+  return _EV_KW.some(k => t.includes(k));
+}
+
 let _evAffCache = null;
 async function getEvAffData() {
   if (_evAffCache) return _evAffCache;
   try {
-    const [r1, r2] = await Promise.allSettled([
-      fetch('../data/affiliate/ev_charger.json').then(r => r.json()),
-      fetch('../data/affiliate/lazada_ev_charger.json').then(r => r.json()),
-    ]);
+    const r1 = await fetch('../data/affiliate/ev_charger.json').then(r => r.json())
+                      .catch(() => ({ items: [] }));
+    // Lazada L1=3833 คืน washing machine/coffee maker → ไม่ใช้
     _evAffCache = {
-      shopee: r1.status === 'fulfilled' ? (r1.value.items || []) : [],
-      lazada: r2.status === 'fulfilled' ? (r2.value.items || []) : [],
+      shopee: (r1.items || []).filter(_isEvCharger),
+      lazada: [],   // disabled: Lazada Home Appliances ไม่มีข้อมูล EV charger
     };
   } catch(e) { _evAffCache = { shopee: [], lazada: [] }; }
   return _evAffCache;

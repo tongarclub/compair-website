@@ -647,21 +647,37 @@ function renderPanelCompare() {
 }
 
 // ── Solar Affiliate Strip ───────────────────────────────────────────
+// Keywords สำหรับโซล่าเซลล์จริง (ตัด solar light / ไฟสนาม ออก)
+const _SOLAR_KW = ['แผงโซล่า','solar panel','โซล่าเซลล์ แผ','แผ่นโซล่า',
+                   'pv panel','photovoltaic','mono solar','poly solar',
+                   'monocrystalline','polycrystalline',
+                   'mppt','inverter','อินเวอร์เตอร์','อินเวอร์ทเตอร์',
+                   'off grid','on grid','hybrid inverter',
+                   'solar inverter','charge controller','solar charger'];
+// ตัด "ไฟโซล่าเซลล์" ออก (solar garden light) — ไม่ใช่แผงจริง
+const _SOLAR_EXCLUDE = ['ไฟโซล่า','ไฟสนาม','ไฟตุ้ม','solar light',
+                        'solar lamp','โคมไฟ','spotlight solar'];
+
+function _isSolarProduct(item) {
+  const t = (item.title || '').toLowerCase();
+  if (_SOLAR_EXCLUDE.some(k => t.includes(k))) return false;
+  return _SOLAR_KW.some(k => t.includes(k));
+}
+
 let _solarAffCache = null;
 async function getSolarAffData() {
   if (_solarAffCache) return _solarAffCache;
   try {
-    const [r1, r2, r3] = await Promise.allSettled([
+    const [r1, r2] = await Promise.allSettled([
       fetch('../data/affiliate/solar_panel.json').then(r => r.json()),
       fetch('../data/affiliate/solar_inverter.json').then(r => r.json()),
-      fetch('../data/affiliate/lazada_solar_panel.json').then(r => r.json()),
     ]);
-    const sp  = r1.status === 'fulfilled' ? (r1.value.items || []) : [];
-    const si  = r2.status === 'fulfilled' ? (r2.value.items || []) : [];
-    const laz = r3.status === 'fulfilled' ? (r3.value.items || []) : [];
+    const sp = r1.status === 'fulfilled' ? (r1.value.items || []) : [];
+    const si = r2.status === 'fulfilled' ? (r2.value.items || []) : [];
+    // Lazada L1=3833 คืน washing machine → ไม่ใช้
     _solarAffCache = {
-      shopee: affMerge(sp, si),   // merge Shopee solar_panel + solar_inverter
-      lazada: laz,
+      shopee: affMerge(sp, si).filter(_isSolarProduct),
+      lazada: [],   // disabled: Lazada Home Appliances ไม่มีข้อมูล solar จริง
     };
   } catch(e) { _solarAffCache = { shopee: [], lazada: [] }; }
   return _solarAffCache;

@@ -52,15 +52,22 @@ scripts/
 
 | หน้า | Shopee | Lazada | Strip | Spec CTA | Guide Table |
 |---|---|---|---|---|---|
-| `ai-calculator.html` | `gpu.json` | `lazada_gpu.json` | ✅ RTX series | ✅ | — |
-| `mac-llm-calculator.html` | `mac.json` + `mac_accessories.json` | `lazada_laptop.json` | ✅ chip match | ✅ | ✅ 7 rows |
+| `ai-calculator.html` | `gpu.json` → `_isGpu()` filter | ❌ disabled (Lazada feed ไม่มี GPU) | ✅ Shopee only (hidden ถ้าไม่มี match) | ✅ | — |
+| `mac-llm-calculator.html` | `mac.json` + `mac_accessories.json` → `_isMacProduct()` | `lazada_laptop.json` (44 items, exclusion-only filter) | ✅ chip match | ✅ | ✅ 7 rows |
 | `image-gen-calculator.html` | — | — | — | — | ✅ 3 rows |
-| `solar-calculator.html` | `solar_panel.json` + `solar_inverter.json` | `lazada_solar_panel.json` | ✅ | — | — |
-| `ev-calculator.html` | `ev_charger.json` | `lazada_ev_charger.json` | ✅ | — | — |
+| `solar-calculator.html` | `solar_panel.json` + `solar_inverter.json` → `_isSolarProduct()` | ❌ disabled (L1=3833 คืน washing machine) | ✅ Shopee only | — | — |
+| `ev-calculator.html` | `ev_charger.json` → `_isEvCharger()` | ❌ disabled (L1=3833 คืน washing machine) | ✅ Shopee only | — | — |
 | `gold-calculator.html` | `gold_invest.json` | — | ✅ | — | — |
 
-**Source badge บน card:** `SP` (Shopee, orange) / `Laz` (Lazada, blue)  
-**Merge logic:** `affMerge()` ใน aff-utils.js — dedupe by title + sort by score (sold × rating × discount)
+**Display:** แยก 2 section (Shopee / Lazada) ต่าง header — ใช้ `affRenderSplit()` ใน `aff-utils.js`  
+**Section ซ่อนตัวเองถ้า:** filtered array ว่างเปล่า (เช่น series ไม่มีสต็อก Shopee → Shopee section hidden)  
+**⚠ Lazada API Limitations (ค้นพบจากการทดสอบ Jul 2026):**
+- `/marketing/product/feed` รองรับแค่ `categoryL1` ระดับ L1 เท่านั้น — L2/L3/categoryId ไม่ทำงาน
+- `keyword` parameter ถูก ignore ทั้งหมด — คืน random feed เหมือนกัน
+- L1=3834 (Computers) คืน laptops เป็นส่วนใหญ่ — ไม่มี GPU card เลย
+- L1=3833 (Home Appliances) คืน washing machine / dehumidifier — ไม่มี EV/Solar
+- **GPU section disabled:** ใช้ Shopee only สำหรับ ai-calculator
+- **EV/Solar disabled:** ใช้ Shopee only พร้อม keyword filter
 
 ---
 
@@ -83,8 +90,8 @@ python3 scripts/pull_lazada_products.py --list-categories
 
 | slug | L1 Category | ไฟล์ output |
 |---|---|---|
-| `gpu` | Computers & Components (3834) | `lazada_gpu.json` |
-| `laptop` | Computers & Components (3834) | `lazada_laptop.json` |
+| `gpu` | ❌ ไม่มี GPU ในฟีด | ไม่ใช้ (Lazada feed คืน laptop เท่านั้น) |
+| `laptop` | Computers & Components (3834) | `lazada_laptop.json` — 44 unique laptops |
 | `headphone` | Audio (10100387) | `lazada_headphone.json` |
 | `smartwatch` | Smart Devices (10100412) | `lazada_smartwatch.json` |
 | `gaming` | Gaming (10100871) | `lazada_gaming.json` |

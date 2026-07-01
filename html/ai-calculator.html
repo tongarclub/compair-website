@@ -541,13 +541,34 @@ async function getGpuAffData() {
 
 // affCardHTML / affRenderSplit provided by aff-utils.js
 
+// ต้องมี GPU model number จริง หรือขึ้นต้นด้วย "การ์ดจอ" / "VGA"
+// → กรอง Thermal Pad, HDMI cable ที่แค่ระบุ "รองรับการ์ดจอ" ในคำอธิบาย
+const _GPU_MODEL_RE = /\b(rtx|gtx)\s*\d{3,4}|rx\s*\d{4,5}|radeon\s+rx\s*\d|geforce\s+rtx|geforce\s+gtx/i;
+
+function _isGpu(item) {
+  const t = (item.title || '').trim();
+  const tl = t.toLowerCase();
+  // มี GPU model number ชัดเจน
+  if (_GPU_MODEL_RE.test(t)) return true;
+  // ขึ้นต้นด้วย "การ์ดจอ" หรือ "VGA " (ไม่ใช่แค่ mention ในคำอธิบาย)
+  if (/^(การ์ดจอ|vga\s)/i.test(t)) return true;
+  // แบรนด์ GPU + ชิปชัดเจน
+  if (/(zotac|sapphire|powercolor|xfx|gigabyte)\s+(geforce|radeon|rtx|gtx|rx)/i.test(t)) return true;
+  return false;
+}
+
+/**
+ * กรอง GPU items:
+ *  1. เอาเฉพาะ GPU จริง (ไม่เอา Thermal Pad / HDMI cable)
+ *  2. ถ้ามี series (เช่น "4070") → match เฉพาะ series นั้น, ไม่ match → return []
+ *  3. ถ้าไม่มี series → คืน GPU จริงทั้งหมด sort by sold
+ */
 function _filterGpu(items, series) {
-  if (!series) return items;
-  const matched = items.filter(i => i.title.includes(series));
-  if (matched.length >= 3) return matched;
-  // Fallback: matched + top-sold fill
-  const rest = items.filter(i => !matched.includes(i));
-  return [...matched, ...rest];
+  const gpuItems = items.filter(_isGpu);
+  if (!series) return gpuItems;
+  const matched = gpuItems.filter(i => i.title.includes(series));
+  // ถ้าไม่มี exact match เลย → return [] → section จะซ่อนตัวเอง
+  return matched;
 }
 
 async function renderGpuAffiliate(gpu) {
@@ -571,7 +592,6 @@ async function renderGpuAffiliate(gpu) {
   document.getElementById('gpuAffLabel').textContent = series
     ? `RTX ${series} · เปรียบราคา` : 'GPU · เปรียบราคา';
 
-  // Render split sections
   affRenderSplit({
     shopeeItems:     _filterGpu(shopee, series),
     lazadaItems:     _filterGpu(lazada, series),
@@ -584,10 +604,10 @@ async function renderGpuAffiliate(gpu) {
     placement:       'strip',
   });
 
-  // Update spec card CTA button (best Shopee item first, fallback Lazada)
-  const allSorted = [...shopee, ...lazada].sort((a,b) =>
-    (parseInt(b.item_sold||0)+1) - (parseInt(a.item_sold||0)+1));
-  const best = _filterGpu(allSorted, series)[0];
+  // Update spec card CTA: Shopee first, fallback Lazada
+  const shopeeFiltered = _filterGpu(shopee, series);
+  const lazadaFiltered = _filterGpu(lazada, series);
+  const best = shopeeFiltered[0] || lazadaFiltered[0];
   if (ctaRow && ctaBtn && best) {
     const platform = best.source === 'lazada' ? 'Lazada' : 'Shopee';
     ctaBtn.textContent = series ? `ซื้อ RTX ${series} บน ${platform}` : `GPU · ดูสินค้า ${platform}`;
