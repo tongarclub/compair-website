@@ -4,3 +4,8 @@ csv-affiliate-shoppe/
 # Playwright session (contains login cookies — never commit)
 scripts/shopee_session.json
 scripts/node_modules/
+
+# Environment variables — never commit
+.env
+.env.local
+.env.*.local
