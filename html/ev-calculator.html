@@ -347,13 +347,26 @@
     <!-- EV Charger Affiliate Strip -->
     <div class="aff-strip" id="evAffBox" style="display:none" data-aff-placement="ev_strip">
       <div class="aff-strip-header">
-        <span class="aff-strip-label">อุปกรณ์ชาร์จ EV แนะนำ · Shopee</span>
-        <a class="aff-strip-more" href="shopee-deals.html?cat=ev_charger" target="_blank" rel="noopener">
-          ดูทั้งหมด
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
+        <span class="aff-strip-label">อุปกรณ์ชาร์จ EV · เปรียบราคา</span>
       </div>
-      <div class="aff-strip-cards" id="evAffCards"></div>
+      <div class="aff-source-section aff-source-section--shopee" id="evAffShopeeSection">
+        <div class="aff-source-header">
+          <span class="aff-source-pip"></span>
+          <span class="aff-source-name">Shopee</span>
+          <a class="aff-source-more" href="shopee-deals.html?cat=ev_charger" target="_blank" rel="noopener">
+            ดูทั้งหมด
+            <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+        <div class="aff-strip-cards" id="evAffShopeeCards"></div>
+      </div>
+      <div class="aff-source-section aff-source-section--lazada" id="evAffLazadaSection">
+        <div class="aff-source-header">
+          <span class="aff-source-pip"></span>
+          <span class="aff-source-name">Lazada</span>
+        </div>
+        <div class="aff-strip-cards" id="evAffLazadaCards"></div>
+      </div>
     </div>
 
     <!-- Solar cross-link -->
@@ -636,29 +649,34 @@ let _evAffCache = null;
 async function getEvAffData() {
   if (_evAffCache) return _evAffCache;
   try {
-    const r = await fetch('../data/affiliate/ev_charger.json');
-    const d = await r.json();
-    _evAffCache = d.items || [];
-  } catch(e) { _evAffCache = []; }
+    const [r1, r2] = await Promise.allSettled([
+      fetch('../data/affiliate/ev_charger.json').then(r => r.json()),
+      fetch('../data/affiliate/lazada_ev_charger.json').then(r => r.json()),
+    ]);
+    _evAffCache = {
+      shopee: r1.status === 'fulfilled' ? (r1.value.items || []) : [],
+      lazada: r2.status === 'fulfilled' ? (r2.value.items || []) : [],
+    };
+  } catch(e) { _evAffCache = { shopee: [], lazada: [] }; }
   return _evAffCache;
 }
 
 async function renderEvAffiliate() {
   const box = document.getElementById('evAffBox');
-  const cardsEl = document.getElementById('evAffCards');
-  const items = await getEvAffData();
-  if (!items.length) return;
+  const { shopee, lazada } = await getEvAffData();
+  if (!shopee.length && !lazada.length) return;
 
-  const sorted = [...items].sort((a,b) =>
-    (parseInt(b.item_sold||0) + parseInt(b.discount_percentage||0)*10) -
-    (parseInt(a.item_sold||0) + parseInt(a.discount_percentage||0)*10)
-  );
-  const v = affVariant();
-  const picks = sorted.slice(0, v === 'B' ? 1 : 3);
-  box.classList.toggle('variant-b', v === 'B');
-  cardsEl.innerHTML = picks.map(i => affCardHTML(i, 'ev_calculator', 'strip')).join('');
-  box.style.display = 'none'; void box.offsetWidth; box.style.display = '';
-  affTrackImpression('ev_calculator', 'strip', picks.length);
+  affRenderSplit({
+    shopeeItems:     shopee,
+    lazadaItems:     lazada,
+    shopeeCardsId:   'evAffShopeeCards',
+    lazadaCardsId:   'evAffLazadaCards',
+    shopeeSectionId: 'evAffShopeeSection',
+    lazadaSectionId: 'evAffLazadaSection',
+    stripEl:         box,
+    page:            'ev_calculator',
+    placement:       'strip',
+  });
 }
 
 /* init */

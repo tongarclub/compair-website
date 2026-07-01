@@ -425,6 +425,37 @@ optgroup { font-style: normal; font-weight: 700; }
   background: #ee4d2d; color: #fff;
   padding: 1px 5px; letter-spacing: .03em;
 }
+/* ── Source sections (Shopee / Lazada split) ──── */
+.aff-source-section { display: block; }
+.aff-source-section + .aff-source-section {
+  border-top: 1px solid var(--border, #e8e2d8);
+  margin-top: 10px;
+  padding-top: 10px;
+}
+.aff-source-header {
+  display: flex; align-items: center; gap: 7px;
+  padding: 0 16px 6px;
+}
+.aff-source-pip {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+}
+.aff-source-section--shopee .aff-source-pip { background: #ee4d2d; }
+.aff-source-section--lazada .aff-source-pip { background: #1d5bd4; }
+.aff-source-name {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+}
+.aff-source-section--shopee .aff-source-name { color: #ee4d2d; }
+.aff-source-section--lazada .aff-source-name { color: #1d5bd4; }
+.aff-source-more {
+  margin-left: auto;
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  color: var(--text3); text-decoration: none;
+  display: flex; align-items: center; gap: 3px;
+  opacity: .7; transition: opacity .15s;
+}
+.aff-source-more:hover { opacity: 1; }
 .aff-card-meta {
   font-family: 'DM Mono', monospace;
   font-size: 9px; color: var(--text3); letter-spacing: .02em;

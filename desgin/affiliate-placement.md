@@ -1,7 +1,7 @@
 # ComPair — Affiliate Placement Strategy
 
 > จุดวางลิงก์ affiliate ที่ดึงดูด click ได้มากที่สุด  
-> อัปเดต: 27 มิถุนายน 2026 (rev 4)
+> อัปเดต: 1 กรกฎาคม 2026 (rev 5 — Lazada integration)
 
 ---
 
@@ -118,15 +118,28 @@ affiliate strip แสดงใต้ info box ทันทีที่เลื
   → `affTrackImpression` บันทึก variant + จำนวน card ที่แสดง  
   → ทุกหน้า (ai, mac-llm, image-gen, solar, ev, gold) ผ่าน `js/aff-utils.js` shared script
 
+### Phase 4 — Lazada Integration ✅ เสร็จ 1 กรกฎาคม 2026
+- [x] ติดตั้ง Lazada Affiliate API (official Python SDK + `.env`)
+- [x] สร้าง `scripts/pull_lazada_products.py` ดึงสินค้า 11 categories → JSON
+- [x] อัปเดต `affMerge()` ใน `aff-utils.js` — merge Shopee + Lazada, dedupe, sort by score
+- [x] เพิ่ม source badge บน card: `SP` (Shopee) / `Laz` (Lazada)
+- [x] Map Lazada JSON เข้า: `ai-calculator`, `mac-llm-calculator`, `solar-calculator`, `ev-calculator`
+- [x] GA4 tracking เพิ่ม param `source` (shopee/lazada) + `sources` ใน impression
+
 ---
 
-## Affiliate Data Mapping
+## Affiliate Data Mapping (Shopee + Lazada)
 
-| หน้า Calculator | Affiliate JSON | Keywords จาก JSON |
-|---|---|---|
-| ai-calculator (GPU) | `gpu.json` | RTX series numbers |
-| mac-llm-calculator | `mac.json` + `mac_accessories.json` | M1/M2/M3/M4 |
-| solar-calculator | `solar_panel.json` + `solar_inverter.json` | วัตต์, แผง, อินเวอร์เตอร์ |
-| ev-calculator | `ev_charger.json` | Type 2, 7kW, 22kW |
-| gold-calculator | `gold_invest.json` | ทองคำ, แหวน, ทองแท่ง |
-| image-gen-calculator | `gpu.json` | RTX series numbers |
+| หน้า Calculator | Shopee JSON | Lazada JSON | merge via |
+|---|---|---|---|
+| `ai-calculator` | `gpu.json` | `lazada_gpu.json` | `affMerge()` |
+| `mac-llm-calculator` | `mac.json` + `mac_accessories.json` | `lazada_laptop.json` | `affMerge()` |
+| `solar-calculator` | `solar_panel.json` + `solar_inverter.json` | `lazada_solar_panel.json` | `affMerge()` |
+| `ev-calculator` | `ev_charger.json` | `lazada_ev_charger.json` | `affMerge()` |
+| `gold-calculator` | `gold_invest.json` | — | — |
+| `image-gen-calculator` | `gpu.json` (guide table) | — | — |
+
+**Refresh Lazada data:**
+```bash
+python3 scripts/pull_lazada_products.py --all --limit 50
+```

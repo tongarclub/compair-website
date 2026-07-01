@@ -248,13 +248,26 @@
 <div class="wrap">
   <div class="aff-strip" id="solarAffBox" style="display:none" data-aff-placement="solar_strip">
     <div class="aff-strip-header">
-      <span class="aff-strip-label">อุปกรณ์โซล่าเซลล์แนะนำ · Shopee</span>
-      <a class="aff-strip-more" href="shopee-deals.html?cat=solar" target="_blank" rel="noopener">
-        ดูทั้งหมด
-        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
+      <span class="aff-strip-label">อุปกรณ์โซล่าเซลล์ · เปรียบราคา</span>
     </div>
-    <div class="aff-strip-cards" id="solarAffCards"></div>
+    <div class="aff-source-section aff-source-section--shopee" id="solarAffShopeeSection">
+      <div class="aff-source-header">
+        <span class="aff-source-pip"></span>
+        <span class="aff-source-name">Shopee</span>
+        <a class="aff-source-more" href="shopee-deals.html?cat=solar" target="_blank" rel="noopener">
+          ดูทั้งหมด
+          <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+      <div class="aff-strip-cards" id="solarAffShopeeCards"></div>
+    </div>
+    <div class="aff-source-section aff-source-section--lazada" id="solarAffLazadaSection">
+      <div class="aff-source-header">
+        <span class="aff-source-pip"></span>
+        <span class="aff-source-name">Lazada</span>
+      </div>
+      <div class="aff-strip-cards" id="solarAffLazadaCards"></div>
+    </div>
   </div>
 </div>
 
@@ -638,32 +651,38 @@ let _solarAffCache = null;
 async function getSolarAffData() {
   if (_solarAffCache) return _solarAffCache;
   try {
-    const [r1, r2] = await Promise.all([
-      fetch('../data/affiliate/solar_panel.json'),
-      fetch('../data/affiliate/solar_inverter.json'),
+    const [r1, r2, r3] = await Promise.allSettled([
+      fetch('../data/affiliate/solar_panel.json').then(r => r.json()),
+      fetch('../data/affiliate/solar_inverter.json').then(r => r.json()),
+      fetch('../data/affiliate/lazada_solar_panel.json').then(r => r.json()),
     ]);
-    const [d1, d2] = await Promise.all([r1.json(), r2.json()]);
-    _solarAffCache = [...(d1.items||[]), ...(d2.items||[])];
-  } catch(e) { _solarAffCache = []; }
+    const sp  = r1.status === 'fulfilled' ? (r1.value.items || []) : [];
+    const si  = r2.status === 'fulfilled' ? (r2.value.items || []) : [];
+    const laz = r3.status === 'fulfilled' ? (r3.value.items || []) : [];
+    _solarAffCache = {
+      shopee: affMerge(sp, si),   // merge Shopee solar_panel + solar_inverter
+      lazada: laz,
+    };
+  } catch(e) { _solarAffCache = { shopee: [], lazada: [] }; }
   return _solarAffCache;
 }
 
 async function renderSolarAffiliate() {
   const box = document.getElementById('solarAffBox');
-  const cardsEl = document.getElementById('solarAffCards');
-  const items = await getSolarAffData();
-  if (!items.length) return;
+  const { shopee, lazada } = await getSolarAffData();
+  if (!shopee.length && !lazada.length) return;
 
-  const sorted = [...items].sort((a,b) =>
-    (parseInt(b.item_sold||0) + parseInt(b.discount_percentage||0)*10) -
-    (parseInt(a.item_sold||0) + parseInt(a.discount_percentage||0)*10)
-  );
-  const v = affVariant();
-  const picks = sorted.slice(0, v === 'B' ? 1 : 3);
-  box.classList.toggle('variant-b', v === 'B');
-  cardsEl.innerHTML = picks.map(i => affCardHTML(i, 'solar_calculator', 'strip')).join('');
-  box.style.display = 'none'; void box.offsetWidth; box.style.display = '';
-  affTrackImpression('solar_calculator', 'strip', picks.length);
+  affRenderSplit({
+    shopeeItems:     shopee,
+    lazadaItems:     lazada,
+    shopeeCardsId:   'solarAffShopeeCards',
+    lazadaCardsId:   'solarAffLazadaCards',
+    shopeeSectionId: 'solarAffShopeeSection',
+    lazadaSectionId: 'solarAffLazadaSection',
+    stripEl:         box,
+    page:            'solar_calculator',
+    placement:       'strip',
+  });
 }
 
 init().catch(err => {

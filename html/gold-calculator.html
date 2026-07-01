@@ -235,7 +235,7 @@
   <!-- Gold Affiliate Strip -->
   <div class="aff-strip" id="goldAffBox" style="display:none" data-aff-placement="gold_strip">
     <div class="aff-strip-header">
-      <span class="aff-strip-label">ทองคำแท้จาก Shopee</span>
+      <span class="aff-strip-label">ทองคำแท้ · Shopee</span>
       <a class="aff-strip-more" href="shopee-deals.html?cat=gold_invest" target="_blank" rel="noopener">
         ดูทั้งหมด
         <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -463,7 +463,7 @@ async function renderGoldAffiliate() {
   box.classList.toggle('variant-b', v === 'B');
   cardsEl.innerHTML = picks.map(i => affCardHTML(i, 'gold_calculator', 'strip')).join('');
   box.style.display = 'none'; void box.offsetWidth; box.style.display = '';
-  affTrackImpression('gold_calculator', 'strip', picks.length);
+  affTrackImpression('gold_calculator', 'strip', picks.length, 'shopee');
 }
 
 // ── Init ─────────────────────────────────────────────────

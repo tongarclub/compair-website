@@ -258,13 +258,28 @@
         <!-- Affiliate Strip: shows on GPU select -->
         <div class="aff-strip" id="gpuAffiliateBox" style="display:none">
           <div class="aff-strip-header">
-            <span class="aff-strip-label">สินค้าที่เกี่ยวข้อง · Shopee</span>
-            <a class="aff-strip-more" href="shopee-deals.html?cat=gpu" target="_blank">
-              ดูทั้งหมด
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
+            <span class="aff-strip-label" id="gpuAffLabel">GPU · เปรียบราคา</span>
           </div>
-          <div class="aff-strip-cards" id="gpuAffCards"></div>
+          <!-- Shopee section -->
+          <div class="aff-source-section aff-source-section--shopee" id="gpuAffShopeeSection">
+            <div class="aff-source-header">
+              <span class="aff-source-pip"></span>
+              <span class="aff-source-name">Shopee</span>
+              <a class="aff-source-more" href="shopee-deals.html?cat=gpu" target="_blank" rel="noopener">
+                ดูทั้งหมด
+                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+            <div class="aff-strip-cards" id="gpuAffShopeeCards"></div>
+          </div>
+          <!-- Lazada section -->
+          <div class="aff-source-section aff-source-section--lazada" id="gpuAffLazadaSection">
+            <div class="aff-source-header">
+              <span class="aff-source-pip"></span>
+              <span class="aff-source-name">Lazada</span>
+            </div>
+            <div class="aff-strip-cards" id="gpuAffLazadaCards"></div>
+          </div>
         </div>
       </div>
       <div class="form-col">
@@ -512,14 +527,28 @@ let _gpuAffCache = null;
 async function getGpuAffData() {
   if (_gpuAffCache) return _gpuAffCache;
   try {
-    const r = await fetch('../data/affiliate/gpu.json');
-    const d = await r.json();
-    _gpuAffCache = d.items || [];
-  } catch(e) { _gpuAffCache = []; }
+    const [r1, r2] = await Promise.allSettled([
+      fetch('../data/affiliate/gpu.json').then(r => r.json()),
+      fetch('../data/affiliate/lazada_gpu.json').then(r => r.json()),
+    ]);
+    _gpuAffCache = {
+      shopee: r1.status === 'fulfilled' ? (r1.value.items || []) : [],
+      lazada: r2.status === 'fulfilled' ? (r2.value.items || []) : [],
+    };
+  } catch(e) { _gpuAffCache = { shopee: [], lazada: [] }; }
   return _gpuAffCache;
 }
 
-// affCardHTML is provided by aff-utils.js (loaded after this script)
+// affCardHTML / affRenderSplit provided by aff-utils.js
+
+function _filterGpu(items, series) {
+  if (!series) return items;
+  const matched = items.filter(i => i.title.includes(series));
+  if (matched.length >= 3) return matched;
+  // Fallback: matched + top-sold fill
+  const rest = items.filter(i => !matched.includes(i));
+  return [...matched, ...rest];
+}
 
 async function renderGpuAffiliate(gpu) {
   const affBox = document.getElementById('gpuAffiliateBox');
@@ -531,54 +560,41 @@ async function renderGpuAffiliate(gpu) {
     return;
   }
 
-  const items = await getGpuAffData();
-  if (!items.length) return;
+  const { shopee, lazada } = await getGpuAffData();
+  if (!shopee.length && !lazada.length) return;
 
-  // Extract GPU series: "RTX 5090" → "5090", "RTX 4070 Super" → "4070"
-  const mNum = gpu.name.match(/\b(\d{4})\b/);
+  // Extract GPU series: "RTX 5090" → "5090"
+  const mNum  = gpu.name.match(/\b(\d{4})\b/);
   const series = mNum ? mNum[1] : null;
 
-  let matched = series
-    ? items.filter(i => i.title.includes(series))
-    : [];
-
-  // Fallback to top sold if fewer than 3 specific matches
-  if (matched.length < 3) {
-    const others = [...items]
-      .filter(i => !matched.includes(i))
-      .sort((a, b) => parseInt(b.item_sold||0) - parseInt(a.item_sold||0));
-    matched = [...matched, ...others].slice(0, 3);
-  } else {
-    matched = matched.slice(0, 3);
-  }
-
-  // A/B variant: B shows 1 card only
-  const affV = affVariant();
-  if (affV === 'B') matched = matched.slice(0, 1);
-  affBox.classList.toggle('variant-b', affV === 'B');
-
   // Update label
-  const labelEl = affBox.querySelector('.aff-strip-label');
-  labelEl.textContent = series
-    ? `RTX ${series} · สินค้าที่เกี่ยวข้อง`
-    : 'GPU · อุปกรณ์ยอดนิยม';
+  document.getElementById('gpuAffLabel').textContent = series
+    ? `RTX ${series} · เปรียบราคา` : 'GPU · เปรียบราคา';
 
-  document.getElementById('gpuAffCards').innerHTML = matched.map(i => affCardHTML(i, 'ai_calculator', 'strip')).join('');
+  // Render split sections
+  affRenderSplit({
+    shopeeItems:     _filterGpu(shopee, series),
+    lazadaItems:     _filterGpu(lazada, series),
+    shopeeCardsId:   'gpuAffShopeeCards',
+    lazadaCardsId:   'gpuAffLazadaCards',
+    shopeeSectionId: 'gpuAffShopeeSection',
+    lazadaSectionId: 'gpuAffLazadaSection',
+    stripEl:         affBox,
+    page:            'ai_calculator',
+    placement:       'strip',
+  });
 
-  // Update spec card CTA button with best match
-  if (ctaRow && ctaBtn && matched.length) {
-    const best = matched[0];
-    ctaBtn.textContent = series ? `ซื้อ RTX ${series} บน Shopee` : 'GPU · ดูสินค้า Shopee';
+  // Update spec card CTA button (best Shopee item first, fallback Lazada)
+  const allSorted = [...shopee, ...lazada].sort((a,b) =>
+    (parseInt(b.item_sold||0)+1) - (parseInt(a.item_sold||0)+1));
+  const best = _filterGpu(allSorted, series)[0];
+  if (ctaRow && ctaBtn && best) {
+    const platform = best.source === 'lazada' ? 'Lazada' : 'Shopee';
+    ctaBtn.textContent = series ? `ซื้อ RTX ${series} บน ${platform}` : `GPU · ดูสินค้า ${platform}`;
     ctaBtn.insertAdjacentHTML('beforeend', ` <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>`);
     ctaBtn.href = best.affiliate_link || best.product_link || '#';
     ctaRow.classList.add('visible');
   }
-
-  // Reset animation + track impression
-  affBox.style.display = 'none';
-  void affBox.offsetWidth;
-  affBox.style.display = '';
-  affTrackImpression('ai_calculator', 'strip', matched.length);
 }
 
 function onCPUChange() {

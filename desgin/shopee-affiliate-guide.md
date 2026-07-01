@@ -1,7 +1,7 @@
-# คู่มือระบบ Shopee Affiliate — ComPair
+# คู่มือระบบ Affiliate — ComPair (Shopee + Lazada)
 
 > คู่มือปฏิบัติการสำหรับจัดการลิงก์ affiliate บนเว็บไซต์ ComPair  
-> อัปเดต: 29 มิถุนายน 2026
+> อัปเดต: 1 กรกฎาคม 2026 — เพิ่ม Lazada integration
 
 ---
 
@@ -9,25 +9,30 @@
 
 1. [ภาพรวมระบบ](#1-ภาพรวมระบบ)
 2. [งานประจำ — เร็วสุด](#2-งานประจำ--เร็วสุด)
-3. [Generate Short Links](#3-generate-short-links)
-4. [อัปเดต Buying Guide Picks](#4-อัปเดต-buying-guide-picks)
-5. [ดูผลใน GA4](#5-ดูผลใน-ga4)
-6. [ทดสอบ A/B Test](#6-ทดสอบ-ab-test)
-7. [เพิ่มหน้า Calculator ใหม่](#7-เพิ่มหน้า-calculator-ใหม่)
-8. [ข้อมูลอ้างอิง](#8-ข้อมูลอ้างอิง)
+3. [Lazada — Refresh ข้อมูลสินค้า](#3-lazada--refresh-ข้อมูลสินค้า)
+4. [Shopee — Generate Short Links](#4-shopee--generate-short-links)
+5. [อัปเดต Buying Guide Picks](#5-อัปเดต-buying-guide-picks)
+6. [ดูผลใน GA4](#6-ดูผลใน-ga4)
+7. [ทดสอบ A/B Test](#7-ทดสอบ-ab-test)
+8. [เพิ่มหน้า Calculator ใหม่](#8-เพิ่มหน้า-calculator-ใหม่)
+9. [ข้อมูลอ้างอิง](#9-ข้อมูลอ้างอิง)
 
 ---
 
 ## 1. ภาพรวมระบบ
 
-### สินค้าแสดงที่ไหนบ้าง
+### สินค้าแสดงที่ไหนบ้าง (Shopee + Lazada)
 
-| หน้าเว็บ | Strip (3 การ์ด หลัง result) | ปุ่ม Spec Card | คอลัมน์ Buying Guide |
-|---|:---:|:---:|:---:|
-| ai-calculator | ✅ GPU ตาม RTX series | ✅ | — |
-| mac-llm-calculator | ✅ Mac accessories ตาม chip | ✅ | ✅ 7 แถว |
-| image-gen-calculator | — | — | ✅ 3 แถว (GPU) |
-| solar-calculator | ✅ โซล่าเซลล์ + อินเวอร์เตอร์ | — | — |
+| หน้าเว็บ | Strip (หลัง result) | ปุ่ม Spec Card | Buying Guide | แหล่งข้อมูล |
+|---|:---:|:---:|:---:|---|
+| ai-calculator | ✅ GPU ตาม RTX series | ✅ | — | Shopee + **Lazada** |
+| mac-llm-calculator | ✅ Mac ตาม chip | ✅ | ✅ 7 แถว | Shopee + **Lazada** |
+| image-gen-calculator | — | — | ✅ 3 แถว | Shopee |
+| solar-calculator | ✅ โซล่า + อินเวอร์เตอร์ | — | — | Shopee + **Lazada** |
+| ev-calculator | ✅ EV Charger | — | — | Shopee + **Lazada** |
+| gold-calculator | ✅ ทองคำ | — | — | Shopee |
+
+**Source badge บน card:** `SP` (Shopee, สีส้ม) / `Laz` (Lazada, สีน้ำเงิน)
 | ev-calculator | ✅ EV Charger | — | — |
 | gold-calculator | ✅ ทองคำ | — | — |
 
@@ -43,13 +48,24 @@ data/affiliate/
 ├── solar_inverter.json    ← อินเวอร์เตอร์ / MPPT ~50 รายการ
 ├── ev_charger.json        ← EV Charger ~50 รายการ
 ├── gold_invest.json       ← ทองคำ ~50 รายการ
-└── shopee-urls-to-shorten.txt  ← ไฟล์ทำงาน short links
+├── shopee-urls-to-shorten.txt  ← ไฟล์ทำงาน short links
+│
+├── lazada_gpu.json        ← Lazada: GPU / Computers
+├── lazada_laptop.json     ← Lazada: Laptop
+├── lazada_headphone.json  ← Lazada: Audio
+├── lazada_smartwatch.json ← Lazada: Smart Devices
+├── lazada_air_conditioner.json ← Lazada: Home Appliances
+├── lazada_solar_panel.json     ← Lazada: Home Appliances
+├── lazada_ev_charger.json      ← Lazada: Home Appliances
+└── lazada_*.json          ← Lazada: อื่นๆ
 
 js/
-└── aff-utils.js           ← Shared JS (A/B test + GA4 tracking)
+└── aff-utils.js           ← Shared JS: affMerge + A/B + GA4 + source badge
 
 scripts/
-└── apply_short_links.py   ← Script จับคู่ URL → short link → JSON
+├── apply_short_links.py   ← Shopee: จับคู่ URL → short link → JSON
+├── pull_lazada_products.py← Lazada: ดึงสินค้าทุก category → JSON
+└── test_lazada_api.py     ← Lazada: ทดสอบ API credentials
 ```
 
 ---
@@ -64,12 +80,19 @@ scripts/
 
 หน้าเว็บจะ fetch ใหม่อัตโนมัติ ไม่ต้อง rebuild หรือ deploy อะไรเพิ่ม
 
-### ตรวจสอบสินค้าที่ยังไม่มี short link
+### Refresh ข้อมูล Lazada (แนะนำ: ทำทุกสัปดาห์)
+
+```bash
+python3 scripts/pull_lazada_products.py --all --limit 50
+```
+
+### ตรวจสอบสินค้าที่ยังไม่มี short link (Shopee)
 
 ```bash
 python3 -c "
 import json, glob
 for f in glob.glob('data/affiliate/*.json'):
+    if 'lazada' in f: continue
     d = json.load(open(f))
     empty = sum(1 for i in d.get('items',[]) if not i.get('shopee_short_link'))
     if empty: print(f'{f}: {empty} items ยังไม่มี short link')
@@ -78,7 +101,44 @@ for f in glob.glob('data/affiliate/*.json'):
 
 ---
 
-## 3. Generate Short Links
+## 3. Lazada — Refresh ข้อมูลสินค้า
+
+### ก่อนใช้งานครั้งแรก — ตรวจสอบ credentials
+
+```bash
+python3 scripts/test_lazada_api.py
+```
+
+ต้องเห็น `✅ ได้ X สินค้า` ใน Test 1 — ถ้าไม่เห็น แสดงว่า `LAZADA_USER_TOKEN` หมดอายุ  
+→ Login [affiliate.lazada.co.th](https://affiliate.lazada.co.th) → รับ token ใหม่ → อัปเดต `.env`
+
+### ไฟล์ .env
+
+```
+LAZADA_APP_KEY=105827
+LAZADA_APP_SECRET=xxxx
+LAZADA_USER_TOKEN=xxxx    ← จาก Lazada Affiliate Dashboard → Settings → API Token
+```
+
+### รัน Pull
+
+```bash
+# ดึงทุก category
+python3 scripts/pull_lazada_products.py --all --limit 50
+
+# ดึงเฉพาะ
+python3 scripts/pull_lazada_products.py --category gpu
+python3 scripts/pull_lazada_products.py --category air_conditioner
+
+# ดู categories ที่รองรับ
+python3 scripts/pull_lazada_products.py --list-categories
+```
+
+output ไปที่ `data/affiliate/lazada_*.json` — หน้าเว็บ fetch อัตโนมัติ
+
+---
+
+## 4. Shopee — Generate Short Links
 
 **Portal:** https://affiliate.shopee.co.th/offer/custom_link  
 **Partner ID:** `15358640421`
@@ -155,7 +215,7 @@ mac.json       → Updated: 0  Already: 5  Not found: 0
 
 ---
 
-## 4. อัปเดต Buying Guide Picks
+## 5. อัปเดต Buying Guide Picks
 
 ไฟล์: `data/affiliate/guide-picks.json`
 
@@ -203,7 +263,7 @@ mac.json       → Updated: 0  Already: 5  Not found: 0
 
 ---
 
-## 5. ดูผลใน GA4
+## 6. ดูผลใน GA4
 
 **Property ID:** G-J3C1X16FZ5  
 **Dashboard:** https://analytics.google.com/
@@ -212,8 +272,11 @@ mac.json       → Updated: 0  Already: 5  Not found: 0
 
 | Event | เมื่อไหร่ | ข้อมูลที่ส่ง |
 |---|---|---|
-| `affiliate_click` | ทุกครั้งที่คลิก affiliate card | page, placement, variant, link, title |
-| `affiliate_impression` | ทุกครั้งที่ strip แสดงผล | page, placement, variant, count |
+| `affiliate_click` | ทุกครั้งที่คลิก affiliate card | page, placement, variant, **source**, link, title |
+| `affiliate_impression` | ทุกครั้งที่ strip แสดงผล | page, placement, variant, count, **sources** |
+
+**`source`** = `shopee` หรือ `lazada` — บอกว่าคลิก card จากแพลตฟอร์มไหน  
+**`sources`** = `shopee`, `lazada`, หรือ `shopee,lazada` — บอกว่า strip นั้นมีสินค้าจากทั้ง 2 แพลตฟอร์ม
 
 ### Placement Values
 
@@ -235,20 +298,20 @@ mac.json       → Updated: 0  Already: 5  Not found: 0
 |---|---|
 | placement ไหน click เยอะสุด | `placement` |
 | หน้าไหน convert ได้ดีสุด | `page` |
+| Shopee vs Lazada click อะไรดีกว่า | `source` |
 | สินค้าไหนคลิกเยอะสุด | `title` |
 | A/B variant ไหนได้ผลดีกว่า | `variant` |
 
-### สูตร CTR สำหรับ A/B
+### สูตร CTR สำหรับ A/B + Source
 
 ```
-CTR = affiliate_click ÷ affiliate_impression  (per variant)
+CTR (Shopee) = affiliate_click[source=shopee] ÷ affiliate_impression
+CTR (Lazada) = affiliate_click[source=lazada] ÷ affiliate_impression
 ```
-
-เปรียบ Variant A กับ Variant B จาก event `affiliate_impression`
 
 ---
 
-## 6. ทดสอบ A/B Test
+## 7. ทดสอบ A/B Test
 
 ระบบแบ่ง user ออกเป็น 2 กลุ่ม 50/50 อัตโนมัติ:
 
@@ -291,7 +354,7 @@ function affVariant() {
 
 ---
 
-## 7. เพิ่มหน้า Calculator ใหม่
+## 8. เพิ่มหน้า Calculator ใหม่
 
 เมื่อมี calculator หน้าใหม่ที่ต้องการ affiliate strip:
 
@@ -366,7 +429,7 @@ function render() {
 
 ---
 
-## 8. ข้อมูลอ้างอิง
+## 9. ข้อมูลอ้างอิง
 
 ### Links สำคัญ
 

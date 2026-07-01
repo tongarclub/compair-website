@@ -1,6 +1,6 @@
-# ComPair — Shopee Affiliate System
+# ComPair — Multi-Source Affiliate System (Shopee + Lazada)
 
-> ระบบ affiliate สมบูรณ์แบบสำหรับ ComPair — ตั้งแต่การ generate short link ไปจนถึง GA4 tracking
+> ระบบ affiliate ครบวงจรสำหรับ ComPair — รองรับ Shopee และ Lazada พร้อม GA4 tracking + A/B test
 
 ---
 
@@ -9,60 +9,123 @@
 ```
 data/affiliate/
 ├── guide-picks.json          ← ✨ Buying Guide curated picks (แก้ที่นี่ที่เดียว)
-├── gpu.json                  ← สินค้า GPU / การ์ดจอ (~900 items)
-├── mac.json                  ← Mac accessories (~900 items)
-├── mac_accessories.json      ← Mac accessories เพิ่มเติม
-├── solar_panel.json          ← แผงโซล่าเซลล์ (~900 items)
-├── solar_inverter.json       ← อินเวอร์เตอร์ / MPPT Controller (~900 items)
-├── ev_charger.json           ← EV Charger / อุปกรณ์ชาร์จ (~900 items)
-├── gold_invest.json          ← ทองคำ / เครื่องประดับ (~900 items)
-├── laptop.json               ← Laptop
-└── shopee-urls-to-shorten.txt ← Working file สำหรับ generate short links
-
+│
+├── [SHOPEE — csv datafeed]
+│   ├── gpu.json              ← GPU / การ์ดจอ
+│   ├── mac.json              ← Mac / อุปกรณ์เสริม Mac
+│   ├── mac_accessories.json  ← Mac accessories เพิ่มเติม
+│   ├── solar_panel.json      ← แผงโซล่าเซลล์
+│   ├── solar_inverter.json   ← อินเวอร์เตอร์ / MPPT Controller
+│   ├── ev_charger.json       ← EV Charger
+│   ├── gold_invest.json      ← ทองคำ / เครื่องประดับ
+│   └── shopee-urls-to-shorten.txt  ← working file สำหรับ short link
+│
+├── [LAZADA — API datafeed]
+│   ├── lazada_gpu.json       ← Computers & Components (L1: 3834)
+│   ├── lazada_laptop.json    ← Computers & Components (L1: 3834)
+│   ├── lazada_headphone.json ← Audio (L1: 10100387)
+│   ├── lazada_smartwatch.json← Smart Devices (L1: 10100412)
+│   ├── lazada_gaming.json    ← Gaming Devices (L1: 10100871)
+│   ├── lazada_air_conditioner.json  ← Home Appliances (L1: 3833)
+│   ├── lazada_washing_machine.json  ← Home Appliances (L1: 3833)
+│   ├── lazada_water_filter.json     ← Home Appliances (L1: 3833)
+│   ├── lazada_air_purifier.json     ← Home Appliances (L1: 3833)
+│   ├── lazada_solar_panel.json      ← Home Appliances (L1: 3833)
+│   └── lazada_ev_charger.json       ← Home Appliances (L1: 3833)
+│
 js/
-└── aff-utils.js              ← ✨ Shared JS: affVariant, affCardHTML, affTrackClick
+└── aff-utils.js              ← ✨ affVariant, affMerge, affCardHTML, affTrackClick
 
 css/
-└── shared.css                ← `.aff-strip` CSS (ใช้ร่วมกันทุกหน้า)
+└── shared.css                ← .aff-strip + .aff-badge--shopee/lazada CSS
 
 scripts/
-└── apply_short_links.py      ← อัปเดต JSON จาก short link pairs
+├── pull_lazada_products.py   ← ดึง Lazada products → JSON (รัน manual หรือ cron)
+├── apply_short_links.py      ← อัปเดต Shopee short links
+├── test_lazada_api.py        ← ทดสอบ Lazada API credentials
+└── lazop/                    ← Official Lazada Python SDK
 ```
 
 ---
 
 ## Placement Map — สินค้าแสดงที่ไหนบ้าง
 
-| หน้า | Strip (หลัง result) | Spec Card CTA | Guide Table |
-|---|---|---|---|
-| `ai-calculator.html` | ✅ GPU (ตาม RTX series) | ✅ `gscCtaRow` | — |
-| `mac-llm-calculator.html` | ✅ Mac accessories (ตาม chip) | ✅ `scCtaRow` | ✅ 7 rows |
-| `image-gen-calculator.html` | — | — | ✅ 3 rows (GPU) |
-| `solar-calculator.html` | ✅ solar_panel + solar_inverter | — | — |
-| `ev-calculator.html` | ✅ ev_charger | — | — |
-| `gold-calculator.html` | ✅ gold_invest | — | — |
+| หน้า | Shopee | Lazada | Strip | Spec CTA | Guide Table |
+|---|---|---|---|---|---|
+| `ai-calculator.html` | `gpu.json` | `lazada_gpu.json` | ✅ RTX series | ✅ | — |
+| `mac-llm-calculator.html` | `mac.json` + `mac_accessories.json` | `lazada_laptop.json` | ✅ chip match | ✅ | ✅ 7 rows |
+| `image-gen-calculator.html` | — | — | — | — | ✅ 3 rows |
+| `solar-calculator.html` | `solar_panel.json` + `solar_inverter.json` | `lazada_solar_panel.json` | ✅ | — | — |
+| `ev-calculator.html` | `ev_charger.json` | `lazada_ev_charger.json` | ✅ | — | — |
+| `gold-calculator.html` | `gold_invest.json` | — | ✅ | — | — |
 
-**Trigger:** Strip แสดงหลังจาก `render()` หรือ `calculate()` ทำงาน (in-sync กับ result เสมอ)
+**Source badge บน card:** `SP` (Shopee, orange) / `Laz` (Lazada, blue)  
+**Merge logic:** `affMerge()` ใน aff-utils.js — dedupe by title + sort by score (sold × rating × discount)
 
 ---
 
-## Part 1: แก้ไข Buying Guide Picks
+## Part 1: Refresh Lazada Data
 
-ไฟล์: `data/affiliate/guide-picks.json`
+### รัน Script
 
-แก้ที่นี่ที่เดียว — ทุกหน้าจะอัปเดตอัตโนมัติ (fetch ทุกครั้งที่โหลดหน้า)
+```bash
+# ดึงทุก category (แนะนำ: รัน weekly)
+python3 scripts/pull_lazada_products.py --all --limit 50
 
-### Schema
+# ดึงเฉพาะ category เดียว
+python3 scripts/pull_lazada_products.py --category gpu
+
+# ดู categories ทั้งหมด
+python3 scripts/pull_lazada_products.py --list-categories
+```
+
+### Categories ที่รองรับ
+
+| slug | L1 Category | ไฟล์ output |
+|---|---|---|
+| `gpu` | Computers & Components (3834) | `lazada_gpu.json` |
+| `laptop` | Computers & Components (3834) | `lazada_laptop.json` |
+| `headphone` | Audio (10100387) | `lazada_headphone.json` |
+| `smartwatch` | Smart Devices (10100412) | `lazada_smartwatch.json` |
+| `gaming` | Gaming (10100871) | `lazada_gaming.json` |
+| `air_conditioner` | Home Appliances (3833) | `lazada_air_conditioner.json` |
+| `washing_machine` | Home Appliances (3833) | `lazada_washing_machine.json` |
+| `water_filter` | Home Appliances (3833) | `lazada_water_filter.json` |
+| `air_purifier` | Home Appliances (3833) | `lazada_air_purifier.json` |
+| `solar_panel` | Home Appliances (3833) | `lazada_solar_panel.json` |
+| `ev_charger` | Home Appliances (3833) | `lazada_ev_charger.json` |
+
+### .env ที่ต้องมี
+
+```
+LAZADA_APP_KEY=105827
+LAZADA_APP_SECRET=xxxx
+LAZADA_USER_TOKEN=xxxx    ← จาก Lazada Affiliate Dashboard
+```
+
+### ทดสอบ credentials
+
+```bash
+python3 scripts/test_lazada_api.py
+```
+
+ต้องเห็น `✅ ได้ X สินค้า` ใน Test 1
+
+---
+
+## Part 2: แก้ไข Buying Guide Picks (Shopee)
+
+ไฟล์: `data/affiliate/guide-picks.json` — แก้ที่นี่ที่เดียว หน้าเว็บ fetch อัตโนมัติ
 
 ```json
 {
   "mac-llm": [
     {
-      "row": 0,           ← index ตาม <td data-pick="0"> ใน HTML table
-      "label": "...",     ← ชื่อรุ่น/งบ (แสดงใน tooltip)
-      "name": "...",      ← ชื่อสินค้า (แสดงบนหน้า)
-      "hint": "...",      ← คำอธิบายสั้น
-      "price": 323,       ← ราคา (บาท) — null = ไม่แสดงราคา
+      "row": 0,
+      "label": "...",
+      "name": "...",
+      "hint": "...",
+      "price": 323,
       "link": "https://s.shopee.co.th/XXXXX"
     }
   ],
@@ -70,246 +133,122 @@ scripts/
 }
 ```
 
-### วิธีแก้ไข picks
-
-1. เปิด `data/affiliate/guide-picks.json`
-2. แก้ `name`, `hint`, `price`, `link` ตาม row ที่ต้องการ
-3. บันทึก — หน้าเว็บจะ fetch ใหม่อัตโนมัติ (no rebuild needed)
-
 ---
 
-## Part 2: Generate Shopee Short Links
+## Part 3: Generate Shopee Short Links
 
-### Portal
 ```
-URL:        https://affiliate.shopee.co.th/offer/custom_link
+Portal:     https://affiliate.shopee.co.th/offer/custom_link
 Partner ID: 15358640421
 ```
-
-### Format ของ shopee-urls-to-shorten.txt
-
-```
---- Batch 1/10 ---
-https://shopee.co.th/product/AAA/111
-https://shopee.co.th/product/BBB/222
-https://shopee.co.th/product/CCC/333
-https://shopee.co.th/product/DDD/444
-https://shopee.co.th/product/EEE/555
-
-https://s.shopee.co.th/SHORT1
-https://s.shopee.co.th/SHORT2
-https://s.shopee.co.th/SHORT3
-https://s.shopee.co.th/SHORT4
-https://s.shopee.co.th/SHORT5
-
---- Batch 2/10 ---
-...
-```
-
-**กฎ:** short links ต้องอยู่ **ใต้ original URLs** ของ batch เดียวกัน คั่นด้วยบรรทัดว่าง 1 บรรทัด  
-Batch ที่ยังไม่ได้ทำ ไม่ต้องใส่ short links — script จะข้ามให้
 
 ### ขั้นตอน
 
 1. เปิด `data/affiliate/shopee-urls-to-shorten.txt`
-2. Copy original URLs จาก batch ที่ยังไม่มี short link
-3. ไปที่ portal → Paste → กด **รับลิงก์** → Copy short links
-4. Paste กลับในไฟล์ ใต้ original URLs (คั่นบรรทัดว่าง)
-5. รัน script:
-
-```bash
-python3 scripts/apply_short_links.py
-```
-
-Script จะอัปเดต `affiliate_link` + `shopee_short_link` ใน JSON files  
-และแสดง summary: `Updated / Already / Not found`
-
-### JSON Item Schema
-
-```json
-{
-  "title": "ชื่อสินค้า",
-  "sale_price": 1990,
-  "price": 2490,
-  "discount_percentage": 20,
-  "item_rating": 4.8,
-  "item_sold": "500",
-  "image_link": "https://...",
-  "product_link": "https://shopee.co.th/product/...",
-  "affiliate_link": "https://s.shopee.co.th/XXXXX",
-  "shopee_short_link": "https://s.shopee.co.th/XXXXX"
-}
-```
-
-- `affiliate_link` — ใช้แสดงบนเว็บ (= short link ถ้ามี, ไม่งั้น = product_link)
-- `shopee_short_link` — short link จาก portal (ว่าง = ยังไม่ได้ generate)
+2. Copy original URLs (batch ที่ยังไม่มี short link)
+3. Portal → Paste → **รับลิงก์** → Copy short links
+4. Paste กลับใต้ original URLs (คั่นบรรทัดว่าง 1 บรรทัด)
+5. รัน: `python3 scripts/apply_short_links.py`
 
 ---
 
-## Part 3: Shared JS — aff-utils.js
-
-ไฟล์: `js/aff-utils.js` — โหลดในทุกหน้า calculator ด้วย `<script src="../js/aff-utils.js"></script>`
-
-### Functions
+## Part 4: Shared JS — aff-utils.js
 
 | Function | หน้าที่ |
 |---|---|
-| `affVariant()` | Return `'A'` หรือ `'B'` — 50/50 A/B split, persistent ต่อ browser (localStorage `aff_v`) |
-| `affCardHTML(item, page, placement)` | Return HTML string สำหรับ product card 1 ใบ |
-| `affTrackClick(el, page, placement)` | Fire GA4 event `affiliate_click` เมื่อคลิก |
-| `affTrackImpression(page, placement, count)` | Fire GA4 event `affiliate_impression` เมื่อ strip แสดง |
+| `affVariant()` | Return `'A'`\|`'B'` — 50/50 A/B, persistent via `localStorage` |
+| `affMerge(...lists)` | Merge Shopee + Lazada arrays, dedupe by title, sort by score |
+| `affCardHTML(item, page, placement)` | HTML string สำหรับ product card + source badge |
+| `affTrackClick(el, page, placement)` | GA4 `affiliate_click` event |
+| `affTrackImpression(page, placement, count, sources)` | GA4 `affiliate_impression` event |
 
-### A/B Test
+### Multi-source card HTML
 
-- **Variant A** (50%) → แสดง 3 cards (default)
-- **Variant B** (50%) → แสดง 1 card เท่านั้น (class `variant-b` ต่อ `.aff-strip`)
-- User เห็นแบบเดิมทุกครั้งในเบราว์เซอร์เดิม
-- Reset ได้ด้วย: `localStorage.removeItem('aff_v')` ใน DevTools Console
+`affCardHTML()` ดู `item.source` อัตโนมัติ:
+- `source: 'shopee'` → badge `SP` สีส้ม
+- `source: 'lazada'` → badge `Laz` สีน้ำเงิน
 
-### เพิ่ม Strip ในหน้าใหม่
+### เพิ่ม Strip หน้าใหม่ (multi-source template)
 
-**1. HTML placeholder:**
-```html
-<div class="aff-strip" id="xxxAffBox" style="display:none" data-aff-placement="xxx_strip">
-  <div class="aff-strip-header">
-    <span class="aff-strip-label">ป้ายชื่อ · Shopee</span>
-    <a class="aff-strip-more" href="shopee-deals.html?cat=xxx" target="_blank" rel="noopener">
-      ดูทั้งหมด
-      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </a>
-  </div>
-  <div class="aff-strip-cards" id="xxxAffCards"></div>
-</div>
-```
-
-**2. JS render function:**
 ```javascript
+// 1. Fetch + merge
 let _xxxAffCache = null;
 async function getXxxAffData() {
   if (_xxxAffCache) return _xxxAffCache;
   try {
-    const r = await fetch('../data/affiliate/xxx.json');
-    const d = await r.json();
-    _xxxAffCache = d.items || [];
+    const [r1, r2] = await Promise.allSettled([
+      fetch('../data/affiliate/xxx.json').then(r => r.json()),
+      fetch('../data/affiliate/lazada_xxx.json').then(r => r.json()),
+    ]);
+    const shopee = r1.status === 'fulfilled' ? (r1.value.items || []) : [];
+    const lazada = r2.status === 'fulfilled' ? (r2.value.items || []) : [];
+    _xxxAffCache = affMerge(shopee, lazada);
   } catch(e) { _xxxAffCache = []; }
   return _xxxAffCache;
 }
 
+// 2. Render
 async function renderXxxAffiliate() {
   const box = document.getElementById('xxxAffBox');
   const cardsEl = document.getElementById('xxxAffCards');
   const items = await getXxxAffData();
   if (!items.length) return;
 
-  const sorted = [...items].sort((a,b) =>
-    (parseInt(b.item_sold||0) + parseInt(b.discount_percentage||0)*10) -
-    (parseInt(a.item_sold||0) + parseInt(a.discount_percentage||0)*10)
-  );
   const v = affVariant();
-  const picks = sorted.slice(0, v === 'B' ? 1 : 3);
+  const picks = items.slice(0, v === 'B' ? 1 : 3);
   box.classList.toggle('variant-b', v === 'B');
-  cardsEl.innerHTML = picks.map(i => affCardHTML(i, 'xxx_calculator', 'strip')).join('');
+  cardsEl.innerHTML = picks.map(i => affCardHTML(i, 'xxx_page', 'strip')).join('');
   box.style.display = 'none'; void box.offsetWidth; box.style.display = '';
-  affTrackImpression('xxx_calculator', 'strip', picks.length);
+  const srcs = [...new Set(picks.map(i => i.source || 'shopee'))].join(',');
+  affTrackImpression('xxx_page', 'strip', picks.length, srcs);
 }
 ```
 
-**3. เรียกจาก render/calculate:**
-```javascript
-function render() {
-  // ... existing logic ...
-  renderXxxAffiliate();
-}
-```
-
-**4. โหลด script:**
 ```html
-<script src="../js/aff-utils.js"></script>  <!-- ก่อน </body> -->
+<!-- HTML placeholder -->
+<div class="aff-strip" id="xxxAffBox" style="display:none" data-aff-placement="xxx_strip">
+  <div class="aff-strip-header">
+    <span class="aff-strip-label">สินค้าแนะนำ</span>
+  </div>
+  <div class="aff-strip-cards" id="xxxAffCards"></div>
+</div>
+
+<!-- โหลด script ก่อน </body> -->
+<script src="../js/aff-utils.js"></script>
 ```
 
 ---
 
-## Part 4: GA4 Tracking
+## Part 5: GA4 Tracking
 
-### Events ที่ถูก Fire อัตโนมัติ
-
-| Event | เมื่อไหร่ | Parameters |
-|---|---|---|
-| `affiliate_click` | คลิก card ใดๆ | `page`, `placement`, `variant`, `link`, `title` |
-| `affiliate_impression` | strip แสดงผล | `page`, `placement`, `variant`, `count` |
-
-### Placement Values
-
-| ค่า | ใช้ที่ไหน |
+| Event | Parameters |
 |---|---|
-| `strip` | Affiliate strip 3 cards หลัง result |
-| `spec_card` | CTA button ใน GPU/Mac spec card |
-| `guide_table` | ลิงก์ใน Buying Guide Table |
+| `affiliate_click` | `page`, `placement`, `variant`, `source` (shopee/lazada), `link`, `title` |
+| `affiliate_impression` | `page`, `placement`, `variant`, `count`, `sources` (shopee/lazada/shopee,lazada) |
 
-### ดูผลใน GA4
-
-1. ไปที่ [GA4 Dashboard](https://analytics.google.com/) → Property `G-J3C1X16FZ5`
-2. **Reports → Engagement → Events**
-3. คลิก `affiliate_click` หรือ `affiliate_impression`
-4. Filter ด้วย `placement` เพื่อเปรียบเทียบ placement
-5. Filter ด้วย `variant` เพื่อดูผล A/B test
-
-### วัดผล A/B Test
-
+**ดูผล A/B Test:**
 ```
-CTR = affiliate_click / affiliate_impression (per variant)
+CTR = affiliate_click / affiliate_impression (per variant, per source)
 ```
 
-- Variant A (3 cards) vs Variant B (1 card)
-- ถ้า B มี CTR สูงกว่า → เปลี่ยน default เป็น B (แก้ `affVariant()` ใน aff-utils.js)
-
----
-
-## Part 5: CSS — aff-strip
-
-CSS ทั้งหมดอยู่ใน `css/shared.css` block `AFFILIATE STRIP`
-
-| Class | หน้าที่ |
-|---|---|
-| `.aff-strip` | Container หลัก — border, animation `affSlideIn` |
-| `.aff-strip-header` | Row บนสุด — label + "ดูทั้งหมด" link |
-| `.aff-strip-label` | ป้ายชื่อ DM Mono uppercase (สี `--primary` ของ theme) |
-| `.aff-strip-cards` | Grid 3 columns (1 column บน mobile) |
-| `.aff-card` | Card แต่ละอัน — flex row, hover effect |
-| `.aff-price` | ราคา Shopee orange `#ee4d2d` |
-| `.aff-strip.variant-b .aff-strip-cards` | Override → 1 column สำหรับ Variant B |
+**ดูใน GA4:** Reports → Engagement → Events → `affiliate_click` → filter by `source`
 
 ---
 
 ## Quick Reference
 
-### อัปเดต link ใน Buying Guide Table (เร็วที่สุด)
-```
-แก้ → data/affiliate/guide-picks.json
-ไม่ต้อง rebuild, browser fetch ใหม่อัตโนมัติ
-```
+| Task | คำสั่ง |
+|---|---|
+| Refresh Lazada data | `python3 scripts/pull_lazada_products.py --all` |
+| Test Lazada API | `python3 scripts/test_lazada_api.py` |
+| Apply Shopee short links | `python3 scripts/apply_short_links.py` |
+| Reset A/B variant | `localStorage.removeItem('aff_v')` ใน DevTools |
+| ดู Lazada categories | `python3 scripts/pull_lazada_products.py --list-categories` |
 
-### Force reset A/B variant (สำหรับ test)
-```javascript
-// ใน DevTools Console
-localStorage.removeItem('aff_v'); location.reload();
 ```
-
-### ตรวจสอบ affiliate links ทั้งหมด
-```bash
-python3 -c "
-import json, glob
-for f in glob.glob('data/affiliate/*.json'):
-    d = json.load(open(f))
-    empty = [i['title'][:40] for i in d.get('items',[]) if not i.get('shopee_short_link')]
-    if empty: print(f, len(empty), 'items without short link')
-"
-```
-
-### Partner & Portal
-```
-Partner ID:  15358640421
-Portal URL:  https://affiliate.shopee.co.th/offer/custom_link
-Dashboard:   https://affiliate.shopee.co.th/dashboard
-GA4 ID:      G-J3C1X16FZ5
+Shopee Partner ID: 15358640421
+Shopee Portal:     https://affiliate.shopee.co.th/offer/custom_link
+Lazada Portal:     https://open.lazada.com/apps/myapp
+Lazada Dashboard:  https://affiliate.lazada.co.th
+GA4 ID:            G-J3C1X16FZ5
 ```
