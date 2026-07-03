@@ -285,6 +285,13 @@
           <select id="cpuSelect"></select>
         </div>
         <div class="info-block" id="cpuInfoBox" style="display:none"><p id="cpuInfoText"></p></div>
+        <!-- Affiliate Strip: เพิ่มสินค้าได้ใน data/affiliate/manual-picks.json → "ai_calculator_cpu" -->
+        <div class="aff-strip" id="cpuAffiliateBox" style="display:none">
+          <div class="aff-strip-header">
+            <span class="aff-strip-label" id="cpuAffLabel">CPU · เปรียบราคา</span>
+          </div>
+          <div class="aff-strip-cards" id="cpuAffCards"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -525,7 +532,22 @@ function onCPUChange() {
   } else {
     box.style.display = 'none';
   }
+  renderCpuAffiliate(state.cpu);
   render();
+}
+
+// ── CPU Affiliate Widget ──────────────────────────────────────
+// สินค้าจาก data/affiliate/manual-picks.json → key "ai_calculator_cpu"
+// แต่ละ item มี "ids" ระบุว่าแสดงกับ cpu.id ไหนบ้าง
+function renderCpuAffiliate(cpu) {
+  const affBox = document.getElementById('cpuAffiliateBox');
+  if (!cpu) { if (affBox) affBox.style.display = 'none'; return; }
+  loadAffiliate('ai_calculator_cpu', {
+    stripId:  'cpuAffiliateBox',
+    cardsId:  'cpuAffCards',
+    labelId:  'cpuAffLabel',
+    filterId: cpu.id,           // กรองเฉพาะ item ที่มี cpu.id ใน ids[]
+  });
 }
 
 // ── Render ─────────────────────────────────────────────────

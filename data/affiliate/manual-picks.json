@@ -7,12 +7,55 @@
     "link":           "https://... (required)",
     "image":          "https://... (optional)",
     "source":         "Shopee | Lazada | JD | ร้านค้า (optional)",
-    "badge":          "ขายดี | แนะนำ | ราคาดี (optional)"
+    "badge":          "ขายดี | แนะนำ | ราคาดี (optional)",
+    "ids":            ["id_1", "id_2"]
   },
 
   "ai_calculator": {
     "label": "GPU · เปรียบราคา",
     "items": []
+  },
+
+  "ai_calculator_cpu": {
+    "_comment": "สินค้าแยกตาม CPU id — ดู ids[] ของแต่ละ item ว่าตรงกับ dropdown ตัวไหน",
+    "_ids_ref": "id มาจาก data/ai-models/cpus.json → field 'id'",
+    "label": "CPU · เปรียบราคา",
+    "items": [
+      {
+        "_comment": "สินค้าที่แสดงเมื่อเลือก Ryzen 9 7950X หรือ 7900X",
+        "ids":   ["r9_7950x", "r9_7900x"],
+        "title": "AMD Ryzen 9 7950X Box (ตัวอย่าง)",
+        "price": 18990,
+        "link":  "https://s.shopee.co.th/ใส่ลิงก์จริงที่นี่",
+        "source": "Shopee",
+        "badge": "แนะนำ"
+      },
+      {
+        "_comment": "สินค้าที่แสดงเมื่อเลือก Ryzen 7 7700X",
+        "ids":   ["r7_7700x"],
+        "title": "AMD Ryzen 7 7700X Box (ตัวอย่าง)",
+        "price": 11990,
+        "link":  "https://s.shopee.co.th/ใส่ลิงก์จริงที่นี่",
+        "source": "Shopee"
+      },
+      {
+        "_comment": "สินค้าที่แสดงเมื่อเลือก i9-14900K หรือ i7-14700K",
+        "ids":   ["i9_14900k", "i7_14700k"],
+        "title": "Intel Core i9-14900K Box (ตัวอย่าง)",
+        "price": 17500,
+        "link":  "https://s.shopee.co.th/ใส่ลิงก์จริงที่นี่",
+        "source": "Shopee",
+        "badge": "ราคาดี"
+      },
+      {
+        "_comment": "Motherboard AM5 — แสดงทุก AMD AM5 (ids ไม่ระบุ = แสดงทุก id ใน key นี้)",
+        "ids":   ["r9_7950x", "r9_7900x", "r7_7700x", "r5_7600x"],
+        "title": "ASUS PRIME X670-P WiFi Motherboard AM5 (ตัวอย่าง)",
+        "price": 8990,
+        "link":  "https://s.shopee.co.th/ใส่ลิงก์จริงที่นี่",
+        "source": "Shopee"
+      }
+    ]
   },
 
   "mac_llm": {

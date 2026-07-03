@@ -55,22 +55,38 @@ function _cardHTML(item) {
  *   stripId  {string} — id ของ .aff-strip container
  *   cardsId  {string} — id ของ .aff-strip-cards container
  *   labelId  {string} — id ของ label element (optional)
+ *   filterId {string} — กรองเฉพาะ item ที่มี ids[] ครอบคลุม id นี้ (optional)
+ *                       item ที่ไม่มี field "ids" จะแสดงเสมอ (fallback)
  */
 async function loadAffiliate(key, opts = {}) {
   const data    = await _getAffData();
   const section = data[key];
-  if (!section || !Array.isArray(section.items) || !section.items.length) return;
+  if (!section || !Array.isArray(section.items)) return;
 
   const strip = opts.stripId ? document.getElementById(opts.stripId) : null;
   const cards = opts.cardsId ? document.getElementById(opts.cardsId) : null;
   if (!cards) return;
+
+  // กรอง items ตาม filterId (ถ้ามี)
+  let items = section.items;
+  if (opts.filterId) {
+    items = items.filter(i =>
+      !Array.isArray(i.ids) || i.ids.includes(opts.filterId)
+    );
+  }
+
+  // ถ้าไม่มีสินค้าหลังกรอง → ซ่อน strip แล้วหยุด
+  if (!items.length) {
+    if (strip) strip.style.display = 'none';
+    return;
+  }
 
   if (opts.labelId && section.label) {
     const lbl = document.getElementById(opts.labelId);
     if (lbl) lbl.textContent = section.label;
   }
 
-  cards.innerHTML = section.items.map(_cardHTML).join('');
+  cards.innerHTML = items.map(_cardHTML).join('');
   if (strip) strip.style.display = '';
 }
 

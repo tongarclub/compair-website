@@ -21,32 +21,31 @@
 
 ```json
 {
-  "ai_calculator": {
-    "label": "GPU · เปรียบราคา",
-    "items": [ ...สินค้า... ]
-  },
+  "ai_calculator":     { "label": "GPU · เปรียบราคา", "items": [ ...สินค้า... ] },
+  "ai_calculator_cpu": { "label": "CPU · เปรียบราคา", "items": [ ...สินค้า ที่มี ids[]... ] },
   "mac_llm": {
     "label": "Mac · เปรียบราคา",
     "items": [ ...สินค้า... ],
     "guide": [ ...guide picks... ]
   },
-  "solar":      { "label": "...", "items": [] },
-  "ev":         { "label": "...", "items": [] },
-  "gold":       { "label": "...", "items": [] },
-  "image_gen":  { "label": "...", "items": [], "guide": [] }
+  "solar":     { "label": "...", "items": [] },
+  "ev":        { "label": "...", "items": [] },
+  "gold":      { "label": "...", "items": [] },
+  "image_gen": { "label": "...", "items": [], "guide": [] }
 }
 ```
 
 ### Key → หน้า
 
-| key | หน้า | มี guide? |
-|-----|------|----------|
-| `ai_calculator` | AI Calculator (GPU) | ไม่ |
-| `mac_llm` | Mac LLM Calculator | ✅ 7 แถว (row 0–6) |
-| `solar` | Solar Calculator | ไม่ |
-| `ev` | EV Calculator | ไม่ |
-| `gold` | Gold Calculator | ไม่ |
-| `image_gen` | Image Gen Calculator | ✅ 3 แถว (row 0–2) |
+| key | หน้า | มี guide? | มี filterId? |
+|-----|------|----------|-------------|
+| `ai_calculator` | AI Calculator (GPU) | ไม่ | ไม่ |
+| `ai_calculator_cpu` | AI Calculator (CPU) | ไม่ | ✅ `cpu.id` |
+| `mac_llm` | Mac LLM Calculator | ✅ 7 แถว (row 0–6) | ไม่ |
+| `solar` | Solar Calculator | ไม่ | ไม่ |
+| `ev` | EV Calculator | ไม่ | ไม่ |
+| `gold` | Gold Calculator | ไม่ | ไม่ |
+| `image_gen` | Image Gen Calculator | ✅ 3 แถว (row 0–2) | ไม่ |
 
 ---
 
@@ -85,6 +84,84 @@
 | `image` | - | URL รูปสินค้า (ถ้าไม่มี card จะ text-only) |
 | `source` | - | "Shopee" / "Lazada" / ชื่อแพลตฟอร์ม |
 | `badge` | - | ป้าย: "ขายดี" / "แนะนำ" / "ราคาดี" |
+
+---
+
+## การผูกสินค้ากับ Dropdown ID (`ids` filter)
+
+บางหน้ามี dropdown เลือกรุ่น (เช่น CPU) ที่ต้องการแสดงสินค้าต่างกันตาม ID ที่เลือก
+ทำได้โดยเพิ่ม field **`ids`** ใน item เพื่อระบุว่าแสดงกับ dropdown id ไหนบ้าง
+
+### หลักการทำงาน
+
+```
+dropdown เลือก "r9_7950x"
+   ↓
+loadAffiliate('ai_calculator_cpu', { filterId: 'r9_7950x' })
+   ↓
+กรอง items ที่มี ids: [..., "r9_7950x", ...]
+   ↓
+render เฉพาะสินค้าที่ตรง
+```
+
+- item **มี** `ids` → แสดงเฉพาะเมื่อ `filterId` อยู่ใน array
+- item **ไม่มี** `ids` → **แสดงทุกครั้ง** (fallback / สินค้าทั่วไป)
+
+### ตัวอย่าง JSON
+
+```json
+"ai_calculator_cpu": {
+  "label": "CPU · เปรียบราคา",
+  "items": [
+    {
+      "ids":   ["r9_7950x", "r9_7900x"],
+      "title": "AMD Ryzen 9 7950X Box",
+      "price": 18990,
+      "link":  "https://s.shopee.co.th/...",
+      "source": "Shopee",
+      "badge": "แนะนำ"
+    },
+    {
+      "ids":   ["r9_7950x", "r9_7900x", "r7_7700x", "r5_7600x"],
+      "title": "ASUS PRIME X670-P WiFi Motherboard AM5",
+      "price": 8990,
+      "link":  "https://s.shopee.co.th/...",
+      "source": "Shopee"
+    },
+    {
+      "ids":   ["i9_14900k", "i7_14700k", "i5_14600k"],
+      "title": "ASUS PRIME Z790-P WiFi Motherboard LGA1700",
+      "price": 7490,
+      "link":  "https://s.shopee.co.th/...",
+      "source": "Shopee"
+    }
+  ]
+}
+```
+
+### ID Reference
+
+ID มาจากไฟล์ `data/ai-models/cpus.json` → field `"id"`:
+
+| id | CPU |
+|----|-----|
+| `r9_7950x` | AMD Ryzen 9 7950X |
+| `r9_7900x` | AMD Ryzen 9 7900X |
+| `r7_7700x` | AMD Ryzen 7 7700X |
+| `r5_7600x` | AMD Ryzen 5 7600X |
+| `r9_5900x` | AMD Ryzen 9 5900X |
+| `r7_5800x` | AMD Ryzen 7 5800X |
+| `r5_5600x` | AMD Ryzen 5 5600X |
+| `i9_14900k` | Intel Core i9-14900K |
+| `i7_14700k` | Intel Core i7-14700K |
+| `i5_14600k` | Intel Core i5-14600K |
+| `i9_13900k` | Intel Core i9-13900K |
+| `i7_13700k` | Intel Core i7-13700K |
+| `i5_13600k` | Intel Core i5-13600K |
+| `i9_12900k` | Intel Core i9-12900K |
+| `i7_12700k` | Intel Core i7-12700K |
+
+---
 
 ### 3. ตัวอย่างสมบูรณ์
 
