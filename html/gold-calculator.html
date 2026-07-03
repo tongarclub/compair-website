@@ -232,14 +232,10 @@
     </div>
   </div>
 
-  <!-- Gold Affiliate Strip -->
-  <div class="aff-strip" id="goldAffBox" style="display:none" data-aff-placement="gold_strip">
+  <!-- Gold Affiliate Strip: เพิ่มสินค้าได้ใน data/affiliate/manual-picks.json → "gold" -->
+  <div class="aff-strip" id="goldAffBox" style="display:none">
     <div class="aff-strip-header">
-      <span class="aff-strip-label">ทองคำแท้ · Shopee</span>
-      <a class="aff-strip-more" href="shopee-deals.html?cat=gold_invest" target="_blank" rel="noopener">
-        ดูทั้งหมด
-        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
+      <span class="aff-strip-label" id="goldAffLabel">ทองคำ · เปรียบราคา</span>
     </div>
     <div class="aff-strip-cards" id="goldAffCards"></div>
   </div>
@@ -437,39 +433,15 @@ function copyURL() {
 }
 
 // ── Gold Affiliate Strip ──────────────────────────────────────────
-let _goldAffCache = null;
-async function getGoldAffData() {
-  if (_goldAffCache) return _goldAffCache;
-  try {
-    const r = await fetch('../data/affiliate/gold_invest.json');
-    const d = await r.json();
-    _goldAffCache = d.items || [];
-  } catch(e) { _goldAffCache = []; }
-  return _goldAffCache;
-}
-
-async function renderGoldAffiliate() {
-  const box = document.getElementById('goldAffBox');
-  const cardsEl = document.getElementById('goldAffCards');
-  const items = await getGoldAffData();
-  if (!items.length) return;
-
-  const sorted = [...items].sort((a,b) =>
-    (parseInt(b.item_sold||0) + parseInt(b.discount_percentage||0)*10) -
-    (parseInt(a.item_sold||0) + parseInt(a.discount_percentage||0)*10)
-  );
-  const v = affVariant();
-  const picks = sorted.slice(0, v === 'B' ? 1 : 3);
-  box.classList.toggle('variant-b', v === 'B');
-  cardsEl.innerHTML = picks.map(i => affCardHTML(i, 'gold_calculator', 'strip')).join('');
-  box.style.display = 'none'; void box.offsetWidth; box.style.display = '';
-  affTrackImpression('gold_calculator', 'strip', picks.length, 'shopee');
+// สินค้าจาก data/affiliate/manual-picks.json → key "gold"
+function renderGoldAffiliate() {
+  loadAffiliate('gold', { stripId: 'goldAffBox', cardsId: 'goldAffCards', labelId: 'goldAffLabel' });
 }
 
 // ── Init ─────────────────────────────────────────────────
 loadFromURL();
 render();
 </script>
-<script src="../js/aff-utils.js"></script>
+<script src="../js/aff-render.js"></script>
 </body>
 </html>

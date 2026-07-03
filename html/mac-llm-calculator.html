@@ -451,39 +451,25 @@ table.gt td:first-child { font-family:'DM Mono',monospace; font-size:12px; color
 
 /* ── Buying Guide — Shopee Column ── */
 .gt-table-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; }
-table.gt th.gt-shopee-th { color:#ee4d2d; letter-spacing:.1em; white-space:nowrap; }
-table.gt th.gt-lazada-th  { color:#1d5bd4; letter-spacing:.1em; white-space:nowrap; }
-.gt-shopee-cell, .gt-lazada-cell { min-width:155px; }
-.gt-sp-pick, .gt-laz-pick { display:flex; flex-direction:column; gap:3px; }
-.gt-sp-name, .gt-laz-name {
-  font-size:11px; color:var(--text2); line-height:1.45;
+table.gt th.gt-buy-th { color:var(--gold,#8B7355); letter-spacing:.1em; white-space:nowrap; }
+.gt-buy-cell { min-width:155px; }
+.gt-buy-pick { display:flex; flex-direction:column; gap:3px; }
+.gt-buy-name { font-size:11px; color:var(--text2); line-height:1.45;
   display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
-.gt-sp-hint { font-size:10px; color:var(--text3); font-style:italic; }
-.gt-sp-price { font-family:'DM Mono',monospace; font-size:12px; font-weight:600; color:#ee4d2d; margin-top:2px; }
-.gt-laz-price { font-family:'DM Mono',monospace; font-size:12px; font-weight:600; color:#1d5bd4; margin-top:2px; }
-.gt-sp-cta {
+.gt-buy-hint { font-size:10px; color:var(--text3); font-style:italic; }
+.gt-buy-price { font-family:'DM Mono',monospace; font-size:12px; font-weight:600; color:var(--gold,#8B7355); margin-top:2px; }
+.gt-buy-cta {
   display:inline-flex; align-items:center; gap:4px;
   padding:5px 10px; margin-top:6px;
   font-size:11px; font-weight:600;
-  background:rgba(238,77,45,.08); color:#ee4d2d;
-  border:1px solid rgba(238,77,45,.25);
+  background:rgba(139,115,85,.08); color:var(--gold,#8B7355);
+  border:1px solid rgba(139,115,85,.25);
   text-decoration:none; white-space:nowrap;
   transition:background .18s;
 }
-.gt-sp-cta:hover { background:rgba(238,77,45,.18); }
-.gt-laz-cta {
-  display:inline-flex; align-items:center; gap:4px;
-  padding:5px 10px; margin-top:6px;
-  font-size:11px; font-weight:600;
-  background:rgba(29,91,212,.08); color:#1d5bd4;
-  border:1px solid rgba(29,91,212,.25);
-  text-decoration:none; white-space:nowrap;
-  transition:background .18s;
-}
-.gt-laz-cta:hover { background:rgba(29,91,212,.18); }
+.gt-buy-cta:hover { background:rgba(139,115,85,.18); }
 @media (max-width:768px) {
-  .gt-shopee-cell, table.gt th.gt-shopee-th,
-  .gt-lazada-cell, table.gt th.gt-lazada-th { display:none; }
+  .gt-buy-cell, table.gt th.gt-buy-th { display:none; }
 }
 
 /* ── TIPS ── */
@@ -693,31 +679,12 @@ footer { border-top:1px solid var(--border); padding:40px 0; }
         <div class="info-block" id="macInfoBox" style="display:none">
           <p id="macInfoText"></p>
         </div>
-        <!-- Affiliate Strip: shows on Mac select -->
+        <!-- Affiliate Strip: เพิ่มสินค้าได้ใน data/affiliate/manual-picks.json → "mac_llm" -->
         <div class="aff-strip" id="macAffiliateBox" style="display:none">
           <div class="aff-strip-header">
             <span class="aff-strip-label" id="macAffLabel">Mac · เปรียบราคา</span>
           </div>
-          <!-- Shopee section -->
-          <div class="aff-source-section aff-source-section--shopee" id="macAffShopeeSection">
-            <div class="aff-source-header">
-              <span class="aff-source-pip"></span>
-              <span class="aff-source-name">Shopee</span>
-              <a class="aff-source-more" href="shopee-deals.html?cat=mac" target="_blank" rel="noopener">
-                ดูทั้งหมด
-                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              </a>
-            </div>
-            <div class="aff-strip-cards" id="macAffShopeeCards"></div>
-          </div>
-          <!-- Lazada section -->
-          <div class="aff-source-section aff-source-section--lazada" id="macAffLazadaSection">
-            <div class="aff-source-header">
-              <span class="aff-source-pip"></span>
-              <span class="aff-source-name">Lazada</span>
-            </div>
-            <div class="aff-strip-cards" id="macAffLazadaCards"></div>
-          </div>
+          <div class="aff-strip-cards" id="macAffCards"></div>
         </div>
       </div>
       <div class="form-col">
@@ -749,7 +716,7 @@ footer { border-top:1px solid var(--border); padding:40px 0; }
     <div class="sc-cta-row" id="scCtaRow">
       <span class="sc-cta-label">อุปกรณ์เสริมแนะนำ</span>
       <a class="sc-cta-btn" id="scCtaBtn" href="#" target="_blank" rel="noopener sponsored"
-         onclick="affTrackClick(this,'mac_llm_calculator','spec_card')">
+         >
         ดูบน Shopee
         <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
       </a>
@@ -914,8 +881,7 @@ footer { border-top:1px solid var(--border); padding:40px 0; }
           <th>LLM ที่รันได้</th>
           <th>~tok/s (7B)</th>
           <th>เหมาะกับ</th>
-          <th class="gt-shopee-th">🛒 Shopee</th>
-          <th class="gt-lazada-th">🟠 Lazada</th>
+          <th class="gt-buy-th">🛒 ซื้อ</th>
         </tr>
       </thead>
       <tbody>
@@ -930,8 +896,7 @@ footer { border-top:1px solid var(--border); padding:40px 0; }
           <td>1B–7B (Q4 ดี) · 13B (Q2–Q3 ได้)</td>
           <td class="gt-speed">~28 tok/s</td>
           <td style="font-size:12px;color:var(--text2)">ทดลองรัน LLM ครั้งแรก · Chat ส่วนตัว</td>
-          <td class="gt-shopee-cell" data-pick="0"></td>
-          <td class="gt-lazada-cell" data-pick="0"></td>
+          <td class="gt-buy-cell" data-pick="0"></td>
         </tr>
         <tr>
           <td>฿55,000–80,000</td>
@@ -943,8 +908,7 @@ footer { border-top:1px solid var(--border); padding:40px 0; }
           <td>1B–13B (Q4 ดีมาก) · 30B (Q3 ได้)</td>
           <td class="gt-speed">~28 tok/s</td>
           <td style="font-size:12px;color:var(--text2)">Dev ส่วนตัว · Coding assistant</td>
-          <td class="gt-shopee-cell" data-pick="1"></td>
-          <td class="gt-lazada-cell" data-pick="1"></td>
+          <td class="gt-buy-cell" data-pick="1"></td>
         </tr>
         <tr>
           <td>฿65,000–85,000</td>
@@ -957,8 +921,7 @@ footer { border-top:1px solid var(--border); padding:40px 0; }
           <td>1B–13B (Q4 เร็วมาก) · 30B (เบา)</td>
           <td class="gt-speed">~45 tok/s</td>
           <td style="font-size:12px;color:var(--text2)">Developer จริงจัง · ใช้งานรายวัน</td>
-          <td class="gt-shopee-cell" data-pick="2"></td>
-          <td class="gt-lazada-cell" data-pick="2"></td>
+          <td class="gt-buy-cell" data-pick="2"></td>
         </tr>
         <tr>
           <td>฿85,000–110,000</td>
@@ -970,8 +933,7 @@ footer { border-top:1px solid var(--border); padding:40px 0; }
           <td>1B–30B (Q4 ดีมาก) · 70B (Q2 ได้)</td>
           <td class="gt-speed">~45–63 tok/s</td>
           <td style="font-size:12px;color:var(--text2)">Researcher · ต้องการ model ใหญ่</td>
-          <td class="gt-shopee-cell" data-pick="3"></td>
-          <td class="gt-lazada-cell" data-pick="3"></td>
+          <td class="gt-buy-cell" data-pick="3"></td>
         </tr>
         <tr>
           <td>฿95,000–120,000</td>
@@ -983,8 +945,7 @@ footer { border-top:1px solid var(--border); padding:40px 0; }
           <td>1B–30B (Q4 เร็วมาก) · 70B (Q3 เบา)</td>
           <td class="gt-speed">~63 tok/s</td>
           <td style="font-size:12px;color:var(--text2)">Power user · ต้องการความเร็ว + ขนาด</td>
-          <td class="gt-shopee-cell" data-pick="4"></td>
-          <td class="gt-lazada-cell" data-pick="4"></td>
+          <td class="gt-buy-cell" data-pick="4"></td>
         </tr>
         <tr>
           <td>฿145,000+</td>
@@ -997,8 +958,7 @@ footer { border-top:1px solid var(--border); padding:40px 0; }
           <td>1B–70B (Q4 ทุก model) · 70B FP16 (partial)</td>
           <td class="gt-speed">~88 tok/s</td>
           <td style="font-size:12px;color:var(--text2)">AI Researcher · Production local AI</td>
-          <td class="gt-shopee-cell" data-pick="5"></td>
-          <td class="gt-lazada-cell" data-pick="5"></td>
+          <td class="gt-buy-cell" data-pick="5"></td>
         </tr>
         <tr>
           <td>฿130,000–210,000+</td>
@@ -1010,8 +970,7 @@ footer { border-top:1px solid var(--border); padding:40px 0; }
           <td>1B–70B+ · รัน FP16 70B ได้ (192 GB)</td>
           <td class="gt-speed">~88–120 tok/s</td>
           <td style="font-size:12px;color:var(--text2)">Workstation AI · ใช้ประจำที่ทำงาน</td>
-          <td class="gt-shopee-cell" data-pick="6"></td>
-          <td class="gt-lazada-cell" data-pick="6"></td>
+          <td class="gt-buy-cell" data-pick="6"></td>
         </tr>
       </tbody>
     </table>
@@ -1167,103 +1126,15 @@ function onMacChange() {
 }
 
 // ── Affiliate Widget ──────────────────────────────────────────
-let _macAffCache = null;
-let _macLoaded = false;
-
-async function getMacAffData() {
-  if (_macLoaded) return _macAffCache;
-  try {
-    const [r1, r2, r3] = await Promise.allSettled([
-      fetch('../data/affiliate/mac.json').then(r => r.json()),
-      fetch('../data/affiliate/mac_accessories.json').then(r => r.json()),
-      fetch('../data/affiliate/lazada_laptop.json').then(r => r.json()),
-    ]);
-    const s1 = r1.status === 'fulfilled' ? (r1.value.items || []) : [];
-    const s2 = r2.status === 'fulfilled' ? (r2.value.items || []) : [];
-    const laz = r3.status === 'fulfilled' ? (r3.value.items || []) : [];
-    // Merge Shopee sources; keep Lazada separate
-    const shopee = affMerge(s1, s2);
-    _macAffCache = { shopee, lazada: laz };
-    _macLoaded = true;
-  } catch(e) { _macAffCache = { shopee: [], lazada: [] }; _macLoaded = true; }
-  return _macAffCache;
-}
-
-// Keywords ที่บ่งบอกว่าสินค้าเกี่ยวกับ Mac/MacBook หรือ Laptop ที่คนซื้อ Mac อยากได้
-const _MAC_KW = ['macbook','mac book','mac pro','mac mini','mac air',
-                 'usb-c','usb c','type-c','type c','thunderbolt',
-                 'อุปกรณ์เสริม','hub','adapter','adaptor','เคส','case',
-                 'laptop','notebook','โน้ตบุ๊ก','แล็ปท็อป',
-                 'apple','m1','m2','m3','m4','m5'];
-// Keywords ที่บ่งบอกว่า "นี่คือ GPU" → ต้องตัดออกจาก Lazada laptop section
-const _GPU_KW_EXCLUDE = ['rtx','gtx','geforce','vga ','graphics card','การ์ดจอ'];
-
-function _isMacProduct(item) {
-  const t = (item.title || '').toLowerCase();
-  return _MAC_KW.some(k => t.includes(k));
-}
-function _isNotGpu(item) {
-  const t = (item.title || '').toLowerCase();
-  return !_GPU_KW_EXCLUDE.some(k => t.includes(k));
-}
-
-function _scoreByChip(items, chipBase) {
-  // กรอง: เฉพาะ Mac/laptop product (ตัด GPU ออก)
-  const clean = items.filter(i => _isMacProduct(i) && _isNotGpu(i));
-  return [...clean].sort((a, b) => {
-    const sc = x => {
-      const t = x.title.toUpperCase();
-      let s = parseInt(x.item_sold || 0);
-      if (t.includes(chipBase.toUpperCase())) s += 5000;
-      if (parseInt(x.discount_percentage||0) > 20)  s += 2000;
-      if (parseFloat(x.item_rating||0) >= 4.8)      s += 1000;
-      return s;
-    };
-    return sc(b) - sc(a);
-  });
-}
-
-async function renderMacAffiliate(mac) {
+// สินค้าจาก data/affiliate/manual-picks.json → key "mac_llm"
+function renderMacAffiliate(mac) {
   const affBox = document.getElementById('macAffiliateBox');
-  const ctaRow = document.getElementById('scCtaRow');
-  const ctaBtn = document.getElementById('scCtaBtn');
-  if (!mac) {
-    affBox.style.display = 'none';
-    ctaRow && ctaRow.classList.remove('visible');
-    return;
-  }
-
-  const { shopee, lazada } = await getMacAffData();
-  if (!shopee.length && !lazada.length) return;
-
-  const chipBase = mac.chip.split(' ')[0]; // "M4", "M3"...
-
-  // Update label
-  document.getElementById('macAffLabel').textContent = `${mac.full} · เปรียบราคา`;
-
-  // Render split sections
-  affRenderSplit({
-    shopeeItems:     _scoreByChip(shopee, chipBase),
-    lazadaItems:     _scoreByChip(lazada, chipBase),
-    shopeeCardsId:   'macAffShopeeCards',
-    lazadaCardsId:   'macAffLazadaCards',
-    shopeeSectionId: 'macAffShopeeSection',
-    lazadaSectionId: 'macAffLazadaSection',
-    stripEl:         affBox,
-    page:            'mac_llm_calculator',
-    placement:       'strip',
+  if (!mac) { if (affBox) affBox.style.display = 'none'; return; }
+  loadAffiliate('mac_llm', {
+    stripId: 'macAffiliateBox',
+    cardsId: 'macAffCards',
+    labelId: 'macAffLabel',
   });
-
-  // Update spec card CTA with best item (Shopee first)
-  const best = _scoreByChip([...shopee, ...lazada], chipBase)[0];
-  if (ctaRow && ctaBtn && best) {
-    const platform = best.source === 'lazada' ? 'Lazada' : 'Shopee';
-    ctaBtn.textContent = `${chipBase} · ดูสินค้า ${platform}`;
-    ctaBtn.insertAdjacentHTML('beforeend', ` <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>`);
-    ctaBtn.href = best.affiliate_link || best.product_link || '#';
-    ctaRow.classList.add('visible');
-  }
-
 }
 
 // ═══════════════════════════════════════
@@ -1390,90 +1261,9 @@ function shareURL() {
   });
 }
 
-// ── Buying Guide Lazada Column — match จาก lazada_laptop.json ───────
-(async function fillGuideLazadaCol() {
-  const ARROW = `<svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>`;
-  const cells = document.querySelectorAll('.gt-lazada-cell[data-pick]');
-  if (!cells.length) return;
-
-  // Price range ของแต่ละ row ใน buying guide (row 0–6)
-  const RANGES = [
-    [35000,  55000],   // row 0: MacBook Air M4 16GB tier
-    [55000,  80000],   // row 1: MacBook Air M4 32GB tier
-    [65000,  85000],   // row 2: MacBook Pro M4 Pro 24GB tier
-    [85000, 110000],   // row 3: MacBook Pro M4 Pro 48GB tier
-    [95000, 120000],   // row 4: MacBook Pro M4 Max 36GB tier
-    [120000,200000],   // row 5: MacBook Pro M4 Max 128GB tier
-    [120000,999999],   // row 6: Mac Studio tier
-  ];
-
-  try {
-    const data = await fetch('../data/affiliate/lazada_laptop.json').then(r => r.json());
-    const items = (data.items || []).filter(i => parseFloat(i.sale_price || 0) > 0);
-
-    cells.forEach(cell => {
-      const rowIdx = +cell.dataset.pick;
-      const [minP, maxP] = RANGES[rowIdx] || [0, 999999];
-
-      // กรองตาม price range
-      const inRange = items.filter(i => {
-        const p = parseFloat(i.sale_price || 0);
-        return p >= minP && p <= maxP;
-      });
-
-      // Sort: Apple/MacBook ก่อน → ราคาต่ำสุดใน tier
-      inRange.sort((a, b) => {
-        const aScore = /apple|macbook/i.test(a.title) ? -1 : 0;
-        const bScore = /apple|macbook/i.test(b.title) ? -1 : 0;
-        if (aScore !== bScore) return aScore - bScore;
-        return parseFloat(a.sale_price) - parseFloat(b.sale_price);
-      });
-
-      const pick = inRange[0];
-      if (!pick) return;
-
-      const name = pick.title
-        .replace(/^\[.*?\]\s*/, '')       // ตัด "[0% Installment ...]" ออก
-        .replace(/\s+by\s+\w.*$/i, '')    // ตัด "by Banana It"
-        .trim().slice(0, 42);
-      const price = parseFloat(pick.sale_price);
-      const link  = pick.affiliate_link || pick.product_link || '#';
-
-      cell.innerHTML = `<div class="gt-laz-pick">
-        <div class="gt-laz-name">${name}</div>
-        <div class="gt-laz-price">฿${price.toLocaleString()}</div>
-        <a class="gt-laz-cta" href="${link}" target="_blank" rel="noopener sponsored"
-           onclick="affTrackClick(this,'mac_llm_calculator','guide_table_lazada')">ดูบน Lazada ${ARROW}</a>
-      </div>`;
-    });
-  } catch(e) { /* fetch fail — column stays empty */ }
-})();
-
-// ── Buying Guide Shopee Column — โหลดจาก guide-picks.json ──────────
-(async function fillGuideShopeeCol() {
-  const ARROW = `<svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>`;
-  const cells = document.querySelectorAll('.gt-shopee-cell[data-pick]');
-  if (!cells.length) return;
-  try {
-    const data = await fetch('../data/affiliate/guide-picks.json').then(r => r.json());
-    const picks = data['mac-llm'] || [];
-    cells.forEach(cell => {
-      const p = picks.find(x => x.row === +cell.dataset.pick);
-      if (!p) return;
-      const priceHtml = p.price != null
-        ? `<div class="gt-sp-price">฿${p.price.toLocaleString()}</div>`
-        : `<div class="gt-sp-price" style="font-size:10px;color:var(--text3)">ดูราคาล่าสุด</div>`;
-      cell.innerHTML = `<div class="gt-sp-pick">
-        <div class="gt-sp-name">${p.name}</div>
-        <div class="gt-sp-hint">${p.hint}</div>
-        ${priceHtml}
-        <a class="gt-sp-cta" href="${p.link}" target="_blank" rel="noopener sponsored"
-           onclick="affTrackClick(this,'mac_llm_calculator','guide_table')">ดูบน Shopee ${ARROW}</a>
-      </div>`;
-    });
-  } catch(e) { /* fetch fail — column stays empty, ไม่กระทบ UX หลัก */ }
-})();
+// ── Buying Guide Column — โหลดจาก manual-picks.json → mac_llm.guide ──
+loadAffiliateGuide('mac_llm', '.gt-buy-cell[data-pick]');
 </script>
-<script src="../js/aff-utils.js"></script>
+<script src="../js/aff-render.js"></script>
 </body>
 </html>

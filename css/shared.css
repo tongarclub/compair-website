@@ -425,37 +425,45 @@ optgroup { font-style: normal; font-weight: 700; }
   background: #ee4d2d; color: #fff;
   padding: 1px 5px; letter-spacing: .03em;
 }
-/* ── Source sections (Shopee / Lazada split) ──── */
-.aff-source-section { display: block; }
-.aff-source-section + .aff-source-section {
-  border-top: 1px solid var(--border, #e8e2d8);
-  margin-top: 10px;
-  padding-top: 10px;
+/* ── Manual affiliate card extras ──── */
+.aff-badge-manual {
+  display: inline-block;
+  font-size: 9px; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--gold, #8B7355);
+  border: 1px solid currentColor; padding: 1px 5px;
+  margin-bottom: 3px;
 }
-.aff-source-header {
-  display: flex; align-items: center; gap: 7px;
-  padding: 0 16px 6px;
-}
-.aff-source-pip {
-  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
-}
-.aff-source-section--shopee .aff-source-pip { background: #ee4d2d; }
-.aff-source-section--lazada .aff-source-pip { background: #1d5bd4; }
-.aff-source-name {
+.aff-card-source {
   font-family: 'DM Mono', monospace;
-  font-size: 10px; font-weight: 700;
-  letter-spacing: .08em; text-transform: uppercase;
+  font-size: 9px; color: var(--text3); margin-top: 3px;
 }
-.aff-source-section--shopee .aff-source-name { color: #ee4d2d; }
-.aff-source-section--lazada .aff-source-name { color: #1d5bd4; }
-.aff-source-more {
-  margin-left: auto;
-  font-family: 'DM Mono', monospace; font-size: 9px;
-  color: var(--text3); text-decoration: none;
-  display: flex; align-items: center; gap: 3px;
-  opacity: .7; transition: opacity .15s;
+/* ── Buying-guide generic buy column ─── */
+.gt-buy-th { color: var(--gold, #8B7355); letter-spacing: .1em; white-space: nowrap; }
+.gt-buy-cell, .gpu-buy-cell { min-width: 150px; }
+.gt-buy-pick { display: flex; flex-direction: column; gap: 3px; }
+.gt-buy-name, .gpu-buy-name {
+  font-size: 11px; color: var(--text2); line-height: 1.45;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
-.aff-source-more:hover { opacity: 1; }
+.gt-buy-hint, .gpu-buy-hint { font-size: 10px; color: var(--text3); font-style: italic; }
+.gt-buy-price, .gpu-buy-price {
+  font-family: 'DM Mono', monospace; font-size: 12px;
+  font-weight: 600; color: var(--gold, #8B7355); margin-top: 2px;
+}
+.gt-buy-cta, .gpu-buy-cta {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 5px 10px; margin-top: 6px;
+  font-size: 11px; font-weight: 600;
+  background: rgba(139,115,85,.08); color: var(--gold, #8B7355);
+  border: 1px solid rgba(139,115,85,.25);
+  text-decoration: none; white-space: nowrap;
+  transition: background .18s;
+}
+.gt-buy-cta:hover, .gpu-buy-cta:hover { background: rgba(139,115,85,.18); }
+.gpu-buy-th { color: var(--gold, #8B7355); letter-spacing: .1em; white-space: nowrap; }
+@media (max-width: 768px) {
+  .gt-buy-cell, .gt-buy-th, .gpu-buy-cell, .gpu-buy-th { display: none; }
+}
 .aff-card-meta {
   font-family: 'DM Mono', monospace;
   font-size: 9px; color: var(--text3); letter-spacing: .02em;

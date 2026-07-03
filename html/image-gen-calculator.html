@@ -279,7 +279,7 @@
             <th>VRAM</th>
             <th>รัน Model</th>
             <th>เหมาะกับ</th>
-            <th class="gpu-shopee-th">🛒 Shopee</th>
+            <th class="gpu-buy-th">🛒 ซื้อ</th>
           </tr>
         </thead>
         <tbody>
@@ -293,7 +293,7 @@
             <td>8 GB</td>
             <td>SD 1.5 · SDXL · FLUX Schnell Q4</td>
             <td style="font-size:.75rem;color:var(--text2)">ทดลอง self-hosted · งบน้อย</td>
-            <td class="gpu-shopee-cell" data-gpu-pick="0"></td>
+            <td class="gpu-buy-cell" data-gpu-pick="0"></td>
           </tr>
           <tr>
             <td>จริงจัง</td>
@@ -305,7 +305,7 @@
             <td>16 GB</td>
             <td>FLUX Dev FP8 · SDXL FullRes · LoRA</td>
             <td style="font-size:.75rem;color:var(--text2)">Creator จริงจัง · ComfyUI / A1111</td>
-            <td class="gpu-shopee-cell" data-gpu-pick="1"></td>
+            <td class="gpu-buy-cell" data-gpu-pick="1"></td>
           </tr>
           <tr>
             <td>โปร</td>
@@ -316,7 +316,7 @@
             <td>24 GB+</td>
             <td>FLUX Dev BF16 · SD 3.5 FP16 · Multi-model</td>
             <td style="font-size:.75rem;color:var(--text2)">Production · Commercial · Studio</td>
-            <td class="gpu-shopee-cell" data-gpu-pick="2"></td>
+            <td class="gpu-buy-cell" data-gpu-pick="2"></td>
           </tr>
         </tbody>
       </table>
@@ -667,31 +667,9 @@ loadFromURL();
 buildChips();
 renderAll();
 
-// ── GPU Buying Guide Shopee Column — โหลดจาก guide-picks.json ───────
-(async function fillGpuGuideCol() {
-  const ARROW = `<svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>`;
-  const cells = document.querySelectorAll('.gpu-shopee-cell[data-gpu-pick]');
-  if (!cells.length) return;
-  try {
-    const data = await fetch('../data/affiliate/guide-picks.json').then(r => r.json());
-    const picks = data['image-gen-gpu'] || [];
-    cells.forEach(cell => {
-      const p = picks.find(x => x.row === +cell.dataset.gpuPick);
-      if (!p) return;
-      const priceHtml = p.price != null
-        ? `<div class="gpu-sp-price">฿${p.price.toLocaleString()}</div>`
-        : `<div class="gpu-sp-price" style="font-size:.65rem;color:var(--text3)">ดูราคาล่าสุด</div>`;
-      cell.innerHTML = `<div class="gpu-sp-pick">
-        <div class="gpu-sp-name">${p.name}</div>
-        <div class="gpu-sp-hint">${p.hint}</div>
-        ${priceHtml}
-        <a class="gpu-sp-cta" href="${p.link}" target="_blank" rel="noopener sponsored"
-           onclick="affTrackClick(this,'image_gen_calculator','guide_table')">ดูบน Shopee ${ARROW}</a>
-      </div>`;
-    });
-  } catch(e) { /* fetch fail — column stays empty, ไม่กระทบ UX หลัก */ }
-})();
+// ── GPU Buying Guide Column — โหลดจาก manual-picks.json → image_gen.guide ──
+loadAffiliateGuide('image_gen', '.gpu-buy-cell[data-gpu-pick]');
 </script>
-<script src="../js/aff-utils.js"></script>
+<script src="../js/aff-render.js"></script>
 </body>
 </html>

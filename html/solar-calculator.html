@@ -250,24 +250,7 @@
     <div class="aff-strip-header">
       <span class="aff-strip-label">อุปกรณ์โซล่าเซลล์ · เปรียบราคา</span>
     </div>
-    <div class="aff-source-section aff-source-section--shopee" id="solarAffShopeeSection">
-      <div class="aff-source-header">
-        <span class="aff-source-pip"></span>
-        <span class="aff-source-name">Shopee</span>
-        <a class="aff-source-more" href="shopee-deals.html?cat=solar" target="_blank" rel="noopener">
-          ดูทั้งหมด
-          <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-      <div class="aff-strip-cards" id="solarAffShopeeCards"></div>
-    </div>
-    <div class="aff-source-section aff-source-section--lazada" id="solarAffLazadaSection">
-      <div class="aff-source-header">
-        <span class="aff-source-pip"></span>
-        <span class="aff-source-name">Lazada</span>
-      </div>
-      <div class="aff-strip-cards" id="solarAffLazadaCards"></div>
-    </div>
+    <div class="aff-strip-cards" id="solarAffCards"></div>
   </div>
 </div>
 
@@ -647,57 +630,11 @@ function renderPanelCompare() {
 }
 
 // ── Solar Affiliate Strip ───────────────────────────────────────────
-// Keywords สำหรับโซล่าเซลล์จริง (ตัด solar light / ไฟสนาม ออก)
-const _SOLAR_KW = ['แผงโซล่า','solar panel','โซล่าเซลล์ แผ','แผ่นโซล่า',
-                   'pv panel','photovoltaic','mono solar','poly solar',
-                   'monocrystalline','polycrystalline',
-                   'mppt','inverter','อินเวอร์เตอร์','อินเวอร์ทเตอร์',
-                   'off grid','on grid','hybrid inverter',
-                   'solar inverter','charge controller','solar charger'];
-// ตัด "ไฟโซล่าเซลล์" ออก (solar garden light) — ไม่ใช่แผงจริง
-const _SOLAR_EXCLUDE = ['ไฟโซล่า','ไฟสนาม','ไฟตุ้ม','solar light',
-                        'solar lamp','โคมไฟ','spotlight solar'];
-
-function _isSolarProduct(item) {
-  const t = (item.title || '').toLowerCase();
-  if (_SOLAR_EXCLUDE.some(k => t.includes(k))) return false;
-  return _SOLAR_KW.some(k => t.includes(k));
-}
-
-let _solarAffCache = null;
-async function getSolarAffData() {
-  if (_solarAffCache) return _solarAffCache;
-  try {
-    const [r1, r2] = await Promise.allSettled([
-      fetch('../data/affiliate/solar_panel.json').then(r => r.json()),
-      fetch('../data/affiliate/solar_inverter.json').then(r => r.json()),
-    ]);
-    const sp = r1.status === 'fulfilled' ? (r1.value.items || []) : [];
-    const si = r2.status === 'fulfilled' ? (r2.value.items || []) : [];
-    // Lazada L1=3833 คืน washing machine → ไม่ใช้
-    _solarAffCache = {
-      shopee: affMerge(sp, si).filter(_isSolarProduct),
-      lazada: [],   // disabled: Lazada Home Appliances ไม่มีข้อมูล solar จริง
-    };
-  } catch(e) { _solarAffCache = { shopee: [], lazada: [] }; }
-  return _solarAffCache;
-}
-
-async function renderSolarAffiliate() {
-  const box = document.getElementById('solarAffBox');
-  const { shopee, lazada } = await getSolarAffData();
-  if (!shopee.length && !lazada.length) return;
-
-  affRenderSplit({
-    shopeeItems:     shopee,
-    lazadaItems:     lazada,
-    shopeeCardsId:   'solarAffShopeeCards',
-    lazadaCardsId:   'solarAffLazadaCards',
-    shopeeSectionId: 'solarAffShopeeSection',
-    lazadaSectionId: 'solarAffLazadaSection',
-    stripEl:         box,
-    page:            'solar_calculator',
-    placement:       'strip',
+// สินค้าจาก data/affiliate/manual-picks.json → key "solar"
+function renderSolarAffiliate() {
+  loadAffiliate('solar', {
+    stripId: 'solarAffBox',
+    cardsId: 'solarAffCards',
   });
 }
 
@@ -710,7 +647,7 @@ init().catch(err => {
     </div>`);
 });
 </script>
-<script src="../js/aff-utils.js"></script>
+<script src="../js/aff-render.js"></script>
 
 </body>
 </html>

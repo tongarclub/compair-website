@@ -1,0 +1,62 @@
+{
+  "_readme": "คู่มือการเพิ่มสินค้า: desgin/affiliate-manual-guide.md",
+  "_item_schema": {
+    "title":          "ชื่อสินค้า (required)",
+    "price":          9990,
+    "original_price": 12000,
+    "link":           "https://... (required)",
+    "image":          "https://... (optional)",
+    "source":         "Shopee | Lazada | JD | ร้านค้า (optional)",
+    "badge":          "ขายดี | แนะนำ | ราคาดี (optional)"
+  },
+
+  "ai_calculator": {
+    "label": "GPU · เปรียบราคา",
+    "items": []
+  },
+
+  "mac_llm": {
+    "label": "Mac · เปรียบราคา",
+    "items": [],
+    "guide": [
+      {
+        "_comment": "guide = Buying Guide table column — 7 แถว (row 0–6)",
+        "row": 0,
+        "name": "",
+        "hint": "",
+        "price": null,
+        "link": ""
+      }
+    ]
+  },
+
+  "solar": {
+    "label": "Solar · เปรียบราคา",
+    "items": []
+  },
+
+  "ev": {
+    "label": "EV Charger · เปรียบราคา",
+    "items": []
+  },
+
+  "gold": {
+    "label": "ทองคำ · เปรียบราคา",
+    "items": []
+  },
+
+  "image_gen": {
+    "label": "GPU สำหรับ Image Gen",
+    "items": [],
+    "guide": [
+      {
+        "_comment": "guide = GPU Buying Guide table column — 3 แถว (row 0–2)",
+        "row": 0,
+        "name": "",
+        "hint": "",
+        "price": null,
+        "link": ""
+      }
+    ]
+  }
+}
