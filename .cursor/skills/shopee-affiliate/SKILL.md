@@ -37,51 +37,49 @@ desgin/
 
 ---
 
-## การเพิ่มสินค้า
+## การเพิ่มสินค้า (Excel Workflow)
 
-### ขั้นตอนสั้น ๆ
+> **picks.xlsx คือ Source of Truth** — แก้ Excel แล้วรัน script เท่านั้น อย่าแก้ JSON โดยตรง
 
-1. เปิด `data/affiliate/manual-picks.json`
-2. หา key ที่ต้องการ (เช่น `"ai_calculator"`)
-3. เพิ่ม object ใน `"items"` array
-4. ตรวจ JSON: `cat data/affiliate/manual-picks.json | python3 -m json.tool`
-5. Push
+### ขั้นตอน
 
-### Item schema
+```bash
+# 1. เปิด Excel แก้ไข (sheet "Picks")
+open data/affiliate/picks.xlsx
 
-```json
-{
-  "title":          "ชื่อสินค้า",
-  "price":          15990,
-  "original_price": 18000,
-  "link":           "https://s.shopee.co.th/xxx",
-  "image":          "https://...",
-  "source":         "Shopee",
-  "badge":          "ขายดี"
-}
+# 2. preview ก่อน (optional)
+python3 scripts/import_picks.py --dry-run
+
+# 3. import จริง
+python3 scripts/import_picks.py
+
+# 4. import เฉพาะ section เดียว
+python3 scripts/import_picks.py --section mac_llm
+
+# 5. reset template ถ้า Excel เสีย
+python3 scripts/create_picks_xlsx.py
 ```
 
-| Field | Required | หมายเหตุ |
-|-------|----------|---------|
-| `title` | ✅ | ≤60 ตัวอักษรสวยที่สุด |
+### Excel Columns (sheet "Picks")
+
+| Column | Required | หมายเหตุ |
+|--------|----------|---------|
+| `section` | ✅ | key ใน JSON เช่น `ai_calculator` |
+| `type` | ✅ | `item` หรือ `guide` (dropdown) |
+| `ids` | - | id คั่นด้วย `\|` เช่น `r9_7950x\|r9_7900x` (filterId) |
+| `title` | ✅ | ชื่อสินค้า (items) / ชื่อใน guide (guides) |
 | `price` | ✅ | ตัวเลขล้วน |
-| `link` | ✅ | Affiliate URL ของแพลตฟอร์มนั้น ๆ |
-| `original_price` | optional | ถ้าใส่ จะแสดง strikethrough |
-| `image` | optional | URL รูป (ไม่มีก็ text-only card) |
-| `source` | optional | "Shopee" / "Lazada" / อื่น ๆ |
-| `badge` | optional | "ขายดี" / "แนะนำ" / "ราคาดี" |
+| `original_price` | - | ราคาก่อนลด (items) |
+| `link` | ✅ | Affiliate URL |
+| `image` | - | URL รูปสินค้า (items) |
+| `source` | - | Shopee / Lazada / ฯลฯ (dropdown) |
+| `badge` | - | ขายดี / แนะนำ / ราคาดี (dropdown) |
+| `row` | ✅ guide | row index 0-based (guides) |
+| `hint` | - | คำอธิบายสั้น (guides) |
 
-### Guide schema (สำหรับ Buying Guide table)
+Sheet **"Ref"** ใน Excel มี reference ครบ: section keys, cpu ids, row index ทุกหน้า
 
-```json
-{
-  "row": 0,
-  "name": "ชื่อสินค้า",
-  "hint": "คำอธิบายสั้น",
-  "price": 14990,
-  "link": "https://..."
-}
-```
+> คู่มือเต็ม → `desgin/affiliate-manual-guide.md`
 
 ---
 

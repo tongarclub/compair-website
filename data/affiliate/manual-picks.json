@@ -1,104 +1,213 @@
 {
   "_readme": "คู่มือการเพิ่มสินค้า: desgin/affiliate-manual-guide.md",
   "_item_schema": {
-    "title":          "ชื่อสินค้า (required)",
-    "price":          9990,
+    "title": "ชื่อสินค้า (required)",
+    "price": 9990,
     "original_price": 12000,
-    "link":           "https://... (required)",
-    "image":          "https://... (optional)",
-    "source":         "Shopee | Lazada | JD | ร้านค้า (optional)",
-    "badge":          "ขายดี | แนะนำ | ราคาดี (optional)",
-    "ids":            ["id_1", "id_2"]
+    "link": "https://... (required)",
+    "image": "https://... (optional)",
+    "source": "Shopee | Lazada | JD | ร้านค้า (optional)",
+    "badge": "ขายดี | แนะนำ | ราคาดี (optional)",
+    "ids": [
+      "id_1",
+      "id_2"
+    ]
   },
-
   "ai_calculator": {
     "label": "GPU · เปรียบราคา",
-    "items": []
+    "items": [
+      {
+        "title": "ASUS DUAL GeForce RTX 5060 8GB GDDR7",
+        "price": 14990,
+        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
+        "original_price": 16500,
+        "source": "Shopee",
+        "badge": "ขายดี"
+      },
+      {
+        "title": "MSI GeForce RTX 5060 VENTUS 2X 8G",
+        "price": 13990,
+        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
+        "source": "Shopee"
+      }
+    ]
   },
-
   "ai_calculator_cpu": {
     "_comment": "สินค้าแยกตาม CPU id — ดู ids[] ของแต่ละ item ว่าตรงกับ dropdown ตัวไหน",
     "_ids_ref": "id มาจาก data/ai-models/cpus.json → field 'id'",
     "label": "CPU · เปรียบราคา",
     "items": [
       {
-        "_comment": "สินค้าที่แสดงเมื่อเลือก Ryzen 9 7950X หรือ 7900X",
-        "ids":   ["r9_7950x", "r9_7900x"],
-        "title": "AMD Ryzen 9 7950X Box (ตัวอย่าง)",
+        "title": "AMD Ryzen 9 7950X Box",
         "price": 18990,
-        "link":  "https://s.shopee.co.th/ใส่ลิงก์จริงที่นี่",
+        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
         "source": "Shopee",
-        "badge": "แนะนำ"
+        "badge": "แนะนำ",
+        "ids": [
+          "r9_7950x",
+          "r9_7900x"
+        ]
       },
       {
-        "_comment": "สินค้าที่แสดงเมื่อเลือก Ryzen 7 7700X",
-        "ids":   ["r7_7700x"],
-        "title": "AMD Ryzen 7 7700X Box (ตัวอย่าง)",
+        "title": "AMD Ryzen 7 7700X Box",
         "price": 11990,
-        "link":  "https://s.shopee.co.th/ใส่ลิงก์จริงที่นี่",
-        "source": "Shopee"
-      },
-      {
-        "_comment": "สินค้าที่แสดงเมื่อเลือก i9-14900K หรือ i7-14700K",
-        "ids":   ["i9_14900k", "i7_14700k"],
-        "title": "Intel Core i9-14900K Box (ตัวอย่าง)",
-        "price": 17500,
-        "link":  "https://s.shopee.co.th/ใส่ลิงก์จริงที่นี่",
+        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
         "source": "Shopee",
-        "badge": "ราคาดี"
+        "ids": [
+          "r7_7700x"
+        ]
       },
       {
-        "_comment": "Motherboard AM5 — แสดงทุก AMD AM5 (ids ไม่ระบุ = แสดงทุก id ใน key นี้)",
-        "ids":   ["r9_7950x", "r9_7900x", "r7_7700x", "r5_7600x"],
-        "title": "ASUS PRIME X670-P WiFi Motherboard AM5 (ตัวอย่าง)",
+        "title": "Intel Core i9-14900K Box",
+        "price": 17500,
+        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
+        "source": "Shopee",
+        "badge": "ราคาดี",
+        "ids": [
+          "i9_14900k",
+          "i7_14700k"
+        ]
+      },
+      {
+        "title": "ASUS PRIME X670-P WiFi Motherboard AM5",
         "price": 8990,
-        "link":  "https://s.shopee.co.th/ใส่ลิงก์จริงที่นี่",
-        "source": "Shopee"
+        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
+        "source": "Shopee",
+        "ids": [
+          "r9_7950x",
+          "r9_7900x",
+          "r7_7700x",
+          "r5_7600x"
+        ]
       }
     ]
   },
-
   "mac_llm": {
     "label": "Mac · เปรียบราคา",
-    "items": [],
+    "items": [
+      {
+        "title": "Apple MacBook Air M4 13\" 16GB",
+        "price": 39900,
+        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
+        "source": "Shopee",
+        "badge": "แนะนำ"
+      }
+    ],
     "guide": [
       {
-        "_comment": "guide = Buying Guide table column — 7 แถว (row 0–6)",
         "row": 0,
-        "name": "",
-        "hint": "",
-        "price": null,
-        "link": ""
+        "name": "เคส MacBook Air M4",
+        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
+        "price": 590,
+        "hint": "ป้องกันรอย"
+      },
+      {
+        "row": 1,
+        "name": "เคส MacBook Air M4 32GB",
+        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
+        "price": 620,
+        "hint": "ป้องกันรอย"
+      },
+      {
+        "row": 2,
+        "name": "เคส MacBook Pro M4 Pro",
+        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
+        "price": 650,
+        "hint": "กันกระแทก"
+      },
+      {
+        "row": 3,
+        "name": "เคส MacBook Pro M4 Pro 48GB",
+        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
+        "price": 650
+      },
+      {
+        "row": 4,
+        "name": "เคส MacBook Pro M4 Max",
+        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
+        "price": 680
+      },
+      {
+        "row": 5,
+        "name": "เคส MacBook Pro M4 Max 128GB",
+        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
+        "price": 680
+      },
+      {
+        "row": 6,
+        "name": "Stand + Hub Mac Studio",
+        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
+        "price": 1290,
+        "hint": "ตั้งโต๊ะ + USB Hub"
       }
     ]
   },
-
   "solar": {
     "label": "Solar · เปรียบราคา",
-    "items": []
+    "items": [
+      {
+        "title": "แผงโซล่าเซลล์ 550W Mono",
+        "price": 4990,
+        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
+        "source": "Shopee",
+        "badge": "ขายดี"
+      }
+    ]
   },
-
   "ev": {
     "label": "EV Charger · เปรียบราคา",
-    "items": []
+    "items": [
+      {
+        "title": "EV Charger 7kW Wallbox Type 2",
+        "price": 12900,
+        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
+        "source": "Shopee",
+        "badge": "แนะนำ"
+      }
+    ]
   },
-
   "gold": {
     "label": "ทองคำ · เปรียบราคา",
-    "items": []
+    "items": [
+      {
+        "title": "ทองคำแท่ง 1 บาท ออโรร่า",
+        "price": 52000,
+        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
+        "source": "Shopee"
+      }
+    ]
   },
-
   "image_gen": {
     "label": "GPU สำหรับ Image Gen",
-    "items": [],
+    "items": [
+      {
+        "title": "ASUS DUAL GeForce RTX 5060 8GB",
+        "price": 14990,
+        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
+        "source": "Shopee"
+      }
+    ],
     "guide": [
       {
-        "_comment": "guide = GPU Buying Guide table column — 3 แถว (row 0–2)",
         "row": 0,
-        "name": "",
-        "hint": "",
-        "price": null,
-        "link": ""
+        "name": "MSI GeForce RTX 5060 VENTUS 2X 8G",
+        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
+        "price": 13990,
+        "hint": "VRAM 8GB เริ่มต้น SD/FLUX Schnell"
+      },
+      {
+        "row": 1,
+        "name": "ASUS DUAL GeForce RTX 5060 Ti 16G",
+        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
+        "price": 19990,
+        "hint": "VRAM 16GB ครบ FLUX Dev FP8"
+      },
+      {
+        "row": 2,
+        "name": "MSI GeForce RTX 5070 Ti Gaming X Slim",
+        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
+        "price": 35990,
+        "hint": "VRAM 16GB Pro batch gen"
       }
     ]
   }
