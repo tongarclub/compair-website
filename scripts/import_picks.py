@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
 """
-import_picks.py — นำเข้าข้อมูล affiliate จาก Excel/CSV → manual-picks.json
+import_picks.py — นำเข้าข้อมูล affiliate จาก picks.xlsx → manual-picks.json
 
-Excel/CSV เป็น Source of Truth:
-  - รันสคริปต์ทุกครั้งที่แก้ไข picks.xlsx (หรือ picks.csv)
-  - ทุก section ที่ปรากฏใน file จะถูก replace ใน JSON (section อื่น → ไม่ถูกแตะ)
-  - รองรับ .xlsx (แนะนำ) และ .csv
+picks.xlsx คือ Source of Truth:
+  - แก้ไขใน sheet "Picks" แล้วรัน script นี้
+  - ทุก section ที่ปรากฏใน Excel จะถูก replace ใน JSON
+  - section อื่นที่ไม่ได้ระบุ → ไม่ถูกแตะ
 
 Usage:
-    python3 scripts/import_picks.py                     # ใช้ picks.xlsx (default)
-    python3 scripts/import_picks.py picks.csv           # ใช้ CSV แทน
-    python3 scripts/import_picks.py --dry-run           # preview ไม่บันทึก
-    python3 scripts/import_picks.py --section mac_llm   # import แค่ section เดียว
+    python3 scripts/import_picks.py                    # ใช้ picks.xlsx default
+    python3 scripts/import_picks.py path/to/file.xlsx  # ระบุไฟล์เอง
+    python3 scripts/import_picks.py --dry-run          # preview ไม่บันทึก
+    python3 scripts/import_picks.py --section mac_llm  # import แค่ section เดียว
 
-Excel Columns (sheet ชื่อ "Picks"):
+Excel Columns (sheet "Picks"):
     section         key ใน manual-picks.json (ai_calculator, mac_llm, ...)
     type            item | guide
     ids             id คั่นด้วย | เช่น r9_7950x|r9_7900x  (items + filterId)
@@ -28,16 +28,20 @@ Excel Columns (sheet ชื่อ "Picks"):
     hint            คำอธิบายสั้น (optional, guides)
 """
 
-import csv
 import json
 import sys
 import argparse
 from pathlib import Path
 
+try:
+    from openpyxl import load_workbook
+except ImportError:
+    print('❌ ต้องติดตั้ง openpyxl: pip3 install openpyxl --break-system-packages')
+    sys.exit(1)
+
 REPO_ROOT   = Path(__file__).parent.parent
 PICKS_JSON  = REPO_ROOT / 'data' / 'affiliate' / 'manual-picks.json'
 DEFAULT_XLS = REPO_ROOT / 'data' / 'affiliate' / 'picks.xlsx'
-DEFAULT_CSV = REPO_ROOT / 'data' / 'affiliate' / 'picks.csv'
 
 EXPECTED_HEADERS = [
     'section', 'type', 'ids', 'title',
@@ -48,9 +52,7 @@ EXPECTED_HEADERS = [
 # ─── helpers ──────────────────────────────────────────────────────────────────
 
 def _str(v) -> str:
-    if v is None:
-        return ''
-    return str(v).strip()
+    return '' if v is None else str(v).strip()
 
 def _price(raw) -> int | float | None:
     s = _str(raw).replace(',', '')
@@ -108,101 +110,57 @@ def _build_guide(row: dict) -> dict | None:
         guide['hint'] = hint
     return guide
 
-# ─── readers ──────────────────────────────────────────────────────────────────
+# ─── reader ───────────────────────────────────────────────────────────────────
 
 def read_xlsx(path: Path) -> list[dict]:
-    """อ่าน sheet 'Picks' จาก Excel → list of row dicts"""
-    try:
-        from openpyxl import load_workbook
-    except ImportError:
-        print('❌ ต้องติดตั้ง openpyxl: pip3 install openpyxl --break-system-packages')
-        sys.exit(1)
-
     wb = load_workbook(path, data_only=True)
-    # ใช้ sheet ชื่อ 'Picks' ก่อน, fallback sheet แรก
     ws = wb['Picks'] if 'Picks' in wb.sheetnames else wb.active
 
     rows = list(ws.iter_rows(values_only=True))
     if not rows:
         return []
 
-    header = [str(h).strip() if h else '' for h in rows[0]]
+    header = [_str(h) for h in rows[0]]
 
-    # ตรวจ header ครบไหม
     missing = [h for h in EXPECTED_HEADERS if h not in header]
     if missing:
-        print(f'⚠ Excel columns ที่หายไป: {missing}')
-        print(f'  header ที่พบ: {header}')
+        print(f'⚠ columns ที่หายไปใน Excel: {missing}')
 
     result = []
     for data_row in rows[1:]:
         row_dict = {header[i]: data_row[i] for i in range(min(len(header), len(data_row)))}
-        # ข้ามแถวว่าง
         if not any(_str(v) for v in row_dict.values()):
             continue
         result.append(row_dict)
 
     return result
 
-def read_csv(path: Path) -> list[dict]:
-    """อ่าน CSV → list of row dicts (ข้าม # comment lines)"""
-    result = []
-    with open(path, newline='', encoding='utf-8-sig') as f:
-        reader = csv.DictReader(
-            (line for line in f if not line.lstrip().startswith('#')),
-        )
-        for row in reader:
-            if not any(_str(v) for v in row.values()):
-                continue
-            result.append(row)
-    return result
-
 # ─── main ─────────────────────────────────────────────────────────────────────
 
 def main():
     parser = argparse.ArgumentParser(
-        description='นำเข้า affiliate picks จาก Excel/CSV → manual-picks.json'
+        description='นำเข้า affiliate picks จาก picks.xlsx → manual-picks.json'
     )
-    parser.add_argument('input_file', nargs='?',
-                        help='path ไปยัง .xlsx หรือ .csv (default: picks.xlsx)')
+    parser.add_argument('input_file', nargs='?', default=str(DEFAULT_XLS),
+                        help='path ไปยัง .xlsx (default: data/affiliate/picks.xlsx)')
     parser.add_argument('--dry-run', action='store_true',
                         help='แสดงผลลัพธ์โดยไม่บันทึก JSON')
     parser.add_argument('--section', metavar='KEY',
                         help='import เฉพาะ section นี้เท่านั้น')
     args = parser.parse_args()
 
-    # เลือกไฟล์ input
-    if args.input_file:
-        input_path = Path(args.input_file)
-    elif DEFAULT_XLS.exists():
-        input_path = DEFAULT_XLS
-    elif DEFAULT_CSV.exists():
-        input_path = DEFAULT_CSV
-    else:
-        print(f'❌ ไม่พบ picks.xlsx หรือ picks.csv ใน data/affiliate/')
-        sys.exit(1)
-
+    input_path = Path(args.input_file)
     if not input_path.exists():
         print(f'❌ ไม่พบไฟล์: {input_path}')
+        print(f'   สร้าง template ใหม่ได้ด้วย: python3 scripts/create_picks_xlsx.py')
         sys.exit(1)
 
-    # อ่านข้อมูล
-    suffix = input_path.suffix.lower()
-    if suffix == '.xlsx':
-        raw_rows = read_xlsx(input_path)
-        print(f'📂 อ่าน {input_path.name} ({len(raw_rows)} แถว)')
-    elif suffix == '.csv':
-        raw_rows = read_csv(input_path)
-        print(f'📂 อ่าน {input_path.name} ({len(raw_rows)} แถว)')
-    else:
-        print(f'❌ รองรับเฉพาะ .xlsx หรือ .csv เท่านั้น')
-        sys.exit(1)
+    raw_rows = read_xlsx(input_path)
+    print(f'📂 อ่าน {input_path.name} ({len(raw_rows)} แถว)')
 
-    # โหลด JSON เดิม
     with open(PICKS_JSON, 'r', encoding='utf-8') as f:
         picks = json.load(f)
 
-    # แยก items / guide ตาม section
     collected_items: dict[str, list] = {}
     collected_guide: dict[str, list] = {}
     errors = []
@@ -221,19 +179,13 @@ def main():
             if obj:
                 collected_guide.setdefault(section, []).append(obj)
             else:
-                errors.append(
-                    f'  ⚠ แถว {lineno} [guide/{section}]: '
-                    f'ข้อมูลไม่ครบ (title/link/row required)'
-                )
+                errors.append(f'  ⚠ แถว {lineno} [guide/{section}]: ข้อมูลไม่ครบ (title/link/row required)')
         else:
             obj = _build_item(row)
             if obj:
                 collected_items.setdefault(section, []).append(obj)
             else:
-                errors.append(
-                    f'  ⚠ แถว {lineno} [item/{section}]: '
-                    f'ข้อมูลไม่ครบ (title/price/link required)'
-                )
+                errors.append(f'  ⚠ แถว {lineno} [item/{section}]: ข้อมูลไม่ครบ (title/price/link required)')
 
     if errors:
         print('\n'.join(errors))
@@ -242,7 +194,6 @@ def main():
         print('❌ ไม่พบข้อมูลที่ valid')
         sys.exit(1)
 
-    # อัปเดต picks dict
     total = 0
     for section, items in collected_items.items():
         if section not in picks:
