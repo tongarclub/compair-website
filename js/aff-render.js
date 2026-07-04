@@ -160,18 +160,20 @@ async function loadAffiliate(key, opts = {}) {
     if (lbl) lbl.textContent = section.label;
   }
 
-  // แสดงเฉพาะ preview (สูงสุด 3 รายการ)
-  const previewN = opts.preview ?? AFF_PREVIEW;
-  cards.innerHTML = items.slice(0, previewN).map(_cardHTML).join('');
+  // แสดงเฉพาะ preview (สูงสุด 3 รายการ) ใช้ items ที่ผ่าน filterId แล้ว
+  const previewN   = opts.preview ?? AFF_PREVIEW;
+  const allItems   = section.items;   // ทั้งหมดใน section (ไม่กรอง filterId)
+  cards.innerHTML  = items.slice(0, previewN).map(_cardHTML).join('');
   if (strip) strip.style.display = '';
 
-  // ถ้ามีสินค้ามากกว่า preview → แสดงปุ่ม "ดูทั้งหมด"
-  if (items.length > previewN && strip) {
+  // ปุ่ม "ดูทั้งหมด" — เปิด modal แสดง allItems ทั้ง section (ไม่กรอง filterId)
+  // เพื่อให้ผู้ใช้เห็นสินค้าทั้งหมดในหมวดนี้ ไม่ใช่แค่สินค้าของ GPU/CPU ที่เลือก
+  if (allItems.length > previewN && strip) {
     const label = section.label || key;
     const btn   = document.createElement('button');
-    btn.className   = 'aff-see-more';
-    btn.innerHTML   = `ดูสินค้าทั้งหมด <strong>${items.length}</strong> รายการ <span class="aff-see-more-arrow">→</span>`;
-    btn.addEventListener('click', () => _openModal(key, items, label));
+    btn.className = 'aff-see-more';
+    btn.innerHTML = `ดูสินค้าทั้งหมด <strong>${allItems.length}</strong> รายการ <span class="aff-see-more-arrow">→</span>`;
+    btn.addEventListener('click', () => _openModal(key, allItems, label));
     strip.appendChild(btn);
   }
 }

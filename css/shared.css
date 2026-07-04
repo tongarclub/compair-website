@@ -387,56 +387,68 @@ optgroup { font-style: normal; font-weight: 700; }
   transition: color .2s;
 }
 .aff-strip-more:hover { color: var(--primary); }
-/* ── Strip: 3-column grid ── */
+/* ── Strip: horizontal scroll (แสดง ~2 cards + hint ของ 3rd) ── */
 .aff-strip-cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex; flex-direction: row;
+  overflow-x: auto; scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; gap: 0;
+}
+.aff-strip-cards::-webkit-scrollbar { display: none; }
+/* fade hint ขวา */
+.aff-strip-cards::after {
+  content: ''; flex-shrink: 0; width: 24px;
 }
 
-/* ── Vertical card (รูปบน, เนื้อหาล่าง) ── */
+/* ── Card: vertical (รูปบน, text ล่าง) — fixed width ── */
 .aff-card {
   display: flex; flex-direction: column;
+  flex: 0 0 152px;              /* ~2 cards visible ใน column ~310px */
   padding: 0;
   text-decoration: none; color: inherit;
   border-right: 1px solid var(--border);
+  scroll-snap-align: start;
   transition: background .18s;
-  position: relative;
+  position: relative; overflow: hidden;
 }
 .aff-card:last-child { border-right: none; }
 .aff-card:hover { background: var(--surface); }
 
-/* รูปสินค้า — ด้านบนเต็มความกว้าง */
+/* รูปสินค้า — สัดส่วน 1:1 (square) */
 .aff-card-img {
-  width: 100%; height: 110px; flex-shrink: 0;
+  width: 100%; aspect-ratio: 1 / 1; flex-shrink: 0;
   object-fit: cover; background: var(--surface2);
   display: block;
 }
 
-/* placeholder รูปสินค้า */
+/* placeholder รูปสินค้า (aspect-ratio มาจาก .aff-card-img) */
 .aff-card-img-placeholder {
-  background: linear-gradient(135deg, var(--surface2) 0%, var(--surface) 100%);
+  background: linear-gradient(135deg, var(--surface2) 0%, var(--border) 100%);
+  /* fallback: ถ้า browser ไม่รองรับ aspect-ratio */
+  min-height: 60px;
 }
+
 /* กล่องเนื้อหาด้านล่าง */
 .aff-card-body {
   flex: 1; min-width: 0;
-  padding: 9px 10px 26px;       /* padding-bottom เผื่อ arrow */
+  padding: 8px 10px 22px;       /* bottom เผื่อ arrow */
   display: flex; flex-direction: column; gap: 2px;
 }
 .aff-card-title {
-  font-size: 11px; line-height: 1.5; color: var(--text);
+  font-size: 10.5px; line-height: 1.45; color: var(--text);
   display: -webkit-box;
   -webkit-line-clamp: 3; -webkit-box-orient: vertical;
   overflow: hidden;
 }
 .aff-card-price {
-  display: flex; align-items: baseline; gap: 5px; flex-wrap: wrap;
-  margin-top: 4px;
+  display: flex; align-items: baseline; gap: 4px; flex-wrap: wrap;
+  margin-top: 3px;
 }
 .aff-price {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 17px; font-weight: 700; color: #ee4d2d; line-height: 1;
+  font-size: 15px; font-weight: 700; color: #ee4d2d; line-height: 1;
 }
-.aff-orig { font-size: 10px; color: var(--text3); text-decoration: line-through; }
+.aff-orig { font-size: 9px; color: var(--text3); text-decoration: line-through; }
 .aff-disc {
   font-family: 'DM Mono', monospace; font-size: 9px;
   background: #ee4d2d; color: #fff;
@@ -462,7 +474,7 @@ optgroup { font-style: normal; font-weight: 700; }
   font-size: 8px; font-weight: 700; letter-spacing: .08em;
   text-transform: uppercase;
   color: #fff; background: #ee1a1a;
-  padding: 2px 7px; line-height: 16px;
+  padding: 2px 6px; line-height: 16px;
   pointer-events: none; z-index: 1;
 }
 /* ── Shop name ── */
@@ -480,11 +492,28 @@ optgroup { font-style: normal; font-weight: 700; }
   white-space: nowrap;
 }
 .aff-sold-hot { color: #ee4d2d; }
-/* ── Card footer: source · shop · sold ── */
+/* ── Card footer: source · shop · sold — stacked ── */
 .aff-card-footer {
-  display: flex; flex-direction: column; gap: 2px;
-  margin-top: auto; padding-top: 6px;
+  display: flex; flex-direction: column; gap: 1px;
+  margin-top: auto; padding-top: 4px;
 }
+
+/* ── Modal grid overrides — larger vertical cards ── */
+.aff-modal-grid .aff-card {
+  flex: none; width: auto;   /* fill grid cell */
+  border-right: none;
+  background: var(--bg);
+}
+.aff-modal-grid .aff-card:hover { background: var(--surface); }
+/* Modal image: สัดส่วน 1:1 ป้องกันรูปแบน */
+.aff-modal-grid .aff-card-img {
+  width: 100%; aspect-ratio: 1 / 1; height: auto;
+}
+.aff-modal-grid .aff-card-body { padding: 9px 24px 26px 10px; }
+.aff-modal-grid .aff-card-title { -webkit-line-clamp: 2; font-size: 11px; }
+.aff-modal-grid .aff-price { font-size: 15px; }
+.aff-modal-grid .aff-card-footer { padding-top: 6px; }
+
 /* ── Buying-guide generic buy column ─── */
 .gt-buy-th { color: var(--gold, #8B7355); letter-spacing: .1em; white-space: nowrap; }
 .gt-buy-cell, .gpu-buy-cell { min-width: 150px; }
@@ -517,17 +546,11 @@ optgroup { font-style: normal; font-weight: 700; }
   font-size: 9px; color: var(--text3); letter-spacing: .02em;
 }
 .aff-card-arrow {
-  position: absolute; right: 8px; bottom: 8px;
+  position: absolute; right: 7px; bottom: 7px;
   font-size: 10px; color: var(--text3);
   transition: color .2s, transform .2s;
 }
 .aff-card:hover .aff-card-arrow { color: var(--primary); transform: translateX(2px); }
-@media (max-width: 640px) {
-  .aff-strip-cards { grid-template-columns: 1fr; }
-  .aff-card { border-right: none; border-bottom: 1px solid var(--border); }
-  .aff-card:last-child { border-bottom: none; }
-}
-
 /* ── "ดูทั้งหมด" button ─────────────────────────────── */
 .aff-see-more {
   display: flex; align-items: center; justify-content: center; gap: 6px;
@@ -609,11 +632,6 @@ optgroup { font-style: normal; font-weight: 700; }
   grid-template-columns: repeat(3, 1fr);
   gap: 1px; background: var(--border);
 }
-.aff-modal-grid .aff-card {
-  border-right: none;
-  background: var(--bg);
-}
-.aff-modal-grid .aff-card:hover { background: var(--surface); }
 @media (max-width: 640px) {
   .aff-modal-panel { max-height: 92vh; }
   .aff-modal-grid { grid-template-columns: repeat(2, 1fr); }
