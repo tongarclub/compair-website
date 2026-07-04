@@ -64,34 +64,34 @@ _IMG_MAC_ACC = 'https://cf.shopee.co.th/file/th-11134207-7r98q-lyuzdp3rmvu19b'
 _LNK_MAC_ACC = 'https://shopee.co.th/product/381301308/27707726524'
 
 EXAMPLE_ROWS = [
-    # section,            type,   ids,                                     title,                                                   price,  orig,   link,          image,          source,  badge,    row, hint
-    ('ai_calculator',     'item', '5060|5060ti|4060|4060ti|3060|3060ti|3070|3070ti', 'INNO3D GeForce RTX 5060 ICHILL X3 WHITE 8GB GDDR7', 16990, '',    _LNK_RTX5060,  _IMG_RTX5060,   'Shopee','ขายดี',  '', ''),
-    ('ai_calculator',     'item', '5070|5070ti|4070|4070s|4070ti|3080|3080ti|3070', 'GIGABYTE GeForce RTX 5070 AERO OC 12GB GDDR7',      31200, 80000, _LNK_RTX5070,  _IMG_RTX5070,   'Shopee','',       '', ''),
-    ('ai_calculator_cpu', 'item', 'r9_7950x|r9_7900x',                    'AMD Ryzen 9 7950X Box',                                 18990,  '',     'https://shopee.co.th/product/ใส่ลิงก์จริง', '', 'Shopee','แนะนำ', '', ''),
-    ('ai_calculator_cpu', 'item', 'r7_7700x',                             'AMD Ryzen 7 7700X Box',                                 11990,  '',     'https://shopee.co.th/product/ใส่ลิงก์จริง', '', 'Shopee','',      '', ''),
-    ('ai_calculator_cpu', 'item', 'i9_14900k|i7_14700k',                  'Intel Core i9-14900K Box',                              17500,  '',     'https://shopee.co.th/product/ใส่ลิงก์จริง', '', 'Shopee','ราคาดี','', ''),
-    ('ai_calculator_cpu', 'item', 'r9_7950x|r9_7900x|r7_7700x|r5_7600x', 'ASUS PRIME X670-P WiFi Motherboard AM5',                8990,   '',     'https://shopee.co.th/product/ใส่ลิงก์จริง', '', 'Shopee','',      '', ''),
-    ('mac_llm',           'item', '',                                      'Apple MacBook Air M4 13" 16GB',                         39900,  '',     'https://shopee.co.th/product/ใส่ลิงก์จริง', '', 'Shopee','แนะนำ', '', ''),
-    ('mac_llm',           'guide','',                                      'elago MagSafe Side Mount Holder ยึดมือถือกับ MacBook',  1390,   '',     _LNK_MAC_ACC,  _IMG_MAC_ACC,   '',     '',        0,  'อุปกรณ์เสริม MacBook Air M4 16GB'),
-    ('mac_llm',           'guide','',                                      'elago MagSafe Side Mount Holder ยึดมือถือกับ MacBook',  1390,   '',     _LNK_MAC_ACC,  _IMG_MAC_ACC,   '',     '',        1,  'อุปกรณ์เสริม MacBook Air M4 32GB'),
-    ('mac_llm',           'guide','',                                      'เคส MacBook Pro M4 Pro',                                650,    '',     'https://shopee.co.th/product/ใส่ลิงก์จริง', '', '',     '',        2,  'กันกระแทก'),
-    ('mac_llm',           'guide','',                                      'เคส MacBook Pro M4 Pro 48GB',                           650,    '',     'https://shopee.co.th/product/ใส่ลิงก์จริง', '', '',     '',        3,  ''),
-    ('mac_llm',           'guide','',                                      'เคส MacBook Pro M4 Max',                                680,    '',     'https://shopee.co.th/product/ใส่ลิงก์จริง', '', '',     '',        4,  ''),
-    ('mac_llm',           'guide','',                                      'เคส MacBook Pro M4 Max 128GB',                          680,    '',     'https://shopee.co.th/product/ใส่ลิงก์จริง', '', '',     '',        5,  ''),
-    ('mac_llm',           'guide','',                                      'Stand + Hub Mac Studio',                                1290,   '',     'https://shopee.co.th/product/ใส่ลิงก์จริง', '', '',     '',        6,  'ตั้งโต๊ะ + USB Hub'),
-    ('solar',             'item', '',                                      'CELUO แผงโซล่าเซลล์ 18V/500W พร้อมสายเชื่อมต่อ',      189,    999,    _LNK_SOLAR,    _IMG_SOLAR,     'Shopee','ขายดี',  '', ''),
-    ('ev',                'item', '',                                      'ROMADA C03 EV Charger Type2 3.5kW 16A จอ LCD',          2520,   5040,   _LNK_EV,       _IMG_EV,        'Shopee','แนะนำ',  '', ''),
-    ('gold',              'item', '',                                      'SHINING GOLD ทองคำแท้ 96.5% น้ำหนัก 0.5 กรัม',         2769,   6559,   _LNK_GOLD,     _IMG_GOLD,      'Shopee','',       '', ''),
-    ('image_gen',         'item', '',                                      'INNO3D GeForce RTX 5060 ICHILL X3 WHITE 8GB GDDR7',     16990,  '',     _LNK_RTX5060,  _IMG_RTX5060,   'Shopee','',       '', ''),
-    ('image_gen',         'guide','',                                      'INNO3D GeForce RTX 5060 ICHILL X3 WHITE 8GB GDDR7',     16990,  '',     _LNK_RTX5060,  _IMG_RTX5060,   '',     '',        0,  'VRAM 8GB เริ่มต้น SD/FLUX Schnell'),
-    ('image_gen',         'guide','',                                      'ASUS DUAL GeForce RTX 5060 Ti 16G',                     19990,  '',     'https://shopee.co.th/product/ใส่ลิงก์จริง', '', '',     '',        1,  'VRAM 16GB ครบ FLUX Dev FP8'),
-    ('image_gen',         'guide','',                                      'GIGABYTE GeForce RTX 5070 AERO OC 12GB GDDR7',          31200,  80000,  _LNK_RTX5070,  _IMG_RTX5070,   '',     '',        2,  'VRAM 12GB Pro batch gen'),
+    # section,            type,   ids,                                     title,                                                   price,  orig,   link,          image,          source,  badge,    shop_name,                      sold, row, hint
+    ('ai_calculator',     'item', '5060|5060ti|4060|4060ti|3060|3060ti|3070|3070ti', 'INNO3D GeForce RTX 5060 ICHILL X3 WHITE 8GB GDDR7', 16990, '',    _LNK_RTX5060,  _IMG_RTX5060,   'Shopee','ขายดี',  'INNO3D Official Store',        3,    '', ''),
+    ('ai_calculator',     'item', '5070|5070ti|4070|4070s|4070ti|3080|3080ti|3070', 'GIGABYTE GeForce RTX 5070 AERO OC 12GB GDDR7',      31200, 80000, _LNK_RTX5070,  _IMG_RTX5070,   'Shopee','',       'EXPERT MINES COMPANY LIMITED', 0,    '', ''),
+    ('ai_calculator_cpu', 'item', 'r9_7950x|r9_7900x',                    'AMD Ryzen 9 7950X Box',                                 18990,  '',     'https://shopee.co.th/product/ใส่ลิงก์จริง', '', 'Shopee','แนะนำ', '',                             '',   '', ''),
+    ('ai_calculator_cpu', 'item', 'r7_7700x',                             'AMD Ryzen 7 7700X Box',                                 11990,  '',     'https://shopee.co.th/product/ใส่ลิงก์จริง', '', 'Shopee','',      '',                             '',   '', ''),
+    ('ai_calculator_cpu', 'item', 'i9_14900k|i7_14700k',                  'Intel Core i9-14900K Box',                              17500,  '',     'https://shopee.co.th/product/ใส่ลิงก์จริง', '', 'Shopee','ราคาดี','',                             '',   '', ''),
+    ('ai_calculator_cpu', 'item', 'r9_7950x|r9_7900x|r7_7700x|r5_7600x', 'ASUS PRIME X670-P WiFi Motherboard AM5',                8990,   '',     'https://shopee.co.th/product/ใส่ลิงก์จริง', '', 'Shopee','',      '',                             '',   '', ''),
+    ('mac_llm',           'item', '',                                      'Apple MacBook Air M4 13" 16GB',                         39900,  '',     'https://shopee.co.th/product/ใส่ลิงก์จริง', '', 'Shopee','แนะนำ', 'Apple Official Store TH',      5,    '', ''),
+    ('mac_llm',           'guide','',                                      'elago MagSafe Side Mount Holder ยึดมือถือกับ MacBook',  1390,   '',     _LNK_MAC_ACC,  _IMG_MAC_ACC,   '',     '',        '',                             '',   0,  'อุปกรณ์เสริม MacBook Air M4 16GB'),
+    ('mac_llm',           'guide','',                                      'elago MagSafe Side Mount Holder ยึดมือถือกับ MacBook',  1390,   '',     _LNK_MAC_ACC,  _IMG_MAC_ACC,   '',     '',        '',                             '',   1,  'อุปกรณ์เสริม MacBook Air M4 32GB'),
+    ('mac_llm',           'guide','',                                      'เคส MacBook Pro M4 Pro',                                650,    '',     'https://shopee.co.th/product/ใส่ลิงก์จริง', '', '',     '',        '',                             '',   2,  'กันกระแทก'),
+    ('mac_llm',           'guide','',                                      'เคส MacBook Pro M4 Pro 48GB',                           650,    '',     'https://shopee.co.th/product/ใส่ลิงก์จริง', '', '',     '',        '',                             '',   3,  ''),
+    ('mac_llm',           'guide','',                                      'เคส MacBook Pro M4 Max',                                680,    '',     'https://shopee.co.th/product/ใส่ลิงก์จริง', '', '',     '',        '',                             '',   4,  ''),
+    ('mac_llm',           'guide','',                                      'เคส MacBook Pro M4 Max 128GB',                          680,    '',     'https://shopee.co.th/product/ใส่ลิงก์จริง', '', '',     '',        '',                             '',   5,  ''),
+    ('mac_llm',           'guide','',                                      'Stand + Hub Mac Studio',                                1290,   '',     'https://shopee.co.th/product/ใส่ลิงก์จริง', '', '',     '',        '',                             '',   6,  'ตั้งโต๊ะ + USB Hub'),
+    ('solar',             'item', '',                                      'CELUO แผงโซล่าเซลล์ 18V/500W พร้อมสายเชื่อมต่อ',      189,    999,    _LNK_SOLAR,    _IMG_SOLAR,     'Shopee','ขายดี',  '',                             '',   '', ''),
+    ('ev',                'item', '',                                      'ROMADA C03 EV Charger Type2 3.5kW 16A จอ LCD',          2520,   5040,   _LNK_EV,       _IMG_EV,        'Shopee','แนะนำ',  '',                             '',   '', ''),
+    ('gold',              'item', '',                                      'SHINING GOLD ทองคำแท้ 96.5% น้ำหนัก 0.5 กรัม',         2769,   6559,   _LNK_GOLD,     _IMG_GOLD,      'Shopee','',       'SHINING GOLD Official Store',  1,    '', ''),
+    ('image_gen',         'item', '',                                      'INNO3D GeForce RTX 5060 ICHILL X3 WHITE 8GB GDDR7',     16990,  '',     _LNK_RTX5060,  _IMG_RTX5060,   'Shopee','',       'INNO3D Official Store',        3,    '', ''),
+    ('image_gen',         'guide','',                                      'INNO3D GeForce RTX 5060 ICHILL X3 WHITE 8GB GDDR7',     16990,  '',     _LNK_RTX5060,  _IMG_RTX5060,   '',     '',        '',                             '',   0,  'VRAM 8GB เริ่มต้น SD/FLUX Schnell'),
+    ('image_gen',         'guide','',                                      'ASUS DUAL GeForce RTX 5060 Ti 16G',                     19990,  '',     'https://shopee.co.th/product/ใส่ลิงก์จริง', '', '',     '',        '',                             '',   1,  'VRAM 16GB ครบ FLUX Dev FP8'),
+    ('image_gen',         'guide','',                                      'GIGABYTE GeForce RTX 5070 AERO OC 12GB GDDR7',          31200,  80000,  _LNK_RTX5070,  _IMG_RTX5070,   '',     '',        '',                             '',   2,  'VRAM 12GB Pro batch gen'),
 ]
 
 HEADERS = [
     'section', 'type', 'ids', 'title',
     'price', 'original_price', 'link', 'image',
-    'source', 'badge', 'row', 'hint',
+    'source', 'badge', 'shop_name', 'item_sold', 'row', 'hint',
 ]
 
 COL_WIDTHS = {
@@ -105,6 +105,8 @@ COL_WIDTHS = {
     'image':          45,
     'source':         10,
     'badge':          10,
+    'shop_name':      28,
+    'item_sold':      10,
     'row':            5,
     'hint':           30,
 }
@@ -234,8 +236,8 @@ def build_workbook() -> Workbook:
             cell.fill    = hfill(bg)
             cell.border  = thin_border()
             cell.alignment = Alignment(vertical='center', wrap_text=False)
-            # price columns → number format
-            if col_idx in (5, 6, 11):
+            # price / number columns → number format
+            if col_idx in (5, 6, 12, 13):
                 cell.number_format = '#,##0'
             # link columns → เขียวอ่อน ถ้ามีค่า
             if col_idx in (7, 8) and value:
@@ -293,7 +295,7 @@ def build_workbook() -> Workbook:
         errorTitle='row ไม่ถูกต้อง',
         error='row ต้องเป็นตัวเลข 0–9',
     )
-    dv_row.sqref = 'K2:K2000'
+    dv_row.sqref = 'M2:M2000'
     ws.add_data_validation(dv_row)
 
     # ── sheet 2: Ref ────────────────────────────────────────────────────────────

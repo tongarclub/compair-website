@@ -8,6 +8,8 @@
     "image": "https://... (optional)",
     "source": "Shopee | Lazada | JD | ร้านค้า (optional)",
     "badge": "ขายดี | แนะนำ | ราคาดี (optional)",
+    "shop_name": "ชื่อร้านค้า — ถ้ามีคำว่า Official จะแสดง Mall badge สีแดงหัวมุม",
+    "item_sold": 0,
     "ids": [
       "id_1",
       "id_2"
@@ -19,47 +21,13 @@
     "label": "GPU · เปรียบราคา",
     "items": [
       {
-        "title": "INNO3D GeForce RTX 5060 ICHILL X3 WHITE 8GB GDDR7",
-        "price": 16990,
-        "link": "https://shopee.co.th/product/74778579/45361620338",
-        "image": "https://cf.shopee.co.th/file/th-11134207-81zte-mp0m4brh648y60",
-        "source": "Shopee",
-        "badge": "ขายดี",
-        "ids": [
-          "5060",
-          "5060ti",
-          "4060",
-          "4060ti",
-          "3060",
-          "3060ti",
-          "3070",
-          "3070ti"
-        ]
-      },
-      {
-        "title": "GIGABYTE GeForce RTX 5070 AERO OC 12GB GDDR7",
-        "price": 31200,
-        "link": "https://shopee.co.th/product/133460598/45410842093",
-        "original_price": 80000,
-        "image": "https://cf.shopee.co.th/file/sg-11134201-822xs-mogaiu4vc2rv54",
-        "source": "Shopee",
-        "ids": [
-          "5070",
-          "5070ti",
-          "4070",
-          "4070s",
-          "4070ti",
-          "3080",
-          "3080ti",
-          "3070"
-        ]
-      },
-      {
         "title": "VGA (การ์ดแสดงผล) MSI GEFORCE RTX 5090 32G GAMING TRIO OC - 32GB GDDR7",
         "price": 169700,
         "link": "https://s.shopee.co.th/2BD1GnZPSV",
         "image": "https://down-zl-th.img.susercontent.com/th-11134207-7ra0m-mbet1fh1hbnaa6.webp",
         "source": "Shopee",
+        "shop_name": "JIB Official Store",
+        "item_sold": 1,
         "ids": [
           "5090"
         ]
@@ -70,6 +38,7 @@
         "link": "https://s.shopee.co.th/1gGkfsbJTQ",
         "image": "https://down-zl-th.img.susercontent.com/th-11134207-81ztn-mq8t04g63tvx56.webp",
         "source": "Shopee",
+        "shop_name": "Advice Official Shop",
         "ids": [
           "5090"
         ]
@@ -80,6 +49,7 @@
         "link": "https://s.shopee.co.th/1qaAsBag8T",
         "image": "https://down-zl-th.img.susercontent.com/sg-11134275-821eo-mh0e5nskf7k86e.webp",
         "source": "Shopee",
+        "shop_name": "บริษัท มังกี้ อีทีซี. จำกัด",
         "ids": [
           "5090"
         ]
@@ -90,6 +60,7 @@
         "link": "https://s.shopee.co.th/1LduHGca9O",
         "image": "https://down-zl-th.img.susercontent.com/th-11134207-81zte-mpeku3c4tngscb.webp",
         "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
         ]
@@ -100,6 +71,8 @@
         "link": "https://s.shopee.co.th/1VxKTZbwoR",
         "image": "https://down-zl-th.img.susercontent.com/th-11134207-7ras8-m8fwept4cfgvaf.webp",
         "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
+        "item_sold": 1,
         "ids": [
           "5090"
         ]
@@ -110,6 +83,7 @@
         "link": "https://s.shopee.co.th/1113sedqpM",
         "image": "https://down-zl-th.img.susercontent.com/th-11134207-7ra0u-mb7sojhocgfq48.webp",
         "source": "Shopee",
+        "shop_name": "JIB Official Store",
         "ids": [
           "5090"
         ]
@@ -120,6 +94,8 @@
         "link": "https://s.shopee.co.th/1BKU4xdDUP",
         "image": "https://down-zl-th.img.susercontent.com/th-11134207-7rasb-m847by4n5tkec6.webp",
         "source": "Shopee",
+        "shop_name": "TECHNOCOM.OFFICIAL",
+        "item_sold": 2,
         "ids": [
           "5090"
         ]
@@ -130,6 +106,8 @@
         "link": "https://s.shopee.co.th/gODU2f7VK",
         "image": "https://down-zl-th.img.susercontent.com/sg-11134201-8260c-mk0ukmy20v7p69.webp",
         "source": "Shopee",
+        "shop_name": "I KNOW YOU",
+        "item_sold": 1,
         "ids": [
           "5090"
         ]
@@ -140,6 +118,7 @@
         "link": "https://s.shopee.co.th/qhdgLeUAN",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-81ztd-mpx5tygok26833.webp",
         "source": "Shopee",
+        "shop_name": "บริษัท มังกี้ อีทีซี. จำกัด",
         "ids": [
           "5090"
         ]
@@ -150,6 +129,7 @@
         "link": "https://s.shopee.co.th/LlN5QgOBI",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-81ztd-mpx5tygok26833.webp",
         "source": "Shopee",
+        "shop_name": "บริษัท มังกี้ อีทีซี. จำกัด",
         "ids": [
           "5090"
         ]
@@ -160,6 +140,7 @@
         "link": "https://s.shopee.co.th/W4nHjfkqL",
         "image": "https://down-bs-th.img.susercontent.com/sg-11134275-825zz-mkf6jms5jdhgb4.webp",
         "source": "Shopee",
+        "shop_name": "Advice Official Shop",
         "ids": [
           "5090"
         ]
@@ -170,6 +151,7 @@
         "link": "https://s.shopee.co.th/18WgoherG",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-81ztc-mpxe9accfaq525.webp",
         "source": "Shopee",
+        "shop_name": "บริษัท มังกี้ อีทีซี. จำกัด",
         "ids": [
           "5090"
         ]
@@ -180,6 +162,7 @@
         "link": "https://s.shopee.co.th/BRwt7h1WJ",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-81ztg-mipnxvm0gi69ef.webp",
         "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
         ]
@@ -190,6 +173,7 @@
         "link": "https://s.shopee.co.th/50XCe0OciG",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-81zto-mibay3dbo0lf65.webp",
         "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
         ]
@@ -200,6 +184,7 @@
         "link": "https://s.shopee.co.th/5AqcqJNzNJ",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-81ztj-mf53ayfgm3nza4.webp",
         "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
         ]
@@ -210,6 +195,7 @@
         "link": "https://s.shopee.co.th/4fuMFOPtOE",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-81ztf-mlolokuve51ra9.webp",
         "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
         ]
@@ -220,6 +206,7 @@
         "link": "https://s.shopee.co.th/4qDmRhPG3H",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-7rasf-m8x6avrr1sztc8.webp",
         "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
         ]
@@ -230,6 +217,8 @@
         "link": "https://s.shopee.co.th/4LHVqmRA4C",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-7rase-m76f4vi99o1j85.webp",
         "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
+        "item_sold": 3,
         "ids": [
           "5090"
         ]
@@ -240,6 +229,7 @@
         "link": "https://s.shopee.co.th/4Vaw35QWjF",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-7rash-m8x6kptwxcgf32.webp",
         "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
         ]
@@ -250,6 +240,7 @@
         "link": "https://s.shopee.co.th/40efSASQkA",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-7rasg-m8vrk1wnfevde1.webp",
         "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
         ]
@@ -260,6 +251,7 @@
         "link": "https://s.shopee.co.th/4Ay5eTRnPD",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-7ras8-m8eac2h34cnd54.webp",
         "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
         ]
@@ -270,6 +262,7 @@
         "link": "https://s.shopee.co.th/3g1p3YThQ8",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-81zth-mlogm2dcg5j558.webp",
         "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
         ]
@@ -280,6 +273,7 @@
         "link": "https://s.shopee.co.th/3qLFFrT45B",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-7rase-m6r6xy11sncf25.webp",
         "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
         ]
@@ -290,6 +284,7 @@
         "link": "https://s.shopee.co.th/3LOyewUy66",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-81ztp-mlisa7sidtdw15.webp",
         "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
         ]
@@ -300,6 +295,7 @@
         "link": "https://s.shopee.co.th/3ViOrFUKl9",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-7ra0g-mczwcxljswclad.webp",
         "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
         ]
@@ -310,6 +306,7 @@
         "link": "https://s.shopee.co.th/30m8GKWEm4",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-81ztq-mdzlhtv1g2yo1b.webp",
         "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
         ]
@@ -320,6 +317,7 @@
         "link": "https://s.shopee.co.th/3B5YSdVbR7",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-7rasd-m8eajig8ywaxe9.webp",
         "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
         ]
@@ -330,6 +328,7 @@
         "link": "https://s.shopee.co.th/2g9HriXVS2",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-7rasd-m8x5qjjikva8b0.webp",
         "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
         ]
@@ -340,6 +339,7 @@
         "link": "https://s.shopee.co.th/2qSi41Ws75",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-81ztd-mnjoolkkmxoldd.webp",
         "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
         ]
@@ -350,6 +350,7 @@
         "link": "https://s.shopee.co.th/7fXxouETJ2",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-7rasl-m8d2dtf6q4mm9d.webp",
         "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
         ]
@@ -360,6 +361,7 @@
         "link": "https://s.shopee.co.th/7prO1DDpy5",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-7rasa-m5js2fig00fea0.webp",
         "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
         ]
@@ -370,6 +372,7 @@
         "link": "https://s.shopee.co.th/7Kv7QIFjz0",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-7rasa-m5js2fig00fea0.webp",
         "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
         ]
@@ -380,6 +383,7 @@
         "link": "https://s.shopee.co.th/7VEXcbF6e3",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-7rasd-m7j5dkasn5qyce.webp",
         "source": "Shopee",
+        "shop_name": "JIB Official Store",
         "ids": [
           "5090"
         ]
@@ -390,6 +394,18 @@
         "link": "https://s.shopee.co.th/70IH1gH0ey",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-81zti-mllhvztzby0w0e.webp",
         "source": "Shopee",
+        "shop_name": "shoppingpc dotnet",
+        "ids": [
+          "5090"
+        ]
+      },
+      {
+        "title": "การ์ดจอ RTX 3060Ti 3060Ti 4060 4070 4080 5070 5080 5090",
+        "price": 9000,
+        "link": "https://s.shopee.co.th/7AbhDzGNK1",
+        "source": "Shopee",
+        "shop_name": "EZGGTECH",
+        "item_sold": 1,
         "ids": [
           "5090"
         ]
@@ -454,7 +470,9 @@
         "price": 39900,
         "link": "https://shopee.co.th/product/ใส่ลิงก์จริง",
         "source": "Shopee",
-        "badge": "แนะนำ"
+        "badge": "แนะนำ",
+        "shop_name": "Apple Official Store TH",
+        "item_sold": 5
       }
     ],
     "guide": [
@@ -543,7 +561,9 @@
         "link": "https://shopee.co.th/product/345889393/20475717603",
         "original_price": 6559,
         "image": "https://cf.shopee.co.th/file/th-11134207-7ras9-m517zanf92n1a5",
-        "source": "Shopee"
+        "source": "Shopee",
+        "shop_name": "SHINING GOLD Official Store",
+        "item_sold": 1
       }
     ]
   },
@@ -555,7 +575,9 @@
         "price": 16990,
         "link": "https://shopee.co.th/product/74778579/45361620338",
         "image": "https://cf.shopee.co.th/file/th-11134207-81zte-mp0m4brh648y60",
-        "source": "Shopee"
+        "source": "Shopee",
+        "shop_name": "INNO3D Official Store",
+        "item_sold": 3
       }
     ],
     "guide": [

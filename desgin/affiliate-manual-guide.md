@@ -178,6 +178,8 @@ section | type | ids | title | price | original_price | link | image | source | 
 | `image` | - | URL รูปสินค้า (items เท่านั้น) |
 | `source` | - | ชื่อแพลตฟอร์ม: Shopee / Lazada / ฯลฯ |
 | `badge` | - | ป้าย: ขายดี / แนะนำ / ราคาดี (items เท่านั้น) |
+| `shop_name` | - | ชื่อร้านค้า — ถ้ามีคำว่า "Official" จะแสดง **Mall badge แดง** หัวมุม card |
+| `item_sold` | - | ยอดขายสะสม (ตัวเลข) — `⚡ N ชิ้น` (< 10) หรือ `🔥 N ชิ้น` (≥ 10) |
 | `row` | ✅ guide | row index 0-based (guides เท่านั้น) |
 | `hint` | - | คำอธิบายสั้นใต้ชื่อ (guides เท่านั้น) |
 
@@ -199,11 +201,15 @@ section | type | ids | title | price | original_price | link | image | source | 
 ## ตัวอย่าง
 
 ```
-section          | type  | ids              | title                     | price | original_price | link                           | image | source | badge  | row | hint
-ai_calculator    | item  |                  | ASUS DUAL RTX 5060 8GB    | 14990 | 16500          | https://s.shopee.co.th/xxx     |       | Shopee | ขายดี  |     |
-ai_calculator_cpu| item  | r9_7950x|r9_7900x| AMD Ryzen 9 7950X         | 18990 |                | https://s.shopee.co.th/xxx     |       | Shopee | แนะนำ  |     |
-mac_llm          | guide |                  | เคส MacBook Air M4         | 590   |                | https://s.shopee.co.th/xxx     |       |        |        | 0   | ป้องกันรอย
+section          | type  | ids              | title                     | price | orig  | link                       | image | source | badge | shop_name              | item_sold | row | hint
+ai_calculator    | item  | 5060|3070        | INNO3D RTX 5060 8GB       | 16990 |       | https://s.shopee.co.th/xxx |       | Shopee | ขายดี | INNO3D Official Store  | 3         |     |
+ai_calculator_cpu| item  | r9_7950x|r9_7900x| AMD Ryzen 9 7950X        | 18990 |       | https://s.shopee.co.th/xxx |       | Shopee | แนะนำ |                        |           |     |
+mac_llm          | guide |                  | เคส MacBook Air M4        | 590   |       | https://s.shopee.co.th/xxx |       |        |       |                        |           | 0   | ป้องกันรอย
 ```
+
+> **Mall badge** — card ที่มี `shop_name` มีคำว่า "Official" จะแสดงป้าย `Mall` สีแดงที่หัวมุมบนขวา อัตโนมัติ  
+> **Sold** — `item_sold = 3` แสดง `⚡ 3 ชิ้น`, `item_sold = 15` แสดง `🔥 15 ชิ้น` (สีส้ม)  
+> ทั้งสองฟิลด์ถูก map อัตโนมัติจาก `import_shopee_links.py` (คอลัมน์ `ชื่อร้านค้า` และ `ขาย`)
 
 ---
 

@@ -97,6 +97,8 @@ python3 scripts/import_picks.py --section ai_calculator
 | `image` | - | URL รูปสินค้า (items) |
 | `source` | - | Shopee / Lazada / ฯลฯ (dropdown) |
 | `badge` | - | ขายดี / แนะนำ / ราคาดี (dropdown) |
+| `shop_name` | - | ชื่อร้านค้า — มี "Official" → แสดง **Mall badge แดง** หัวมุม card |
+| `item_sold` | - | ยอดขาย — `⚡ N ชิ้น` (< 10) / `🔥 N ชิ้น` (≥ 10) |
 | `row` | ✅ guide | row index 0-based (guides) |
 | `hint` | - | คำอธิบายสั้น (guides) |
 

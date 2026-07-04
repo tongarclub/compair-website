@@ -221,3 +221,15 @@ npx vitest
 
 Pure Functions ทุกตัวใน `js/` รับ input → return output โดยไม่มี side effects  
 ครอบ test ได้โดยตรงโดยไม่ต้อง mock browser APIs
+
+
+mac@Macs-MacBook-Air-2 compair-website % python3 scripts/import_shopee_links.py "ลิงก์สินค้าหลายลิงก์20260704183233-ec6516d0ebd44669b5db74bfd5ed34b3.csv" \
+  --section ai_calculator --ids "5090"
+
+
+cd /Users/mac/GitHub/compair-website && python3 scripts/import_shopee_links.py \
+  "csv-affiliate-shoppe/ลิงก์สินค้าหลายลิงก์20260704183233-ec6516d0ebd44669b5db74bfd5ed34b3.csv" \
+  --section ai_calculator \
+  --ids "5090" \
+  --source Shopee \
+  --replace

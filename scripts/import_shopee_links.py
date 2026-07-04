@@ -65,7 +65,7 @@ FEED_COLS = (
 XLSX_HEADERS = [
     'section', 'type', 'ids', 'title',
     'price', 'original_price', 'link', 'image',
-    'source', 'badge', 'row', 'hint',
+    'source', 'badge', 'shop_name', 'item_sold', 'row', 'hint',
 ]
 
 # ─── ราคา helpers ────────────────────────────────────────────────────────────
@@ -147,31 +147,45 @@ def build_xlsx_row(
     image_index: dict[str, str],
 ) -> list:
     """แปลง 1 แถวจาก Shopee CSV → 1 row สำหรับ picks.xlsx"""
-    itemid = src.get('รหัสสินค้า', '').strip()
-    title  = src.get('ชื่อสินค้า', '').strip()
-    price  = parse_price(src.get('ราคา', ''))
+    itemid    = src.get('รหัสสินค้า', '').strip()
+    title     = src.get('ชื่อสินค้า', '').strip()
+    price     = parse_price(src.get('ราคา', ''))
+    shop_name = src.get('ชื่อร้านค้า', '').strip()
+
+    # ยอดขาย — คอลัมน์ "ขาย" เป็น int โดยตรง
+    try:
+        item_sold = int(str(src.get('ขาย', '0')).strip()) or None
+    except (ValueError, TypeError):
+        item_sold = None
 
     if use_product_link:
         link = src.get('ลิงก์สินค้า', '').strip()
     else:
         link = src.get('ลิงก์ข้อเสนอ', '').strip() or src.get('ลิงก์สินค้า', '').strip()
 
-    # หารูปจาก feed index
-    image = image_index.get(itemid, '')
+    # รูปสินค้า: ลำดับ priority
+    #   1. คอลัมน์ "รูปสินค้า" ใน CSV (ใส่เองหรือ back-fill แล้ว)
+    #   2. ค้นจาก product feed CSV ด้วย itemid (--feed-csv)
+    image = (
+        src.get('รูปสินค้า', '').strip()
+        or image_index.get(itemid, '')
+    )
 
     return [
-        section,       # section
-        row_type,      # type
-        ids,           # ids
-        title,         # title
-        price,         # price
-        None,          # original_price
-        link,          # link
-        image or None, # image
-        source,        # source
-        badge or None, # badge
-        None,          # row (guide only)
-        hint or None,  # hint
+        section,          # section
+        row_type,         # type
+        ids,              # ids
+        title,            # title
+        price,            # price
+        None,             # original_price
+        link,             # link
+        image or None,    # image
+        source,           # source
+        badge or None,    # badge
+        shop_name or None,# shop_name
+        item_sold,        # item_sold
+        None,             # row (guide only)
+        hint or None,     # hint
     ]
 
 # ─── xlsx append ─────────────────────────────────────────────────────────────

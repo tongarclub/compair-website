@@ -387,37 +387,61 @@ optgroup { font-style: normal; font-weight: 700; }
   transition: color .2s;
 }
 .aff-strip-more:hover { color: var(--primary); }
+/* ── Horizontal scroll strip ── */
 .aff-strip-cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  overflow-x: auto;
+  gap: 0;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;        /* Firefox */
 }
+.aff-strip-cards::-webkit-scrollbar { display: none; }
+
+/* ── Vertical card (รูปบน, เนื้อหาล่าง) ── */
 .aff-card {
-  display: flex; gap: 10px; padding: 12px 14px;
+  display: flex; flex-direction: column;
+  flex: 0 0 148px;              /* fixed width, scroll ดูทีละ card */
+  padding: 0;
   text-decoration: none; color: inherit;
   border-right: 1px solid var(--border);
-  transition: background .2s;
+  transition: background .18s;
   position: relative;
+  scroll-snap-align: start;
 }
 .aff-card:last-child { border-right: none; }
 .aff-card:hover { background: var(--surface); }
+
+/* รูปสินค้า — ด้านบนเต็มความกว้าง */
 .aff-card-img {
-  width: 52px; height: 52px; flex-shrink: 0;
+  width: 100%; height: 110px; flex-shrink: 0;
   object-fit: cover; background: var(--surface2);
+  display: block;
 }
-.aff-card-body { flex: 1; min-width: 0; }
+
+/* placeholder รูปสินค้า */
+.aff-card-img-placeholder {
+  background: linear-gradient(135deg, var(--surface2) 0%, var(--surface) 100%);
+}
+/* กล่องเนื้อหาด้านล่าง */
+.aff-card-body {
+  flex: 1; min-width: 0;
+  padding: 9px 10px 26px;       /* padding-bottom เผื่อ arrow */
+  display: flex; flex-direction: column; gap: 2px;
+}
 .aff-card-title {
-  font-size: 11.5px; line-height: 1.5; color: var(--text);
+  font-size: 11px; line-height: 1.5; color: var(--text);
   display: -webkit-box;
-  -webkit-line-clamp: 2; -webkit-box-orient: vertical;
-  overflow: hidden; margin-bottom: 5px;
+  -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .aff-card-price {
-  display: flex; align-items: center; gap: 5px; flex-wrap: wrap;
-  margin-bottom: 3px;
+  display: flex; align-items: baseline; gap: 5px; flex-wrap: wrap;
+  margin-top: 4px;
 }
 .aff-price {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 16px; font-weight: 600; color: #ee4d2d; line-height: 1;
+  font-size: 17px; font-weight: 700; color: #ee4d2d; line-height: 1;
 }
 .aff-orig { font-size: 10px; color: var(--text3); text-decoration: line-through; }
 .aff-disc {
@@ -425,17 +449,48 @@ optgroup { font-style: normal; font-weight: 700; }
   background: #ee4d2d; color: #fff;
   padding: 1px 5px; letter-spacing: .03em;
 }
+
 /* ── Manual affiliate card extras ──── */
 .aff-badge-manual {
   display: inline-block;
   font-size: 9px; font-weight: 700; letter-spacing: .06em;
   text-transform: uppercase; color: var(--gold, #8B7355);
   border: 1px solid currentColor; padding: 1px 5px;
-  margin-bottom: 3px;
+  align-self: flex-start; margin-bottom: 2px;
 }
 .aff-card-source {
   font-family: 'DM Mono', monospace;
-  font-size: 9px; color: var(--text3); margin-top: 3px;
+  font-size: 9px; color: var(--text3);
+}
+/* ── Mall badge — top-right corner ── */
+.aff-mall-badge {
+  position: absolute; top: 0; right: 0;
+  font-family: 'DM Mono', monospace;
+  font-size: 8px; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase;
+  color: #fff; background: #ee1a1a;
+  padding: 2px 7px; line-height: 16px;
+  pointer-events: none; z-index: 1;
+}
+/* ── Shop name ── */
+.aff-card-shop {
+  font-family: 'DM Mono', monospace;
+  font-size: 8.5px; color: var(--text3);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  max-width: 100%;
+}
+/* ── Sold indicator ── */
+.aff-sold {
+  font-family: 'DM Mono', monospace;
+  font-size: 8.5px; color: var(--text3);
+  display: inline-flex; align-items: center; gap: 2px;
+  white-space: nowrap;
+}
+.aff-sold-hot { color: #ee4d2d; }
+/* ── Card footer: source · shop · sold ── */
+.aff-card-footer {
+  display: flex; flex-direction: column; gap: 2px;
+  margin-top: auto; padding-top: 6px;
 }
 /* ── Buying-guide generic buy column ─── */
 .gt-buy-th { color: var(--gold, #8B7355); letter-spacing: .1em; white-space: nowrap; }
@@ -469,18 +524,15 @@ optgroup { font-style: normal; font-weight: 700; }
   font-size: 9px; color: var(--text3); letter-spacing: .02em;
 }
 .aff-card-arrow {
-  position: absolute; right: 10px; bottom: 10px;
+  position: absolute; right: 8px; bottom: 8px;
   font-size: 10px; color: var(--text3);
   transition: color .2s, transform .2s;
 }
 .aff-card:hover .aff-card-arrow { color: var(--primary); transform: translateX(2px); }
-/* Variant B: single compact button */
-.aff-strip.variant-b .aff-strip-cards { grid-template-columns: 1fr; }
-.aff-strip.variant-b .aff-card { border-right: none; }
+/* Mobile: 2 cards visible at once */
 @media (max-width: 640px) {
-  .aff-strip-cards { grid-template-columns: 1fr; }
-  .aff-card { border-right: none; border-bottom: 1px solid var(--border); }
-  .aff-card:last-child { border-bottom: none; }
+  .aff-card { flex: 0 0 130px; }
+  .aff-card-img { height: 90px; }
 }
 
 /* ═══════════════════════════════════════════════

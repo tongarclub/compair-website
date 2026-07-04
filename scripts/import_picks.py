@@ -46,7 +46,7 @@ DEFAULT_XLS = REPO_ROOT / 'data' / 'affiliate' / 'picks.xlsx'
 EXPECTED_HEADERS = [
     'section', 'type', 'ids', 'title',
     'price', 'original_price', 'link', 'image',
-    'source', 'badge', 'row', 'hint',
+    'source', 'badge', 'shop_name', 'item_sold', 'row', 'hint',
 ]
 
 # ─── helpers ──────────────────────────────────────────────────────────────────
@@ -80,10 +80,14 @@ def _build_item(row: dict) -> dict | None:
     if op is not None and op > price:
         item['original_price'] = op
 
-    for field in ('image', 'source', 'badge'):
+    for field in ('image', 'source', 'badge', 'shop_name'):
         v = _str(row.get(field))
         if v:
             item[field] = v
+
+    sold = _price(row.get('item_sold'))
+    if sold is not None and sold > 0:
+        item['item_sold'] = int(sold)
 
     ids = _ids(_str(row.get('ids', '')))
     if ids:

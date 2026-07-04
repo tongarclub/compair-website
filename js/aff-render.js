@@ -22,18 +22,38 @@ async function _getAffData() {
 
 function _cardHTML(item) {
   const img    = item.image
-    ? `<img class="aff-card-img" src="${item.image}" alt="" loading="lazy">`
-    : '';
+    ? `<img class="aff-card-img" src="${item.image}" alt="${item.title}" loading="lazy">`
+    : `<div class="aff-card-img aff-card-img-placeholder"></div>`;
   const badge  = item.badge
     ? `<span class="aff-badge-manual">${item.badge}</span>`
     : '';
   const orig   = (item.original_price && item.original_price > item.price)
     ? `<span class="aff-orig">฿${Number(item.original_price).toLocaleString()}</span>`
     : '';
-  const source = item.source
+
+  // Mall badge — แสดงถ้าชื่อร้านมีคำว่า "official" (case-insensitive)
+  const isOfficial = item.shop_name && /official/i.test(item.shop_name);
+  const mallBadge  = isOfficial
+    ? `<span class="aff-mall-badge">Mall</span>`
+    : '';
+
+  // Footer: source · shop name · sold
+  const sourcePart = item.source
     ? `<span class="aff-card-source">${item.source}</span>`
     : '';
+  const shopPart = item.shop_name
+    ? `<span class="aff-card-shop" title="${item.shop_name}">${item.shop_name}</span>`
+    : '';
+  const sold = Number(item.item_sold) || 0;
+  const soldPart = sold > 0
+    ? `<span class="aff-sold${sold >= 10 ? ' aff-sold-hot' : ''}">${sold >= 10 ? '🔥' : '⚡'} ขายได้ ${sold} ชิ้น</span>`
+    : '';
+  const footer = (sourcePart || shopPart || soldPart)
+    ? `<div class="aff-card-footer">${sourcePart}${shopPart}${soldPart}</div>`
+    : '';
+
   return `<a class="aff-card" href="${item.link}" target="_blank" rel="noopener sponsored">
+    ${mallBadge}
     ${img}
     <div class="aff-card-body">
       ${badge}
@@ -42,7 +62,7 @@ function _cardHTML(item) {
         <span class="aff-price">฿${Number(item.price).toLocaleString()}</span>
         ${orig}
       </div>
-      ${source}
+      ${footer}
     </div>
     <span class="aff-card-arrow">→</span>
   </a>`;
