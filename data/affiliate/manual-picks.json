@@ -17,17 +17,19 @@
     "label": "GPU · เปรียบราคา",
     "items": [
       {
-        "title": "ASUS DUAL GeForce RTX 5060 8GB GDDR7",
-        "price": 14990,
-        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
-        "original_price": 16500,
+        "title": "INNO3D GeForce RTX 5060 ICHILL X3 WHITE 8GB GDDR7",
+        "price": 16990,
+        "link": "https://shopee.co.th/product/74778579/45361620338",
+        "image": "https://cf.shopee.co.th/file/th-11134207-81zte-mp0m4brh648y60",
         "source": "Shopee",
         "badge": "ขายดี"
       },
       {
-        "title": "MSI GeForce RTX 5060 VENTUS 2X 8G",
-        "price": 13990,
-        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
+        "title": "GIGABYTE GeForce RTX 5070 AERO OC 12GB GDDR7",
+        "price": 31200,
+        "link": "https://shopee.co.th/product/133460598/45410842093",
+        "original_price": 80000,
+        "image": "https://cf.shopee.co.th/file/sg-11134201-822xs-mogaiu4vc2rv54",
         "source": "Shopee"
       }
     ]
@@ -40,7 +42,7 @@
       {
         "title": "AMD Ryzen 9 7950X Box",
         "price": 18990,
-        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
+        "link": "https://shopee.co.th/product/ใส่ลิงก์จริง",
         "source": "Shopee",
         "badge": "แนะนำ",
         "ids": [
@@ -51,7 +53,7 @@
       {
         "title": "AMD Ryzen 7 7700X Box",
         "price": 11990,
-        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
+        "link": "https://shopee.co.th/product/ใส่ลิงก์จริง",
         "source": "Shopee",
         "ids": [
           "r7_7700x"
@@ -60,7 +62,7 @@
       {
         "title": "Intel Core i9-14900K Box",
         "price": 17500,
-        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
+        "link": "https://shopee.co.th/product/ใส่ลิงก์จริง",
         "source": "Shopee",
         "badge": "ราคาดี",
         "ids": [
@@ -71,7 +73,7 @@
       {
         "title": "ASUS PRIME X670-P WiFi Motherboard AM5",
         "price": 8990,
-        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
+        "link": "https://shopee.co.th/product/ใส่ลิงก์จริง",
         "source": "Shopee",
         "ids": [
           "r9_7950x",
@@ -88,7 +90,7 @@
       {
         "title": "Apple MacBook Air M4 13\" 16GB",
         "price": 39900,
-        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
+        "link": "https://shopee.co.th/product/ใส่ลิงก์จริง",
         "source": "Shopee",
         "badge": "แนะนำ"
       }
@@ -96,47 +98,47 @@
     "guide": [
       {
         "row": 0,
-        "name": "เคส MacBook Air M4",
-        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
-        "price": 590,
-        "hint": "ป้องกันรอย"
+        "name": "elago MagSafe Side Mount Holder ยึดมือถือกับ MacBook",
+        "link": "https://shopee.co.th/product/381301308/27707726524",
+        "price": 1390,
+        "hint": "อุปกรณ์เสริม MacBook Air M4 16GB"
       },
       {
         "row": 1,
-        "name": "เคส MacBook Air M4 32GB",
-        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
-        "price": 620,
-        "hint": "ป้องกันรอย"
+        "name": "elago MagSafe Side Mount Holder ยึดมือถือกับ MacBook",
+        "link": "https://shopee.co.th/product/381301308/27707726524",
+        "price": 1390,
+        "hint": "อุปกรณ์เสริม MacBook Air M4 32GB"
       },
       {
         "row": 2,
         "name": "เคส MacBook Pro M4 Pro",
-        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
+        "link": "https://shopee.co.th/product/ใส่ลิงก์จริง",
         "price": 650,
         "hint": "กันกระแทก"
       },
       {
         "row": 3,
         "name": "เคส MacBook Pro M4 Pro 48GB",
-        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
+        "link": "https://shopee.co.th/product/ใส่ลิงก์จริง",
         "price": 650
       },
       {
         "row": 4,
         "name": "เคส MacBook Pro M4 Max",
-        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
+        "link": "https://shopee.co.th/product/ใส่ลิงก์จริง",
         "price": 680
       },
       {
         "row": 5,
         "name": "เคส MacBook Pro M4 Max 128GB",
-        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
+        "link": "https://shopee.co.th/product/ใส่ลิงก์จริง",
         "price": 680
       },
       {
         "row": 6,
         "name": "Stand + Hub Mac Studio",
-        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
+        "link": "https://shopee.co.th/product/ใส่ลิงก์จริง",
         "price": 1290,
         "hint": "ตั้งโต๊ะ + USB Hub"
       }
@@ -146,9 +148,11 @@
     "label": "Solar · เปรียบราคา",
     "items": [
       {
-        "title": "แผงโซล่าเซลล์ 550W Mono",
-        "price": 4990,
-        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
+        "title": "CELUO แผงโซล่าเซลล์ 18V/500W พร้อมสายเชื่อมต่อ",
+        "price": 189,
+        "link": "https://shopee.co.th/product/1001948638/53005644906",
+        "original_price": 999,
+        "image": "https://cf.shopee.co.th/file/th-11134207-81ztd-mk4p2vjmkhkzbc",
         "source": "Shopee",
         "badge": "ขายดี"
       }
@@ -158,9 +162,11 @@
     "label": "EV Charger · เปรียบราคา",
     "items": [
       {
-        "title": "EV Charger 7kW Wallbox Type 2",
-        "price": 12900,
-        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
+        "title": "ROMADA C03 EV Charger Type2 3.5kW 16A จอ LCD",
+        "price": 2520,
+        "link": "https://shopee.co.th/product/1791120553/49208184442",
+        "original_price": 5040,
+        "image": "https://cf.shopee.co.th/file/cn-11134207-820l4-mmle2s3pjuvc6a",
         "source": "Shopee",
         "badge": "แนะนำ"
       }
@@ -170,9 +176,11 @@
     "label": "ทองคำ · เปรียบราคา",
     "items": [
       {
-        "title": "ทองคำแท่ง 1 บาท ออโรร่า",
-        "price": 52000,
-        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
+        "title": "SHINING GOLD ทองคำแท้ 96.5% น้ำหนัก 0.5 กรัม",
+        "price": 2769,
+        "link": "https://shopee.co.th/product/345889393/20475717603",
+        "original_price": 6559,
+        "image": "https://cf.shopee.co.th/file/th-11134207-7ras9-m517zanf92n1a5",
         "source": "Shopee"
       }
     ]
@@ -181,33 +189,34 @@
     "label": "GPU สำหรับ Image Gen",
     "items": [
       {
-        "title": "ASUS DUAL GeForce RTX 5060 8GB",
-        "price": 14990,
-        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
+        "title": "INNO3D GeForce RTX 5060 ICHILL X3 WHITE 8GB GDDR7",
+        "price": 16990,
+        "link": "https://shopee.co.th/product/74778579/45361620338",
+        "image": "https://cf.shopee.co.th/file/th-11134207-81zte-mp0m4brh648y60",
         "source": "Shopee"
       }
     ],
     "guide": [
       {
         "row": 0,
-        "name": "MSI GeForce RTX 5060 VENTUS 2X 8G",
-        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
-        "price": 13990,
+        "name": "INNO3D GeForce RTX 5060 ICHILL X3 WHITE 8GB GDDR7",
+        "link": "https://shopee.co.th/product/74778579/45361620338",
+        "price": 16990,
         "hint": "VRAM 8GB เริ่มต้น SD/FLUX Schnell"
       },
       {
         "row": 1,
         "name": "ASUS DUAL GeForce RTX 5060 Ti 16G",
-        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
+        "link": "https://shopee.co.th/product/ใส่ลิงก์จริง",
         "price": 19990,
         "hint": "VRAM 16GB ครบ FLUX Dev FP8"
       },
       {
         "row": 2,
-        "name": "MSI GeForce RTX 5070 Ti Gaming X Slim",
-        "link": "https://s.shopee.co.th/ใส่ลิงก์จริง",
-        "price": 35990,
-        "hint": "VRAM 16GB Pro batch gen"
+        "name": "GIGABYTE GeForce RTX 5070 AERO OC 12GB GDDR7",
+        "link": "https://shopee.co.th/product/133460598/45410842093",
+        "price": 31200,
+        "hint": "VRAM 12GB Pro batch gen"
       }
     ]
   }
