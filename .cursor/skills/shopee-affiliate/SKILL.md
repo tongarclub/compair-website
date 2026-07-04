@@ -37,28 +37,51 @@ desgin/
 
 ---
 
-## การเพิ่มสินค้า (Excel Workflow)
+## การเพิ่มสินค้า (2 วิธี)
 
-> **picks.xlsx คือ Source of Truth** — แก้ Excel แล้วรัน script เท่านั้น อย่าแก้ JSON โดยตรง
+> **picks.xlsx คือ Source of Truth** — อย่าแก้ JSON โดยตรง
 
-### ขั้นตอน
+### วิธี A — แก้ Excel โดยตรง
 
 ```bash
-# 1. เปิด Excel แก้ไข (sheet "Picks")
-open data/affiliate/picks.xlsx
-
-# 2. preview ก่อน (optional)
-python3 scripts/import_picks.py --dry-run
-
-# 3. import จริง
-python3 scripts/import_picks.py
-
-# 4. import เฉพาะ section เดียว
-python3 scripts/import_picks.py --section mac_llm
-
-# 5. reset template ถ้า Excel เสีย
-python3 scripts/create_picks_xlsx.py
+open data/affiliate/picks.xlsx        # แก้ sheet "Picks"
+python3 scripts/import_picks.py       # sync → JSON
+python3 scripts/import_picks.py --dry-run          # preview ก่อน
+python3 scripts/import_picks.py --section mac_llm  # เฉพาะ section
+python3 scripts/create_picks_xlsx.py               # reset template
 ```
+
+### วิธี B — นำเข้าจาก Shopee "ลิงก์สินค้าหลายรายการ" (ใหม่)
+
+CSV จาก Shopee Affiliate Portal → "สร้างลิงก์หลายรายการ" → Export
+
+```bash
+# Step 1: append สินค้าเข้า picks.xlsx
+python3 scripts/import_shopee_links.py "csv-affiliate-shoppe/links.csv" \
+  --section ai_calculator \
+  --ids "5090|5080"     \   # ผูกกับ GPU id (optional)
+  --source Shopee        \   # platform label
+  --badge ขายดี         \   # badge (optional)
+  --dry-run                  # preview ก่อน
+
+# Step 2: sync picks.xlsx → JSON
+python3 scripts/import_picks.py --section ai_calculator
+```
+
+#### Options ครบของ import_shopee_links.py
+
+| Option | ค่าตัวอย่าง | อธิบาย |
+|--------|------------|--------|
+| `--section` | `ai_calculator` | **required** section key |
+| `--source` | `Shopee` | platform: Shopee / Lazada / Amazon / JD |
+| `--badge` | `ขายดี` | ป้าย: ขายดี / แนะนำ / ราคาดี / ใหม่ / HOT |
+| `--ids` | `5090\|5080` | GPU/CPU id filter คั่น `\|` |
+| `--hint` | `VRAM 32GB` | คำอธิบาย ใส่ทุกแถว |
+| `--type` | `item` | item (default) / guide |
+| `--limit` | `10` | จำกัดจำนวนแถว |
+| `--feed-csv` | `csv-affiliate-shoppe/feed.csv` | ดึงรูปอัตโนมัติจาก Product Feed |
+| `--replace` | — | แทนที่แถวเดิมของ section (default: append) |
+| `--dry-run` | — | preview ไม่บันทึก |
 
 ### Excel Columns (sheet "Picks")
 
@@ -83,6 +106,8 @@ Sheet **"Ref"** ใน Excel มี reference ครบ: section keys, cpu ids, 
 
 ---
 
+---
+
 ## JS API
 
 ### loadAffiliate(key, opts)
@@ -90,14 +115,25 @@ Sheet **"Ref"** ใน Excel มี reference ครบ: section keys, cpu ids, 
 แสดง affiliate strip จาก `manual-picks.json`
 
 ```javascript
+// แสดงสินค้าทั้งหมดใน section
 loadAffiliate('ai_calculator', {
-  stripId: 'gpuAffiliateBox',  // id ของ .aff-strip container
-  cardsId: 'gpuAffCards',      // id ของ .aff-strip-cards
-  labelId: 'gpuAffLabel',      // id ของ label element (optional)
+  stripId: 'gpuAffiliateBox',
+  cardsId: 'gpuAffCards',
+  labelId: 'gpuAffLabel',
+});
+
+// กรองด้วย filterId — ผูกกับ dropdown (ai_calculator, ai_calculator_cpu)
+loadAffiliate('ai_calculator', {
+  stripId: 'gpuAffiliateBox',
+  cardsId: 'gpuAffCards',
+  filterId: gpu.id,   // เช่น "5090", "3070"
 });
 ```
 
-**Behavior:** ถ้า `items` ว่าง → strip ซ่อนตัวเอง (ไม่แสดงกล่องว่าง)
+**Behavior:**
+- `items` ที่มี `ids[]` → แสดงเมื่อ `filterId` อยู่ใน array
+- `items` ที่ไม่มี `ids` → แสดงเสมอ (fallback)
+- ไม่มี items หลังกรอง → strip ซ่อนตัวเอง
 
 ### loadAffiliateGuide(key, selector)
 
@@ -147,6 +183,21 @@ loadAffiliateGuide('image_gen', '.gpu-buy-cell[data-gpu-pick]');
   "items": []
 }
 ```
+
+---
+
+## ids Reference (ai_calculator)
+
+GPU ids มาจาก `data/ai-models/gpus.json` field `id`:
+
+```
+5090 / 5080 / 5070ti / 5070 / 5060ti / 5060
+4090 / 4080s / 4080 / 4070tis / 4070ti / 4070s / 4070
+4060ti16 / 4060ti / 4060
+3090ti / 3090 / 3080ti / 3080_12 / 3080 / 3070ti / 3070 / 3060ti / 3060 / 3050
+```
+
+CPU ids อยู่ใน sheet "Ref" ของ `picks.xlsx` และใน `desgin/affiliate-manual-guide.md`
 
 ---
 

@@ -6,14 +6,26 @@
 | ไฟล์ | หน้าที่ |
 |------|--------|
 | `data/affiliate/picks.xlsx` | ✏️ **แก้สินค้าที่นี่** (Excel หลัก) |
-| `scripts/import_picks.py` | รัน import Excel → JSON (รองรับ .xlsx และ .csv) |
+| `scripts/import_shopee_links.py` | **ใหม่** — แปลง Shopee CSV "ลิงก์หลายรายการ" → append picks.xlsx |
+| `scripts/import_picks.py` | sync picks.xlsx → manual-picks.json |
 | `scripts/create_picks_xlsx.py` | สร้าง template ใหม่ (ถ้า Excel เสีย) |
 | `data/affiliate/manual-picks.json` | 🔄 generated — อย่าแก้มือ |
 
-### Script Options
+### Workflow หลัก (Shopee CSV → เว็บ)
 
 ```bash
-python3 scripts/import_picks.py               # import ทั้งหมด (xlsx > csv)
+# ขั้นตอนที่ 1: แปลง Shopee CSV → append ลง picks.xlsx
+python3 scripts/import_shopee_links.py "csv-affiliate-shoppe/ลิงก์สินค้า...csv" \
+  --section ai_calculator --ids "5090|5080" --badge ขายดี
+
+# ขั้นตอนที่ 2: sync picks.xlsx → manual-picks.json
+python3 scripts/import_picks.py --section ai_calculator
+```
+
+### Script Options (import_picks.py)
+
+```bash
+python3 scripts/import_picks.py               # import ทั้งหมด
 python3 scripts/import_picks.py --dry-run     # preview ไม่บันทึก
 python3 scripts/import_picks.py --section ev  # import เฉพาะ section
 python3 scripts/create_picks_xlsx.py          # reset Excel template
@@ -51,7 +63,8 @@ data/affiliate/manual-picks.json  ← 🔄 auto-generated จาก Excel
 |------|--------|
 | `data/affiliate/picks.xlsx` | ✏️ แก้ไขสินค้าที่นี่ (Excel หลัก) |
 | `data/affiliate/manual-picks.json` | 🔄 generated — อย่าแก้มือ |
-| `scripts/import_picks.py` | Script import Excel/CSV → JSON |
+| `scripts/import_shopee_links.py` | **ใหม่** Shopee CSV "ลิงก์หลายรายการ" → picks.xlsx |
+| `scripts/import_picks.py` | picks.xlsx → manual-picks.json |
 | `scripts/create_picks_xlsx.py` | สร้าง picks.xlsx ใหม่ (reset template) |
 | `js/aff-render.js` | Renderer (อย่าแก้ถ้าไม่จำเป็น) |
 | `css/shared.css` | Style ของ card และ guide column |
@@ -59,6 +72,8 @@ data/affiliate/manual-picks.json  ← 🔄 auto-generated จาก Excel
 ---
 
 ## วิธีใช้ทุกวัน (Quick Start)
+
+### แบบ A — แก้ Excel โดยตรง
 
 ```bash
 # 1. เปิด Excel แก้ไขสินค้า (sheet "Picks")
@@ -75,6 +90,68 @@ python3 scripts/import_picks.py --section mac_llm
 
 # 5. reset Excel template (ถ้าไฟล์เสีย หรือต้องการเริ่มใหม่)
 python3 scripts/create_picks_xlsx.py
+```
+
+### แบบ B — นำเข้าจาก Shopee "ลิงก์สินค้าหลายรายการ" (ใหม่)
+
+```bash
+# 1. ดาวน์โหลด CSV จาก Shopee Affiliate Portal
+#    → "สร้างลิงก์" → "สร้างลิงก์หลายรายการ" → Export → บันทึกใน csv-affiliate-shoppe/
+
+# 2. append สินค้าเข้า picks.xlsx
+python3 scripts/import_shopee_links.py "csv-affiliate-shoppe/ลิงก์สินค้า...csv" \
+  --section ai_calculator \
+  --ids "5090|5080"          # optional: ผูกกับ GPU/CPU id
+  --source Shopee            # optional: platform (default: Shopee)
+  --badge ขายดี             # optional: ป้ายสินค้า
+  --dry-run                  # ดู preview ก่อน import จริง
+
+# 3. ถ้า OK → import จริง (ลบ --dry-run)
+python3 scripts/import_shopee_links.py "csv-affiliate-shoppe/ลิงก์สินค้า...csv" \
+  --section ai_calculator --ids "5090|5080"
+
+# 4. sync picks.xlsx → manual-picks.json
+python3 scripts/import_picks.py --section ai_calculator
+```
+
+---
+
+## import_shopee_links.py — Options ครบ
+
+| Option | ค่าตัวอย่าง | อธิบาย |
+|--------|------------|--------|
+| `--section` | `ai_calculator` | **required** — section key ใน JSON |
+| `--source` | `Shopee` (default) | platform: Shopee / Lazada / Amazon / JD / อื่นๆ |
+| `--badge` | `ขายดี` | ป้ายสินค้า: ขายดี / แนะนำ / ราคาดี / ใหม่ / HOT |
+| `--ids` | `5090\|5080` | GPU/CPU id filter คั่น `\|` (ดู Ref sheet ใน Excel) |
+| `--hint` | `VRAM 32GB` | คำอธิบายสั้น ใส่ทุกแถว |
+| `--type` | `item` (default) | item / guide |
+| `--limit` | `10` | จำกัดจำนวนแถว |
+| `--feed-csv` | `csv-affiliate-shoppe/feed.csv` | Product Feed ใหญ่ — ดึงรูปอัตโนมัติ (ถ้ามี) |
+| `--use-product-link` | — | ใช้ลิงก์สินค้าเต็มแทน short affiliate link |
+| `--replace` | — | แทนที่แถวเดิมของ section นั้น (default: append) |
+| `--dry-run` | — | preview โดยไม่บันทึก |
+| `--output` | `path/file.xlsx` | ระบุ path picks.xlsx เอง |
+
+### ตัวอย่างคำสั่ง
+
+```bash
+# GPU RTX 5090 → section ai_calculator, กรองด้วย ids=5090
+python3 scripts/import_shopee_links.py "csv-affiliate-shoppe/links.csv" \
+  --section ai_calculator --ids "5090" --badge ขายดี
+
+# EV Charger → section ev, source Shopee
+python3 scripts/import_shopee_links.py "csv-affiliate-shoppe/ev-links.csv" \
+  --section ev --source Shopee --replace
+
+# ดึงรูปสินค้าอัตโนมัติจาก Product Feed (ถ้า itemid ตรงกัน)
+python3 scripts/import_shopee_links.py "csv-affiliate-shoppe/links.csv" \
+  --section solar \
+  --feed-csv "csv-affiliate-shoppe/1006_200101_Product Feed All Global Category_20260626T060855_1.csv"
+
+# preview 5 แถวแรก ไม่บันทึก
+python3 scripts/import_shopee_links.py "csv-affiliate-shoppe/links.csv" \
+  --section gold --limit 5 --dry-run
 ```
 
 ---
