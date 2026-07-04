@@ -65,8 +65,8 @@ _LNK_MAC_ACC = 'https://shopee.co.th/product/381301308/27707726524'
 
 EXAMPLE_ROWS = [
     # section,            type,   ids,                                     title,                                                   price,  orig,   link,          image,          source,  badge,    row, hint
-    ('ai_calculator',     'item', '',                                      'INNO3D GeForce RTX 5060 ICHILL X3 WHITE 8GB GDDR7',     16990,  '',     _LNK_RTX5060,  _IMG_RTX5060,   'Shopee','ขายดี',  '', ''),
-    ('ai_calculator',     'item', '',                                      'GIGABYTE GeForce RTX 5070 AERO OC 12GB GDDR7',          31200,  80000,  _LNK_RTX5070,  _IMG_RTX5070,   'Shopee','',       '', ''),
+    ('ai_calculator',     'item', '5060|5060ti|4060|4060ti|3060|3060ti|3070|3070ti', 'INNO3D GeForce RTX 5060 ICHILL X3 WHITE 8GB GDDR7', 16990, '',    _LNK_RTX5060,  _IMG_RTX5060,   'Shopee','ขายดี',  '', ''),
+    ('ai_calculator',     'item', '5070|5070ti|4070|4070s|4070ti|3080|3080ti|3070', 'GIGABYTE GeForce RTX 5070 AERO OC 12GB GDDR7',      31200, 80000, _LNK_RTX5070,  _IMG_RTX5070,   'Shopee','',       '', ''),
     ('ai_calculator_cpu', 'item', 'r9_7950x|r9_7900x',                    'AMD Ryzen 9 7950X Box',                                 18990,  '',     'https://shopee.co.th/product/ใส่ลิงก์จริง', '', 'Shopee','แนะนำ', '', ''),
     ('ai_calculator_cpu', 'item', 'r7_7700x',                             'AMD Ryzen 7 7700X Box',                                 11990,  '',     'https://shopee.co.th/product/ใส่ลิงก์จริง', '', 'Shopee','',      '', ''),
     ('ai_calculator_cpu', 'item', 'i9_14900k|i7_14700k',                  'Intel Core i9-14900K Box',                              17500,  '',     'https://shopee.co.th/product/ใส่ลิงก์จริง', '', 'Shopee','ราคาดี','', ''),
@@ -112,8 +112,8 @@ COL_WIDTHS = {
 # ─── Ref sheet ──────────────────────────────────────────────────────────────────
 
 SECTION_NOTES = [
-    ('ai_calculator',     'item',          'AI Calculator — GPU strip'),
-    ('ai_calculator_cpu', 'item + ids',    'AI Calculator — CPU strip (กรองด้วย ids)'),
+    ('ai_calculator',     'item + ids',    'AI Calculator — GPU strip (กรองด้วย gpu.id → ดู Ref col N)'),
+    ('ai_calculator_cpu', 'item + ids',    'AI Calculator — CPU strip (กรองด้วย cpu.id → ดู Ref col E)'),
     ('mac_llm',           'item / guide',  'Mac LLM Calculator — strip + guide (row 0–6)'),
     ('solar',             'item',          'Solar Calculator — Solar strip'),
     ('ev',                'item',          'EV Calculator — EV Charger strip'),
@@ -153,6 +153,34 @@ GPU_ROWS = [
     (0, 'RTX 5060 8 GB — เริ่มต้น'),
     (1, 'RTX 5060 Ti 16 GB — จริงจัง'),
     (2, 'RTX 5070 Ti / 5080 — Pro'),
+]
+
+GPU_IDS = [
+    ('5090',    'RTX 5090  · VRAM 32GB'),
+    ('5080',    'RTX 5080  · VRAM 16GB'),
+    ('5070ti',  'RTX 5070 Ti · VRAM 16GB'),
+    ('5070',    'RTX 5070  · VRAM 12GB'),
+    ('5060ti',  'RTX 5060 Ti 16GB · VRAM 16GB'),
+    ('4090',    'RTX 4090  · VRAM 24GB'),
+    ('4080s',   'RTX 4080 Super · VRAM 16GB'),
+    ('4080',    'RTX 4080  · VRAM 16GB'),
+    ('4070tis', 'RTX 4070 Ti Super · VRAM 16GB'),
+    ('4070ti',  'RTX 4070 Ti · VRAM 12GB'),
+    ('4070s',   'RTX 4070 Super · VRAM 12GB'),
+    ('4070',    'RTX 4070  · VRAM 12GB'),
+    ('4060ti16','RTX 4060 Ti 16GB · VRAM 16GB'),
+    ('4060ti',  'RTX 4060 Ti 8GB · VRAM 8GB'),
+    ('4060',    'RTX 4060  · VRAM 8GB'),
+    ('3090ti',  'RTX 3090 Ti · VRAM 24GB'),
+    ('3090',    'RTX 3090  · VRAM 24GB'),
+    ('3080ti',  'RTX 3080 Ti · VRAM 12GB'),
+    ('3080_12', 'RTX 3080 12GB · VRAM 12GB'),
+    ('3080',    'RTX 3080 10GB · VRAM 10GB'),
+    ('3070ti',  'RTX 3070 Ti · VRAM 8GB'),
+    ('3070',    'RTX 3070  · VRAM 8GB'),
+    ('3060ti',  'RTX 3060 Ti · VRAM 8GB'),
+    ('3060',    'RTX 3060 12GB · VRAM 12GB'),
+    ('3050',    'RTX 3050 8GB · VRAM 8GB'),
 ]
 
 # ─── helpers ────────────────────────────────────────────────────────────────────
@@ -334,6 +362,18 @@ def build_workbook() -> Workbook:
         bg = 'FFE0F7FA' if i % 2 == 0 else 'FFFFFFFF'
         ref_cell(r,     i, 11, bold=True, bg=bg)
         ref_cell(label, i, 12, bg=bg)
+
+    # GPU IDs table — สำหรับ ai_calculator ids (col 14–15)
+    ref_header('ids (ai_calculator)', 1, 14)
+    ref_header('GPU name + VRAM', 1, 15)
+    ref.column_dimensions['N'].width = 20
+    ref.column_dimensions['O'].width = 30
+
+    for i, (gpu_id, gpu_name) in enumerate(GPU_IDS, start=2):
+        bg = 'FFE8F4FD' if i % 2 == 0 else 'FFFFFFFF'
+        ref_cell(gpu_id,   i, 14, bold=True, bg=bg)
+        ref_cell(gpu_name, i, 15, bg=bg)
+        ref.row_dimensions[i].height = 18
 
     ref.row_dimensions[1].height = 22
 
