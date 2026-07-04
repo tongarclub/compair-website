@@ -233,3 +233,10 @@ cd /Users/mac/GitHub/compair-website && python3 scripts/import_shopee_links.py \
   --ids "5090" \
   --source Shopee \
   --replace
+
+  cd /Users/mac/GitHub/compair-website && python3 scripts/import_shopee_links.py \
+  "csv-affiliate-shoppe/ลิงก์สินค้าหลายลิงก์20260705010306-d75872bab8824823b20461098e76e509.csv" \
+  --section ai_calculator \
+  --ids "r9_7950x" \
+  --source Shopee \
+  --replace

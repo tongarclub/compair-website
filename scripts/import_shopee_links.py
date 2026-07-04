@@ -3,17 +3,21 @@
 import_shopee_links.py — แปลง CSV "ลิงก์สินค้าหลายลิงก์" จาก Shopee Affiliate
                          แล้ว append rows เข้า picks.xlsx
 
+รองรับ input ทั้งแบบ single file และ folder (ประมวลผลทุก *.csv ใน folder)
+
 CSV format (Shopee Affiliate → "สร้างลิงก์หลายรายการ"):
     รหัสสินค้า, ชื่อสินค้า, ราคา, ขาย, ชื่อร้านค้า,
-    อัตราค่าคอมมิชชัน, คอมมิชชัน, ลิงก์สินค้า, ลิงก์ข้อเสนอ
+    อัตราค่าคอมมิชชัน, คอมมิชชัน, ลิงก์สินค้า, ลิงก์ข้อเสนอ, รูปสินค้า
 
 Usage:
+    # folder (ประมวลผลทุก .csv ในคราวเดียว)
+    python3 scripts/import_shopee_links.py csv-affiliate-shoppe/products/ --section ai_calculator
+    python3 scripts/import_shopee_links.py csv-affiliate-shoppe/products/ --section ai_calculator --ids "5090|5080"
+
+    # single file (เหมือนเดิม)
     python3 scripts/import_shopee_links.py <csv_file>  --section ai_calculator
-    python3 scripts/import_shopee_links.py <csv_file>  --section ai_calculator --ids "5090|5080"
     python3 scripts/import_shopee_links.py <csv_file>  --section ev --source Shopee --badge แนะนำ
     python3 scripts/import_shopee_links.py <csv_file>  --dry-run
-    python3 scripts/import_shopee_links.py <csv_file>  --feed-csv csv-affiliate-shoppe/feed.csv
-    python3 scripts/import_shopee_links.py <csv_file>  --limit 10 --use-product-link
 
 Options:
     --section      KEY ใน manual-picks.json  (required)
@@ -22,7 +26,7 @@ Options:
     --ids          id filter คั่นด้วย |  เช่น "5090|5080"  (optional)
     --hint         คำอธิบายสั้น ใส่ทุกแถว  (optional)
     --type         item | guide  (default: item)
-    --limit        จำกัดจำนวนแถวสูงสุดที่ import
+    --limit        จำกัดจำนวนแถวสูงสุด (รวมทุกไฟล์)
     --feed-csv     path ของ Product Feed CSV ใหญ่ เพื่อดึงรูปสินค้า
     --use-product-link  ใช้ลิงก์สินค้าเต็มแทน affiliate short link
     --replace      แทนที่แถวใน section เดิมใน picks.xlsx (default: append)
@@ -32,8 +36,6 @@ Options:
 
 import argparse
 import csv
-import json
-import re
 import sys
 from pathlib import Path
 
@@ -45,11 +47,6 @@ except ImportError:
 
 REPO_ROOT   = Path(__file__).parent.parent
 DEFAULT_XLS = REPO_ROOT / 'data' / 'affiliate' / 'picks.xlsx'
-
-SHOPEE_CSV_COLS = [
-    'รหัสสินค้า', 'ชื่อสินค้า', 'ราคา', 'ขาย', 'ชื่อร้านค้า',
-    'อัตราค่าคอมมิชชัน', 'คอมมิชชัน', 'ลิงก์สินค้า', 'ลิงก์ข้อเสนอ',
-]
 
 FEED_COLS = (
     'image_link_4,cb_option,global_category1,stock,item_sold,is_preferred_shop,'
@@ -77,7 +74,7 @@ _THAI_UNIT = {
     'ล้าน': 1_000_000,
 }
 
-def parse_price(raw: str) -> int | float | None:
+def parse_price(raw: str) -> 'int | float | None':
     """แปลง '169.7พัน' → 169700, '฿1,697.30' → 1697, '9,990' → 9990"""
     s = str(raw).strip().replace(',', '').replace('฿', '').replace(' ', '')
     if not s:
@@ -95,6 +92,33 @@ def parse_price(raw: str) -> int | float | None:
     except (ValueError, TypeError):
         return None
 
+# ─── Input resolver (file หรือ folder) ──────────────────────────────────────
+
+def resolve_inputs(raw: str) -> list[Path]:
+    """
+    แปลง argument เป็นรายการ CSV paths
+    - ถ้าเป็น folder → glob *.csv ทุกไฟล์ใน folder
+    - ถ้าเป็น file  → [file]
+    """
+    p = Path(raw)
+    # ถ้า path ไม่ absolute ให้ลอง resolve จาก REPO_ROOT ก่อน
+    if not p.is_absolute() and not p.exists():
+        candidate = REPO_ROOT / p
+        if candidate.exists():
+            p = candidate
+
+    if p.is_dir():
+        files = sorted(p.glob('*.csv'))
+        if not files:
+            print(f'❌ ไม่พบไฟล์ .csv ใน folder: {p}')
+            sys.exit(1)
+        return files
+    elif p.is_file():
+        return [p]
+    else:
+        print(f'❌ ไม่พบไฟล์หรือ folder: {p}')
+        sys.exit(1)
+
 # ─── CSV reader ───────────────────────────────────────────────────────────────
 
 def read_shopee_links_csv(path: Path) -> list[dict]:
@@ -103,7 +127,6 @@ def read_shopee_links_csv(path: Path) -> list[dict]:
     with open(path, encoding='utf-8-sig', errors='replace', newline='') as f:
         reader = csv.DictReader(f)
         for row in reader:
-            # skip แถวว่าง
             if not any(v.strip() for v in row.values()):
                 continue
             rows.append({k.strip(): v.strip() for k, v in row.items()})
@@ -111,14 +134,14 @@ def read_shopee_links_csv(path: Path) -> list[dict]:
 
 # ─── Product Feed image lookup ───────────────────────────────────────────────
 
-def build_image_index(feed_csv: Path) -> dict[str, str]:
+def build_image_index(feed_csv: Path) -> dict:
     """สร้าง dict {itemid: image_url} จาก Product Feed CSV ใหญ่"""
-    index: dict[str, str] = {}
+    index: dict = {}
     print(f'🔍 กำลังสร้าง image index จาก {feed_csv.name}...')
     try:
         with open(feed_csv, encoding='utf-8-sig', errors='replace') as f:
             reader = csv.reader(f)
-            next(reader)  # skip header
+            next(reader)
             for row in reader:
                 if len(row) < 42:
                     continue
@@ -144,7 +167,7 @@ def build_xlsx_row(
     hint: str,
     row_type: str,
     use_product_link: bool,
-    image_index: dict[str, str],
+    image_index: dict,
 ) -> list:
     """แปลง 1 แถวจาก Shopee CSV → 1 row สำหรับ picks.xlsx"""
     itemid    = src.get('รหัสสินค้า', '').strip()
@@ -152,7 +175,6 @@ def build_xlsx_row(
     price     = parse_price(src.get('ราคา', ''))
     shop_name = src.get('ชื่อร้านค้า', '').strip()
 
-    # ยอดขาย — คอลัมน์ "ขาย" เป็น int โดยตรง
     try:
         item_sold = int(str(src.get('ขาย', '0')).strip()) or None
     except (ValueError, TypeError):
@@ -163,39 +185,37 @@ def build_xlsx_row(
     else:
         link = src.get('ลิงก์ข้อเสนอ', '').strip() or src.get('ลิงก์สินค้า', '').strip()
 
-    # รูปสินค้า: ลำดับ priority
-    #   1. คอลัมน์ "รูปสินค้า" ใน CSV (ใส่เองหรือ back-fill แล้ว)
-    #   2. ค้นจาก product feed CSV ด้วย itemid (--feed-csv)
+    # รูปสินค้า: priority 1=คอลัมน์ในCSV, 2=feed-csv lookup
     image = (
         src.get('รูปสินค้า', '').strip()
         or image_index.get(itemid, '')
     )
 
     return [
-        section,          # section
-        row_type,         # type
-        ids,              # ids
-        title,            # title
-        price,            # price
+        section,
+        row_type,
+        ids,
+        title,
+        price,
         None,             # original_price
-        link,             # link
-        image or None,    # image
-        source,           # source
-        badge or None,    # badge
-        shop_name or None,# shop_name
-        item_sold,        # item_sold
+        link,
+        image or None,
+        source,
+        badge or None,
+        shop_name or None,
+        item_sold,
         None,             # row (guide only)
-        hint or None,     # hint
+        hint or None,
     ]
 
-# ─── xlsx append ─────────────────────────────────────────────────────────────
+# ─── xlsx append/replace ──────────────────────────────────────────────────────
 
 def append_to_xlsx(
     xlsx_path: Path,
     new_rows: list[list],
     section: str,
     replace: bool,
-) -> tuple[int, int]:
+) -> tuple:
     """
     append (หรือ replace) rows ใน picks.xlsx
     Returns: (rows_added, rows_removed)
@@ -207,7 +227,6 @@ def append_to_xlsx(
 
     removed = 0
     if replace:
-        # ลบแถวที่ section ตรงกัน (จากท้ายขึ้นมาเพื่อไม่ให้ index เลื่อน)
         sec_col = header_row.index('section') + 1 if 'section' in header_row else 1
         rows_to_delete = [
             r for r in range(2, ws.max_row + 1)
@@ -217,7 +236,6 @@ def append_to_xlsx(
             ws.delete_rows(r)
         removed = len(rows_to_delete)
 
-    # append
     for data_row in new_rows:
         ws.append(data_row)
 
@@ -228,12 +246,15 @@ def append_to_xlsx(
 
 def main():
     parser = argparse.ArgumentParser(
-        description='แปลง Shopee Affiliate "ลิงก์สินค้าหลายลิงก์" CSV → picks.xlsx',
+        description='แปลง Shopee Affiliate "ลิงก์สินค้าหลายลิงก์" CSV → picks.xlsx\n'
+                    'รับได้ทั้ง single file และ folder (ประมวลผลทุก *.csv ในคราวเดียว)',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )
-    parser.add_argument('input_csv',
-                        help='path ของ CSV ลิงก์สินค้าหลายลิงก์ จาก Shopee Affiliate')
+    parser.add_argument(
+        'input',
+        help='path ของ CSV หรือ folder ที่มี *.csv (เช่น csv-affiliate-shoppe/products/)',
+    )
     parser.add_argument('--section', required=True, metavar='KEY',
                         help='section key ใน manual-picks.json (เช่น ai_calculator)')
     parser.add_argument('--source', default='Shopee', metavar='PLATFORM',
@@ -247,7 +268,7 @@ def main():
     parser.add_argument('--type', default='item', choices=['item', 'guide'], dest='row_type',
                         help='ประเภท: item (default) | guide')
     parser.add_argument('--limit', type=int, default=None, metavar='N',
-                        help='จำกัดจำนวนแถวสูงสุดที่ import')
+                        help='จำกัดจำนวนแถวสูงสุดรวมทุกไฟล์')
     parser.add_argument('--feed-csv', default='', metavar='PATH',
                         help='path ของ Product Feed CSV เพื่อดึงรูปสินค้า (optional)')
     parser.add_argument('--use-product-link', action='store_true',
@@ -261,84 +282,111 @@ def main():
 
     args = parser.parse_args()
 
-    input_path = Path(args.input_csv)
-    if not input_path.exists():
-        print(f'❌ ไม่พบไฟล์: {input_path}')
-        sys.exit(1)
-
+    # ─── ตรวจ output xlsx ──────────────────────────────────────────────────────
     output_path = Path(args.output)
+    if not output_path.is_absolute():
+        candidate = REPO_ROOT / output_path
+        if candidate.exists():
+            output_path = candidate
     if not output_path.exists():
         print(f'❌ ไม่พบ picks.xlsx: {output_path}')
         print(f'   สร้าง template ใหม่: python3 scripts/create_picks_xlsx.py')
         sys.exit(1)
 
-    # ─── อ่าน CSV ──────────────────────────────────────────────────────────────
-    src_rows = read_shopee_links_csv(input_path)
-    print(f'📂 อ่าน {input_path.name}: {len(src_rows)} แถว')
+    # ─── resolve input files (file หรือ folder) ────────────────────────────────
+    input_files = resolve_inputs(args.input)
 
-    if args.limit:
-        src_rows = src_rows[:args.limit]
-        print(f'   → จำกัดที่ {args.limit} แถว')
+    if len(input_files) == 1:
+        print(f'📄 ไฟล์: {input_files[0].name}')
+    else:
+        print(f'📁 folder — พบ {len(input_files)} ไฟล์:')
+        for f in input_files:
+            print(f'   • {f.name}')
 
-    # ─── image index (optional) ────────────────────────────────────────────────
-    image_index: dict[str, str] = {}
+    # ─── image index (สร้างครั้งเดียว ใช้กับทุกไฟล์) ──────────────────────────
+    image_index: dict = {}
     if args.feed_csv:
         feed_path = Path(args.feed_csv)
-        if not feed_path.is_absolute():
+        if not feed_path.is_absolute() and not feed_path.exists():
             feed_path = REPO_ROOT / feed_path
         image_index = build_image_index(feed_path)
 
-    # ─── build rows ────────────────────────────────────────────────────────────
-    new_rows: list[list] = []
-    skipped = 0
+    # ─── อ่านและ build rows จากทุกไฟล์ ───────────────────────────────────────
+    all_new_rows: list[list] = []
+    total_skipped  = 0
+    per_file_stats = []
 
-    for i, src in enumerate(src_rows, start=1):
-        title = src.get('ชื่อสินค้า', '').strip()
-        price = parse_price(src.get('ราคา', ''))
-        link  = (
-            src.get('ลิงก์ข้อเสนอ', '').strip()
-            if not args.use_product_link
-            else src.get('ลิงก์สินค้า', '').strip()
-        )
+    for file_path in input_files:
+        src_rows = read_shopee_links_csv(file_path)
+        file_ok  = 0
+        file_skip = 0
 
-        if not title or not link or price is None:
-            print(f'  ⚠ แถว {i}: ข้อมูลไม่ครบ (title={bool(title)}, price={price}, link={bool(link)}) — ข้าม')
-            skipped += 1
-            continue
+        for i, src in enumerate(src_rows, start=1):
+            title = src.get('ชื่อสินค้า', '').strip()
+            price = parse_price(src.get('ราคา', ''))
+            link  = (
+                src.get('ลิงก์ข้อเสนอ', '').strip()
+                if not args.use_product_link
+                else src.get('ลิงก์สินค้า', '').strip()
+            )
 
-        row = build_xlsx_row(
-            src,
-            section=args.section,
-            source=args.source,
-            badge=args.badge,
-            ids=args.ids,
-            hint=args.hint,
-            row_type=args.row_type,
-            use_product_link=args.use_product_link,
-            image_index=image_index,
-        )
-        new_rows.append(row)
+            if not title or not link or price is None:
+                file_skip += 1
+                total_skipped += 1
+                continue
 
+            row = build_xlsx_row(
+                src,
+                section=args.section,
+                source=args.source,
+                badge=args.badge,
+                ids=args.ids,
+                hint=args.hint,
+                row_type=args.row_type,
+                use_product_link=args.use_product_link,
+                image_index=image_index,
+            )
+            all_new_rows.append(row)
+            file_ok += 1
+
+        per_file_stats.append((file_path.name, len(src_rows), file_ok, file_skip))
+
+    # ─── apply global limit ────────────────────────────────────────────────────
+    if args.limit and len(all_new_rows) > args.limit:
+        all_new_rows = all_new_rows[:args.limit]
+        print(f'   → จำกัดที่ {args.limit} แถว (รวมทุกไฟล์)')
+
+    # ─── สรุปก่อน import ──────────────────────────────────────────────────────
     print(f'\n📋 สรุปก่อน import:')
     print(f'   section  : {args.section}')
     print(f'   source   : {args.source}')
     print(f'   badge    : {args.badge or "(ว่าง)"}')
     print(f'   ids      : {args.ids or "(ว่าง — แสดงทุก GPU/CPU)"}')
     print(f'   mode     : {"replace" if args.replace else "append"}')
-    print(f'   แถวที่ valid  : {len(new_rows)}')
-    print(f'   แถวที่ข้าม   : {skipped}')
-    print(f'   มีรูปสินค้า  : {sum(1 for r in new_rows if r[7])}')
+    print(f'   ไฟล์ทั้งหมด : {len(input_files)} ไฟล์')
+
+    if len(input_files) > 1:
+        for name, total, ok, skip in per_file_stats:
+            print(f'     • {name:<60} {ok} แถว ({skip} ข้าม)')
+
+    print(f'   แถวที่ valid  : {len(all_new_rows)}')
+    print(f'   แถวที่ข้าม   : {total_skipped}')
+    print(f'   มีรูปสินค้า  : {sum(1 for r in all_new_rows if r[7])}')
 
     if args.dry_run:
         print(f'\n[dry-run] ตัวอย่าง 5 แถวแรก:')
-        for r in new_rows[:5]:
+        for r in all_new_rows[:5]:
             d = dict(zip(XLSX_HEADERS, r))
             print(f'  {d["title"][:55]:<55} ฿{str(d["price"]):>8}  {d["link"][:40]}')
         print('\n[dry-run] ไม่บันทึก — ลบ --dry-run เพื่อ import จริง')
         return
 
-    # ─── เขียนลง xlsx ──────────────────────────────────────────────────────────
-    added, removed = append_to_xlsx(output_path, new_rows, args.section, args.replace)
+    if not all_new_rows:
+        print('\n⚠ ไม่มีแถวที่ valid — ไม่บันทึก')
+        return
+
+    # ─── เขียนลง xlsx ─────────────────────────────────────────────────────────
+    added, removed = append_to_xlsx(output_path, all_new_rows, args.section, args.replace)
 
     print(f'\n✅ บันทึกแล้ว → {output_path.relative_to(REPO_ROOT)}')
     if removed:

@@ -51,24 +51,30 @@ python3 scripts/import_picks.py --section mac_llm  # เฉพาะ section
 python3 scripts/create_picks_xlsx.py               # reset template
 ```
 
-### วิธี B — นำเข้าจาก Shopee "ลิงก์สินค้าหลายรายการ" (ใหม่)
+### วิธี B — นำเข้าจาก Shopee "ลิงก์สินค้าหลายรายการ"
 
-CSV จาก Shopee Affiliate Portal → "สร้างลิงก์หลายรายการ" → Export
+CSV จาก Shopee Affiliate Portal → "สร้างลิงก์หลายรายการ" → Export → บันทึกใน `csv-affiliate-shoppe/products/`
 
 ```bash
-# Step 1: append สินค้าเข้า picks.xlsx
-python3 scripts/import_shopee_links.py "csv-affiliate-shoppe/links.csv" \
+# Step 1a: folder — ประมวลผลทุก .csv ในคราวเดียว (แนะนำ)
+python3 scripts/import_shopee_links.py csv-affiliate-shoppe/products/ \
   --section ai_calculator \
   --ids "5090|5080"     \   # ผูกกับ GPU id (optional)
   --source Shopee        \   # platform label
   --badge ขายดี         \   # badge (optional)
   --dry-run                  # preview ก่อน
 
+# Step 1b: single file (เหมือนเดิม)
+python3 scripts/import_shopee_links.py "csv-affiliate-shoppe/products/links.csv" \
+  --section ai_calculator --dry-run
+
 # Step 2: sync picks.xlsx → JSON
 python3 scripts/import_picks.py --section ai_calculator
 ```
 
 #### Options ครบของ import_shopee_links.py
+
+Input รับได้ทั้ง **folder** (glob `*.csv` ทุกไฟล์) และ **single file**
 
 | Option | ค่าตัวอย่าง | อธิบาย |
 |--------|------------|--------|
@@ -78,7 +84,7 @@ python3 scripts/import_picks.py --section ai_calculator
 | `--ids` | `5090\|5080` | GPU/CPU id filter คั่น `\|` |
 | `--hint` | `VRAM 32GB` | คำอธิบาย ใส่ทุกแถว |
 | `--type` | `item` | item (default) / guide |
-| `--limit` | `10` | จำกัดจำนวนแถว |
+| `--limit` | `10` | จำกัดจำนวนแถวรวมทุกไฟล์ |
 | `--feed-csv` | `csv-affiliate-shoppe/feed.csv` | ดึงรูปอัตโนมัติจาก Product Feed |
 | `--replace` | — | แทนที่แถวเดิมของ section (default: append) |
 | `--dry-run` | — | preview ไม่บันทึก |

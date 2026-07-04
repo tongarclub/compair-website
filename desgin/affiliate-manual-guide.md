@@ -15,6 +15,11 @@
 
 ```bash
 # ขั้นตอนที่ 1: แปลง Shopee CSV → append ลง picks.xlsx
+# แบบ folder (ประมวลผลทุก .csv ในคราวเดียว) ← แนะนำ
+python3 scripts/import_shopee_links.py csv-affiliate-shoppe/products/ \
+  --section ai_calculator --ids "5090|5080" --badge ขายดี
+
+# แบบ single file
 python3 scripts/import_shopee_links.py "csv-affiliate-shoppe/ลิงก์สินค้า...csv" \
   --section ai_calculator --ids "5090|5080" --badge ขายดี
 
@@ -92,22 +97,27 @@ python3 scripts/import_picks.py --section mac_llm
 python3 scripts/create_picks_xlsx.py
 ```
 
-### แบบ B — นำเข้าจาก Shopee "ลิงก์สินค้าหลายรายการ" (ใหม่)
+### แบบ B — นำเข้าจาก Shopee "ลิงก์สินค้าหลายรายการ"
 
 ```bash
 # 1. ดาวน์โหลด CSV จาก Shopee Affiliate Portal
-#    → "สร้างลิงก์" → "สร้างลิงก์หลายรายการ" → Export → บันทึกใน csv-affiliate-shoppe/
+#    → "สร้างลิงก์" → "สร้างลิงก์หลายรายการ" → Export
+#    → บันทึกไว้ใน csv-affiliate-shoppe/products/
 
-# 2. append สินค้าเข้า picks.xlsx
-python3 scripts/import_shopee_links.py "csv-affiliate-shoppe/ลิงก์สินค้า...csv" \
+# 2a. แบบ folder — ประมวลผลทุก .csv ในคราวเดียว (แนะนำ)
+python3 scripts/import_shopee_links.py csv-affiliate-shoppe/products/ \
   --section ai_calculator \
   --ids "5090|5080"          # optional: ผูกกับ GPU/CPU id
   --source Shopee            # optional: platform (default: Shopee)
   --badge ขายดี             # optional: ป้ายสินค้า
   --dry-run                  # ดู preview ก่อน import จริง
 
+# 2b. แบบ single file (เหมือนเดิม)
+python3 scripts/import_shopee_links.py "csv-affiliate-shoppe/products/ลิงก์สินค้า...csv" \
+  --section ai_calculator --ids "5090|5080" --dry-run
+
 # 3. ถ้า OK → import จริง (ลบ --dry-run)
-python3 scripts/import_shopee_links.py "csv-affiliate-shoppe/ลิงก์สินค้า...csv" \
+python3 scripts/import_shopee_links.py csv-affiliate-shoppe/products/ \
   --section ai_calculator --ids "5090|5080"
 
 # 4. sync picks.xlsx → manual-picks.json
@@ -118,6 +128,10 @@ python3 scripts/import_picks.py --section ai_calculator
 
 ## import_shopee_links.py — Options ครบ
 
+**Input** — รับได้ทั้ง:
+- **folder** เช่น `csv-affiliate-shoppe/products/` → glob `*.csv` ทุกไฟล์ในคราวเดียว
+- **single file** เช่น `csv-affiliate-shoppe/products/links.csv` → เหมือนเดิม
+
 | Option | ค่าตัวอย่าง | อธิบาย |
 |--------|------------|--------|
 | `--section` | `ai_calculator` | **required** — section key ใน JSON |
@@ -126,7 +140,7 @@ python3 scripts/import_picks.py --section ai_calculator
 | `--ids` | `5090\|5080` | GPU/CPU id filter คั่น `\|` (ดู Ref sheet ใน Excel) |
 | `--hint` | `VRAM 32GB` | คำอธิบายสั้น ใส่ทุกแถว |
 | `--type` | `item` (default) | item / guide |
-| `--limit` | `10` | จำกัดจำนวนแถว |
+| `--limit` | `10` | จำกัดจำนวนแถวรวมทุกไฟล์ |
 | `--feed-csv` | `csv-affiliate-shoppe/feed.csv` | Product Feed ใหญ่ — ดึงรูปอัตโนมัติ (ถ้ามี) |
 | `--use-product-link` | — | ใช้ลิงก์สินค้าเต็มแทน short affiliate link |
 | `--replace` | — | แทนที่แถวเดิมของ section นั้น (default: append) |
@@ -136,22 +150,25 @@ python3 scripts/import_picks.py --section ai_calculator
 ### ตัวอย่างคำสั่ง
 
 ```bash
-# GPU RTX 5090 → section ai_calculator, กรองด้วย ids=5090
-python3 scripts/import_shopee_links.py "csv-affiliate-shoppe/links.csv" \
+# ทุกไฟล์ใน folder → section ai_calculator
+python3 scripts/import_shopee_links.py csv-affiliate-shoppe/products/ \
+  --section ai_calculator --badge ขายดี --replace
+
+# GPU RTX 5090 เฉพาะไฟล์เดียว + ผูก ids
+python3 scripts/import_shopee_links.py "csv-affiliate-shoppe/products/gpu-5090.csv" \
   --section ai_calculator --ids "5090" --badge ขายดี
 
-# EV Charger → section ev, source Shopee
-python3 scripts/import_shopee_links.py "csv-affiliate-shoppe/ev-links.csv" \
+# EV Charger folder → section ev
+python3 scripts/import_shopee_links.py csv-affiliate-shoppe/products/ \
   --section ev --source Shopee --replace
 
-# ดึงรูปสินค้าอัตโนมัติจาก Product Feed (ถ้า itemid ตรงกัน)
-python3 scripts/import_shopee_links.py "csv-affiliate-shoppe/links.csv" \
-  --section solar \
-  --feed-csv "csv-affiliate-shoppe/1006_200101_Product Feed All Global Category_20260626T060855_1.csv"
+# preview ก่อน import (ไม่บันทึก)
+python3 scripts/import_shopee_links.py csv-affiliate-shoppe/products/ \
+  --section ai_calculator --dry-run
 
-# preview 5 แถวแรก ไม่บันทึก
-python3 scripts/import_shopee_links.py "csv-affiliate-shoppe/links.csv" \
-  --section gold --limit 5 --dry-run
+# จำกัดจำนวน (รวมทุกไฟล์ไม่เกิน 10 แถว)
+python3 scripts/import_shopee_links.py csv-affiliate-shoppe/products/ \
+  --section gold --limit 10 --dry-run
 ```
 
 ---
