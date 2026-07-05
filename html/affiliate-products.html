@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-J3C1X16FZ5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-J3C1X16FZ5');
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>สินค้าแนะนำ | ComPair</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="../css/theme-ai.css">
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+/* ── Page shell ── */
+.aff-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 16px 64px;
+}
+
+/* ── Sticky header bar ── */
+.aff-page-header {
+  position: sticky; top: 0; z-index: 10;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 0;
+  margin-bottom: 20px;
+}
+.aff-page-title {
+  font-size: 15px; font-weight: 600; color: var(--text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  flex: 1;
+}
+.aff-page-count {
+  font-size: 12px; color: var(--text3);
+  flex-shrink: 0;
+}
+
+/* ── Filter chip (แสดงเมื่อ filter ถูก set) ── */
+.aff-filter-bar {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.aff-filter-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--primary-dim, rgba(59,130,246,.12));
+  color: var(--primary);
+  border: 1px solid var(--primary-dim, rgba(59,130,246,.25));
+  border-radius: 20px; padding: 3px 10px;
+  font-size: 12px;
+}
+.aff-filter-all {
+  background: none; border: none;
+  font-size: 12px; color: var(--text3);
+  cursor: pointer; text-decoration: underline;
+  padding: 0;
+}
+.aff-filter-all:hover { color: var(--text2); }
+
+/* ── Product grid ── */
+.aff-products-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  align-items: start;
+}
+@media (max-width: 640px) {
+  .aff-products-grid {
+    grid-template-columns: 1fr;
+    background: transparent;
+    border: none; border-radius: 0;
+    gap: 0;
+  }
+}
+@media (min-width: 641px) and (max-width: 860px) {
+  .aff-products-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── Card overrides for full-page layout ── */
+.aff-products-grid .aff-card {
+  flex: none; width: auto;
+  border-right: none;
+  background: var(--bg);
+}
+.aff-products-grid .aff-card:hover { background: var(--surface); }
+.aff-products-grid .aff-card-img {
+  width: 100%; aspect-ratio: 1 / 1; height: auto;
+}
+.aff-products-grid .aff-card-body { padding: 10px 26px 12px 10px; }
+.aff-products-grid .aff-card-title {
+  -webkit-line-clamp: 2; font-size: 11.5px;
+}
+.aff-products-grid .aff-price { font-size: 15px; }
+
+/* Mobile: horizontal list */
+@media (max-width: 640px) {
+  .aff-products-grid .aff-card {
+    flex-direction: row !important;
+    width: 100%; overflow: hidden;
+    border-bottom: 1px solid var(--border);
+    min-height: 88px;
+    background: var(--bg);
+  }
+  .aff-products-grid .aff-card:last-child { border-bottom: none; }
+  .aff-products-grid .aff-card-img {
+    width: 88px !important; height: 88px !important;
+    min-width: 88px; aspect-ratio: auto !important;
+    flex-shrink: 0;
+  }
+  .aff-products-grid .aff-card-body {
+    flex: 1; min-width: 0; overflow: hidden;
+    padding: 10px 28px 10px 12px; gap: 3px;
+  }
+  .aff-products-grid .aff-card-title {
+    -webkit-line-clamp: 2; font-size: 12.5px;
+    word-break: break-word;
+  }
+  .aff-products-grid .aff-price { font-size: 14px; }
+  .aff-products-grid .aff-card-footer {
+    flex-direction: row; flex-wrap: wrap; gap: 3px 6px; padding-top: 3px;
+  }
+  .aff-products-grid .aff-card-shop,
+  .aff-products-grid .aff-sold {
+    max-width: 100%;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .aff-products-grid .aff-mall-badge {
+    left: 64px; right: auto; top: 0;
+    font-size: 7px; padding: 1px 5px;
+    border-radius: 0 0 3px 0;
+  }
+  .aff-products-grid .aff-card-arrow {
+    top: 50%; transform: translateY(-50%); bottom: auto; right: 8px;
+  }
+  .aff-products-grid .aff-card:hover .aff-card-arrow {
+    transform: translateY(-50%) translateX(2px);
+  }
+}
+
+/* ── Empty / error states ── */
+.aff-page-empty {
+  text-align: center; padding: 60px 20px;
+  color: var(--text3); font-size: 14px;
+}
+.aff-page-loading {
+  display: flex; align-items: center; justify-content: center;
+  gap: 8px; padding: 60px 20px;
+  color: var(--text3); font-size: 14px;
+}
+.aff-spinner {
+  width: 18px; height: 18px;
+  border: 2px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a class="logo" href="../index.html">
+      <div class="logo-mark">C</div>
+      <div>
+        <div class="logo-text">ComPair</div>
+        <div class="logo-sub">Comparison Engine</div>
+      </div>
+    </a>
+    <div class="nav-right">
+      <a class="nav-link" href="ai-calculator.html">AI Calc</a>
+      <a class="nav-link" href="solar-calculator.html">Solar</a>
+      <a class="nav-link" href="ev-calculator.html">EV</a>
+    </div>
+  </div>
+</nav>
+
+<main class="aff-page">
+
+  <!-- Header -->
+  <div class="aff-page-header">
+    <span class="aff-page-title" id="pageTitle">กำลังโหลด…</span>
+    <span class="aff-page-count" id="pageCount"></span>
+  </div>
+
+  <!-- Filter chip -->
+  <div class="aff-filter-bar" id="filterBar" style="display:none">
+    <span class="aff-filter-chip" id="filterChip"></span>
+    <button class="aff-filter-all" id="showAllBtn">ดูทั้งหมดในหมวดนี้</button>
+  </div>
+
+  <!-- Loading -->
+  <div class="aff-page-loading" id="loadingState">
+    <div class="aff-spinner"></div>
+    กำลังโหลดสินค้า…
+  </div>
+
+  <!-- Product grid -->
+  <div class="aff-products-grid" id="productsGrid" style="display:none"></div>
+
+  <!-- Empty -->
+  <div class="aff-page-empty" id="emptyState" style="display:none">
+    ไม่พบสินค้าในหมวดนี้
+  </div>
+
+</main>
+
+<script src="../js/aff-render.js"></script>
+<script>
+(async () => {
+  const params  = new URLSearchParams(location.search);
+  const section = params.get('section') || '';
+  const label   = params.get('label')   || 'สินค้าแนะนำ';
+  const filter  = params.get('filter')  || '';   // optional filterId
+
+  const grid    = document.getElementById('productsGrid');
+  const loading = document.getElementById('loadingState');
+  const empty   = document.getElementById('emptyState');
+  const title   = document.getElementById('pageTitle');
+  const count   = document.getElementById('pageCount');
+  const bar     = document.getElementById('filterBar');
+  const chip    = document.getElementById('filterChip');
+  const showAll = document.getElementById('showAllBtn');
+
+  document.title = `${label} | ComPair`;
+  title.textContent = label;
+
+  if (!section) {
+    loading.style.display = 'none';
+    empty.style.display   = '';
+    empty.textContent     = 'ไม่ระบุหมวดสินค้า';
+    return;
+  }
+
+  // โหลดข้อมูล
+  let data;
+  try {
+    data = await fetch('../data/affiliate/manual-picks.json').then(r => r.json());
+  } catch {
+    loading.style.display = 'none';
+    empty.style.display   = '';
+    empty.textContent     = 'โหลดข้อมูลไม่สำเร็จ';
+    return;
+  }
+
+  const sec = data[section];
+  if (!sec || !Array.isArray(sec.items) || !sec.items.length) {
+    loading.style.display = 'none';
+    empty.style.display   = '';
+    return;
+  }
+
+  // กรองตาม filter (ถ้ามี)
+  let items = sec.items;
+  if (filter) {
+    const filtered = items.filter(i => !Array.isArray(i.ids) || i.ids.includes(filter));
+    if (filtered.length) {
+      items = filtered;
+      chip.textContent = `สินค้าสำหรับ: ${filter}`;
+      bar.style.display = '';
+      showAll.addEventListener('click', () => {
+        items = sec.items;
+        renderItems(items);
+        bar.style.display = 'none';
+        count.textContent = `${items.length} รายการ`;
+      });
+    }
+  }
+
+  function renderItems(list) {
+    grid.innerHTML = list.map(i => _cardHTML(i)).join('');
+    count.textContent = `${list.length} รายการ`;
+  }
+
+  renderItems(items);
+
+  loading.style.display = 'none';
+  grid.style.display    = '';
+  if (!items.length) {
+    empty.style.display = '';
+    grid.style.display  = 'none';
+  }
+})();
+</script>
+
+</body>
+</html>

@@ -559,7 +559,7 @@ optgroup { font-style: normal; font-weight: 700; }
   background: transparent; cursor: pointer;
   font-family: 'DM Mono', monospace;
   font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
-  color: var(--primary);
+  color: var(--primary); text-decoration: none;   /* รองรับทั้ง <button> และ <a> */
   transition: background .18s, color .18s;
 }
 .aff-see-more:hover { background: var(--surface); }
@@ -577,72 +577,6 @@ optgroup { font-style: normal; font-weight: 700; }
 }
 .aff-see-more:hover .aff-see-more-arrow { transform: translateX(3px); }
 
-/* ── Modal overlay ──────────────────────────────────── */
-.aff-modal {
-  position: fixed; inset: 0; z-index: 9999;
-  display: flex; align-items: flex-end;
-  opacity: 0; pointer-events: none;
-  transition: opacity .22s ease;
-}
-.aff-modal.is-open {
-  opacity: 1; pointer-events: auto;
-}
-.aff-modal-backdrop {
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,.48);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
-}
-.aff-modal-panel {
-  position: relative; z-index: 1;
-  background: var(--bg);
-  width: 100%; max-height: 88vh;
-  display: flex; flex-direction: column;
-  transform: translateY(32px);
-  transition: transform .25s cubic-bezier(.25,.46,.45,.94);
-  box-shadow: 0 -4px 40px rgba(0,0,0,.18);
-}
-.aff-modal.is-open .aff-modal-panel { transform: translateY(0); }
-
-.aff-modal-header {
-  display: flex; align-items: center; gap: 10px;
-  padding: 13px 18px;
-  border-bottom: 1px solid var(--border);
-  background: var(--surface2);
-  flex-shrink: 0;
-}
-.aff-modal-title {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
-  color: var(--primary); flex: 1;
-}
-.aff-modal-count {
-  font-family: 'DM Mono', monospace;
-  font-size: 9px; color: var(--text3);
-}
-.aff-modal-close {
-  border: none; background: none;
-  color: var(--text3); cursor: pointer;
-  font-size: 13px; padding: 3px 8px;
-  line-height: 1; border-radius: 2px;
-  transition: background .15s, color .15s;
-}
-.aff-modal-close:hover { background: var(--border); color: var(--text); }
-
-.aff-modal-body {
-  overflow-y: auto; flex: 1;
-  overscroll-behavior: contain;
-}
-/* Grid ใน modal — 3 column desktop, 2 mobile */
-.aff-modal-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px; background: var(--border);
-}
-@media (max-width: 640px) {
-  .aff-modal-panel { max-height: 92vh; }
-  .aff-modal-grid { grid-template-columns: repeat(2, 1fr); }
-}
 
 /* ═══════════════════════════════════════════════
    FOOTER

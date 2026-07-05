@@ -3,7 +3,7 @@
  * ข้อมูลสินค้ามาจาก data/affiliate/manual-picks.json เท่านั้น
  *
  * API:
- *   loadAffiliate(key, opts)        — render strip (preview 3 รายการ + modal ทั้งหมด)
+ *   loadAffiliate(key, opts)        — render strip (preview 3 รายการ + link ไป affiliate-products.html)
  *   loadAffiliateGuide(key, opts)   — render คอลัมน์ใน Buying Guide table
  */
 
@@ -66,54 +66,24 @@ function _cardHTML(item) {
   </a>`;
 }
 
-// ─── Modal ───────────────────────────────────────────────────────────────────
+// ─── URL helper ──────────────────────────────────────────────────────────────
 
-function _openModal(key, items, label) {
-  // ลบ modal เดิม (ถ้ามี) เพื่อ refresh เมื่อ filterId เปลี่ยน
-  const old = document.getElementById(`aff-modal-${key}`);
-  if (old) old.remove();
+function _affProductsUrl(key, label, filterId) {
+  const isHtmlDir = location.pathname.includes('/html/');
+  const base = isHtmlDir ? 'affiliate-products.html' : 'html/affiliate-products.html';
+  const p = new URLSearchParams({ section: key, label });
+  if (filterId) p.set('filter', filterId);
+  return `${base}?${p}`;
+}
 
-  const modal = document.createElement('div');
-  modal.id        = `aff-modal-${key}`;
-  modal.className = 'aff-modal';
-  modal.setAttribute('role', 'dialog');
-  modal.setAttribute('aria-modal', 'true');
-  modal.setAttribute('aria-label', label);
-
-  modal.innerHTML = `
-    <div class="aff-modal-backdrop"></div>
-    <div class="aff-modal-panel">
-      <div class="aff-modal-header">
-        <span class="aff-modal-title">${label}</span>
-        <span class="aff-modal-count">${items.length} รายการ</span>
-        <button class="aff-modal-close" aria-label="ปิด">✕</button>
-      </div>
-      <div class="aff-modal-body">
-        <div class="aff-modal-grid">
-          ${items.map(_cardHTML).join('')}
-        </div>
-      </div>
-    </div>`;
-
-  document.body.appendChild(modal);
-
-  const close = () => {
-    modal.classList.remove('is-open');
-    document.body.style.overflow = '';
-    modal.addEventListener('transitionend', () => modal.remove(), { once: true });
-  };
-
-  modal.querySelector('.aff-modal-backdrop').addEventListener('click', close);
-  modal.querySelector('.aff-modal-close').addEventListener('click', close);
-  document.addEventListener('keydown', function onKey(e) {
-    if (e.key === 'Escape') { close(); document.removeEventListener('keydown', onKey); }
-  });
-
-  // trigger animation
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => modal.classList.add('is-open'));
-  });
-  document.body.style.overflow = 'hidden';
+function _makeViewAllBtn(href, count, className, text) {
+  const a = document.createElement('a');
+  a.className  = className;
+  a.href       = href;
+  a.target     = '_blank';
+  a.rel        = 'noopener';
+  a.innerHTML  = text;
+  return a;
 }
 
 // ─── loadAffiliate ───────────────────────────────────────────────────────────
@@ -163,11 +133,12 @@ async function loadAffiliate(key, opts = {}) {
         const lbl = document.getElementById(opts.labelId);
         if (lbl) lbl.textContent = section.label;
       }
-      const btn = document.createElement('button');
-      btn.className = 'aff-see-more aff-see-more--fallback';
-      btn.innerHTML = `ดูสินค้าในหมวดนี้ <strong>${allItems.length}</strong> รายการ <span class="aff-see-more-arrow">→</span>`;
-      btn.addEventListener('click', () => _openModal(key, allItems, label));
-      strip.appendChild(btn);
+      strip.appendChild(_makeViewAllBtn(
+        _affProductsUrl(key, label),
+        allItems.length,
+        'aff-see-more aff-see-more--fallback',
+        `ดูสินค้าในหมวดนี้ <strong>${allItems.length}</strong> รายการ <span class="aff-see-more-arrow">→</span>`
+      ));
     } else {
       if (strip) strip.style.display = 'none';
     }
@@ -184,13 +155,14 @@ async function loadAffiliate(key, opts = {}) {
   cards.innerHTML = items.slice(0, previewN).map(_cardHTML).join('');
   if (strip) strip.style.display = '';
 
-  // ปุ่ม "ดูทั้งหมด" เปิด modal แสดง allItems ทั้ง section
+  // ลิงก์ "ดูทั้งหมด" → affiliate-products.html (เปิด tab ใหม่)
   if (allItems.length > previewN && strip) {
-    const btn = document.createElement('button');
-    btn.className = 'aff-see-more';
-    btn.innerHTML = `ดูสินค้าทั้งหมด <strong>${allItems.length}</strong> รายการ <span class="aff-see-more-arrow">→</span>`;
-    btn.addEventListener('click', () => _openModal(key, allItems, label));
-    strip.appendChild(btn);
+    strip.appendChild(_makeViewAllBtn(
+      _affProductsUrl(key, label),
+      allItems.length,
+      'aff-see-more',
+      `ดูสินค้าทั้งหมด <strong>${allItems.length}</strong> รายการ <span class="aff-see-more-arrow">→</span>`
+    ));
   }
 }
 
