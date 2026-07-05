@@ -564,6 +564,13 @@ optgroup { font-style: normal; font-weight: 700; }
 }
 .aff-see-more:hover { background: var(--surface); }
 .aff-see-more strong { font-weight: 700; }
+/* fallback — เมื่อไม่มีสินค้าสำหรับ GPU/CPU รุ่นนี้โดยเฉพาะ */
+.aff-see-more--fallback {
+  color: var(--text3);
+  border-top: none;
+  font-style: italic;
+}
+.aff-see-more--fallback:hover { color: var(--primary); }
 .aff-see-more-arrow {
   display: inline-block;
   transition: transform .18s;

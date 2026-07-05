@@ -137,40 +137,56 @@ async function loadAffiliate(key, opts = {}) {
   const cards = opts.cardsId ? document.getElementById(opts.cardsId) : null;
   if (!cards) return;
 
+  const allItems = section.items;                 // ทั้งหมดใน section ไม่กรอง
+  const label    = section.label || key;
+
   // กรอง items ตาม filterId (ถ้ามี)
-  let items = section.items;
+  let items = allItems;
   if (opts.filterId) {
-    items = items.filter(i =>
+    items = allItems.filter(i =>
       !Array.isArray(i.ids) || i.ids.includes(opts.filterId)
     );
   }
 
-  // ลบปุ่ม "ดูทั้งหมด" เดิม (กรณี filterId เปลี่ยน)
+  // ลบปุ่ม "ดูทั้งหมด" / "fallback" เดิม (กรณี filterId เปลี่ยน)
   const oldBtn = strip ? strip.querySelector('.aff-see-more') : null;
   if (oldBtn) oldBtn.remove();
 
-  // ถ้าไม่มีสินค้า → ซ่อน strip
+  // ── ไม่มีสินค้าที่ตรงกับ filterId ──────────────────────────────────
   if (!items.length) {
-    if (strip) strip.style.display = 'none';
+    if (opts.filterId && allItems.length > 0 && strip) {
+      // มีสินค้าในหมวดอยู่ แต่ไม่มีสำหรับ GPU/CPU นี้โดยเฉพาะ
+      // → แสดง strip ว่าง + ปุ่ม fallback "ดูสินค้าหมวดนี้ทั้งหมด"
+      cards.innerHTML = '';
+      strip.style.display = '';
+      if (opts.labelId && section.label) {
+        const lbl = document.getElementById(opts.labelId);
+        if (lbl) lbl.textContent = section.label;
+      }
+      const btn = document.createElement('button');
+      btn.className = 'aff-see-more aff-see-more--fallback';
+      btn.innerHTML = `ดูสินค้าในหมวดนี้ <strong>${allItems.length}</strong> รายการ <span class="aff-see-more-arrow">→</span>`;
+      btn.addEventListener('click', () => _openModal(key, allItems, label));
+      strip.appendChild(btn);
+    } else {
+      if (strip) strip.style.display = 'none';
+    }
     return;
   }
 
+  // ── มีสินค้า → แสดงปกติ ────────────────────────────────────────────
   if (opts.labelId && section.label) {
     const lbl = document.getElementById(opts.labelId);
     if (lbl) lbl.textContent = section.label;
   }
 
-  // แสดงเฉพาะ preview (สูงสุด 3 รายการ) ใช้ items ที่ผ่าน filterId แล้ว
-  const previewN   = opts.preview ?? AFF_PREVIEW;
-  const allItems   = section.items;   // ทั้งหมดใน section (ไม่กรอง filterId)
-  cards.innerHTML  = items.slice(0, previewN).map(_cardHTML).join('');
+  const previewN = opts.preview ?? AFF_PREVIEW;
+  cards.innerHTML = items.slice(0, previewN).map(_cardHTML).join('');
   if (strip) strip.style.display = '';
 
-  // ปุ่ม "ดูทั้งหมด" — เปิด modal แสดง allItems ทั้ง section (ไม่กรอง filterId)
-  // เพื่อให้ผู้ใช้เห็นสินค้าทั้งหมดในหมวดนี้ ไม่ใช่แค่สินค้าของ GPU/CPU ที่เลือก
+  // ปุ่ม "ดูทั้งหมด" เปิด modal แสดง allItems ทั้ง section
   if (allItems.length > previewN && strip) {
-    const label = section.label || key;
-    const btn   = document.createElement('button');
+    const btn = document.createElement('button');
     btn.className = 'aff-see-more';
     btn.innerHTML = `ดูสินค้าทั้งหมด <strong>${allItems.length}</strong> รายการ <span class="aff-see-more-arrow">→</span>`;
     btn.addEventListener('click', () => _openModal(key, allItems, label));
