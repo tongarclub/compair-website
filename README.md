@@ -240,3 +240,6 @@ cd /Users/mac/GitHub/compair-website && python3 scripts/import_shopee_links.py \
   --ids "r9_7950x" \
   --source Shopee \
   --replace
+
+
+  TEST
