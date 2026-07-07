@@ -21,12 +21,967 @@
     "label": "GPU · เปรียบราคา",
     "items": [
       {
+        "title": "VGA การ์ดจอ PNY GeForce RTX 5080 16GB ARGB Overclocked Triple Fan DLSS 4 GDDR7",
+        "price": 51900,
+        "link": "https://s.shopee.co.th/9fJ7913vKx",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81ztk-mo4863r6po1v3b.webp",
+        "source": "Shopee",
+        "shop_name": "บริษัท มังกี้ อีทีซี. จำกัด",
+        "item_sold": 1,
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "GBT GF RTX 5080 GAMING OC 16G (Rev1.0)\tGV-N5080GAMOC-16GD",
+        "price": 57600,
+        "link": "https://s.shopee.co.th/6AjEyaHFRI",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7rasj-mazph6oiow1i7d.webp",
+        "source": "Shopee",
+        "shop_name": "Hp_by_iqink",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "ZOTAC GAMING GEFORCE RTX5080 SOLID CORE OC 16GB 256BIT GDDR7(P288-1N765-300Z8)",
+        "price": 56000,
+        "link": "https://s.shopee.co.th/60PomHHsmH",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7ras8-m8a9twwj7iemf8.webp",
+        "source": "Shopee",
+        "shop_name": "TECHNOCOM.OFFICIAL",
+        "item_sold": 4,
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "ASUS PRIME GEFORCE RTX5080 OC 16G GDDR7 (90YV0LX0-M0NA00)",
+        "price": 63000,
+        "link": "https://s.shopee.co.th/6VM5NCFylO",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7rase-m846xz01ff8u95.webp",
+        "source": "Shopee",
+        "shop_name": "TECHNOCOM.OFFICIAL",
+        "item_sold": 9,
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "VGA (การ์ดแสดงผล) PALIT GEFORCE RTX 5080 GAMINGPRO - 16GB GDDR7",
+        "price": 52900,
+        "link": "https://s.shopee.co.th/6L2fAtGc6N",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81ztj-mmv7butau96u14.webp",
+        "source": "Shopee",
+        "shop_name": "แอดบอล คอมพิวเตอร์",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "VGA (การ์ดแสดงผล) MSI GEFORCE RTX 5080 16G GAMING TRIO OC - 16GB GDDR7",
+        "price": 62600,
+        "link": "https://s.shopee.co.th/5VTYBMJmnE",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81ztn-moy490f3fuofce.webp",
+        "source": "Shopee",
+        "shop_name": "แอดบอล คอมพิวเตอร์",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "ASUS ROG ASTRAL GEFORCE RTX 5080 OC HATSUNE MIKU EDITION 16GB GDDR7 +  PSU ASUS 1200W ROG THOR 1200P3 80+PLATINUM MIKU",
+        "price": 111000,
+        "link": "https://s.shopee.co.th/5LA7z3KQ8D",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81zte-mmjrx4g2i8zn0b.webp",
+        "source": "Shopee",
+        "shop_name": "D.P COMPUTER Hi End",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "ASUS ROG ASTRAL GEFORCE RTX 5080 OC HATSUNE MIKU EDITION 16GB GDDR7",
+        "price": 89900,
+        "link": "https://s.shopee.co.th/5q6OZyIW7K",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81ztn-mpkfshwxt3ij71.webp",
+        "source": "Shopee",
+        "shop_name": "D.P COMPUTER Hi End",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "VGA (การ์ดแสดงผล) ZOTAC GAMING GeForce RTX 5080 SOLID CORE OC",
+        "price": 52200,
+        "link": "https://s.shopee.co.th/5fmyNfJ9SJ",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81ztp-mm1mtsp7op3402.webp",
+        "source": "Shopee",
+        "shop_name": "M.B Computer Store",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "INNO3D VGA GEFORCE RTX 5080 X3 OC - 16GB GDDR7 - A0182764",
+        "price": 56500,
+        "link": "https://s.shopee.co.th/7VEcZ2CAjg",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81ztd-mpukkz1kncp821.webp",
+        "source": "Shopee",
+        "shop_name": "Advice Official Shop",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "INNO3D VGA GEFORCE RTX 5080 ICHILL FROSTBITE OC - 16GB GDDR7 - A0182767",
+        "price": 71700,
+        "link": "https://s.shopee.co.th/7KvCMjCo4f",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81ztm-mpukedl8v8ch88.webp",
+        "source": "Shopee",
+        "shop_name": "Advice Official Shop",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "VGA การ์ดจอ GIGABYTE GeForce RTX 5080 WINDFORCE OC SFF 16GB GDDR7",
+        "price": 52900,
+        "link": "https://s.shopee.co.th/7prSxeAu3m",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81ztn-mkd8n452amth61.webp",
+        "source": "Shopee",
+        "shop_name": "บริษัท มังกี้ อีทีซี. จำกัด",
+        "item_sold": 10,
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "VGA การ์ดจอ ZOTAC GAMING GeForce RTX 5080 GAMING SOLID CORE OC 16GB GDDR7",
+        "price": 52400,
+        "link": "https://s.shopee.co.th/7fY2lLBXOl",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81ztc-mki0hzdcdlvk9a.webp",
+        "source": "Shopee",
+        "shop_name": "บริษัท มังกี้ อีทีซี. จำกัด",
+        "item_sold": 4,
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "VGA (การ์ดแสดงผล) ASUS PRIME GEFORCE RTX 5080 16GB GDDR7 (PRIME-RTX5080-16G)",
+        "price": 67600,
+        "link": "https://s.shopee.co.th/6pyvloEi5c",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81ztq-moy4j8l8twxuce.webp",
+        "source": "Shopee",
+        "shop_name": "แอดบอล คอมพิวเตอร์",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "VGA (การ์ดแสดงผล) ASUS PRIME GEFORCE RTX 5080 16GB GDDR7 OC EDITION (PRIME-RTX5080-O16G)",
+        "price": 55900,
+        "link": "https://s.shopee.co.th/6ffVZVFLQb",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81zth-mmv7325j5mgxbb.webp",
+        "source": "Shopee",
+        "shop_name": "แอดบอล คอมพิวเตอร์",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "ASUS ROG ASTRAL RTX5080 OC HATSUNE MIKU EDITION 16GB GDDR7",
+        "price": 113000,
+        "link": "https://s.shopee.co.th/7AbmAQDRPi",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81zto-mjxxy5kvxjied7.webp",
+        "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "GALAX RTX5080 EX GAMER 16GB GDDR7",
+        "price": 71900,
+        "link": "https://s.shopee.co.th/70ILy7E4kh",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81ztf-mjjcxbr8kqo03d.webp",
+        "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "VGA (การ์ดแสดงผล) INNO3D GEFORCE RTX 5080 X3 OC - 16GB GDDR7 (N50803-16D7X-17603930)",
+        "price": 59000,
+        "link": "https://s.shopee.co.th/3ViTngROr2",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7ra0j-mbdla2gs3l9wca.webp",
+        "source": "Shopee",
+        "shop_name": "JIB Official Store",
+        "item_sold": 1,
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "MSI VGA GEFORCE RTX 5080 SHADOW 3X OC - 16GB GDDR7 - A0167047",
+        "price": 58000,
+        "link": "https://s.shopee.co.th/3LP3bNS2C1",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7rask-m9r5cxk7f42o1c.webp",
+        "source": "Shopee",
+        "shop_name": "Advice Official Shop",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "GIGABYTE VGA GEFORCE RTX 5080 XTREME WATERFORCE - 16GB GDDR7 (REV. 1.0) - A0166365",
+        "price": 74200,
+        "link": "https://s.shopee.co.th/3qLKCIQ8B8",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134275-7rask-mai21hqfq6icd6.webp",
+        "source": "Shopee",
+        "shop_name": "Advice Official Shop",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "VGA การ์ดจอ GIGABYTE GeForce RTX 5080 AORUS MASTER 16GB GDDR7",
+        "price": 60700,
+        "link": "https://s.shopee.co.th/3g1tzzQlW7",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81ztd-mky5qpeaknwi66.webp",
+        "source": "Shopee",
+        "shop_name": "บริษัท มังกี้ อีทีซี. จำกัด",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "การ์ดจอ RTX 3060Ti 3060Ti 4060 4070 4080 5070 5080 5090",
+        "price": 9000,
+        "link": "https://s.shopee.co.th/2qSn0STwCy",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7ras8-m6deloele5jx0d.webp",
+        "source": "Shopee",
+        "shop_name": "EZGGTECH",
+        "item_sold": 1,
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "VGA (การ์ดแสดงผล) GIGABYTE GEFORCE RTX 5080 AERO OC SFF 16G - 16GB GDDR7",
+        "price": 67900,
+        "link": "https://s.shopee.co.th/2g9Mo9UZXx",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81ztq-moy4xoa7sr9r50.webp",
+        "source": "Shopee",
+        "shop_name": "แอดบอล คอมพิวเตอร์",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "VGA (การ์ดแสดงผล) GALAX GEFORCE RTX 5080 1-CLICK OC WHITE - 16GB GDDR7",
+        "price": 55900,
+        "link": "https://s.shopee.co.th/3B5dP4SfX4",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81ztm-mqbi0037km4r5f.webp",
+        "source": "Shopee",
+        "shop_name": "แอดบอล คอมพิวเตอร์",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "GALAX RTX5080 HOF GAMING BLACK EDITION 16GB GDDR7",
+        "price": 87000,
+        "link": "https://s.shopee.co.th/30mDClTIs3",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81ztf-mi2smox3b8qo49.webp",
+        "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "GALAX RTX5080 1-CLICK OC 16GB GDDR7",
+        "price": 69500,
+        "link": "https://s.shopee.co.th/4qDrO8MK9Q",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7rasa-m9pqc1bk39ipd8.webp",
+        "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "VGA (การ์ดแสดงผล) MSI GEFORCE RTX 5080 16G VENTUS 3X OC - 16GB GDDR7",
+        "price": 64100,
+        "link": "https://s.shopee.co.th/4fuRBpMxUP",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81ztj-mmjx8u2c385h1b.webp",
+        "source": "Shopee",
+        "shop_name": "JIB Official Store",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "GIGABYTE VGA GEFORCE RTX 5080 AERO OC - 16GB GDDR7 (REV. 1.0) - A0166362",
+        "price": 66200,
+        "link": "https://s.shopee.co.th/5AqhmkL3TW",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7rasm-m9r5fxjheinlbf.webp",
+        "source": "Shopee",
+        "shop_name": "Advice Official Shop",
+        "item_sold": 3,
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "VGA GIGABYTE GEFORCE RTX 5080 AORUS MASTER - 16GB GDDR7 (REV. 1.0) - A0166364",
+        "price": 70500,
+        "link": "https://s.shopee.co.th/50XHaRLgoV",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7ras9-m9e59iq7j2a769.webp",
+        "source": "Shopee",
+        "shop_name": "Advice Official Shop",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "VGA (การ์ดแสดงผล) ASUS ROG ASTRAL GEFORCE RTX 5080 16GB GDDR7 WHITE OC EDITION",
+        "price": 79900,
+        "link": "https://s.shopee.co.th/4AyAauOrVM",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81ztf-mlljzbvrqccib8.webp",
+        "source": "Shopee",
+        "shop_name": "JIB Official Store",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "(มีโค้ดลด2000฿) RTX 5060 5060Ti 5060 ti 2060Super 3060 3060Ti 3070 3070Ti 4060 4060Ti 4070 4070Ti 4080 4090 5080 5090",
+        "price": 5000,
+        "link": "https://s.shopee.co.th/40ekObPUqL",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7ras8-m6deloele5jx0d.webp",
+        "source": "Shopee",
+        "shop_name": "EZGGTECH",
+        "item_sold": 23,
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "Alphacool Core Water Block Serve สําหรับ Inno3D Geforce RTX 5080 Reference (AIC),MSI GeForce 5080/5070 Ti VENTUS 3X OC การ์ด Cooler",
+        "price": 21400,
+        "link": "https://s.shopee.co.th/4Vb0zWNapS",
+        "image": "https://down-tx-th.img.susercontent.com/sg-11134202-822yl-mhyxlw339sle8f.webp",
+        "source": "Shopee",
+        "shop_name": "3CCamera.th",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "คอมประกอบพรีเมียม / 4K | Intel Core Ultra 9 285K + RTX 5080 | DDR5 64GB 6400MHz / SSD 2TB | โทนขาว / ชุดแต่ง Lian Li",
+        "price": 155700,
+        "link": "https://s.shopee.co.th/4LHanDOEAR",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81zto-mfkgr2oabvux4c.webp",
+        "source": "Shopee",
+        "shop_name": "บริษัท มังกี้ อีทีซี. จำกัด",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "GIGABYTE RTX5080 AORUS XTREME WATERFORECE 16GB GDDR7",
+        "price": 89500,
+        "link": "https://s.shopee.co.th/qhicmbYGm",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7rasa-m9prhvzpau3yd2.webp",
+        "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "GALAX RTX5080 1-CLICK OC 16GB GDDR7 WHITE",
+        "price": 66900,
+        "link": "https://s.shopee.co.th/gOIQTcBbl",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7rase-m9pqq1xfnr3i22.webp",
+        "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "VGA (การ์ดแสดงผล) ASUS PROART GEFORCE RTX 5080 16GB GDDR7 OC EDITION",
+        "price": 75300,
+        "link": "https://s.shopee.co.th/1BKZ1OaHas",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81ztg-mmwzh1437egx8f.webp",
+        "source": "Shopee",
+        "shop_name": "JIB Official Store",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "MSI VGA GEFORCE RTX 5080 VENTUS 3X OC - 16GB GDDR7 - A0167046",
+        "price": 60500,
+        "link": "https://s.shopee.co.th/1118p5auvr",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134275-7rasf-m9r4yrpdj75afe.webp",
+        "source": "Shopee",
+        "shop_name": "Advice Official Shop",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "VGA GIGABYTE GEFORCE RTX 5080 GAMING OC - 16GB GDDR7 (REV. 1.0) - A0166361",
+        "price": 65500,
+        "link": "https://s.shopee.co.th/BS1pYe5ci",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7rase-m9e55v65yvbda7.webp",
+        "source": "Shopee",
+        "shop_name": "Advice Official Shop",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "VGA (การ์ดแสดงผล) INNO3D GEFORCE RTX 5080 ICHILL X3 V2 - 16GB GDDR7 C50803-16D7X-176069R",
+        "price": 64900,
+        "link": "https://s.shopee.co.th/18bdFeixh",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81zte-modebjzln30gb5.webp",
+        "source": "Shopee",
+        "shop_name": "JIB Official Store",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "คอมประกอบพรีเมียม / 4K | Ryzen 7 9800X3D + RTX 5080 | RAM 64GB 6400MHz / SSD 2TB | โทนขาว / HYTE Y70 Touch",
+        "price": 145900,
+        "link": "https://s.shopee.co.th/W4sEAcowo",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81zto-mq8r6vopg3rg36.webp",
+        "source": "Shopee",
+        "shop_name": "บริษัท มังกี้ อีทีซี. จำกัด",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "ROG Zephyrus G18 G815LW-S9112W Asus U9-275HX32 G 1TB RTX5080 W11 3YOSS",
+        "price": 125000,
+        "link": "https://s.shopee.co.th/LlS1rdSHn",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81ztd-me5o4gxp31mrb5.webp",
+        "source": "Shopee",
+        "shop_name": "NOTEBOOK  CORP",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "คอมประกอบพรีเมียม / 4K | Ryzen 7 9800X3D + RTX 5080 | DDR5 12GB 6000MHz / SSD 1TB | ชุดน้ำปิด",
+        "price": 130900,
+        "link": "https://s.shopee.co.th/2BD6DEWTZA",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81zto-mq90ma8arc3x60.webp",
+        "source": "Shopee",
+        "shop_name": "บริษัท มังกี้ อีทีซี. จำกัด",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "MSI RTX5080 SHADOW 3X OC 16GB GDDR7",
+        "price": 67800,
+        "link": "https://s.shopee.co.th/20tg0vX6u9",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7rash-m9prwjnh3cy749.webp",
+        "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "GIGABYTE RTX5080 WINFOREC OC SFF 16GB GDDR7",
+        "price": 68500,
+        "link": "https://s.shopee.co.th/2VpwbqVCtG",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7rasa-m9prnu5bv9wxb3.webp",
+        "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "VGA (การ์ดแสดงผล) GIGABYTE AORUS GEFORCE RTX 5080 MASTER 16G - 16GB GDDR7 (GV-N5080AORUS M-16GD)",
+        "price": 67900,
+        "link": "https://s.shopee.co.th/2LWWPXVqEF",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7ra0s-mbbxwlx4z7uc43.webp",
+        "source": "Shopee",
+        "shop_name": "JIB Official Store",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "GALAX VGA GEFORCE RTX 5080 HOF GAMING BLACK - 16GB GDDR7 - A0172861",
+        "price": 68400,
+        "link": "https://s.shopee.co.th/1VxPQ0Z0v6",
+        "image": "https://down-tx-th.img.susercontent.com/sg-11134275-824je-me9vcwg1o3cw45.webp",
+        "source": "Shopee",
+        "shop_name": "Advice Official Shop",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "PALIT VGA GEFORCE RTX 5080 GAMINGPRO OC - 16GB GDDR7 - A0180200",
+        "price": 55500,
+        "link": "https://s.shopee.co.th/1LdzDhZeG5",
+        "image": "https://down-tx-th.img.susercontent.com/sg-11134275-82609-mmd4ly6nd341a5.webp",
+        "source": "Shopee",
+        "shop_name": "Advice Official Shop",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "VGA (การ์ดแสดงผล) GIGABYTE AORUS GEFORCE RTX 5080 XTREME WATERFORCE 16G - 16GB GDDR7 (GV-N5080AORUSX W-16GD)",
+        "price": 73800,
+        "link": "https://s.shopee.co.th/1qaFocXkFC",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7ra0l-mbbxc0wleh6p7b.webp",
+        "source": "Shopee",
+        "shop_name": "JIB Official Store",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "คอมประกอบพรีเมียม / 4K | Ryzen 7 9800X3D + RTX 5080 16GB | DDR5 32GB / SSD 1TB | พร้อมใช้ ประกันไทย",
+        "price": 130900,
+        "link": "https://s.shopee.co.th/1gGpcJYNaB",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81ztk-mq8stcq5cx6of7.webp",
+        "source": "Shopee",
+        "shop_name": "บริษัท มังกี้ อีทีซี. จำกัด",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "MSI STEALTH A16 AI PLUS Ryzen AI 9 HX 370/RTX 5080 RAM64/2TB - ID26060441",
+        "price": 113400,
+        "link": "https://s.shopee.co.th/8fQZxB7jNY",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81ztd-mpuc7ehxc9ho8a.webp",
+        "source": "Shopee",
+        "shop_name": "10X Store",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "Original 380W 20V 19A อะแดปเตอร์ชาร์จสําหรับ ASUS ROG Strix scar 16 2025 G635LW RTX5080 ADP-380AB B",
+        "price": 6400,
+        "link": "https://s.shopee.co.th/8pk09U762b",
+        "image": "https://down-tx-th.img.susercontent.com/sg-11134201-824jc-mep4jcmcgnphd5.webp",
+        "source": "Shopee",
+        "shop_name": "junyue999.th",
+        "item_sold": 3,
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "GIGABYTE RTX5080 AORUS MASTER ICE 16GB GDDR7",
+        "price": 82500,
+        "link": "https://s.shopee.co.th/903QLn6She",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7ras8-map4vxrow1ao8a.webp",
+        "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
+        "item_sold": 1,
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "INNO3D RTX5080 X3 OC 16GB BLACK GDDR7",
+        "price": 66900,
+        "link": "https://s.shopee.co.th/9AMqY65pMh",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7rasd-m8d39ntj3z7289.webp",
+        "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "VGA (การ์ดแสดงผล) INNO3D GEFORCE RTX 5080 X3 OC WHITE - 16GB GDDR7 (N50803-16D7X-17605211)",
+        "price": 59000,
+        "link": "https://s.shopee.co.th/80At9xAGjU",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7ra0n-mbdmsesr8qk199.webp",
+        "source": "Shopee",
+        "shop_name": "JIB Official Store",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "INNO3D VGA GEFORCE RTX 5080 ICHILL X3 V2 OC - 16GB GDDR7 - A0182766",
+        "price": 61800,
+        "link": "https://s.shopee.co.th/8AUJMG9dOX",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81ztc-mpujxufur8y4aa.webp",
+        "source": "Shopee",
+        "shop_name": "Advice Official Shop",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "PALIT VGA GEFORCE RTX 5080 GAMINGPRO - 16GB GDDR7 - A0166369",
+        "price": 55500,
+        "link": "https://s.shopee.co.th/8KnjYZ903a",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7ra0k-mc7mmx5y9omf72.webp",
+        "source": "Shopee",
+        "shop_name": "Advice Official Shop",
+        "item_sold": 3,
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "VGA (การ์ดแสดงผล) ASUS ROG ASTRAL GEFORCE RTX 5080 16GB GDDR7 OC EDITION",
+        "price": 78500,
+        "link": "https://s.shopee.co.th/8V79ks8Mid",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81ztf-me6x1j4ufmyqba.webp",
+        "source": "Shopee",
+        "shop_name": "JIB Official Store",
+        "item_sold": 1,
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "GIGABYTE VGA GEFORCE RTX 5080 WINDFORCE OC - 16GB GDDR7 (REV. 1.0) - A0166360",
+        "price": 60300,
+        "link": "https://s.shopee.co.th/9zvxXd2efw",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134275-7ras8-m9r4yq4hudlb71.webp",
+        "source": "Shopee",
+        "shop_name": "Advice Official Shop",
+        "item_sold": 2,
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "GALAX RTX5080 EX GAMER 16GB GDDR7 WHITE",
+        "price": 69200,
+        "link": "https://s.shopee.co.th/AAFNjw21Kz",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7rasl-m9pqwzx9tkvi06.webp",
+        "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "GIGABYTE GAMING RTX5080 16 GB GDDR7 OC EDITION",
+        "price": 75900,
+        "link": "https://s.shopee.co.th/AKYnwF1O02",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7rasi-m5zvhd595sc69a.webp",
+        "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "VGA (การ์ดแสดงผล) GIGABYTE GEFORCE RTX 5080 WINDFORCE OC SFF 16G - 16GB GDDR7 (GV-N5080WF3OC-16GD)",
+        "price": 58800,
+        "link": "https://s.shopee.co.th/AUsE8Y0kf5",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7ra0s-mbc1uyc222bab6.webp",
+        "source": "Shopee",
+        "shop_name": "JIB Official Store",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "[สินค้าพร้อมจัดส่งในไทย] MSI GAMING TRIO RTX5080 16 GB GDDR7 OC EDITION",
+        "price": 72900,
+        "link": "https://s.shopee.co.th/9KgGkP5C1s",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7rasj-m5qng58cco0t25.webp",
+        "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
+        "item_sold": 1,
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "RTX5080/16GB GALAX 1-CLICK (OC/D7) - A0166352",
+        "price": 59600,
+        "link": "https://s.shopee.co.th/9Uzgwi4Ygv",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7rasa-m81gt7mb1w4u18.webp",
+        "source": "Shopee",
+        "shop_name": "Advice Official Shop",
+        "item_sold": 11,
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "VGA (การ์ดแสดงผล) GALAX GEFORCE RTX 5080 HOF GAMING BLACK EDITION - 16GB GDDR7",
+        "price": 70600,
+        "link": "https://s.shopee.co.th/9fJ7913vLy",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7ra0l-mdpq3ctyx2ta3e.webp",
+        "source": "Shopee",
+        "shop_name": "JIB Official Store",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "ASUS ROG ASTRAL RTX5080 OC WHITE 16GB GDDR7",
+        "price": 89500,
+        "link": "https://s.shopee.co.th/9pcXLK3I11",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81ztp-misduj582yo30b.webp",
+        "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "ZOTAC RTX5080 SOLID GAMING OC 16GB GDDR7 WHITE",
+        "price": 64900,
+        "link": "https://s.shopee.co.th/60PomHHsnI",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7rasa-mapdn0hs6q9gfb.webp",
+        "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "GALAX RTX5080 HOF GAMING 16GB GDDR7",
+        "price": 87000,
+        "link": "https://s.shopee.co.th/6AjEyaHFSL",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81ztn-mi2scd35wirsed.webp",
+        "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "GIGABYTE AERO RTX5080 16GB GDDR7 OC EDITION",
+        "price": 78500,
+        "link": "https://s.shopee.co.th/6L2fAtGc7O",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81ztd-mki1wyjsh14yd6.webp",
+        "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
+        "item_sold": 1,
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "ZOTAC GAMING RTX5080 SOLID CORE OC 16GB GDDR7",
+        "price": 62500,
+        "link": "https://s.shopee.co.th/6VM5NCFymR",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81ztm-mloguv0dy97323.webp",
+        "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "VGA (การ์ดแสดงผล) ZOTAC GAMING GEFORCE RTX 5080 SOLID CORE OC - 16GB GDDR7 (ZT-B50800J2-10P)",
+        "price": 59000,
+        "link": "https://s.shopee.co.th/5LA7z3KQ9E",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7ra0n-mbvy43nc50gsdd.webp",
+        "source": "Shopee",
+        "shop_name": "JIB Official Store",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "ASUS TUF RTX5080 GAMING OC 16GB GDDR7",
+        "price": 81000,
+        "link": "https://s.shopee.co.th/5VTYBMJmoH",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7rasj-m9pk6xb8lmjk47.webp",
+        "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "INNO3D RTX5080 X3 OC WHITE 16GB GDDR7",
+        "price": 68300,
+        "link": "https://s.shopee.co.th/5fmyNfJ9TK",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7ras8-m8d2yz7814ax90.webp",
+        "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "VGA (การ์ดแสดงผล) GIGABYTE GEFORCE RTX 5080 AERO OC SFF 16G - 16GB GDDR7 (GV-N5080AERO OC-16GD)",
+        "price": 67000,
+        "link": "https://s.shopee.co.th/5q6OZyIW8N",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7ra0i-mbbyjj2rglflce.webp",
+        "source": "Shopee",
+        "shop_name": "JIB Official Store",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "[สินค้าพร้อมจัดส่งในไทย] GIGABYTE AORUS RTX5080 MASTER 16GB GDDR7",
+        "price": 80900,
+        "link": "https://s.shopee.co.th/7KvCMjCo5g",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81ztk-ml4sii5ubnym20.webp",
+        "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
+        "item_sold": 1,
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "ROG ASTRAL RTX5080 16GB OC GDDR7 BLACK",
+        "price": 85500,
+        "link": "https://s.shopee.co.th/7VEcZ2CAkj",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81zto-mq632jnzevwuf9.webp",
+        "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "ROG ASTRAL RTX5080 16 GB GDDR7 OC EDITION",
+        "price": 88500,
+        "link": "https://s.shopee.co.th/7fY2lLBXPm",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7rasi-m5p939h7ybw69b.webp",
+        "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
+        "item_sold": 1,
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "MSI RTX5080 VENTUS X3 OC PLUS 16GB GDDR7",
+        "price": 63000,
+        "link": "https://s.shopee.co.th/7prSxeAu4p",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-81ztl-mnkzq2y21x51b3.webp",
+        "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "ASUS PRIME RTX5080 OC 16GB GDDR7",
+        "price": 74300,
+        "link": "https://s.shopee.co.th/6ffVZVFLRc",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7ras9-m9pl3a6dymlq34.webp",
+        "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "VGA (การ์ดแสดงผล) MSI GEFORCE RTX 5080 16G SHADOW 3X OC - 16GB GDDR7",
+        "price": 60500,
+        "link": "https://s.shopee.co.th/6pyvloEi6f",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7ras9-m807f87tz7xq68.webp",
+        "source": "Shopee",
+        "shop_name": "JIB Official Store",
+        "item_sold": 1,
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "VGA (การ์ดแสดงผล) GIGABYTE GEFORCE RTX 5080 GAMING OC 16G - 16GB GDDR7 (GV-N5080GAMING OC-16GD)",
+        "price": 63500,
+        "link": "https://s.shopee.co.th/70ILy7E4li",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7ra0o-mbbz0v0mfsdt28.webp",
+        "source": "Shopee",
+        "shop_name": "JIB Official Store",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "VGA (การ์ดแสดงผล) GALAX GEFORCE RTX 5080 1-CLICK OC - 16GB GDDR7",
+        "price": 61400,
+        "link": "https://s.shopee.co.th/7AbmAQDRQl",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7ra0g-mb65w0t41ai927.webp",
+        "source": "Shopee",
+        "shop_name": "JIB Official Store",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "VGA (การ์ดแสดงผล) ASUS TUF GAMING GEFORCE RTX 5080 16GB GDDR7 OC EDITION (TUF-RTX5080-O16G-GAMING)",
+        "price": 71700,
+        "link": "https://s.shopee.co.th/3LP3bNS2D2",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7ra0s-mb7lu03gdf7ace.webp",
+        "source": "Shopee",
+        "shop_name": "JIB Official Store",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "VGA (การ์ดแสดงผล) ASUS PRIME GEFORCE RTX 5080 16GB GDDR7 OC EDITION (PRIME-RTX5080-O16G)",
+        "price": 63900,
+        "link": "https://s.shopee.co.th/3ViTngROs5",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7rasl-m9qqhz75s2cu0e.webp",
+        "source": "Shopee",
+        "shop_name": "JIB Official Store",
+        "item_sold": 1,
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "คอมพิวเตอร์ประกอบ HYTE Y40 RTX5080 BLACK/WHITE",
+        "price": 155900,
+        "link": "https://s.shopee.co.th/3g1tzzQlX8",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7ras8-m5v66xgrzeuv7b.webp",
+        "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
+        "title": "คอมพิวเตอร์ประกอบ HTYE Y60 RTX5080 OC GDDR7 BLACK",
+        "price": 159000,
+        "link": "https://s.shopee.co.th/3qLKCIQ8CB",
+        "image": "https://down-tx-th.img.susercontent.com/th-11134207-7rasd-m63p4ze31cil46.webp",
+        "source": "Shopee",
+        "shop_name": "EXPERT MINES COMPANY LIMITED",
+        "ids": [
+          "5080"
+        ]
+      },
+      {
         "title": "VGA (การ์ดแสดงผล) MSI GEFORCE RTX 5090 32G GAMING TRIO OC - 32GB GDDR7",
         "price": 169700,
         "link": "https://s.shopee.co.th/2BD1GnZPSV",
         "image": "https://down-zl-th.img.susercontent.com/th-11134207-7ra0m-mbet1fh1hbnaa6.webp",
         "source": "Shopee",
-        "badge": "ขายดี",
         "shop_name": "JIB Official Store",
         "item_sold": 1,
         "ids": [
@@ -39,7 +994,6 @@
         "link": "https://s.shopee.co.th/1gGkfsbJTQ",
         "image": "https://down-zl-th.img.susercontent.com/th-11134207-81ztn-mq8t04g63tvx56.webp",
         "source": "Shopee",
-        "badge": "ขายดี",
         "shop_name": "Advice Official Shop",
         "ids": [
           "5090"
@@ -51,7 +1005,6 @@
         "link": "https://s.shopee.co.th/1qaAsBag8T",
         "image": "https://down-zl-th.img.susercontent.com/sg-11134275-821eo-mh0e5nskf7k86e.webp",
         "source": "Shopee",
-        "badge": "ขายดี",
         "shop_name": "บริษัท มังกี้ อีทีซี. จำกัด",
         "ids": [
           "5090"
@@ -63,7 +1016,6 @@
         "link": "https://s.shopee.co.th/1LduHGca9O",
         "image": "https://down-zl-th.img.susercontent.com/th-11134207-81zte-mpeku3c4tngscb.webp",
         "source": "Shopee",
-        "badge": "ขายดี",
         "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
@@ -75,7 +1027,6 @@
         "link": "https://s.shopee.co.th/1VxKTZbwoR",
         "image": "https://down-zl-th.img.susercontent.com/th-11134207-7ras8-m8fwept4cfgvaf.webp",
         "source": "Shopee",
-        "badge": "ขายดี",
         "shop_name": "EXPERT MINES COMPANY LIMITED",
         "item_sold": 1,
         "ids": [
@@ -88,7 +1039,6 @@
         "link": "https://s.shopee.co.th/1113sedqpM",
         "image": "https://down-zl-th.img.susercontent.com/th-11134207-7ra0u-mb7sojhocgfq48.webp",
         "source": "Shopee",
-        "badge": "ขายดี",
         "shop_name": "JIB Official Store",
         "ids": [
           "5090"
@@ -100,7 +1050,6 @@
         "link": "https://s.shopee.co.th/1BKU4xdDUP",
         "image": "https://down-zl-th.img.susercontent.com/th-11134207-7rasb-m847by4n5tkec6.webp",
         "source": "Shopee",
-        "badge": "ขายดี",
         "shop_name": "TECHNOCOM.OFFICIAL",
         "item_sold": 2,
         "ids": [
@@ -113,7 +1062,6 @@
         "link": "https://s.shopee.co.th/gODU2f7VK",
         "image": "https://down-zl-th.img.susercontent.com/sg-11134201-8260c-mk0ukmy20v7p69.webp",
         "source": "Shopee",
-        "badge": "ขายดี",
         "shop_name": "I KNOW YOU",
         "item_sold": 1,
         "ids": [
@@ -126,7 +1074,6 @@
         "link": "https://s.shopee.co.th/qhdgLeUAN",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-81ztd-mpx5tygok26833.webp",
         "source": "Shopee",
-        "badge": "ขายดี",
         "shop_name": "บริษัท มังกี้ อีทีซี. จำกัด",
         "ids": [
           "5090"
@@ -138,7 +1085,6 @@
         "link": "https://s.shopee.co.th/LlN5QgOBI",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-81ztd-mpx5tygok26833.webp",
         "source": "Shopee",
-        "badge": "ขายดี",
         "shop_name": "บริษัท มังกี้ อีทีซี. จำกัด",
         "ids": [
           "5090"
@@ -150,7 +1096,6 @@
         "link": "https://s.shopee.co.th/W4nHjfkqL",
         "image": "https://down-bs-th.img.susercontent.com/sg-11134275-825zz-mkf6jms5jdhgb4.webp",
         "source": "Shopee",
-        "badge": "ขายดี",
         "shop_name": "Advice Official Shop",
         "ids": [
           "5090"
@@ -162,7 +1107,6 @@
         "link": "https://s.shopee.co.th/18WgoherG",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-81ztc-mpxe9accfaq525.webp",
         "source": "Shopee",
-        "badge": "ขายดี",
         "shop_name": "บริษัท มังกี้ อีทีซี. จำกัด",
         "ids": [
           "5090"
@@ -174,7 +1118,6 @@
         "link": "https://s.shopee.co.th/BRwt7h1WJ",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-81ztg-mipnxvm0gi69ef.webp",
         "source": "Shopee",
-        "badge": "ขายดี",
         "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
@@ -186,7 +1129,6 @@
         "link": "https://s.shopee.co.th/50XCe0OciG",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-81zto-mibay3dbo0lf65.webp",
         "source": "Shopee",
-        "badge": "ขายดี",
         "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
@@ -198,7 +1140,6 @@
         "link": "https://s.shopee.co.th/5AqcqJNzNJ",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-81ztj-mf53ayfgm3nza4.webp",
         "source": "Shopee",
-        "badge": "ขายดี",
         "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
@@ -210,7 +1151,6 @@
         "link": "https://s.shopee.co.th/4fuMFOPtOE",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-81ztf-mlolokuve51ra9.webp",
         "source": "Shopee",
-        "badge": "ขายดี",
         "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
@@ -222,7 +1162,6 @@
         "link": "https://s.shopee.co.th/4qDmRhPG3H",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-7rasf-m8x6avrr1sztc8.webp",
         "source": "Shopee",
-        "badge": "ขายดี",
         "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
@@ -234,7 +1173,6 @@
         "link": "https://s.shopee.co.th/4LHVqmRA4C",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-7rase-m76f4vi99o1j85.webp",
         "source": "Shopee",
-        "badge": "ขายดี",
         "shop_name": "EXPERT MINES COMPANY LIMITED",
         "item_sold": 3,
         "ids": [
@@ -247,7 +1185,6 @@
         "link": "https://s.shopee.co.th/4Vaw35QWjF",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-7rash-m8x6kptwxcgf32.webp",
         "source": "Shopee",
-        "badge": "ขายดี",
         "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
@@ -259,7 +1196,6 @@
         "link": "https://s.shopee.co.th/40efSASQkA",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-7rasg-m8vrk1wnfevde1.webp",
         "source": "Shopee",
-        "badge": "ขายดี",
         "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
@@ -271,7 +1207,6 @@
         "link": "https://s.shopee.co.th/4Ay5eTRnPD",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-7ras8-m8eac2h34cnd54.webp",
         "source": "Shopee",
-        "badge": "ขายดี",
         "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
@@ -283,7 +1218,6 @@
         "link": "https://s.shopee.co.th/3g1p3YThQ8",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-81zth-mlogm2dcg5j558.webp",
         "source": "Shopee",
-        "badge": "ขายดี",
         "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
@@ -295,7 +1229,6 @@
         "link": "https://s.shopee.co.th/3qLFFrT45B",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-7rase-m6r6xy11sncf25.webp",
         "source": "Shopee",
-        "badge": "ขายดี",
         "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
@@ -307,7 +1240,6 @@
         "link": "https://s.shopee.co.th/3LOyewUy66",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-81ztp-mlisa7sidtdw15.webp",
         "source": "Shopee",
-        "badge": "ขายดี",
         "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
@@ -319,7 +1251,6 @@
         "link": "https://s.shopee.co.th/3ViOrFUKl9",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-7ra0g-mczwcxljswclad.webp",
         "source": "Shopee",
-        "badge": "ขายดี",
         "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
@@ -331,7 +1262,6 @@
         "link": "https://s.shopee.co.th/30m8GKWEm4",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-81ztq-mdzlhtv1g2yo1b.webp",
         "source": "Shopee",
-        "badge": "ขายดี",
         "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
@@ -343,7 +1273,6 @@
         "link": "https://s.shopee.co.th/3B5YSdVbR7",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-7rasd-m8eajig8ywaxe9.webp",
         "source": "Shopee",
-        "badge": "ขายดี",
         "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
@@ -355,7 +1284,6 @@
         "link": "https://s.shopee.co.th/2g9HriXVS2",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-7rasd-m8x5qjjikva8b0.webp",
         "source": "Shopee",
-        "badge": "ขายดี",
         "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
@@ -367,7 +1295,6 @@
         "link": "https://s.shopee.co.th/2qSi41Ws75",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-81ztd-mnjoolkkmxoldd.webp",
         "source": "Shopee",
-        "badge": "ขายดี",
         "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
@@ -379,7 +1306,6 @@
         "link": "https://s.shopee.co.th/7fXxouETJ2",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-7rasl-m8d2dtf6q4mm9d.webp",
         "source": "Shopee",
-        "badge": "ขายดี",
         "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
@@ -391,7 +1317,6 @@
         "link": "https://s.shopee.co.th/7prO1DDpy5",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-7rasa-m5js2fig00fea0.webp",
         "source": "Shopee",
-        "badge": "ขายดี",
         "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
@@ -403,7 +1328,6 @@
         "link": "https://s.shopee.co.th/7Kv7QIFjz0",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-7rasa-m5js2fig00fea0.webp",
         "source": "Shopee",
-        "badge": "ขายดี",
         "shop_name": "EXPERT MINES COMPANY LIMITED",
         "ids": [
           "5090"
@@ -415,7 +1339,6 @@
         "link": "https://s.shopee.co.th/7VEXcbF6e3",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-7rasd-m7j5dkasn5qyce.webp",
         "source": "Shopee",
-        "badge": "ขายดี",
         "shop_name": "JIB Official Store",
         "ids": [
           "5090"
@@ -427,20 +1350,7 @@
         "link": "https://s.shopee.co.th/70IH1gH0ey",
         "image": "https://down-bs-th.img.susercontent.com/th-11134207-81zti-mllhvztzby0w0e.webp",
         "source": "Shopee",
-        "badge": "ขายดี",
         "shop_name": "shoppingpc dotnet",
-        "ids": [
-          "5090"
-        ]
-      },
-      {
-        "title": "การ์ดจอ RTX 3060Ti 3060Ti 4060 4070 4080 5070 5080 5090",
-        "price": 9000,
-        "link": "https://s.shopee.co.th/7AbhDzGNK1",
-        "source": "Shopee",
-        "badge": "ขายดี",
-        "shop_name": "EZGGTECH",
-        "item_sold": 1,
         "ids": [
           "5090"
         ]
@@ -459,7 +1369,10 @@
         "image": "https://down-ws-th.img.susercontent.com/th-11134207-7rasd-m8x801x6gycuda.webp",
         "source": "Shopee",
         "shop_name": "mcwinner",
-        "item_sold": 19
+        "item_sold": 19,
+        "ids": [
+          "r9_7950x"
+        ]
       },
       {
         "title": "CPU (ซีพียู) AMD RYZEN 9 9950X - 16C 32T 4.3-5.7GHz (AMD SOCKET AM5) (ระบบระบายความร้อนไม่รวมอยู่ในสินค้า)",
@@ -468,7 +1381,10 @@
         "image": "https://down-ws-th.img.susercontent.com/th-11134207-7r991-m08fblrkcqfsb1.webp",
         "source": "Shopee",
         "shop_name": "JIB Official Store",
-        "item_sold": 6
+        "item_sold": 6,
+        "ids": [
+          "r9_7950x"
+        ]
       },
       {
         "title": "CPU (ซีพียู) AMD RYZEN 5 9600X - 6C 12T 3.9-5.4GHz (AMD SOCKET AM5) (ระบบระบายความร้อนไม่รวมอยู่ในสินค้า)",
@@ -477,7 +1393,10 @@
         "image": "https://down-ws-th.img.susercontent.com/th-11134207-7ras8-m7agd6ph9f744c.webp",
         "source": "Shopee",
         "shop_name": "JIB Official Store",
-        "item_sold": 382
+        "item_sold": 382,
+        "ids": [
+          "r9_7950x"
+        ]
       },
       {
         "title": "CPU (ซีพียู) AMD RYZEN 9 9950X3D - 16C 32T 4.3-5.7GHz AMD SOCKET AM5 (ระบบระบายความร้อนไม่รวมอยู่ในสินค้า)",
@@ -486,7 +1405,10 @@
         "image": "https://down-ws-th.img.susercontent.com/th-11134207-7rasd-m8ylj449xemnd8.webp",
         "source": "Shopee",
         "shop_name": "JIB Official Store",
-        "item_sold": 6
+        "item_sold": 6,
+        "ids": [
+          "r9_7950x"
+        ]
       },
       {
         "title": "ซีพียู CPU: AMD - RYZEN 9 (9950X AM5)",
@@ -495,7 +1417,10 @@
         "image": "https://down-ws-th.img.susercontent.com/th-11134275-7rasm-maw7h34vstcg33.webp",
         "source": "Shopee",
         "shop_name": "atSine Tech",
-        "item_sold": 2
+        "item_sold": 2,
+        "ids": [
+          "r9_7950x"
+        ]
       },
       {
         "title": "CPU AMD AM5 RYZEN 9 9900X3D (NEXT) - A0169017",
@@ -504,7 +1429,10 @@
         "image": "https://down-ws-th.img.susercontent.com/th-11134275-7rasf-maw7gzrwpuo1b1.webp",
         "source": "Shopee",
         "shop_name": "Advice Official Shop",
-        "item_sold": 4
+        "item_sold": 4,
+        "ids": [
+          "r9_7950x"
+        ]
       },
       {
         "title": "CPU AMD AM5 RYZEN 9 9950X3D (NEXT) - A0168684",
@@ -513,7 +1441,10 @@
         "image": "https://down-ws-th.img.susercontent.com/th-11134275-7rasf-maw7gzrwpuo1b1.webp",
         "source": "Shopee",
         "shop_name": "Advice Official Shop",
-        "item_sold": 11
+        "item_sold": 11,
+        "ids": [
+          "r9_7950x"
+        ]
       }
     ]
   },

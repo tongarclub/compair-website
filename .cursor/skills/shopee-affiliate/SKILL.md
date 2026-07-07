@@ -53,35 +53,48 @@ python3 scripts/create_picks_xlsx.py               # reset template
 
 ### วิธี B — นำเข้าจาก Shopee "ลิงก์สินค้าหลายรายการ"
 
-CSV จาก Shopee Affiliate Portal → "สร้างลิงก์หลายรายการ" → Export → บันทึกใน `csv-affiliate-shoppe/products/`
+CSV จาก Shopee Affiliate Portal → "สร้างลิงก์หลายรายการ" → Export  
+ตั้งชื่อไฟล์ตาม **ids** และวางใน subfolder ที่ชื่อตาม **section**:
+
+```
+csv-affiliate-shoppe/products/
+    ai_calculator/        ← section
+        5080.csv          ← ids
+        5090.csv
+    ai_calculator_cpu/
+        r9_7950x.csv
+```
+
+**Auto-mapping:** `section` = ชื่อ folder แม่ · `ids` = ชื่อไฟล์ (stem)
 
 ```bash
-# Step 1a: folder — ประมวลผลทุก .csv ในคราวเดียว (แนะนำ)
-python3 scripts/import_shopee_links.py csv-affiliate-shoppe/products/ \
-  --section ai_calculator \
-  --ids "5090|5080"     \   # ผูกกับ GPU id (optional)
-  --source Shopee        \   # platform label
-  --badge ขายดี         \   # badge (optional)
-  --dry-run                  # preview ก่อน
+# Step 1a: products root — ประมวลผลทุก section/ไฟล์ อัตโนมัติ (แนะนำ)
+python3 scripts/import_shopee_links.py csv-affiliate-shoppe/products/ --dry-run
 
-# Step 1b: single file (เหมือนเดิม)
-python3 scripts/import_shopee_links.py "csv-affiliate-shoppe/products/links.csv" \
-  --section ai_calculator --dry-run
+# Step 1b: section folder เดียว
+python3 scripts/import_shopee_links.py csv-affiliate-shoppe/products/ai_calculator/ --dry-run
 
-# Step 2: sync picks.xlsx → JSON
-python3 scripts/import_picks.py --section ai_calculator
+# Step 1c: single file
+python3 scripts/import_shopee_links.py csv-affiliate-shoppe/products/ai_calculator/5090.csv --dry-run
+
+# Step 1d: override section / ids ถ้าต้องการ
+python3 scripts/import_shopee_links.py <path> --section ev --ids "5090|5090D"
+
+# Step 2: ถ้า OK → import จริง (ลบ --dry-run)
+python3 scripts/import_shopee_links.py csv-affiliate-shoppe/products/ --replace
+
+# Step 3: sync picks.xlsx → JSON
+python3 scripts/import_picks.py
 ```
 
 #### Options ครบของ import_shopee_links.py
 
-Input รับได้ทั้ง **folder** (glob `*.csv` ทุกไฟล์) และ **single file**
-
 | Option | ค่าตัวอย่าง | อธิบาย |
 |--------|------------|--------|
-| `--section` | `ai_calculator` | **required** section key |
+| `--section` | `ai_calculator` | override section (default: **ชื่อ folder แม่**) |
+| `--ids` | `5090\|5090D` | override ids (default: **ชื่อไฟล์ stem**) |
 | `--source` | `Shopee` | platform: Shopee / Lazada / Amazon / JD |
 | `--badge` | `ขายดี` | ป้าย: ขายดี / แนะนำ / ราคาดี / ใหม่ / HOT |
-| `--ids` | `5090\|5080` | GPU/CPU id filter คั่น `\|` |
 | `--hint` | `VRAM 32GB` | คำอธิบาย ใส่ทุกแถว |
 | `--type` | `item` | item (default) / guide |
 | `--limit` | `10` | จำกัดจำนวนแถวรวมทุกไฟล์ |

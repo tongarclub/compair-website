@@ -156,12 +156,13 @@ async function loadAffiliate(key, opts = {}) {
   if (strip) strip.style.display = '';
 
   // ลิงก์ "ดูทั้งหมด" → affiliate-products.html (เปิด tab ใหม่)
-  if (allItems.length > previewN && strip) {
+  // ใช้ items.length (หลัง filter) และส่ง filterId ไปด้วยถ้ามี
+  if (items.length > previewN && strip) {
     strip.appendChild(_makeViewAllBtn(
-      _affProductsUrl(key, label),
-      allItems.length,
+      _affProductsUrl(key, label, opts.filterId),
+      items.length,
       'aff-see-more',
-      `ดูสินค้าทั้งหมด <strong>${allItems.length}</strong> รายการ <span class="aff-see-more-arrow">→</span>`
+      `ดูสินค้าทั้งหมด <strong>${items.length}</strong> รายการ <span class="aff-see-more-arrow">→</span>`
     ));
   }
 }

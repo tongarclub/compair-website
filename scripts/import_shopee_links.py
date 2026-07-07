@@ -3,27 +3,37 @@
 import_shopee_links.py — แปลง CSV "ลิงก์สินค้าหลายลิงก์" จาก Shopee Affiliate
                          แล้ว append rows เข้า picks.xlsx
 
-รองรับ input ทั้งแบบ single file และ folder (ประมวลผลทุก *.csv ใน folder)
+โครงสร้าง folder แนะนำ:
+    csv-affiliate-shoppe/products/
+        ai_calculator/        ← ชื่อ folder = section
+            5090.csv          ← ชื่อไฟล์ = ids
+            5080.csv
+        ai_calculator_cpu/
+            r9_7950x.csv
 
-CSV format (Shopee Affiliate → "สร้างลิงก์หลายรายการ"):
-    รหัสสินค้า, ชื่อสินค้า, ราคา, ขาย, ชื่อร้านค้า,
-    อัตราค่าคอมมิชชัน, คอมมิชชัน, ลิงก์สินค้า, ลิงก์ข้อเสนอ, รูปสินค้า
+Auto-mapping:
+    section  = ชื่อ folder แม่ของไฟล์ CSV (override ด้วย --section)
+    ids      = ชื่อไฟล์ (stem) (override ด้วย --ids)
 
 Usage:
-    # folder (ประมวลผลทุก .csv ในคราวเดียว)
-    python3 scripts/import_shopee_links.py csv-affiliate-shoppe/products/ --section ai_calculator
-    python3 scripts/import_shopee_links.py csv-affiliate-shoppe/products/ --section ai_calculator --ids "5090|5080"
+    # products root — ประมวลผลทุก section/ไฟล์ อัตโนมัติ
+    python3 scripts/import_shopee_links.py csv-affiliate-shoppe/products/
 
-    # single file (เหมือนเดิม)
-    python3 scripts/import_shopee_links.py <csv_file>  --section ai_calculator
-    python3 scripts/import_shopee_links.py <csv_file>  --section ev --source Shopee --badge แนะนำ
-    python3 scripts/import_shopee_links.py <csv_file>  --dry-run
+    # folder เดียว — section = ชื่อ folder
+    python3 scripts/import_shopee_links.py csv-affiliate-shoppe/products/ai_calculator/
+
+    # single file — section = ชื่อ folder แม่, ids = ชื่อไฟล์
+    python3 scripts/import_shopee_links.py csv-affiliate-shoppe/products/ai_calculator/5090.csv
+
+    # override section / ids
+    python3 scripts/import_shopee_links.py <path>  --section ev --ids "5090|5080"
+    python3 scripts/import_shopee_links.py <path>  --dry-run
 
 Options:
-    --section      KEY ใน manual-picks.json  (required)
+    --section      override section key (default: ชื่อ folder แม่)
     --source       Shopee | Lazada | Amazon | ...  (default: Shopee)
     --badge        ขายดี | แนะนำ | ราคาดี | ใหม่ | HOT  (optional)
-    --ids          id filter คั่นด้วย |  เช่น "5090|5080"  (optional)
+    --ids          override ids ทุกไฟล์ (default: ชื่อไฟล์ stem)
     --hint         คำอธิบายสั้น ใส่ทุกแถว  (optional)
     --type         item | guide  (default: item)
     --limit        จำกัดจำนวนแถวสูงสุด (รวมทุกไฟล์)
@@ -92,32 +102,52 @@ def parse_price(raw: str) -> 'int | float | None':
     except (ValueError, TypeError):
         return None
 
-# ─── Input resolver (file หรือ folder) ──────────────────────────────────────
+# ─── Input resolver ──────────────────────────────────────────────────────────
 
-def resolve_inputs(raw: str) -> list[Path]:
+def resolve_inputs(raw: str, section_override: str) -> list[tuple[Path, str]]:
     """
-    แปลง argument เป็นรายการ CSV paths
-    - ถ้าเป็น folder → glob *.csv ทุกไฟล์ใน folder
-    - ถ้าเป็น file  → [file]
+    แปลง argument เป็นรายการ (csv_path, section) tuples
+
+    กฎการหา section (ตามลำดับ priority):
+      1. --section override
+      2. ชื่อ folder แม่ของไฟล์ CSV (parent.name)
+
+    กฎการ traverse:
+      - single file     → [(file, section)]
+      - folder มี CSV   → [(csv, section)] ทุกไฟล์ใน folder นั้น
+      - folder มี subdir → recurse เข้า subdir แต่ละอัน (1 ชั้น)
     """
     p = Path(raw)
-    # ถ้า path ไม่ absolute ให้ลอง resolve จาก REPO_ROOT ก่อน
     if not p.is_absolute() and not p.exists():
         candidate = REPO_ROOT / p
         if candidate.exists():
             p = candidate
 
+    if p.is_file():
+        section = section_override or p.parent.name
+        return [(p, section)]
+
     if p.is_dir():
-        files = sorted(p.glob('*.csv'))
-        if not files:
-            print(f'❌ ไม่พบไฟล์ .csv ใน folder: {p}')
+        csv_files = sorted(p.glob('*.csv'))
+        if csv_files:
+            # folder ที่มี CSV โดยตรง → section = ชื่อ folder นี้
+            section = section_override or p.name
+            return [(f, section) for f in csv_files]
+
+        # folder ที่มี subdir → แต่ละ subdir คือ section
+        subdirs = sorted(d for d in p.iterdir() if d.is_dir() and not d.name.startswith('.'))
+        results: list[tuple[Path, str]] = []
+        for subdir in subdirs:
+            section = section_override or subdir.name
+            for f in sorted(subdir.glob('*.csv')):
+                results.append((f, section))
+        if not results:
+            print(f'❌ ไม่พบ .csv หรือ subfolder ใน: {p}')
             sys.exit(1)
-        return files
-    elif p.is_file():
-        return [p]
-    else:
-        print(f'❌ ไม่พบไฟล์หรือ folder: {p}')
-        sys.exit(1)
+        return results
+
+    print(f'❌ ไม่พบไฟล์หรือ folder: {p}')
+    sys.exit(1)
 
 # ─── CSV reader ───────────────────────────────────────────────────────────────
 
@@ -213,11 +243,12 @@ def build_xlsx_row(
 def append_to_xlsx(
     xlsx_path: Path,
     new_rows: list[list],
-    section: str,
+    sections_to_replace: set[str],
     replace: bool,
 ) -> tuple:
     """
     append (หรือ replace) rows ใน picks.xlsx
+    sections_to_replace — set ของ section ที่ต้องลบแถวเดิมก่อน (ใช้เมื่อ replace=True)
     Returns: (rows_added, rows_removed)
     """
     wb = load_workbook(xlsx_path)
@@ -226,11 +257,11 @@ def append_to_xlsx(
     header_row = [str(c.value).strip() if c.value else '' for c in ws[1]]
 
     removed = 0
-    if replace:
+    if replace and sections_to_replace:
         sec_col = header_row.index('section') + 1 if 'section' in header_row else 1
         rows_to_delete = [
             r for r in range(2, ws.max_row + 1)
-            if str(ws.cell(row=r, column=sec_col).value or '').strip() == section
+            if str(ws.cell(row=r, column=sec_col).value or '').strip() in sections_to_replace
         ]
         for r in reversed(rows_to_delete):
             ws.delete_rows(r)
@@ -255,14 +286,14 @@ def main():
         'input',
         help='path ของ CSV หรือ folder ที่มี *.csv (เช่น csv-affiliate-shoppe/products/)',
     )
-    parser.add_argument('--section', required=True, metavar='KEY',
-                        help='section key ใน manual-picks.json (เช่น ai_calculator)')
+    parser.add_argument('--section', default='', metavar='KEY',
+                        help='override section key (default: ชื่อ folder แม่ของ CSV)')
     parser.add_argument('--source', default='Shopee', metavar='PLATFORM',
                         help='ชื่อ platform: Shopee|Lazada|Amazon|JD|อื่นๆ  (default: Shopee)')
     parser.add_argument('--badge', default='', metavar='LABEL',
                         help='badge label: ขายดี|แนะนำ|ราคาดี|ใหม่|HOT  (optional)')
     parser.add_argument('--ids', default='', metavar='ID1|ID2',
-                        help='ids filter คั่นด้วย |  เช่น "5090|5080"  (optional)')
+                        help='override ids ทุกไฟล์ (default: ใช้ชื่อไฟล์ stem เช่น 5090.csv → "5090")')
     parser.add_argument('--hint', default='', metavar='TEXT',
                         help='คำอธิบายสั้นที่ใส่ทุกแถว  (optional)')
     parser.add_argument('--type', default='item', choices=['item', 'guide'], dest='row_type',
@@ -293,15 +324,18 @@ def main():
         print(f'   สร้าง template ใหม่: python3 scripts/create_picks_xlsx.py')
         sys.exit(1)
 
-    # ─── resolve input files (file หรือ folder) ────────────────────────────────
-    input_files = resolve_inputs(args.input)
+    # ─── resolve input files + sections ───────────────────────────────────────
+    input_files = resolve_inputs(args.input, args.section)  # list[(Path, section)]
+
+    unique_sections = list(dict.fromkeys(sec for _, sec in input_files))
 
     if len(input_files) == 1:
-        print(f'📄 ไฟล์: {input_files[0].name}')
+        fp, sec = input_files[0]
+        print(f'📄 ไฟล์: {fp.name}  (section={sec})')
     else:
-        print(f'📁 folder — พบ {len(input_files)} ไฟล์:')
-        for f in input_files:
-            print(f'   • {f.name}')
+        print(f'📁 พบ {len(input_files)} ไฟล์ ({len(unique_sections)} section):')
+        for fp, sec in input_files:
+            print(f'   • {sec}/{fp.name}')
 
     # ─── image index (สร้างครั้งเดียว ใช้กับทุกไฟล์) ──────────────────────────
     image_index: dict = {}
@@ -316,10 +350,13 @@ def main():
     total_skipped  = 0
     per_file_stats = []
 
-    for file_path in input_files:
+    for file_path, effective_section in input_files:
         src_rows = read_shopee_links_csv(file_path)
         file_ok  = 0
         file_skip = 0
+
+        # ids: ใช้ --ids ที่ระบุมา หรือ fallback เป็น stem ของชื่อไฟล์
+        effective_ids = args.ids if args.ids else file_path.stem
 
         for i, src in enumerate(src_rows, start=1):
             title = src.get('ชื่อสินค้า', '').strip()
@@ -337,10 +374,10 @@ def main():
 
             row = build_xlsx_row(
                 src,
-                section=args.section,
+                section=effective_section,
                 source=args.source,
                 badge=args.badge,
-                ids=args.ids,
+                ids=effective_ids,
                 hint=args.hint,
                 row_type=args.row_type,
                 use_product_link=args.use_product_link,
@@ -349,7 +386,7 @@ def main():
             all_new_rows.append(row)
             file_ok += 1
 
-        per_file_stats.append((file_path.name, len(src_rows), file_ok, file_skip))
+        per_file_stats.append((file_path.name, effective_section, effective_ids, len(src_rows), file_ok, file_skip))
 
     # ─── apply global limit ────────────────────────────────────────────────────
     if args.limit and len(all_new_rows) > args.limit:
@@ -358,16 +395,20 @@ def main():
 
     # ─── สรุปก่อน import ──────────────────────────────────────────────────────
     print(f'\n📋 สรุปก่อน import:')
-    print(f'   section  : {args.section}')
+    print(f'   section  : {"--section override: " + args.section if args.section else "auto (จากชื่อ folder)"}')
+    print(f'   ids mode : {"--ids override: " + args.ids if args.ids else "auto (จากชื่อไฟล์)"}')
     print(f'   source   : {args.source}')
     print(f'   badge    : {args.badge or "(ว่าง)"}')
-    print(f'   ids      : {args.ids or "(ว่าง — แสดงทุก GPU/CPU)"}')
     print(f'   mode     : {"replace" if args.replace else "append"}')
-    print(f'   ไฟล์ทั้งหมด : {len(input_files)} ไฟล์')
+    print(f'   ไฟล์ทั้งหมด : {len(input_files)} ไฟล์ ({len(unique_sections)} section)')
 
     if len(input_files) > 1:
-        for name, total, ok, skip in per_file_stats:
-            print(f'     • {name:<60} {ok} แถว ({skip} ข้าม)')
+        for name, eff_sec, eff_ids, total, ok, skip in per_file_stats:
+            print(f'     • {eff_sec}/{name:<35} ids={eff_ids:<20} {ok} แถว ({skip} ข้าม)')
+    else:
+        name, eff_sec, eff_ids, total, ok, skip = per_file_stats[0]
+        print(f'   section  : {eff_sec}')
+        print(f'   ids      : {eff_ids}')
 
     print(f'   แถวที่ valid  : {len(all_new_rows)}')
     print(f'   แถวที่ข้าม   : {total_skipped}')
@@ -386,14 +427,22 @@ def main():
         return
 
     # ─── เขียนลง xlsx ─────────────────────────────────────────────────────────
-    added, removed = append_to_xlsx(output_path, all_new_rows, args.section, args.replace)
+    added, removed = append_to_xlsx(
+        output_path,
+        all_new_rows,
+        sections_to_replace=set(unique_sections),
+        replace=args.replace,
+    )
 
     print(f'\n✅ บันทึกแล้ว → {output_path.relative_to(REPO_ROOT)}')
     if removed:
         print(f'   ลบแถวเดิม  : {removed} แถว')
     print(f'   เพิ่มแถวใหม่: {added} แถว')
     print(f'\n👉 ขั้นตอนถัดไป: รัน import_picks.py เพื่อ sync ไปยัง JSON')
-    print(f'   python3 scripts/import_picks.py --section {args.section}')
+    if len(unique_sections) == 1:
+        print(f'   python3 scripts/import_picks.py --section {unique_sections[0]}')
+    else:
+        print(f'   python3 scripts/import_picks.py  # (sync ทุก section)')
 
 if __name__ == '__main__':
     main()
