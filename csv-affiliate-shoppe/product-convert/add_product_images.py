@@ -1,18 +1,28 @@
 #!/usr/bin/env python3
 """
-Script to add 'รูปสินค้า' column to a Shopee affiliate CSV file
-by extracting image URLs from the product.html file.
+Script to add 'รูปสินค้า' column to Shopee affiliate CSV files
+by extracting image URLs from .txt files (saved HTML from Shopee Affiliate Portal).
 
 Usage:
     python3 add_product_images.py
 
 Input:
-    - product.html  : HTML file from Shopee Affiliate (same directory)
-    - *.csv         : CSV file without 'รูปสินค้า' column (same directory)
+    - txt/*.txt  : HTML content saved from Shopee Affiliate Portal (1 or more files)
+    - csv/*.csv  : CSV files exported from Shopee Affiliate (1 or more files)
 
 Output:
-    - Updates the CSV file in-place, adding the 'รูปสินค้า' column
+    - Updates each CSV file in csv/ in-place, adding the 'รูปสินค้า' column
       with image URLs matched by product ID.
+
+Directory structure:
+    product-convert/
+    ├── add_product_images.py
+    ├── txt/                    ← วาง .txt files ที่ copy มาจากหน้า Shopee Affiliate
+    │   ├── product_offer_list.txt
+    │   └── product_offer_list (1).txt
+    └── csv/                    ← วาง .csv files ที่ export จาก Shopee Affiliate
+        ├── 5080.csv
+        └── 5090.csv
 """
 
 import csv
@@ -21,22 +31,21 @@ import sys
 import os
 import glob
 
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-HTML_FILE = os.path.join(SCRIPT_DIR, "product.html")
+SCRIPT_DIR   = os.path.dirname(os.path.abspath(__file__))
+TXT_DIR      = os.path.join(SCRIPT_DIR, "txt")
+CSV_DIR      = os.path.join(SCRIPT_DIR, "csv")
 IMAGE_COLUMN = "รูปสินค้า"
-ID_COLUMN = "รหัสสินค้า"
+ID_COLUMN    = "รหัสสินค้า"
 
 
-def extract_product_images(html_path: str) -> dict[str, str]:
-    """Parse HTML and return {product_id: image_url} mapping."""
-    with open(html_path, "r", encoding="utf-8") as f:
+def extract_product_images(txt_path: str) -> dict[str, str]:
+    """Parse HTML/text content and return {product_id: image_url} mapping."""
+    with open(txt_path, "r", encoding="utf-8", errors="replace") as f:
         content = f.read()
 
-    # Each product block: href contains the product ID, followed by img src
-    # Pattern: /offer/product_offer/{ID}  ...  <img src="{image_url}"
     pattern = re.compile(
-        r'/offer/product_offer/(\d+)[^"]*"'   # product ID in href
-        r'.*?'                                  # anything in between
+        r'/offer/product_offer/(\d+)[^"]*"'
+        r'.*?'
         r'<img src="(https?://[^"]+\.(?:webp|jpg|jpeg|png))"',
         re.DOTALL,
     )
@@ -44,44 +53,42 @@ def extract_product_images(html_path: str) -> dict[str, str]:
     mapping: dict[str, str] = {}
     for match in pattern.finditer(content):
         product_id = match.group(1)
-        image_url = match.group(2)
+        image_url  = match.group(2)
         if product_id not in mapping:
             mapping[product_id] = image_url
 
     return mapping
 
 
-def find_csv_file(directory: str) -> str:
-    """Find the CSV file in the given directory (skip if already has image column)."""
-    csv_files = glob.glob(os.path.join(directory, "*.csv"))
-    if not csv_files:
-        print("ERROR: No CSV file found in", directory)
+def build_image_map_from_txt_dir(txt_dir: str) -> dict[str, str]:
+    """อ่านทุก .txt ใน txt_dir แล้ว merge image map รวมกัน"""
+    txt_files = sorted(glob.glob(os.path.join(txt_dir, "*.txt")))
+    if not txt_files:
+        print(f"ERROR: No .txt files found in {txt_dir}")
         sys.exit(1)
 
-    # Prefer files that do NOT have the image column yet
-    for path in csv_files:
-        with open(path, "r", encoding="utf-8-sig") as f:
-            reader = csv.DictReader(f)
-            if IMAGE_COLUMN not in (reader.fieldnames or []):
-                return path
+    combined: dict[str, str] = {}
+    for path in txt_files:
+        mapping = extract_product_images(path)
+        new_ids = len([k for k in mapping if k not in combined])
+        combined.update(mapping)
+        print(f"  [{os.path.basename(path)}] → {len(mapping)} images ({new_ids} new)")
 
-    # If all already have the column, just return the first one
-    print("WARNING: All CSV files already have the image column. Updating the first one.")
-    return csv_files[0]
+    return combined
 
 
 def add_images_to_csv(csv_path: str, image_map: dict[str, str]) -> None:
-    """Read CSV, add/update 'รูปสินค้า' column, write back."""
+    """Read CSV, add/update 'รูปสินค้า' column, write back in-place."""
     with open(csv_path, "r", encoding="utf-8-sig", newline="") as f:
-        reader = csv.DictReader(f)
+        reader    = csv.DictReader(f)
         fieldnames = list(reader.fieldnames or [])
-        rows = list(reader)
+        rows      = list(reader)
 
     if IMAGE_COLUMN not in fieldnames:
         fieldnames.append(IMAGE_COLUMN)
-        print(f"Added new column '{IMAGE_COLUMN}' to {os.path.basename(csv_path)}")
+        print(f"  Added column '{IMAGE_COLUMN}'")
     else:
-        print(f"Column '{IMAGE_COLUMN}' already exists — will overwrite with matched values.")
+        print(f"  Column '{IMAGE_COLUMN}' already exists — overwriting matched values")
 
     matched = 0
     missing = []
@@ -101,28 +108,29 @@ def add_images_to_csv(csv_path: str, image_map: dict[str, str]) -> None:
         writer.writeheader()
         writer.writerows(rows)
 
-    print(f"\nResults:")
-    print(f"  Total rows   : {len(rows)}")
-    print(f"  Matched      : {matched}")
-    print(f"  Not matched  : {len(missing)}")
+    print(f"  Total: {len(rows)}  Matched: {matched}  Not matched: {len(missing)}")
     if missing:
-        print(f"  Missing IDs  : {', '.join(missing)}")
-    print(f"\nOutput saved to: {csv_path}")
+        print(f"  Missing IDs: {', '.join(missing)}")
 
 
 def main():
-    if not os.path.exists(HTML_FILE):
-        print(f"ERROR: HTML file not found: {HTML_FILE}")
+    # ── 1. build image map จากทุก .txt ใน txt/ ────────────────────────────────
+    print(f"📂 อ่าน .txt จาก: {TXT_DIR}")
+    image_map = build_image_map_from_txt_dir(TXT_DIR)
+    print(f"✅ รวม {len(image_map)} image URLs จากทุกไฟล์\n")
+
+    # ── 2. process ทุก .csv ใน csv/ ───────────────────────────────────────────
+    csv_files = sorted(glob.glob(os.path.join(CSV_DIR, "*.csv")))
+    if not csv_files:
+        print(f"ERROR: No .csv files found in {CSV_DIR}")
         sys.exit(1)
 
-    print(f"Parsing image URLs from: {HTML_FILE}")
-    image_map = extract_product_images(HTML_FILE)
-    print(f"Found {len(image_map)} product image(s) in HTML.\n")
+    print(f"📂 พบ {len(csv_files)} CSV file(s) ใน: {CSV_DIR}")
+    for csv_path in csv_files:
+        print(f"\n🔄 {os.path.basename(csv_path)}")
+        add_images_to_csv(csv_path, image_map)
 
-    csv_path = find_csv_file(SCRIPT_DIR)
-    print(f"Processing CSV: {os.path.basename(csv_path)}")
-
-    add_images_to_csv(csv_path, image_map)
+    print(f"\n✅ เสร็จสิ้น — อัปเดต {len(csv_files)} ไฟล์แล้ว")
 
 
 if __name__ == "__main__":

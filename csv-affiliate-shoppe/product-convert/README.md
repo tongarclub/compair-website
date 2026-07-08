@@ -1,18 +1,25 @@
 # add_product_images.py — วิธีการใช้งาน
 
 Script สำหรับเพิ่ม column **`รูปสินค้า`** ลงใน CSV ที่ export มาจาก Shopee Affiliate  
-โดยดึง link รูปภาพจากไฟล์ HTML ที่ save มาจากหน้าเว็บ Shopee Affiliate Portal
+โดยดึง link รูปภาพจากไฟล์ `.txt` ที่ copy มาจากหน้าเว็บ Shopee Affiliate Portal
 
 ---
 
-## โครงสร้างไฟล์ที่ต้องมี
+## โครงสร้างไฟล์
 
 ```
 product-convert/
 ├── add_product_images.py   ← script หลัก
-├── product.html            ← HTML ที่ save จากหน้า Shopee Affiliate (ต้องมีอยู่เสมอ)
-└── *.csv                   ← ไฟล์ CSV ที่ export จาก Shopee Affiliate
+├── txt/                    ← วาง .txt files ที่ copy มาจากหน้า Shopee Affiliate
+│   ├── product_offer_list.txt
+│   ├── product_offer_list (1).txt
+│   └── product_offer_list (2).txt
+└── csv/                    ← วาง .csv files ที่ export จาก Shopee Affiliate
+    ├── 5080.csv
+    └── 5090.csv
 ```
+
+> Script จะอ่าน **ทุก `.txt`** ใน `txt/` และประมวลผล **ทุก `.csv`** ใน `csv/` ในคราวเดียว
 
 ---
 
@@ -22,23 +29,23 @@ product-convert/
 
 1. เข้า [Shopee Affiliate Portal](https://affiliate.shopee.co.th)
 2. เลือกสินค้าที่ต้องการ → กด **"สร้างลิงก์หลายรายการ"**
-3. กด **Export CSV** แล้วนำไฟล์มาวางไว้ใน folder `product-convert/`
+3. กด **Export CSV** แล้วนำไฟล์มาวางไว้ใน folder `product-convert/csv/`
 
-### ขั้นที่ 2 — Save HTML จากหน้า Shopee Affiliate
+### ขั้นที่ 2 — Save HTML จากหน้า Shopee Affiliate เป็น .txt
 
-> ขั้นตอนนี้สำคัญมาก เพราะรูปสินค้าอยู่ใน HTML เท่านั้น ไม่ได้อยู่ใน CSV
+> ขั้นตอนนี้สำคัญ เพราะรูปสินค้าอยู่ใน HTML เท่านั้น ไม่ได้อยู่ใน CSV
 
 1. เปิดหน้าที่แสดงรายการสินค้าบน Shopee Affiliate Portal (หน้าเดียวกับที่เลือกสินค้า)
 2. กด **Ctrl+A** (เลือกทั้งหมด) → **Ctrl+C** (copy)
-3. เปิดโปรแกรม Text Editor (เช่น VS Code, Notepad)  
-   แล้ว paste และ save เป็นชื่อ **`product.html`**  
-   วางไว้ใน folder `product-convert/`
+3. เปิด Text Editor (เช่น VS Code) แล้ว paste แล้ว save เป็นไฟล์ `.txt`  
+   วางไว้ใน folder `product-convert/txt/`
 
-   **หรือ** กด `Ctrl+U` ใน Browser เพื่อดู Page Source แล้ว Save As → `product.html`
+   **หรือ** กด `Ctrl+U` ใน Browser เพื่อดู Page Source แล้ว Save As → ตั้งชื่อ `.txt`
+
+> ถ้ามีสินค้าหลายหน้า ให้ save ทีละหน้าเป็นหลายไฟล์ เช่น `page1.txt`, `page2.txt`  
+> Script จะ merge image URL จากทุกไฟล์รวมกัน
 
 ### ขั้นที่ 3 — รัน Script
-
-เปิด Terminal แล้วรันคำสั่ง:
 
 ```bash
 cd /path/to/csv-affiliate-shoppe/product-convert
@@ -47,24 +54,23 @@ python3 add_product_images.py
 
 ### ขั้นที่ 4 — ตรวจสอบผลลัพธ์
 
-Script จะแสดงผลดังนี้:
-
 ```
-Parsing image URLs from: product.html
-Found 87 product image(s) in HTML.
+📂 อ่าน .txt จาก: .../txt
+  [product_offer_list.txt]    → 20 images (20 new)
+  [product_offer_list (1).txt] → 20 images (20 new)
+  [product_offer_list (2).txt] → 4 images (4 new)
+✅ รวม 44 image URLs จากทุกไฟล์
 
-Processing CSV: ลิงก์สินค้าหลายลิงก์20260707205443-...csv
-Added new column 'รูปสินค้า' to ลิงก์สินค้าหลายลิงก์20260707205443-...csv
+📂 พบ 1 CSV file(s) ใน: .../csv
 
-Results:
-  Total rows   : 85
-  Matched      : 85
-  Not matched  : 0
+🔄 5070ti.csv
+  Added column 'รูปสินค้า'
+  Total: 44  Matched: 44  Not matched: 0
 
-Output saved to: ลิงก์สินค้าหลายลิงก์20260707205443-...csv
+✅ เสร็จสิ้น — อัปเดต 1 ไฟล์แล้ว
 ```
 
-ไฟล์ CSV จะถูก **อัปเดต in-place** โดยเพิ่ม column `รูปสินค้า` ต่อท้าย
+ไฟล์ CSV ใน `csv/` จะถูก **อัปเดต in-place** โดยเพิ่ม column `รูปสินค้า` ต่อท้าย
 
 ---
 
@@ -75,23 +81,8 @@ Output saved to: ลิงก์สินค้าหลายลิงก์202
 | CSV ยังไม่มี column `รูปสินค้า` | เพิ่ม column ให้อัตโนมัติ |
 | CSV มี column `รูปสินค้า` อยู่แล้ว | เขียนทับด้วยค่าที่ match ได้ใหม่ |
 | สินค้าบางตัว match ไม่ได้ | แสดง Warning พร้อม ID ที่หาไม่พบ ค่าจะเป็นช่องว่าง |
-| มี CSV หลายไฟล์ใน folder | จะเลือกไฟล์ที่ **ยังไม่มี** column `รูปสินค้า` ก่อน |
-
----
-
-## ตัวอย่าง CSV ที่ถูกต้อง
-
-**ก่อนรัน script:**
-```
-รหัสสินค้า,ชื่อสินค้า,ราคา,ขาย,ชื่อร้านค้า,อัตราค่าคอมมิชชัน,คอมมิชชัน,ลิงก์สินค้า,ลิงก์ข้อเสนอ
-48160551599,VGA การ์ดจอ PNY GeForce RTX 5080,...
-```
-
-**หลังรัน script:**
-```
-รหัสสินค้า,ชื่อสินค้า,ราคา,ขาย,ชื่อร้านค้า,อัตราค่าคอมมิชชัน,คอมมิชชัน,ลิงก์สินค้า,ลิงก์ข้อเสนอ,รูปสินค้า
-48160551599,VGA การ์ดจอ PNY GeForce RTX 5080,...,https://down-tx-th.img.susercontent.com/th-11134207-81ztk-mo4863r6po1v3b.webp
-```
+| มี .txt หลายไฟล์ | merge image URL ทั้งหมดก่อน แล้วค่อย match กับ CSV |
+| มี CSV หลายไฟล์ใน csv/ | ประมวลผลทุกไฟล์ในคราวเดียว |
 
 ---
 
